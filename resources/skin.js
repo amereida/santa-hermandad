@@ -1,4 +1,4 @@
-/* Stella Nova — mejora progresiva. Vanilla ES, sin jQuery propio. Sin JS
+/* Stellamereida — mejora progresiva. Vanilla ES, sin jQuery propio. Sin JS
  * la página es legible y el pre-pintado (Hooks) ya aplicó el tema; aquí
  * se añaden panel de preferencias, persistencia híbrida, cajón y popovers.
  */
@@ -7,8 +7,8 @@
 
 	var doc = document;
 	var root = doc.documentElement;
-	var cfg = ( window.mw && mw.config && mw.config.get( 'wgStellaNova' ) ) || {
-		identity: 'anonymous', persist: 'browser', apiPrefix: 'stellanova-', server: {}
+	var cfg = ( window.mw && mw.config && mw.config.get( 'wgStellamereida' ) ) || {
+		identity: 'anonymous', persist: 'browser', apiPrefix: 'stellamereida-', server: {}
 	};
 	var KEYS = [ 'theme', 'font', 'family' ];
 
@@ -84,7 +84,7 @@
 
 	/* ── Modo compact (tablet vertical y menos): paneles emergentes como
 	 *    modales. Detecta el viewport igual que la media query CSS (48rem,
-	 *    ≈ 768 px). Si cambia este umbral, sincronizar con stella-nova.css.
+	 *    ≈ 768 px). Si cambia este umbral, sincronizar con stellamereida.css.
 	 *    El estado se refresca on-resize para responder a rotación. */
 	var COMPACT_MQ = ( window.matchMedia && window.matchMedia( '(max-width: 48rem)' ) ) || null;
 	function isCompact() { return !!( COMPACT_MQ && COMPACT_MQ.matches ); }
@@ -310,7 +310,7 @@
 			if ( !a ) { return; }
 			e.preventDefault();
 			e.stopImmediatePropagation();
-			mw.loader.using( 'skins.stellanova.print' ).then( function () {
+			mw.loader.using( 'skins.stellamereida.print' ).then( function () {
 				var ok = window.SN_PrintPreview && window.SN_PrintPreview.open();
 				if ( ok === false ) { window.print(); }
 			}, function () { window.print(); } );

@@ -1,4 +1,4 @@
-/* Stella Nova — previsualización de impresión paginada (Vivliostyle).
+/* Stellamereida — previsualización de impresión paginada (Vivliostyle).
  *
  * Por qué existe: lo que el usuario pidió para el papel —cabecera/pie por
  * página con logo + numeración «n / total», URL y fecha; números de página en
@@ -16,7 +16,7 @@
  *    iframe oculto y lanza `print()` → salida 1:1, sin trucos de aislamiento.
  *
  * El documento fuente es autocontenido: enlaza las MISMAS hojas del skin
- * (fonts/tokens/stella-nova) que ya usa la página viva + un <style> propio con
+ * (fonts/tokens/stellamereida) que ya usa la página viva + un <style> propio con
  * el @page, las columnas, los elementos corrientes y el TOC. La tipografía,
  * por tanto, es idéntica a pantalla.
  *
@@ -140,23 +140,23 @@
 	   la salida impresa). Útil para «alejar» y ver completa una hoja grande. */
 	var ZOOM_MIN = 0.25, ZOOM_MAX = 1.5, ZOOM_STEP = 0.25;
 
-	/* Base de archivos del skin (p. ej. «…/skins/StellaNova/resources»), tomada
+	/* Base de archivos del skin (p. ej. «…/skins/Stellamereida/resources»), tomada
 	   del <link rel=icon> del isótopo que el skin inyecta con ruta de archivo. */
 	function skinBase() {
 		var ico = doc.querySelector( 'link[rel~="icon"][href*="/resources/"]' );
 		if ( ico && ico.href ) { return ico.href.replace( /\/[^/]*$/, '' ); }
-		return ( ( mw && mw.config && mw.config.get( 'wgServer' ) ) || '' ) + '/skins/StellaNova/resources';
+		return ( ( mw && mw.config && mw.config.get( 'wgServer' ) ) || '' ) + '/skins/Stellamereida/resources';
 	}
 
 	/* Enlazamos las hojas LIMPIAS del skin como ARCHIVOS directos: fonts.css
-	   (@font-face), tokens.css (variables --sn-*) y stella-nova.css (tipografía
+	   (@font-face), tokens.css (variables --sn-*) y stellamereida.css (tipografía
 	   del contenido: .sn-body p, cabeceras, listas, tablas…). A propósito NO
-	   usamos el módulo combinado `skins.stellanova.styles`: ese incluye print.css
+	   usamos el módulo combinado `skins.stellamereida.styles`: ese incluye print.css
 	   (media print) cuyo `@page` se SUMA al nuestro en Vivliostyle (doble margen).
 	   Con archivos directos hay un único @page (el de printCss). */
 	function skinCssLinks() {
 		var base = skinBase();
-		return [ 'fonts.css', 'tokens.css', 'stella-nova.css' ].map( function ( f ) {
+		return [ 'fonts.css', 'tokens.css', 'stellamereida.css' ].map( function ( f ) {
 			return '<link rel="stylesheet" href="' + base + '/' + f + '">';
 		} ).join( '' );
 	}

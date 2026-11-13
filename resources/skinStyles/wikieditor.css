@@ -1,10 +1,10 @@
 /* ============================================================
- * skinStyles/wikieditor.css — Stella Nova
+ * skinStyles/wikieditor.css — Stellamereida
  * 
  * Snapshot inicial del CSS de la extensión WikiEditor
  * versión 0.5.4, licencia upstream: GPL-2.0-or-later.
  * Capturado el 2026-05-19 desde WikiEditor/extension.json para
- * absorber los estilos dentro del sistema visual de Stella Nova.
+ * absorber los estilos dentro del sistema visual de Stellamereida.
  * 
  * Estos bloques se reescribirán gradualmente usando los tokens del
  * skin (var(--sn-...)). Mientras tanto, sirven como referencia
@@ -59,7 +59,7 @@ form#editform {
 	margin-top: 2.062em;
 }
 
-/* ─── Tema Stella Nova para el WikiEditor ───────────────────────────
+/* ─── Tema Stellamereida para el WikiEditor ───────────────────────────
  * El módulo `ext.wikiEditor` hardcodea superficies claras (#fff, #ccc,
  * #f9f9f9, #222, #0645ad) en el frame, la toolbar, las tabs y los
  * tool-selects. En modo oscuro esa cromática NO voltea (no usa
@@ -76,7 +76,7 @@ form#editform {
    `+ext.wikiEditor.styles`. Con la MISMA especificidad, core ganaba por
    orden de fuente → por eso sobrevivían en oscuro sus azules `#0645ad`,
    sus negros `#222` y sus bordes `#ccc`. Prefijamos cada regla con
-   `.skin-stellanova` (clase del <body> con el skin activo) para subir +1
+   `.skin-stellamereida` (clase del <body> con el skin activo) para subir +1
    clase y ganar SIEMPRE, sin depender del orden de carga.
    Convenciones de esta sección:
      · bordes  → --sn-hairline (el filete coherente de .editOptions)
@@ -86,38 +86,38 @@ form#editform {
    ╚══════════════════════════════════════════════════════════════════╝ */
 
 /* Frame del editor: borde exterior y filete entre toolbar y textarea. */
-.skin-stellanova .wikiEditor-ui .wikiEditor-ui-view {
+.skin-stellamereida .wikiEditor-ui .wikiEditor-ui-view {
 	border-color: var(--sn-hairline);
 }
-.skin-stellanova .wikiEditor-ui .wikiEditor-ui-top {
+.skin-stellamereida .wikiEditor-ui .wikiEditor-ui-top {
 	border-bottom-color: var(--sn-hairline);
 }
-.skin-stellanova .wikiEditor-ui .wikiEditor-ui-right {
+.skin-stellamereida .wikiEditor-ui .wikiEditor-ui-right {
 	background: var(--sn-sunk);
 }
 
 /* Cinta inferior con controles + barra de tabs/buttons del wikitexto. */
-.skin-stellanova .wikiEditor-ui-controls,
-.skin-stellanova .wikiEditor-ui-tabs,
-.skin-stellanova .wikiEditor-ui-tabs div.current,
-.skin-stellanova .wikiEditor-ui-buttons {
+.skin-stellamereida .wikiEditor-ui-controls,
+.skin-stellamereida .wikiEditor-ui-tabs,
+.skin-stellamereida .wikiEditor-ui-tabs div.current,
+.skin-stellamereida .wikiEditor-ui-buttons {
 	background-color: var(--sn-paper);
 }
-.skin-stellanova .wikiEditor-ui-tabs {
+.skin-stellamereida .wikiEditor-ui-tabs {
 	border-left-color: var(--sn-hairline);
 	border-top-color: var(--sn-hairline);
 }
-.skin-stellanova .wikiEditor-ui-tabs div {
+.skin-stellamereida .wikiEditor-ui-tabs div {
 	background-color: var(--sn-sunk);
 	border-right-color: var(--sn-hairline);
 	border-bottom-color: var(--sn-hairline);
 }
-.skin-stellanova .wikiEditor-ui-tabs div a { color: var(--sn-nova); }
-.skin-stellanova .wikiEditor-ui-tabs div.current {
+.skin-stellamereida .wikiEditor-ui-tabs div a { color: var(--sn-nova); }
+.skin-stellamereida .wikiEditor-ui-tabs div.current {
 	border-bottom-color: var(--sn-paper);
 }
-.skin-stellanova .wikiEditor-ui-tabs div.current a { color: var(--sn-ink); }
-.skin-stellanova .wikiEditor-ui-buttons { border-top-color: var(--sn-paper); }
+.skin-stellamereida .wikiEditor-ui-tabs div.current a { color: var(--sn-ink); }
+.skin-stellamereida .wikiEditor-ui-buttons { border-top-color: var(--sn-paper); }
 
 /* Superficie de la barra: el tema `wikimedia` la fija con
    `@background-color-neutral-subtle` (compilado a #f8f9fa, NO voltea).
@@ -125,12 +125,12 @@ form#editform {
    del skin y voltee claro/oscuro. La sombra negra de core se mantiene en
    claro pero se neutraliza en oscuro (invisible/sucia sobre papel oscuro).
 
-   `.skin-stellanova` (+1 clase) es OBLIGATORIO aquí: la regla de core
+   `.skin-stellamereida` (+1 clase) es OBLIGATORIO aquí: la regla de core
    vive en `jquery.wikiEditor.toolbar-wikimedia.less`, skinStyle `default`
    del módulo `ext.wikiEditor` (el grande), que carga DESPUÉS de nuestro
    `+ext.wikiEditor.styles` → con misma especificidad (0,1,0) ganaba core
    por orden de fuente. Mismo patrón que `.page-characters` más abajo. */
-.skin-stellanova .wikiEditor-ui-toolbar {
+.skin-stellamereida .wikiEditor-ui-toolbar {
 	background-color: var(--sn-sunk);
 }
 :root[data-sn-theme="dark"] .wikiEditor-ui-toolbar {
@@ -151,59 +151,59 @@ form#editform {
 }
 
 /* Toolbar: secciones, tabs expandibles, grupos. */
-.skin-stellanova .wikiEditor-ui-toolbar .sections .section {
+.skin-stellamereida .wikiEditor-ui-toolbar .sections .section {
 	border-top-color: var(--sn-hairline);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .tabs span.tab a,
-.skin-stellanova .wikiEditor-ui-toolbar .tabs span.tab a:visited {
+.skin-stellamereida .wikiEditor-ui-toolbar .tabs span.tab a,
+.skin-stellamereida .wikiEditor-ui-toolbar .tabs span.tab a:visited {
 	color: var(--sn-nova);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .tabs span.tab a.current,
-.skin-stellanova .wikiEditor-ui-toolbar .tabs span.tab a.current:visited {
+.skin-stellamereida .wikiEditor-ui-toolbar .tabs span.tab a.current,
+.skin-stellamereida .wikiEditor-ui-toolbar .tabs span.tab a.current:visited {
 	color: var(--sn-ink);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .section-secondary .group,
-.skin-stellanova .wikiEditor-ui-toolbar .group-search {
+.skin-stellamereida .wikiEditor-ui-toolbar .section-secondary .group,
+.skin-stellamereida .wikiEditor-ui-toolbar .group-search {
 	border-left-color: var(--sn-hairline);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .group {
+.skin-stellamereida .wikiEditor-ui-toolbar .group {
 	border-right-color: var(--sn-hairline);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .group .label,
-.skin-stellanova .wikiEditor-ui-toolbar .page-table th {
+.skin-stellamereida .wikiEditor-ui-toolbar .group .label,
+.skin-stellamereida .wikiEditor-ui-toolbar .page-table th {
 	color: var(--sn-ink-soft);
 }
 
 /* Tool-select (desplegable "Avanzado": estilo de párrafo, encabezados). */
-.skin-stellanova .wikiEditor-ui-toolbar .group .tool-select {
+.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select {
 	border-color: var(--sn-hairline);
 	background-color: var(--sn-paper);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .group .tool-select .label { color: var(--sn-ink); }
-.skin-stellanova .wikiEditor-ui-toolbar .group .tool-select .options {
+.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select .label { color: var(--sn-ink); }
+.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select .options {
 	border-color: var(--sn-hairline);
 	background-color: var(--sn-paper);
 	box-shadow: var(--sn-lift-soft);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .group .tool-select .options .option {
+.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select .options .option {
 	color: var(--sn-ink);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .group .tool-select .options .option:hover {
+.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select .options .option:hover {
 	background-color: var(--sn-opt-hover-bg);
 }
 
 /* Booklet — pestaña "Ayuda" y panel de caracteres especiales. */
 /* Pestaña/índice ACTIVO: core lo pinta `#eaf3ff` + texto `#0645ad` (azul).
    A lavado nova + tinta nova (nada azul en el cromo del editor). */
-.skin-stellanova .wikiEditor-ui-toolbar .booklet > .index > .current {
+.skin-stellamereida .wikiEditor-ui-toolbar .booklet > .index > .current {
 	background-color: var(--sn-nova-wash);
 	color: var(--sn-nova);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .booklet > .index .wikiEditor-character-highlighted {
+.skin-stellamereida .wikiEditor-ui-toolbar .booklet > .index .wikiEditor-character-highlighted {
 	background-color: var(--sn-nova-wash);
 	color: var(--sn-ink);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .page-table td {
+.skin-stellamereida .wikiEditor-ui-toolbar .page-table td {
 	color: var(--sn-ink);
 	border-top-color: var(--sn-hairline-soft);
 }
@@ -215,7 +215,7 @@ form#editform {
    inline-flex y lo centramos. Color y borde siguen por token (= #222/#ccc del
    inspector, pero tematizables claro/oscuro).
 
-   Prefijamos con `.skin-stellanova` (la clase que MW añade al <body> con el
+   Prefijamos con `.skin-stellamereida` (la clase que MW añade al <body> con el
    skin activo) porque las reglas correspondientes upstream — height: 1em,
    font-size: 1.25em — viven en `jquery.wikiEditor.toolbar.less`, parte del
    módulo `ext.wikiEditor` (el grande, con JS). Ese módulo carga DESPUÉS que
@@ -223,8 +223,8 @@ form#editform {
    ganaba por orden de fuente. Subir un nivel de especificidad (+1 clase)
    nos hace ganar siempre sin depender del orden de carga. Mismo patrón si
    en el futuro otra extensión presenta el mismo síntoma: prefijar la regla
-   conflictiva con `.skin-stellanova`, no mover el hook entre módulos. */
-.skin-stellanova .wikiEditor-ui-toolbar .page-characters div span {
+   conflictiva con `.skin-stellamereida`, no mover el hook entre módulos. */
+.skin-stellamereida .wikiEditor-ui-toolbar .page-characters div span {
 	display: inline-flex; align-items: center; justify-content: center;
 	height: 2rem;
 	margin-left: .5ex; margin-top: .5ex;
@@ -233,11 +233,11 @@ form#editform {
 	border-radius: var(--sn-radius);
 	color: var(--sn-ink);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .page-characters div span:hover {
+.skin-stellamereida .wikiEditor-ui-toolbar .page-characters div span:hover {
 	background-color: var(--sn-sunk);
 	border-color: var(--sn-ink-faint);
 }
-.skin-stellanova .wikiEditor-ui-toolbar .page-characters div .wikiEditor-character-highlighted {
+.skin-stellamereida .wikiEditor-ui-toolbar .page-characters div .wikiEditor-character-highlighted {
 	background-color: var(--sn-nova-wash);
 	color: var(--sn-ink);
 }
@@ -288,7 +288,7 @@ form#editform {
 /* Textarea — venciendo a MediaWiki:Common.css.
  * Common.css trae `.mw-body #wpTextbox1 { background-color: rgb(132 150 117 / 8%) }`
  * con especificidad (1,1,0): pisaba al `#wpTextbox1` (1,0,0) de
- * stella-nova.css en modo oscuro y dejaba un tinte verdoso sobre el
+ * stellamereida.css en modo oscuro y dejaba un tinte verdoso sobre el
  * papel oscuro. Subimos especificidad agregando `.mw-body` al selector
  * y fijamos también el textarea ya wrapped por WikiEditor
  * (`.wikiEditor-ui .wikiEditor-ui-text textarea`). */
@@ -310,7 +310,7 @@ form#editform {
  * recalcula a nova sin tocar su CSS. Cubre claro (nova carmín) y oscuro
  * (nova coral) por igual. El botón Cancelar es `destructive`
  * (--sn-danger), no progressive → no se ve afectado. */
-.skin-stellanova .mw-editform {
+.skin-stellamereida .mw-editform {
 	--color-progressive:                    var(--sn-nova);
 	--color-progressive--hover:             color-mix(in oklab, var(--sn-nova) 80%, var(--sn-ink));
 	--color-progressive--active:            color-mix(in oklab, var(--sn-nova) 65%, var(--sn-ink));

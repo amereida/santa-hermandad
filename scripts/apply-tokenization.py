@@ -25,7 +25,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-# Path relativo al repo del skin (este script vive en skins/stella-nova/scripts/).
+# Path relativo al repo del skin (este script vive en skins/stellamereida/scripts/).
 SKIN_STYLES = Path(__file__).resolve().parent.parent / "resources" / "skinStyles"
 # Hojas reescritas a mano: no se tocan. OOUI salió de esta lista el 2026-05-23
 # (decisión del usuario: tratarla como snapshot tokenizado igual que el resto).

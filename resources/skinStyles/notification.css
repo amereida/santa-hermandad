@@ -1,5 +1,5 @@
 /* ============================================================
- * skinStyles/notification.css — Stella Nova
+ * skinStyles/notification.css — Stellamereida
  *
  * Tokeniza y REUBICA los avisos flotantes del CORE (mw.notify):
  * el "Se guardó la edición", "Página marcada para borrado", avisos de
@@ -10,7 +10,7 @@
  *   1. POSICIÓN. El core ancla `.mw-notification-area` arriba a la
  *      derecha (`position: absolute|fixed; top:0; right:0; width:20em`,
  *      ver resources/src/mediawiki.notification/{common,default}.less del
- *      core). En Stella Nova esa esquina la ocupa el `.sn-header` sticky
+ *      core). En Stellamereida esa esquina la ocupa el `.sn-header` sticky
  *      con la barra de acciones (editar, historial, menús). El toast la
  *      tapaba y, como cada `.mw-notification` lleva `pointer-events:auto`
  *      + `cursor:pointer` (un clic la cierra), los clics sobre la barra

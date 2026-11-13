@@ -1,6 +1,6 @@
-# Stella Nova — compatibilidad con extensiones
+# Stellamereida — compatibilidad con extensiones
 
-Stella Nova **absorbe** los estilos de las extensiones de MediaWiki en
+Stellamereida **absorbe** los estilos de las extensiones de MediaWiki en
 vez de pelearse con ellos. La extensión sigue actualizándose por su
 cuenta; solo cambia su apariencia. Sin parchear el código de la
 extensión, sin forkearla y sin `!important` regados.
@@ -17,7 +17,7 @@ cascada hace que las reglas del skin ganen sin necesidad de
 
 ```json
 "ResourceModuleSkinStyles": {
-  "stellanova": {
+  "stellamereida": {
     "+ext.smw.styles":        "resources/skinStyles/smw.css",
     "+ext.srf.formats.tagcloud": "resources/skinStyles/srf.css",
     …
@@ -158,14 +158,14 @@ sistema visual.)
 ## Detalle completo y trazabilidad
 
 > El proceso completo, mapas de equivalencias y trazabilidad de cada
-> hoja está en el [Plan de Migración Stella Nova](https://wiki.ead.pucv.cl/Stella_Nova).
+> hoja está en el [Plan de Migración Stellamereida](https://wiki.ead.pucv.cl/Stella_Nova).
 
 ## Casiopea-Con§tel (desarrollo propio)
 
 [`skinStyles/constel.css`](../resources/skinStyles/constel.css) sobre
 `ext.constel.map.styles`: las páginas Especial:Constelación y Especial:MiConstel
 marcan `<body class="constel-wide">` y aquí la hoja se ensancha a `--sn-shell`.
-Especial:Constelación además va a pantalla completa: fija `stellanova-fullscreen`
+Especial:Constelación además va a pantalla completa: fija `stellamereida-fullscreen`
 (lo mismo que `__PANTALLACOMPLETA__`) y marca `constel-full`; aquí el canvas
 pierde su padding, título e introducción quedan sólo para lectores de pantalla
 y la barra del mapa deja libre la esquina del isotipo.

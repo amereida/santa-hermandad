@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Componentes — Stella Nova v0.9.3</title>
+<title>Componentes — Stellamereida v0.9.3</title>
 <link rel="icon" href="assets/icons/casiopea-icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
-<link rel="stylesheet" href="assets/stella-nova.css">
+<link rel="stylesheet" href="assets/stellamereida.css">
 <link rel="stylesheet" href="assets/specimen.css">
 <!-- ── overrides ────────────────────────────────────────────────────────────
      El taller de diseño pega aquí redefiniciones de variables de diseño para proponer
@@ -52,7 +52,7 @@
 	<symbol id="sn-i-book-open" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
 </svg>
 <header class="spec-top">
-  <a class="spec-brand" href="index.html" aria-label="Stella Nova — Inicio">
+  <a class="spec-brand" href="index.html" aria-label="Stellamereida — Inicio">
     <svg class="spec-brand-icon" width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 148" fill="currentColor" aria-hidden="true" focusable="false">
 	<style>
 		.sn-i-line { stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: .45; }
@@ -69,7 +69,7 @@
 		</g>
 	</g>
 </svg>
-    <span class="spec-brand-name">Stella Nova</span>
+    <span class="spec-brand-name">Stellamereida</span>
     <span class="spec-brand-ver">v0.9.3</span>
   </a>
   <nav class="spec-nav" aria-label="Secciones del espécimen"><a href="index.html">Fundamentos</a><a href="components.html" aria-current="page">Componentes</a><a href="aplicados.html">Estilos aplicados</a></nav>
@@ -86,22 +86,21 @@
 <main class="spec-main">
 
 <section class="comp">
-  <h1 class="display">Stella Nova · componentes</h1>
+  <h1 class="display">Stellamereida · componentes</h1>
   <p class="lede">Espécimen de primitivos del skin. Cada bloque documenta los
   variables de diseño en juego y muestra el componente con texto simulado.</p>
 </section>
 
 <section class="comp">
   <h2>Colofón tipográfico</h2>
-  <p class="meta">Familia única IBM Plex, auto-alojada en
-  <code>assets/fonts/</code> (woff2, subsetting latin / latin-ext vía
-  <code>unicode-range</code>). Sin CDN, sin Google Fonts.</p>
+  <p class="meta">Avenida autoalojada: 24 WOFF2 estáticas, seis pesos,
+  redonda e itálica, normal y condensada. Código en monospace del sistema.</p>
   <div class="demo">
     <div class="colophon">
       <div class="colophon-row">
         <div class="colophon-name" style="font-family: var(--sn-font-text);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
-          <strong>IBM Plex Sans</strong> · variable, dos ejes wght 100–700 + wdth 75–100<br>
+          <strong>Avenida</strong> · estática, pesos 275, 400, 500, 600, 700 y 900<br>
           Variable <code>--sn-font-sans</code> (primitiva). Alias semánticos:
           <code>--sn-font-text</code> = cuerpo + UI + cabeceras,
           <code>--sn-font-display</code> = alias de text.
@@ -110,21 +109,15 @@
       <div class="colophon-row">
         <div class="colophon-name" style="font-family: var(--sn-font-serif);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
-          <strong>Roboto Serif</strong> · variable, cuatro ejes wght 100–900 + wdth 75–100 + opsz 8–60 + GRAD −50–100<br>
-          Variable <code>--sn-font-serif</code> (primitiva). Alias semántico:
-          <code>--sn-font-quote</code> = citas + <code>&lt;poem&gt;</code> por defecto.<br>
-          Activable como familia del cuerpo desde el menú del usuario
-          (<code>data-sn-family="serif"</code>): cuerpo + UI voltean a Serif y
-          citas/<code>&lt;poem&gt;</code> voltean a Sans. Comparte el rango de
-          ancho con el sans (wdth 75–100) → el cuerpo condensa igual.
-          Grado vía <code>--sn-serif-grade</code> (eje GRAD): 0 en claro, 30
-          en oscuro para compensar el aclaramiento óptico.
+          <strong>Avenida</strong> · citas y poemas<br>
+          <code>--sn-font-quote</code> conserva el alias de citas.
+          Ambos alias de familia usan Avenida; no hay ejes variables.
         </div>
       </div>
       <div class="colophon-row">
         <div class="colophon-name" style="font-family: var(--sn-font-mono);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
-          <strong>IBM Plex Mono</strong> · monospace técnico<br>
+          <strong>Monospace del sistema</strong> · monospace técnico<br>
           Variable <code>--sn-font-mono</code><br>
           Uso: código, valores numéricos, identificadores
         </div>
@@ -136,7 +129,7 @@
 <section class="comp">
   <h2>Cabeceras</h2>
   <p class="meta">Todas las cabeceras (H1–H6) en <code>--sn-font-text</code>
-  — IBM Plex Sans, familia única. Sus alturas de línea son múltiplos enteros
+  — Avenida, familia única. Sus alturas de línea son múltiplos enteros
   de <code>--sn-baseline</code> (la interlínea del cuerpo): H1/H2 ocupan
   2 baselines, H3–H6 uno. Escala: <code>--sn-fs-display</code>
   (1.5–2.0 rem) → <code>--sn-fs-base</code> (el cuerpo, en H5/H6, que nunca
@@ -406,25 +399,9 @@ de Valparaíso
   de v0.6.14). <code>font-stretch</code> hereda → en un <code>&lt;div&gt;</code>
   el ancho fluye a los párrafos internos.</p>
   <div class="spec-notes" style="border-left:3px solid var(--sn-nova);padding-left:1em">
-    <p><strong>⚠️ La escala declarada es más ancha que lo que las fuentes saben
-    renderizar.</strong> El navegador <strong>clampa en silencio</strong> al eje
-    <code>wdth</code> del <code>woff2</code>, y ese rango depende de la familia:</p>
-    <ul>
-      <li><strong>IBM Plex Sans</strong> (familia por defecto): <code>wdth</code>
-      <strong>75–100</strong>. Es la fuente entera —no tiene ancho expandido, no
-      es cosa del subset—. <code>fw-50/60/70</code> se ven todos como 75;
-      <code>fw-110</code>…<code>fw-150</code> se ven todos como 100.</li>
-      <li><strong>Roboto Serif</strong> (modo serif): nuestro <code>woff2</code>
-      va instanciado a <strong>62.5–100</strong>, aunque upstream trae 50–150
-      (se recortó en v0.2.4 para bajar la familia de ~1.6&nbsp;MB a ~0.9&nbsp;MB).
-      <code>fw-50/60</code> se ven como 62.5; <code>fw-110</code>…<code>fw-150</code>
-      como 100. Activar el tramo expandido exige reconstruir el
-      <code>woff2</code> sin recortar el eje.</li>
-    </ul>
-    <p><strong>La familia la elige el LECTOR</strong> (menú del skin, default
-    sans), no quien escribe. Así que un mismo <code>fw-130</code> puede clampar
-    para un lector y expandir para otro. Fuera de 75–100, <strong>fija la familia
-    en el elemento</strong>: <code>class="serif fw-130"</code>.</p>
+    <p>Avenida es estática: las clases <code>fw-*</code> se conservan por
+    compatibilidad, pero no interpolan su ancho. La variante condensada es
+    una familia separada: <code>Avenida Condensed</code>.</p>
   </div>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">&lt;span class="fw-100"&gt;Ancho normal&lt;/span&gt;
@@ -654,10 +631,7 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
   <h2>Cita y poema</h2>
   <p class="meta"><code>&lt;blockquote&gt;</code> y <code>&lt;poem&gt;</code>
   (extensión Poem) consumen <code>--sn-font-quote</code>, que por defecto
-  apunta a Roboto Serif (la serif del skin, variable en wght/wdth/opsz/GRAD). Si
-  el lector alterna la familia del cuerpo a serif desde el menú del
-  usuario, citas y poemas voltean a sans para mantener el contraste
-  editorial. El poema lleva
+  apunta a Avenida, igual que el cuerpo. El poema lleva
   <code>white-space: pre-wrap</code>, lo que conserva los espacios del
   wikitexto como materia significante (no son adorno: son la
   espacialidad del verso). Fragmento de la <em>Aventura de Amereida</em>
@@ -1637,7 +1611,7 @@ Archivo:C.jpg|Tercera obra
   <h2>Inventario de clases instrumentales</h2>
   <p class="meta">Clases que no describen contenido sino que <em>instrumentan</em>
   la maqueta: se escriben en el wikitexto o en una plantilla y el skin les da
-  comportamiento. Es la lista completa de lo que trae Stella Nova v0.9, con sus
+  comportamiento. Es la lista completa de lo que trae Stellamereida v0.9, con sus
   sinónimos en castellano cuando existen. El conjunto se mantiene chico a
   propósito; antes de pedir una clase nueva, revisar si alguna de estas sirve.
   Las que tienen demostración en este espécimen enlazan a su sección; las que
@@ -1868,7 +1842,7 @@ Archivo:C.jpg|Tercera obra
 <footer class="spec-foot">
   <p>
     Espécimen generado por <code>scripts/build-specimen.py</code> ·
-    Stella Nova v0.9.3 ·
+    Stellamereida v0.9.3 ·
     <a href="notes.md">notes.md</a> (notas del taller de diseño) ·
     <a href="https://wiki.ead.pucv.cl">wiki.ead.pucv.cl</a>
   </p>

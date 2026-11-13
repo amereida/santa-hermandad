@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Stella Nova — captura el snapshot de OOUI (tema wikimediaui) desde el
+# Stellamereida — captura el snapshot de OOUI (tema wikimediaui) desde el
 # wiki local y lo escribe como resources/skinStyles/oojs-ui.css con header
 # de atribución. El archivo resultante luego se tokeniza con
 # scripts/apply-tokenization.py (las 3 pasadas: hex, codex-vars, medidas).
@@ -28,12 +28,12 @@ MODULES = [
 ]
 
 HEADER_TPL = """/* ============================================================
- * skinStyles/oojs-ui.css — Stella Nova
+ * skinStyles/oojs-ui.css — Stellamereida
  *
  * Snapshot inicial de OOUI (tema wikimediaui), versión {version},
  * licencia upstream: MIT. Capturado el {today} desde
  * w/resources/lib/ooui/ para absorber los estilos dentro del sistema
- * visual de Stella Nova.
+ * visual de Stellamereida.
  *
  * OOUI es la librería de widgets de MediaWiki (botones, campos,
  * casillas, desplegables, diálogos). La usan el editor, Preferencias,

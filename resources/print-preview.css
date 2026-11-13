@@ -1,4 +1,4 @@
-/* Stella Nova — cromo en PANTALLA de la previsualización de impresión paginada.
+/* Stellamereida — cromo en PANTALLA de la previsualización de impresión paginada.
  * Solo presentación del overlay (scrim, barra, sombra de las hojas). La
  * maqueta de las páginas y sus cabeceras/pies los genera paged.js a partir del
  * CSS que print-preview.js le pasa como cadena. Al imprimir, una hoja

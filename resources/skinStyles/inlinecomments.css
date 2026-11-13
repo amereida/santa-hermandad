@@ -1,8 +1,8 @@
 /* ============================================================
- * skinStyles/inlinecomments.css — Stella Nova
+ * skinStyles/inlinecomments.css — Stellamereida
  *
  * Homologación de la extensión InlineComments (GPL-2.0-or-later) al lenguaje
- * visual de Stella Nova. Cubre los TRES módulos de estilo de la extensión, todos
+ * visual de Stellamereida. Cubre los TRES módulos de estilo de la extensión, todos
  * enrutados a este archivo desde skin.json con prefijo `+` (se añaden DESPUÉS del
  * CSS original → ganan por orden a igual especificidad):
  *   +ext.inlineComments.sidenotes.styles   (sidenotes.css)
@@ -22,7 +22,7 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 /* ─────────────────────── Estructura: notas como POPOVER ───────────────────────
    InlineComments envuelve TODO el contenido en #mw-inlinecomments-precontainer,
    le resta ancho por JS y aloja los asides `position:absolute; right:1px` en un
-   canalón derecho (offsetParent = .sn-paper). En Stella Nova NO queremos canalón
+   canalón derecho (offsetParent = .sn-paper). En Stellamereida NO queremos canalón
    permanente: las notas van OCULTAS y emergen como popover pegado al borde
    derecho de la PANTALLA SÓLO la nota elegida. La única afordancia en reposo es
    la marca carmín del texto. La revelación se MONTA en el estado nativo de la

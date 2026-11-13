@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Stella Nova — generador del espécimen gráfico.
+# Stellamereida — generador del espécimen gráfico.
 #
 # Lee resources/tokens.css y produce un mini-sitio estático autocontenido en
 # docs/specimen/ (más un zip versionado para enviar al taller de diseño).
@@ -299,16 +299,16 @@ def page_shell(title, body, version, current_page):
             for href, label in APLICADOS
             for cur in [' aria-current="page"' if href == current_page else '']
         ) + '</nav>'
-    return f"""<!DOCTYPE html>
+    html = f"""<!DOCTYPE html>
 <html lang="es" data-sn-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)} — Stella Nova v{esc(version)}</title>
+<title>{esc(title)} — Stellamereida v{esc(version)}</title>
 <link rel="icon" href="assets/icons/casiopea-icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
-<link rel="stylesheet" href="assets/stella-nova.css">
+<link rel="stylesheet" href="assets/stellamereida.css">
 <link rel="stylesheet" href="assets/specimen.css">
 <!-- ── overrides ────────────────────────────────────────────────────────────
      El taller de diseño pega aquí redefiniciones de variables de diseño para proponer
@@ -322,9 +322,9 @@ def page_shell(title, body, version, current_page):
 <body class="spec">
 {icons_sprite}
 <header class="spec-top">
-  <a class="spec-brand" href="index.html" aria-label="Stella Nova — Inicio">
+  <a class="spec-brand" href="index.html" aria-label="Stellamereida — Inicio">
     {brand_icon}
-    <span class="spec-brand-name">Stella Nova</span>
+    <span class="spec-brand-name">Stellamereida</span>
     <span class="spec-brand-ver">v{esc(version)}</span>
   </a>
   <nav class="spec-nav" aria-label="Secciones del espécimen">{nav}</nav>
@@ -344,7 +344,7 @@ def page_shell(title, body, version, current_page):
 <footer class="spec-foot">
   <p>
     Espécimen generado por <code>scripts/build-specimen.py</code> ·
-    Stella Nova v{esc(version)} ·
+    Stellamereida v{esc(version)} ·
     <a href="notes.md">notes.md</a> (notas del taller de diseño) ·
     <a href="https://wiki.ead.pucv.cl">wiki.ead.pucv.cl</a>
   </p>
@@ -374,6 +374,7 @@ def page_shell(title, body, version, current_page):
 </body>
 </html>
 """
+    return "\n".join(line.rstrip() for line in html.splitlines()) + "\n"
 
 
 # ── page bodies ────────────────────────────────────────────────────────────
@@ -429,7 +430,7 @@ def body_index(tokens):
     sections = group_by_section(tokens)
     rendered = []
     rendered.append("""<section class="intro">
-  <h1 class="display">Stella Nova · fundamentos</h1>
+  <h1 class="display">Stellamereida · fundamentos</h1>
   <p class="lede">Variables de diseño (<em>tokens</em>) del sistema visual: color,
   tipografía, escala, forma, movimiento. Cada valor proviene de
   <code>resources/tokens.css</code> y se refleja aquí en vivo.</p>
@@ -529,22 +530,21 @@ def body_components():
     # el componente con texto simulado (lorem ipsum) o etiquetas funcionales.
     return r"""
 <section class="comp">
-  <h1 class="display">Stella Nova · componentes</h1>
+  <h1 class="display">Stellamereida · componentes</h1>
   <p class="lede">Espécimen de primitivos del skin. Cada bloque documenta los
   variables de diseño en juego y muestra el componente con texto simulado.</p>
 </section>
 
 <section class="comp">
   <h2>Colofón tipográfico</h2>
-  <p class="meta">Familia única IBM Plex, auto-alojada en
-  <code>assets/fonts/</code> (woff2, subsetting latin / latin-ext vía
-  <code>unicode-range</code>). Sin CDN, sin Google Fonts.</p>
+  <p class="meta">Avenida autoalojada: 24 WOFF2 estáticas, seis pesos,
+  redonda e itálica, normal y condensada. Código en monospace del sistema.</p>
   <div class="demo">
     <div class="colophon">
       <div class="colophon-row">
         <div class="colophon-name" style="font-family: var(--sn-font-text);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
-          <strong>IBM Plex Sans</strong> · variable, dos ejes wght 100–700 + wdth 75–100<br>
+          <strong>Avenida</strong> · estática, pesos 275, 400, 500, 600, 700 y 900<br>
           Variable <code>--sn-font-sans</code> (primitiva). Alias semánticos:
           <code>--sn-font-text</code> = cuerpo + UI + cabeceras,
           <code>--sn-font-display</code> = alias de text.
@@ -553,21 +553,15 @@ def body_components():
       <div class="colophon-row">
         <div class="colophon-name" style="font-family: var(--sn-font-serif);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
-          <strong>Roboto Serif</strong> · variable, cuatro ejes wght 100–900 + wdth 75–100 + opsz 8–60 + GRAD −50–100<br>
-          Variable <code>--sn-font-serif</code> (primitiva). Alias semántico:
-          <code>--sn-font-quote</code> = citas + <code>&lt;poem&gt;</code> por defecto.<br>
-          Activable como familia del cuerpo desde el menú del usuario
-          (<code>data-sn-family="serif"</code>): cuerpo + UI voltean a Serif y
-          citas/<code>&lt;poem&gt;</code> voltean a Sans. Comparte el rango de
-          ancho con el sans (wdth 75–100) → el cuerpo condensa igual.
-          Grado vía <code>--sn-serif-grade</code> (eje GRAD): 0 en claro, 30
-          en oscuro para compensar el aclaramiento óptico.
+          <strong>Avenida</strong> · citas y poemas<br>
+          <code>--sn-font-quote</code> conserva el alias de citas.
+          Ambos alias de familia usan Avenida; no hay ejes variables.
         </div>
       </div>
       <div class="colophon-row">
         <div class="colophon-name" style="font-family: var(--sn-font-mono);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
-          <strong>IBM Plex Mono</strong> · monospace técnico<br>
+          <strong>Monospace del sistema</strong> · monospace técnico<br>
           Variable <code>--sn-font-mono</code><br>
           Uso: código, valores numéricos, identificadores
         </div>
@@ -579,7 +573,7 @@ def body_components():
 <section class="comp">
   <h2>Cabeceras</h2>
   <p class="meta">Todas las cabeceras (H1–H6) en <code>--sn-font-text</code>
-  — IBM Plex Sans, familia única. Sus alturas de línea son múltiplos enteros
+  — Avenida, familia única. Sus alturas de línea son múltiplos enteros
   de <code>--sn-baseline</code> (la interlínea del cuerpo): H1/H2 ocupan
   2 baselines, H3–H6 uno. Escala: <code>--sn-fs-display</code>
   (1.5–2.0 rem) → <code>--sn-fs-base</code> (el cuerpo, en H5/H6, que nunca
@@ -849,25 +843,9 @@ de Valparaíso
   de v0.6.14). <code>font-stretch</code> hereda → en un <code>&lt;div&gt;</code>
   el ancho fluye a los párrafos internos.</p>
   <div class="spec-notes" style="border-left:3px solid var(--sn-nova);padding-left:1em">
-    <p><strong>⚠️ La escala declarada es más ancha que lo que las fuentes saben
-    renderizar.</strong> El navegador <strong>clampa en silencio</strong> al eje
-    <code>wdth</code> del <code>woff2</code>, y ese rango depende de la familia:</p>
-    <ul>
-      <li><strong>IBM Plex Sans</strong> (familia por defecto): <code>wdth</code>
-      <strong>75–100</strong>. Es la fuente entera —no tiene ancho expandido, no
-      es cosa del subset—. <code>fw-50/60/70</code> se ven todos como 75;
-      <code>fw-110</code>…<code>fw-150</code> se ven todos como 100.</li>
-      <li><strong>Roboto Serif</strong> (modo serif): nuestro <code>woff2</code>
-      va instanciado a <strong>62.5–100</strong>, aunque upstream trae 50–150
-      (se recortó en v0.2.4 para bajar la familia de ~1.6&nbsp;MB a ~0.9&nbsp;MB).
-      <code>fw-50/60</code> se ven como 62.5; <code>fw-110</code>…<code>fw-150</code>
-      como 100. Activar el tramo expandido exige reconstruir el
-      <code>woff2</code> sin recortar el eje.</li>
-    </ul>
-    <p><strong>La familia la elige el LECTOR</strong> (menú del skin, default
-    sans), no quien escribe. Así que un mismo <code>fw-130</code> puede clampar
-    para un lector y expandir para otro. Fuera de 75–100, <strong>fija la familia
-    en el elemento</strong>: <code>class="serif fw-130"</code>.</p>
+    <p>Avenida es estática: las clases <code>fw-*</code> se conservan por
+    compatibilidad, pero no interpolan su ancho. La variante condensada es
+    una familia separada: <code>Avenida Condensed</code>.</p>
   </div>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">&lt;span class="fw-100"&gt;Ancho normal&lt;/span&gt;
@@ -1097,10 +1075,7 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
   <h2>Cita y poema</h2>
   <p class="meta"><code>&lt;blockquote&gt;</code> y <code>&lt;poem&gt;</code>
   (extensión Poem) consumen <code>--sn-font-quote</code>, que por defecto
-  apunta a Roboto Serif (la serif del skin, variable en wght/wdth/opsz/GRAD). Si
-  el lector alterna la familia del cuerpo a serif desde el menú del
-  usuario, citas y poemas voltean a sans para mantener el contraste
-  editorial. El poema lleva
+  apunta a Avenida, igual que el cuerpo. El poema lleva
   <code>white-space: pre-wrap</code>, lo que conserva los espacios del
   wikitexto como materia significante (no son adorno: son la
   espacialidad del verso). Fragmento de la <em>Aventura de Amereida</em>
@@ -2080,7 +2055,7 @@ Archivo:C.jpg|Tercera obra
   <h2>Inventario de clases instrumentales</h2>
   <p class="meta">Clases que no describen contenido sino que <em>instrumentan</em>
   la maqueta: se escriben en el wikitexto o en una plantilla y el skin les da
-  comportamiento. Es la lista completa de lo que trae Stella Nova v0.9, con sus
+  comportamiento. Es la lista completa de lo que trae Stellamereida v0.9, con sus
   sinónimos en castellano cuando existen. El conjunto se mantiene chico a
   propósito; antes de pedir una clase nueva, revisar si alguna de estas sirve.
   Las que tienen demostración en este espécimen enlazan a su sección; las que
@@ -2378,7 +2353,7 @@ CHROME_FOOT = r"""      </article>
 """
 
 TIPO_INNER = r"""        <aside class="sn-notice" role="note">
-          <div class="sn-notice-body"><strong>Página tipo.</strong> Simulacro del marco completo de Stella Nova con texto de relleno. Los estilos aplicados por categoría están en las subpáginas: <a href="aplicados-tipografia.html">tipografía</a> · <a href="aplicados-grilla.html">grilla</a> · <a href="aplicados-tablas.html">tablas</a> · <a href="aplicados-imagenes.html">imágenes</a> · <a href="aplicados-diagramaciones.html">diagramaciones</a>.</div>
+          <div class="sn-notice-body"><strong>Página tipo.</strong> Simulacro del marco completo de Stellamereida con texto de relleno. Los estilos aplicados por categoría están en las subpáginas: <a href="aplicados-tipografia.html">tipografía</a> · <a href="aplicados-grilla.html">grilla</a> · <a href="aplicados-tablas.html">tablas</a> · <a href="aplicados-imagenes.html">imágenes</a> · <a href="aplicados-diagramaciones.html">diagramaciones</a>.</div>
           <button type="button" class="sn-notice-x" aria-label="Cerrar">
             <svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
           </button>
@@ -2759,7 +2734,7 @@ def body_aplicados_diagramaciones():
 
 
 # ── specimen.css (scaffolding propio del espécimen) ────────────────────────
-SPECIMEN_CSS = r"""/* specimen.css — andamio del espécimen Stella Nova.
+SPECIMEN_CSS = r"""/* specimen.css — andamio del espécimen Stellamereida.
    Sólo lo necesario para presentar los componentes en grilla y para la
    barra de control superior. NO redefine tokens — los usa. */
 
@@ -3065,8 +3040,8 @@ body.spec { display: flex; flex-direction: column; min-height: 100vh; }
    familia .fondo-* del skin, documentada en "Bandas de fondo".) */
 
 /* Badges: .sn-badge (+ variantes -nova/-ok/-warn/-danger) ahora es componente
-   REAL del skin (resources/stella-nova.css), no specimen-only. El especimen
-   carga stella-nova.css → los ejemplos se pintan con el componente shippeado;
+   REAL del skin (resources/stellamereida.css), no specimen-only. El especimen
+   carga stellamereida.css → los ejemplos se pintan con el componente shippeado;
    no se redefine aquí para no duplicar/divergir. */
 .sn-pill { display: inline-flex; align-items: center; padding: 2px var(--sn-s-3);
            font-size: var(--sn-fs-xs); background: var(--sn-sunk);
@@ -3092,7 +3067,7 @@ body.spec { display: flex; flex-direction: column; min-height: 100vh; }
 
 /* Tablas: SIN andamio propio del espécimen. El estilo real de
    `.wikitable` / `.smwtable` / `.broadtable` y de las fichas
-   `table.plantilla` vive en stella-nova.css (que el espécimen carga) y se
+   `table.plantilla` vive en stellamereida.css (que el espécimen carga) y se
    aplica dentro de `.sn-body`. Una regla `.wikitable` local aquí solo
    introduciría inexactitudes (p.ej. filas alternadas, que el skin NO usa:
    su diseño son filetes horizontales uniformes, cabecera transparente). */
@@ -3131,7 +3106,7 @@ body.spec { display: flex; flex-direction: column; min-height: 100vh; }
 .spec-subnav a:hover { color: var(--sn-ink); }
 .spec-subnav a[aria-current="page"] { color: var(--sn-ink); background: var(--sn-paper); }
 /* El CONTENIDO del paper (h1/h2/párrafos/enlaces/cita/aviso .sn-notice) NO se
-   re-estila aquí: lo pinta la CSS REAL del skin (stella-nova.css, que el
+   re-estila aquí: lo pinta la CSS REAL del skin (stellamereida.css, que el
    espécimen carga). El contenido del layout vive dentro de `.sn-body`, así que
    hereda tipografía, jerarquía de cabeceras, enlaces, blockquote y el aviso
    `.sn-notice` tal cual el skin — sin CSS custom que diverja. Antes esta zona
@@ -3146,7 +3121,7 @@ code { background: var(--sn-sunk); padding: 1px 4px; border-radius: 2px;
        font-size: 0.9em; }
 pre code { background: transparent; padding: 0; }
 
-/* `.poem` ya está estilada por stella-nova.css (familia display,
+/* `.poem` ya está estilada por stellamereida.css (familia display,
    white-space: pre-wrap, `.poem br { display: none }`). No redefinir aquí. */
 
 /* — Bloque "uso": código wikitexto a la izquierda, render a la derecha
@@ -3217,7 +3192,7 @@ pre code { background: transparent; padding: 0; }
   color: var(--sn-ink-soft);
 }
 
-/* Iconbutton mínimo (el stella-nova.css real lo cubre, pero el demo aislado
+/* Iconbutton mínimo (el stellamereida.css real lo cubre, pero el demo aislado
    no siempre está dentro de los selectores anclados al chrome) */
 .sn-iconbtn { display: inline-grid; place-items: center;
               width: var(--sn-ctl); height: var(--sn-ctl);
@@ -3233,8 +3208,8 @@ pre code { background: transparent; padding: 0; }
 # YA NO SE REPLICAN AQUÍ. Desde v0.8.0 las clases utilitarias de contenido
 # (jumbo/lg/sm/xs · serif/sans/mono · uppercase/italic/bold ·
 # left/center/right/justify · nova/ok/warn/danger) las trae el propio skin, en
-# resources/stella-nova.css, que el espécimen enlaza tal cual desde
-# assets/stella-nova.css. Una sola fuente: lo que se ve en el espécimen es
+# resources/stellamereida.css, que el espécimen enlaza tal cual desde
+# assets/stellamereida.css. Una sola fuente: lo que se ve en el espécimen es
 # literalmente el CSS que corre en la wiki. Antes había un espejo aquí y
 # divergió (sm/xs perdieron el factor --sn-font-scale).
 HELPERS_CSS = ""
@@ -3365,7 +3340,7 @@ CONTENT_CSS = r"""
 # sola vez y sobrevive a todos los rebuilds, así que un `v{version}` estampado
 # al nacer envejece mal (llegó a decir v0.0.4 con el skin en 0.8.0). La versión
 # vigente está en el README y en cada página del espécimen.
-NOTES_TEMPLATE = """# Notas de diseño — Stella Nova
+NOTES_TEMPLATE = """# Notas de diseño — Stellamereida
 
 Este archivo sobrevive a los rebuilds del espécimen. Anotá aquí decisiones,
 preguntas y propuestas. Los cambios de variables de diseño van en el bloque
@@ -3387,10 +3362,10 @@ preguntas y propuestas. Los cambios de variables de diseño van en el bloque
 - (vacío)
 """
 
-README_TEMPLATE = """# Stella Nova — espécimen gráfico v{version}
+README_TEMPLATE = """# Stellamereida — espécimen gráfico v{version}
 
 Mini-sitio estático con todas las variables de diseño, los componentes y una diagramación simulada del
-skin **Stella Nova** para iteración con el taller de diseño.
+skin **Stellamereida** para iteración con el taller de diseño.
 
 ## Cómo verlo
 
@@ -3421,7 +3396,7 @@ No necesita servidor. Las fuentes y CSS van inlinados en `assets/`.
 ## Cómo actualizar el espécimen
 
 Cuando el skin cambia (nuevos tokens, componentes o ajustes de `tokens.css` /
-`stella-nova.css`), el espécimen se regenera con un solo comando desde la raíz
+`stellamereida.css`), el espécimen se regenera con un solo comando desde la raíz
 del repo del skin:
 
 ```bash
@@ -3429,7 +3404,7 @@ python3 scripts/build-specimen.py
 ```
 
 El script borra y recompone `docs/specimen/` y empaqueta un zip nuevo
-`stella-nova-specimen-v<version>.zip`. **`notes.md` se preserva** entre
+`stellamereida-specimen-v<version>.zip`. **`notes.md` se preserva** entre
 rebuilds, así que las anotaciones del taller de diseño no se pierden. Las
 `overrides` que hayas escrito en los HTML **sí se pierden** (los HTML se
 reescriben); copialas a `notes.md` o a un parche antes de regenerar si querés
@@ -3440,7 +3415,7 @@ Flujo típico de iteración:
 1. Diseñador recibe el zip, anota en `notes.md` y propone cambios en `overrides`.
 2. Devuelve el zip.
 3. Mantenedor traslada los cambios validados a `resources/tokens.css` /
-   `resources/stella-nova.css` del skin.
+   `resources/stellamereida.css` del skin.
 4. Mantenedor corre `python3 scripts/build-specimen.py` para regenerar el
    espécimen sincronizado y manda el nuevo zip.
 
@@ -3474,7 +3449,7 @@ def clean():
 
 def copy_assets():
     # CSS
-    for f in ("tokens.css", "fonts.css", "stella-nova.css"):
+    for f in ("tokens.css", "fonts.css", "stellamereida.css"):
         shutil.copy2(RESOURCES / f, ASSETS / f)
     # Fonts dir
     shutil.copytree(RESOURCES / "fonts", ASSETS / "fonts", dirs_exist_ok=True)
@@ -3526,14 +3501,14 @@ def write_readme(version):
 
 
 def make_zip(version):
-    zip_path = OUT_DIR / f"stella-nova-specimen-v{version}.zip"
+    zip_path = OUT_DIR / f"stellamereida-specimen-v{version}.zip"
     if zip_path.exists():
         zip_path.unlink()
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         for path in sorted(OUT_DIR.rglob("*")):
             if path.is_dir() or path.suffix == ".zip":
                 continue
-            arcname = Path("stella-nova-specimen") / path.relative_to(OUT_DIR)
+            arcname = Path("stellamereida-specimen") / path.relative_to(OUT_DIR)
             z.write(path, arcname)
     return zip_path
 
@@ -3541,7 +3516,7 @@ def make_zip(version):
 def main():
     skin_json = json.loads((SKIN_ROOT / "skin.json").read_text())
     version = skin_json.get("version", "0.0.0")
-    print(f"Stella Nova specimen v{version}")
+    print(f"Stellamereida specimen v{version}")
     print(f"  → output: {OUT_DIR}")
     clean()
     copy_assets()

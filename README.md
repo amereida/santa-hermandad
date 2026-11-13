@@ -1,4 +1,4 @@
-# Stella Nova
+# Stellamereida
 
 Skin para MediaWiki, especialmente diseñado y desarrollado para la wiki
 de la e[ad] PUCV desde cero (con `SkinMustache` + `skin.json`).
@@ -35,22 +35,33 @@ revolución científica.
 ## Instalación
 
 ```php
-wfLoadSkin( 'StellaNova' );
+wfLoadSkin( 'Stellamereida' );
 // opcional durante desarrollo:
-// $wgDefaultSkin = 'stellanova';
+// $wgDefaultSkin = 'stellamereida';
 ```
 
-Probar sin cambiar el default: añadir `?useskin=stellanova` a cualquier
+Probar sin cambiar el default: añadir `?useskin=stellamereida` a cualquier
 URL.
 
 **Nombre de carpeta:** `wfLoadSkin( 'X' )` carga `skins/X/skin.json`, así
 que el argumento debe coincidir con la carpeta. Las **URLs de los assets
 (fuentes incluidas) se calculan de la carpeta real** donde el wiki sirve el
 skin (`Hooks::onResourceLoaderRegisterModules`), no de un nombre fijo: por
-eso da igual clonar en `StellaNova`, `stella-nova` o vía symlink — basta que
+eso da igual clonar en `Stellamereida`, `stellamereida` o vía symlink — basta que
 el `wfLoadSkin` apunte a esa carpeta y los woff2 resuelven solos. (Antes,
 `remoteSkinPath` estaba hardcodeado y las fuentes daban 404 si la carpeta no
-se llamaba exactamente `StellaNova`.)
+se llamaba exactamente `Stellamereida`.)
+
+## Desarrollo local
+
+El checkout principal está en `~/Sites/casiopea/skins/stellamereida/`.
+`~/Sites/casiopea/w/skins/stellamereida` enlaza a ese directorio. Los worktrees
+para tareas van fuera de `skins/`; no deben quedar como destino permanente
+de la wiki. Las fuentes del skin viven en `resources/fonts/Avenida/`.
+
+Los estilos específicos de la portada se editan en la wiki local:
+`Plantilla:Ciudad Abierta/estilos.css`, cargada mediante TemplateStyles desde
+`Ciudad Abierta`. No añadir reglas `.cca-*` del contenido al CSS del skin.
 
 ## Logo / isotipo
 
@@ -58,8 +69,8 @@ El skin muestra **dos** assets de marca en la cabecera:
 
 | Asset | Config | Bundle por defecto | Uso |
 |---|---|---|---|
-| **Wordmark** (logotipo + constelación) | `$wgStellaNovaIsotypePath` | `resources/casiopea.svg` | Cabecera en viewport normal |
-| **Glifo compacto** (cuadrado, sin texto) | `$wgStellaNovaIconPath` | `resources/casiopea-icon.svg` | Viewport estrecho + barra de pantalla completa |
+| **Wordmark** (logotipo + constelación) | `$wgStellamereidaIsotypePath` | `resources/casiopea.svg` | Cabecera en viewport normal |
+| **Glifo compacto** (cuadrado, sin texto) | `$wgStellamereidaIconPath` | `resources/casiopea-icon.svg` | Viewport estrecho + barra de pantalla completa |
 
 A diferencia del `<img>` de `$wgLogos` (que es opaco al CSS y no se puede
 recolorear), el skin **lee el SVG del disco y lo incrusta *inline*** en el
@@ -69,11 +80,11 @@ archivos. Por eso el logo se configura con una **ruta de sistema de archivos**
 
 ### Usar tu propio logo
 
-En `LocalSettings.php`, después de `wfLoadSkin( 'StellaNova' )`:
+En `LocalSettings.php`, después de `wfLoadSkin( 'Stellamereida' )`:
 
 ```php
-$wgStellaNovaIsotypePath = '/ruta/absoluta/en/el/servidor/mi-logo.svg';
-$wgStellaNovaIconPath    = '/ruta/absoluta/en/el/servidor/mi-icono.svg';
+$wgStellamereidaIsotypePath = '/ruta/absoluta/en/el/servidor/mi-logo.svg';
+$wgStellamereidaIconPath    = '/ruta/absoluta/en/el/servidor/mi-icono.svg';
 ```
 
 Si no se definen (o el archivo no es legible), el skin usa el bundle de
@@ -84,7 +95,7 @@ cada `git pull` / actualización. Ponlo en una ubicación estable servida por el
 mismo host y a prueba de upgrades — la convención MediaWiki es bajo
 `$IP/images/` (p. ej. `images/branding/mi-logo.svg`). Con `$IP` = raíz de tu
 instalación (`.../w`), la config quedaría
-`$wgStellaNovaIsotypePath = "$IP/images/branding/mi-logo.svg";`.
+`$wgStellamereidaIsotypePath = "$IP/images/branding/mi-logo.svg";`.
 
 ### Cómo construir un buen SVG claro-oscuro
 
@@ -136,7 +147,7 @@ Dos slots del chrome se editan **como páginas de la wiki**, no en código: el
 **aviso** de cabecera (`Stella-Nova:Aviso`) y el **pie** institucional
 (`Stella-Nova:Pie`). El skin lee cada página, y si tiene contenido lo inyecta en
 su slot; si está **vacía o no existe**, el slot no se muestra
-(`SkinStellaNova::resolveFragment`).
+(`SkinStellamereida::resolveFragment`).
 
 > Hubo un tercer slot, `Stella-Nova:Barra lateral`, retirado en la v0.8.0: el
 > skin lo resolvía en cada request y la plantilla nunca lo dibujaba. La
@@ -218,7 +229,7 @@ escribir su texto; retirarlo = dejar la página en blanco.
 
 ## Fundamentos y enfoque
 
-Stella Nova sigue el camino oficial de MediaWiki para skins modernos:
+Stellamereida sigue el camino oficial de MediaWiki para skins modernos:
 **`SkinMustache` + `skin.json`**, separando datos (PHP) de presentación
 (Mustache + CSS) y declarando todo en JSON.
 
@@ -226,11 +237,11 @@ Stella Nova sigue el camino oficial de MediaWiki para skins modernos:
   `ResourceModuleSkinStyles` (estilos para extensiones), los `Hooks`, los
   `MessagesDirs`. **No hay archivo de bootstrap PHP** que llame a
   `wfLoadSkin`. La única salvedad: los `ResourceModules` del skin
-  (`skins.stellanova.styles` / `.scripts`) se registran en PHP
+  (`skins.stellamereida.styles` / `.scripts`) se registran en PHP
   (`Hooks::onResourceLoaderRegisterModules`) en vez de declararse aquí, para
   calcular su `remoteSkinPath` de la carpeta real y que las fuentes resuelvan
   sin importar cómo se llame el directorio al clonar (ver *Instalación*).
-- **[`includes/SkinStellaNova.php`](includes/SkinStellaNova.php)**
+- **[`includes/SkinStellamereida.php`](includes/SkinStellamereida.php)**
   extiende `SkinMustache`. Es la **única** clase PHP del skin (aparte
   de los hooks): el resto del trabajo lo hace la plantilla. Su única
   responsabilidad es emitir las *data keys* propias que el `.mustache`
@@ -250,7 +261,7 @@ Stella Nova sigue el camino oficial de MediaWiki para skins modernos:
   de diseño con *custom properties* (`--sn-*`): paleta, escala
   tipográfica, ritmo vertical (*baseline grid*), espacios, sombras,
   movimiento. Light/dark se voltea solo cambiando un puñado de tokens.
-- **[`resources/stella-nova.css`](resources/stella-nova.css)** consume
+- **[`resources/stellamereida.css`](resources/stellamereida.css)** consume
   los tokens para el layout y los componentes. Sin Bootstrap, sin
   framework — CSS moderno (Grid, Flexbox, container queries puntuales,
   `:has()`, `color-mix()`).
@@ -262,8 +273,8 @@ Stella Nova sigue el camino oficial de MediaWiki para skins modernos:
 
 Si vienes a tocar el skin por primera vez, conviene leerlo en este
 orden: `skin.json` (qué declara) → `skin.mustache` (qué emite) →
-`tokens.css` (qué variables hay) → `stella-nova.css` (cómo se aplica).
-`SkinStellaNova.php` solo si necesitas un dato nuevo en la plantilla.
+`tokens.css` (qué variables hay) → `stellamereida.css` (cómo se aplica).
+`SkinStellamereida.php` solo si necesitas un dato nuevo en la plantilla.
 
 ## Documentación
 
@@ -280,7 +291,7 @@ orden: `skin.json` (qué declara) → `skin.mustache` (qué emite) →
 - **[`docs/DISENO.md`](docs/DISENO.md)** — para diseñadoras y
   diseñadores: dónde tocar cada cosa (tabla), cómo iterar sin pelear
   con la caché de ResourceLoader, tipografía/íconos/color, y el
-  espécimen gráfico ([en línea](https://hspencer.github.io/stella-nova/specimen/)
+  espécimen gráfico ([en línea](https://hspencer.github.io/stellamereida/specimen/)
   o local en [`docs/specimen/`](docs/specimen/)) para iterar el
   sistema visual sin levantar la wiki.
 - **[`docs/EXTENSIONES.md`](docs/EXTENSIONES.md)** — compatibilidad
@@ -293,7 +304,7 @@ orden: `skin.json` (qué declara) → `skin.mustache` (qué emite) →
   (`__PANTALLACOMPLETA__`) y clases CSS opt-in disponibles desde
   wikitexto (`full-width`, `fondo-*`, `grilla` + `cols-N`, `plantilla`,
   `img-circle`, `wiki-btn`, `fw-*`, `noprint`, `sn-notice`).
-- **[`specs/stella-nova.allium`](specs/stella-nova.allium)** —
+- **[`specs/stellamereida.allium`](specs/stellamereida.allium)** —
   especificación de comportamiento (Allium): resolución de
   preferencias, chrome administrable desde el namespace `Stella-Nova`,
   modo pantalla completa, identidad tri-estado (anónimo / cuenta

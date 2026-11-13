@@ -1,0 +1,3428 @@
+/* Stellamereida — layout y componentes.
+ *
+ * "Página de papel": una hoja cálida (la-sn-paper) flota sobre el campo
+ * gris ahuesado (el atelier). El contenido es el protagonista; el chrome
+ * se retira a un filete. Mobile-first. Tokens en tokens.css; tipos en
+ * fonts.css. No reestructura el DOM de extensiones (ver skinStyles).
+ */
+
+/* ───────────────────────── Base ───────────────────────── */
+html { box-sizing: border-box; -webkit-text-size-adjust: 100%; }
+/* La cabecera es `position: sticky; top: 0`, así que al saltar a un ancla
+   (clic en la tabla de contenidos, #target en la URL) el encabezado destino
+   quedaba tapado por la barra. `scroll-padding-top` retrae el punto de anclaje
+   del scroll el alto de la barra + un respiro, así el encabezado aterriza justo
+   debajo. Una sola declaración cubre TODO salto de scroll (TOC, :target,
+   anclas de Especial:). */
+html { scroll-padding-top: calc(var(--sn-header-h) + var(--sn-s-3)); }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+	margin: 0;
+	font-family: var(--sn-font-text);
+	font-size: var(--sn-fs-base);
+	font-weight: 400;
+	line-height: var(--sn-leading);
+	color: var(--sn-ink);
+	background-color: var(--sn-field);
+	/* Grano de papel: ruido fractal SVG a muy baja opacidad, solo en el
+	   campo. Da atmósfera sin coste de imagen ni daño al contraste. */
+	background-image:
+		radial-gradient(circle at 15% 0%, rgba(255,255,255,.5), transparent 55%),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+	background-blend-mode: soft-light;
+	background-attachment: fixed;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-feature-settings: "kern", "liga", "calt";
+}
+body::before { /* fija la opacidad del grano vía token sin tocar el bg */
+	content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+	background: var(--sn-field); opacity: calc(1 - var(--sn-field-grain) * 6);
+	mix-blend-mode: normal;
+}
+
+a { color: var(--sn-link); text-underline-offset: .14em;
+	text-decoration-thickness: .06em; }
+a:hover { color: var(--sn-link-hover); }
+a:visited { color: var(--sn-link-visited); }
+
+/* ── Redlinks (a páginas inexistentes) y :visited ─────────────────
+   OJO (revisado 2026-08-02): el Common.css de producción YA NO trae estas dos
+   reglas — la migración al skin de julio de 2026 lo dejó al mínimo. Lo de aquí
+   abajo queda como DEFENSA para wikis que aún las conserven; si se confirma que
+   ninguna instalación las tiene, los `!important` se pueden retirar. Contexto
+   histórico: Common.css traía
+     a[href].new { color: rgba(0,0,0,.3) !important; }   ← negro en dark
+     a:visited   { color: #681603; }                     ← rojo carbón
+   En claro funcionan (faded grey y rojo oscuro sobre cream). En oscuro
+   son inaccesibles (WCAG <1.5:1 sobre paper, falla tanto en .sn-body
+   como en .catlinks). Por eso el override sólo aplica en oscuro: en
+   claro respetamos el aire de producción. Especificidad bumpeada por
+   `:root[data-…]` (0,1,1,1+) gana al `a:visited` de Common; el
+   !important de redlinks empata al !important del site CSS, y la
+   especificidad mayor desempata. */
+a.new, a[href].new { color: var(--sn-link-new); }
+/* El redlink NO se oscurece al visitarse: mantiene el rosado pálido por
+   encima de la regla global `a:visited`. */
+a.new:visited, a[href].new:visited { color: var(--sn-link-new); }
+:root[data-sn-theme="dark"] a.new,
+:root[data-sn-theme="dark"] a[href].new {
+	color: var(--sn-link-new) !important;
+}
+:root[data-sn-theme="dark"] a:visited {
+	color: var(--sn-link-visited);
+}
+@media (prefers-color-scheme: dark) {
+	:root[data-sn-theme="auto"] a.new,
+	:root[data-sn-theme="auto"] a[href].new {
+		color: var(--sn-link-new) !important;
+	}
+	:root[data-sn-theme="auto"] a:visited {
+		color: var(--sn-link-visited);
+	}
+}
+
+::selection { background: var(--sn-nova-wash); color: var(--sn-ink); }
+
+/* Foco: el anillo es la nova. Nunca solo color. */
+:where(a, button, input, select, textarea, summary, [tabindex], [contenteditable]):focus-visible {
+	outline: 2px solid var(--sn-nova);
+	outline-offset: 2px;
+	border-radius: var(--sn-radius-s);
+}
+:focus:not(:focus-visible) { outline: none; }
+
+.sn-vh {
+	position: absolute !important; width: 1px; height: 1px;
+	padding: 0; margin: -1px; overflow: hidden;
+	clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Política global de íconos: nunca negro pleno ni carmín. Tinta al ~70%
+   en reposo; tinta plena al hover/foco/activo del control que los
+   contiene. Color propio (no heredan del texto: aunque el enlace se
+   ponga en acento, el ícono no). */
+.sn-i { display: inline-block; flex: none; vertical-align: middle;
+	fill: none; stroke: currentColor; stroke-width: 1.75;
+	stroke-linecap: round; stroke-linejoin: round;
+	color: var(--sn-icon); transition: color var(--sn-dur-1); }
+.sn-i use { fill: inherit; stroke: inherit; }
+:is(a, button, summary, label, [role="button"]):hover > .sn-i,
+:is(a, button, summary, label, [role="button"]):hover .sn-i,
+:is(a, button, summary, label, [role="button"]):focus-visible .sn-i,
+[data-sn-menu][aria-expanded="true"] .sn-i,
+.sn-tabs li.selected a .sn-i, .sn-tabs li.active a .sn-i {
+	color: var(--sn-icon-active);
+}
+
+/* ─────────────────────── Skip links ─────────────────────── */
+.sn-skip {
+	position: fixed; top: var(--sn-s-3); left: var(--sn-s-3);
+	z-index: var(--sn-z-skip);
+	transform: translateY(-180%);
+	background: var(--sn-ink); color: var(--sn-paper);
+	padding: var(--sn-s-2) var(--sn-s-4);
+	border-radius: var(--sn-radius); font-weight: 500;
+	text-decoration: none;
+	transition: transform var(--sn-dur-2) var(--sn-ease);
+}
+.sn-skip:focus { transform: translateY(0); color: var(--sn-paper); }
+.sn-skip + .sn-skip:focus { left: calc(var(--sn-s-3) + 11rem); }
+
+/* ─────────────────────── App / shell ─────────────────────── */
+.sn-app { display: flex; flex-direction: column; min-height: 100vh; }
+
+.sn-header {
+	position: sticky; top: 0; z-index: var(--sn-z-header);
+	background: color-mix(in oklab, var(--sn-field) 60%, transparent);
+	-webkit-backdrop-filter: saturate(1.5) blur(5px);
+	backdrop-filter: saturate(1.5) blur(5px);
+	/* NO promover el header a su propia capa (translateZ(0)/will-change). Se
+	   intentó (v0.7.0) para ganarle al canvas en Macs viejos, pero en Safari/
+	   Firefox antiguos la capa RECORTA el dropdown `.sn-menu-list`, que se
+	   desborda por debajo del header → el menú abría (JS ok) pero no se veía.
+	   La defensa contra el canvas va en el CONTENIDO, no aquí: `.sn-shell` /
+	   `.sn-canvas` son `isolation: isolate`, así el canvas queda encerrado en
+	   su contexto —por debajo del header hermano— sin tocar el header. */
+	/* Sin filete inferior: la cabecera se separa del cuerpo por el blur y el
+	   fondo translúcido, no por una regla horizontal (doctrina "sin filetes"). */
+}
+/* CONTAINING-BLOCK TRAP: `backdrop-filter` hace que la cabecera sea el bloque
+   contenedor de cualquier descendiente `position: fixed` —y todos los menús
+   modales (.sn-menu-list) y el buscador modal (.sn-search) cuelgan de aquí—.
+   En móvil eso ancla el modal a la posición de ORIGEN del header sticky (arriba
+   del documento) en vez del viewport: estando con scroll abajo, el modal se
+   abre fuera de pantalla mientras el scroll-lock congela la página. Mientras
+   haya un modal abierto (el JS marca `data-sn-modal` en <html>), anulamos el
+   filtro: el modal cubre todo con papel opaco, así que el blur no se ve, y su
+   `fixed` vuelve a ser relativo al viewport → se abre donde estés. */
+html[data-sn-modal] .sn-header {
+	-webkit-backdrop-filter: none;
+	backdrop-filter: none;
+}
+/* Cabecera despejada: isotipo · pestañas de página · buscador · usuario.
+   La navegación del sitio vive en el pie. */
+.sn-header-bar {
+	display: flex; align-items: center;
+	justify-content: space-between;       /* repartidos de forma homogénea */
+	gap: var(--sn-s-5);
+	max-width: var(--sn-shell); margin-inline: auto;
+	padding: var(--sn-s-3) var(--sn-s-4);
+}
+
+/* Marca + navegación juntas a la izquierda (iso pegado a la hamburguesa). */
+.sn-brandnav {
+	display: flex; align-items: center; gap: var(--sn-s-2); flex: none;
+}
+
+/* — Isotipo: logotipo "Casiopea" + constelación (SVG colorizable). El
+   wordmark va EN el SVG; sin texto aparte. Monocromo currentColor →
+   tematizable (tinta en claro/oscuro; acento sutil al hover). */
+/* Mismo color que el resto de íconos/enlaces del toolbar (nunca rojo):
+   semitransparente en reposo, opaco al hover. */
+/* :visited/:link explícitos para ganarle a `a:visited` (que si no, tiñe
+   el isotipo con el color de enlace visitado — el "rojo"). */
+.sn-isotype, .sn-isotype:link, .sn-isotype:visited {
+	display: inline-flex; align-items: center;
+	text-decoration: none; color: var(--sn-icon);
+	flex: none; padding: var(--sn-s-1);
+	border-radius: var(--sn-radius);
+	transition: color var(--sn-dur-1);
+}
+.sn-isotype:hover, .sn-isotype:focus-visible, .sn-isotype:active {
+	color: var(--sn-icon-active);
+}
+/* El SVG colorea DIRECTAMENTE con el token de icono, NO `inherit` del <a>.
+   Motivo: `--sn-icon` lleva alfa (color-mix … transparent), y por privacidad
+   los navegadores IGNORAN colores con transparencia en `:visited` → el <a>
+   visitado caía al morado de `--sn-link-visited` y el SVG (color:inherit) lo
+   heredaba. Coloreando el <svg> (que no es enlace, no sufre la restricción)
+   el logo es inmune al estado link/visited y NUNCA se ve morado. */
+.sn-isotype svg {
+	display: block; height: 2rem; width: auto; max-width: 100%;
+	color: var(--sn-icon);
+}
+.sn-isotype:hover svg,
+.sn-isotype:focus-visible svg,
+.sn-isotype:active svg {
+	color: var(--sn-icon-active);
+}
+.sn-isotype :is(img, .sn-isotype-img) { display: block; height: 2rem; width: auto; max-width: 12em; }
+/* Doble variante inline: wordmark (desktop) + glifo cuadrado (mobile).
+   El swap por viewport está al final del archivo, sección Responsive. */
+.sn-isotype :is(.sn-isotype-full, .sn-isotype-compact) { display: contents; }
+.sn-isotype .sn-isotype-compact { display: none; }
+.sn-isotype .sn-isotype-compact svg { height: 2rem; width: 2rem; border-radius: var(--sn-radius); }
+
+/* — Búsqueda — En reposo: fondo transparente, sin borde visible (borde
+   transparente para no descuadrar al enfocar). Al enfocar: fondo papel
+   + borde del filete normal (sin rojo, sin halo). En desktop el form
+   se muestra inline; en compact viewport el form se colapsa y el
+   trigger (.sn-search-trigger) lo abre como modal — ver media query
+   al final del archivo, sección Responsive. */
+.sn-searchbox {
+	flex: 1 1 auto; max-width: none; min-width: 0;
+	display: flex; align-items: center;
+}
+/* Trigger y close: especificidad bumpeada (.sn-searchbox …) para ganarle
+   a .sn-iconbtn { display: inline-grid }, que aparece más abajo en la
+   cascada y los re-mostraría en desktop si fueran solo .sn-search-trigger. */
+.sn-searchbox .sn-search-trigger { display: none; }   /* sólo en compact */
+.sn-searchbox .sn-search-close   { display: none; }   /* sólo en compact-modal */
+.sn-search {
+	flex: 1; min-width: 0;
+	height: var(--sn-ctl); box-sizing: border-box;
+	display: flex; align-items: center; gap: var(--sn-s-1);
+	background: transparent;
+	border: 1px solid var(--sn-hairline);
+	border-radius: 999px;
+	padding: 0 var(--sn-s-1) 0 var(--sn-s-4);
+	transition: background var(--sn-dur-1), border-color var(--sn-dur-1);
+}
+.sn-search:focus-within {
+	background: var(--sn-paper);
+	border-color: var(--sn-hairline);
+}
+.sn-search :is(input[type="search"], #searchInput, .mw-searchInput) {
+	flex: 1; min-width: 0; border: 0; background: transparent;
+	font: inherit; color: var(--sn-ink); padding: 0; line-height: 1.2;
+}
+.sn-search input::placeholder { color: var(--sn-hairline); }   /* igual que el borde */
+.sn-search :is(input):focus { outline: none; }
+/* "Buscar" ahora es el ícono (texto → tooltip/aria-label). Botón-ícono
+   discreto; el ícono hereda el color del texto, acento al activar. */
+.sn-search-go {
+	flex: none; cursor: pointer; display: grid; place-items: center;
+	width: 2rem; height: 2rem; padding: 0; margin: 0;
+	background: none; border: 0; border-radius: 999px;
+	color: var(--sn-ink-soft);
+	transition: background var(--sn-dur-1), color var(--sn-dur-1);
+}
+.sn-search-go:hover, .sn-search-go:focus-visible {
+	background: var(--sn-sunk); color: var(--sn-icon-active);
+}
+
+/* — Autocomplete del buscador (módulo clásico mediawiki.searchSuggest) —
+   La caja .suggestions la posiciona el JS con `top` = borde inferior del
+   #searchInput (no del pill). Como el input va centrado dentro del pill de
+   --sn-ctl de alto, ese `top` cae ~dentro del pill y el borde superior de la
+   caja queda "sobre" el input. Compensamos con margin-top = mitad del hueco
+   input↔pill + un respiro, para que cuelgue inmediatamente debajo del pill.
+   Sin prefijo .skin-stellamereida el CSS del módulo (selectores de 1 clase)
+   ganaría por especificidad. */
+.skin-stellamereida .suggestions {
+	margin-top: calc((var(--sn-ctl) - 1.25rem) / 2 + var(--sn-s-1));
+	padding: var(--sn-s-1);
+	background: var(--sn-paper); color: var(--sn-ink);
+	border: 1px solid var(--sn-hairline);
+	border-radius: var(--sn-radius-l);
+	box-shadow: var(--sn-lift-soft);
+	overflow: hidden;
+	font-family: var(--sn-font-text); font-size: var(--sn-fs-sm);
+}
+/* Matar borde + fondo blanco de los wrappers internos del módulo (el borde
+   externo ya lo pone .suggestions): así no hay doble borde y el --sn-paper
+   tokenizado del contenedor manda en claro/oscuro. */
+.skin-stellamereida .suggestions-results,
+.skin-stellamereida .suggestions-special {
+	background: transparent; border: 0; margin: 0;
+}
+/* CLAVE: el JS pone el texto en el <div.suggestions-result> y LUEGO lo envuelve
+   en <a.mw-searchSuggest-link> (el <a> es el PADRE, no el que lleva el texto).
+   El módulo cablea el color SOBRE EL DIV — .suggestions-result{color:#000} y
+   .suggestions-result-current{color:#fff} — y un color propio del div gana a la
+   herencia desde el <a>. Por eso hay que pintar el DIV: un selector
+   .skin-stellamereida .suggestions-result (0,2,0) le gana al (0,1,0) del módulo,
+   sin empates ni pseudo-clases de por medio. (Intentar colorear el <a> no hace
+   nada: el div tiene color propio.) */
+.skin-stellamereida .suggestions-result {
+	padding: var(--sn-s-2) var(--sn-s-3);
+	border-radius: var(--sn-radius); cursor: pointer;
+	color: var(--sn-ink); line-height: 1.3;
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* El <a> solo envuelve la fila: que la ocupe entera y no subraye; el color lo
+   manda el div de adentro (color:inherit lo deja en paz). */
+.skin-stellamereida .suggestions a.mw-searchSuggest-link {
+	display: block; color: inherit; text-decoration: none;
+}
+/* Fila resaltada: el JS añade -current al DIV (teclado y ratón). */
+.skin-stellamereida .suggestions-result-current,
+.skin-stellamereida .suggestions-result:hover {
+	background: var(--sn-sunk); color: var(--sn-nova);
+}
+.skin-stellamereida .suggestions-special {
+	position: relative;
+	padding: var(--sn-s-2) var(--sn-s-3);
+	margin-top: var(--sn-s-1);
+	border-top: 1px solid var(--sn-hairline-soft);
+	border-radius: var(--sn-radius); cursor: pointer;
+	color: var(--sn-ink-soft);
+}
+.skin-stellamereida .suggestions-special .special-hover,
+.skin-stellamereida .suggestions-special.suggestions-result-current {
+	background: var(--sn-sunk);
+}
+.skin-stellamereida .suggestions-special .special-label {
+	color: var(--sn-ink-soft); font-size: var(--sn-fs-sm);
+}
+.skin-stellamereida .suggestions-special .special-query {
+	color: var(--sn-ink); font-style: italic;
+}
+
+/* — Zona 5 · Herramientas del usuario —
+   Se pega al .sn-pagecluster (mismo cluster de íconos a la derecha): el
+   gap del header-bar es --sn-s-5, y aquí lo compensamos con un margen
+   negativo para dejar exactamente --sn-s-1 entre ambos. Search ya tiene
+   `flex: 1 1 auto` y devora todo el espacio entre la marca y este cluster. */
+.sn-usertools {
+	display: flex; align-items: center; gap: var(--sn-s-1);
+	flex: none; margin-left: calc(var(--sn-s-1) - var(--sn-s-5));
+}
+.sn-tempbadge {
+	display: grid; place-items: center; width: 2rem; height: 2rem;
+	color: var(--sn-warn); border-radius: 999px;
+	background: color-mix(in oklab, var(--sn-warn) 14%, transparent);
+}
+.sn-notif :is(a) { color: var(--sn-ink-soft); }
+
+.sn-usermenu-trigger {
+	display: inline-grid; place-items: center;
+	width: var(--sn-ctl); height: var(--sn-ctl); padding: 0;
+	box-sizing: border-box;
+	background: transparent; color: var(--sn-ink);
+	border: 1px solid transparent; border-radius: var(--sn-radius);
+	cursor: pointer; transition: background var(--sn-dur-1), border-color var(--sn-dur-1);
+}
+.sn-usermenu-trigger:hover,
+.sn-usermenu-trigger[aria-expanded="true"] {
+	background: var(--sn-paper); border-color: var(--sn-hairline);
+}
+
+/* — Menús colapsables del header: Navegación · Página · Usuario — */
+.sn-md { position: relative; }
+.sn-md-trigger {
+	display: inline-flex; align-items: center; gap: var(--sn-s-2);
+	height: var(--sn-ctl); box-sizing: border-box;
+	background: none; border: 1px solid transparent;
+	padding: 0 var(--sn-s-3);
+	font-family: var(--sn-font-text); font-size: var(--sn-fs-sm);
+	font-weight: 500; line-height: 1.2; color: var(--sn-ink);
+	text-decoration: none; cursor: pointer; white-space: nowrap;
+	border-radius: var(--sn-radius);
+	transition: background var(--sn-dur-1), border-color var(--sn-dur-1);
+}
+.sn-md-trigger:hover,
+.sn-md-trigger[aria-expanded="true"] {
+	background: var(--sn-paper); border-color: var(--sn-hairline);
+}
+/* Disparador solo-ícono (Navegación / Página): el texto pasa a
+   tooltip/aria-label; compacto, con cheurón pegado al ícono. */
+.sn-md-icononly { gap: .15rem; padding: 0 var(--sn-s-2); }
+
+/* Bloque "Página": acciones de edición (solo-ícono) + menú, agrupadas
+   como una sola zona de la barra. */
+.sn-pagecluster {
+	display: flex; align-items: center; gap: var(--sn-s-1); flex: none;
+}
+.sn-iconbtn {
+	display: inline-grid; place-items: center;
+	width: var(--sn-ctl); height: var(--sn-ctl); flex: none;
+	box-sizing: border-box;
+	color: var(--sn-ink); text-decoration: none;
+	background: transparent;
+	border: 1px solid transparent; border-radius: var(--sn-radius);
+	transition: background var(--sn-dur-1), border-color var(--sn-dur-1), color var(--sn-dur-1);
+}
+.sn-iconbtn:hover, .sn-iconbtn:focus-visible {
+	background: var(--sn-paper); border-color: var(--sn-hairline);
+	color: var(--sn-icon-active);
+}
+/* Íconos del MISMO color que el texto (heredan currentColor del botón);
+   nunca acento. El cheurón solo rota. */
+.sn-md-caret { transition: transform var(--sn-dur-1) var(--sn-ease); }
+.sn-md-trigger[aria-expanded="true"] .sn-md-caret { transform: rotate(180deg); }
+.sn-md .sn-menu-list { left: 0; right: auto; }
+.sn-usermenu .sn-menu-list, .sn-pagemenu .sn-menu-list { right: 0; left: auto; }
+
+/* Popover base */
+.sn-menu-list {
+	list-style: none; margin: 0; padding: var(--sn-s-2);
+	position: absolute; right: 0; top: calc(100% + .4rem);
+	min-width: 14rem; z-index: var(--sn-z-panel);
+	background: var(--sn-paper); color: var(--sn-ink);
+	border: 1px solid var(--sn-hairline);
+	border-radius: var(--sn-radius-l);
+	box-shadow: var(--sn-lift);
+	opacity: 0; visibility: hidden; transform: translateY(-.4rem);
+	transition: opacity var(--sn-dur-1), transform var(--sn-dur-1), visibility var(--sn-dur-1);
+}
+[data-sn-menu][aria-expanded="true"] + .sn-menu-list {
+	opacity: 1; visibility: visible; transform: translateY(0);
+}
+.sn-menu-list li { margin: 0; list-style: none; }
+.sn-menu-list ul { list-style: none; margin: 0; padding: 0; }
+.sn-menu-list :is(a, .sn-menu-list-item) {
+	display: flex; align-items: center; gap: var(--sn-s-2);
+	padding: var(--sn-s-2) var(--sn-s-3);
+	border-radius: var(--sn-radius); text-decoration: none;
+	color: var(--sn-ink); font-family: var(--sn-font-text);
+	font-size: var(--sn-fs-sm); font-weight: 400;
+}
+.sn-menu-list :is(a:hover, a:focus-visible) { background: var(--sn-sunk); color: var(--sn-nova); }
+.sn-menu-list li.selected a, .sn-menu-list li.active a {
+	color: var(--sn-ink); font-weight: 600;
+}
+.sn-menu-list li.new a { color: var(--sn-link); }
+
+/* Página: grupos (espacios · vistas · acciones · variantes) con filete */
+.sn-mm-grp { padding: var(--sn-s-1) 0; }
+/* Un grupo vacío (p. ej. `data-variants` cuando la página no tiene variantes de
+   idioma) se emite como `<ul class="sn-mm-grp"></ul>`: sin esto seguía contando
+   como `.sn-mm-grp + .sn-mm-grp` y arrastraba el filete, dejando un divisor
+   colgando al final del menú. Ocultarlo lo saca del flujo y del filete. */
+.sn-mm-grp:empty { display: none; }
+.sn-mm-grp + .sn-mm-grp {
+	border-top: 1px solid var(--sn-hairline-soft); margin-top: var(--sn-s-1);
+}
+
+/* Navegación: megamenú en secciones, varias columnas si caben */
+.sn-megamenu {
+	min-width: min(34rem, calc(100vw - 2 * var(--sn-s-4)));
+	max-height: min(72vh, 32rem); overflow-y: auto;
+	columns: 2; column-gap: var(--sn-s-5); padding: var(--sn-s-4);
+}
+.sn-mm-sec { break-inside: avoid; margin-bottom: var(--sn-s-4); }
+.sn-mm-sec:last-child { margin-bottom: 0; }
+.sn-mm-h {
+	margin: 0 0 var(--sn-s-1); font-family: var(--sn-font-text);
+	font-size: var(--sn-fs-xs); font-weight: 600;
+	text-transform: uppercase; letter-spacing: .08em;
+	color: var(--sn-ink-faint);
+}
+@media (max-width: 34rem) { .sn-megamenu { columns: 1; } }
+
+/* ───────────── Shell: una sola columna centrada ───────────── */
+/* Sin riel: la hoja queda centrada y más ancha sobre el campo. */
+.sn-shell {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-inline: auto;
+	/* AÍSLA el contenido (layout normal). Cualquier canvas p5 / embed dinámico
+	   de la página queda ENCERRADO en este contexto de apilamiento, que se
+	   sienta por debajo del `.sn-header` hermano — el canvas no puede escalar
+	   sobre el menú por más `z-index` que ponga el JS. Gemelo de la misma regla
+	   en `.sn-canvas` (layout fullscreen). NO promovemos el header a capa GPU:
+	   eso recortaba el dropdown en navegadores viejos (ver `.sn-header`). */
+	isolation: isolate;
+	/* Sin padding inferior: el campo ya se fusiona con el pie (mismo --sn-field),
+	   así la hoja no deja un colchón muerto antes del pie. */
+	padding: clamp(var(--sn-s-5), 5vw, var(--sn-s-7)) var(--sn-s-4) 0;
+}
+/* El ancho de la HOJA está fijado por --sn-measure (no es preferencia de
+   usuario: la métrica de la hoja desparametriza el ajuste al baseline grid).
+   El contenido va al 100% de la hoja. */
+.sn-paper-wrap {
+	width: 100%;
+	max-width: var(--sn-measure);
+	min-width: 0;
+}
+/* __PAGINAANCHA__ (LayoutMode.wide): la hoja se ensancha al ancho del
+   conjunto (--sn-shell, el del header) para tablas, grillas o grafos que no
+   caben en la medida de lectura. Chrome intacto. El pie acompaña a la hoja
+   (ver .sn-footer-inner). */
+.sn-wide .sn-paper-wrap { max-width: var(--sn-shell); }
+
+.sn-portlet-h {
+	margin: 0 0 var(--sn-s-2);
+	font-family: var(--sn-font-text);
+	font-size: var(--sn-fs-xs); font-weight: 600;
+	text-transform: uppercase; letter-spacing: .09em;
+	color: var(--sn-ink-faint);
+}
+.sn-portlet-b ul, .sn-portlet ul, .sn-managed ul {
+	list-style: none; margin: 0; padding: 0;
+	display: flex; flex-direction: column; gap: .15rem;
+}
+.sn-portlet-b li a, .sn-portlet li a, .sn-managed a {
+	display: block; padding: .3rem var(--sn-s-3) .3rem var(--sn-s-2);
+	margin-left: calc(-1 * var(--sn-s-2));
+	color: var(--sn-ink-soft); text-decoration: none;
+	border-left: 2px solid transparent;
+	border-radius: 0 var(--sn-radius-s) var(--sn-radius-s) 0;
+	transition: color var(--sn-dur-1), border-color var(--sn-dur-1), background var(--sn-dur-1);
+}
+.sn-portlet-b li a:hover, .sn-portlet li a:hover, .sn-managed a:hover {
+	color: var(--sn-ink); border-left-color: var(--sn-nova);
+	background: var(--sn-nova-wash);
+}
+.sn-portlet-b li.selected a, .sn-portlet li.active a {
+	color: var(--sn-ink); border-left-color: var(--sn-nova);
+}
+
+/* ─────────────────────── La hoja (paper) ─────────────────── */
+.sn-paper-wrap { min-width: 0; }
+.sn-paper {
+	/* --sn-paper-px / --sn-paper-py exponen como contrato el padding del
+	   paper. Cualquier hijo que quiera reventar (p.ej. .full-width) lo
+	   niega con margin-inline / margin-block: calc(-1 * var(--…)). */
+	--sn-paper-px: clamp(var(--sn-s-4), 4vw, var(--sn-s-7));
+	--sn-paper-py: clamp(var(--sn-s-5), 4vw, var(--sn-s-7));
+	background: var(--sn-paper);
+	border: 1px solid var(--sn-paper-edge);
+	border-radius: var(--sn-radius-paper);
+	box-shadow: var(--sn-lift-paper);
+	padding: var(--sn-paper-py) var(--sn-paper-px);
+	min-width: 0;
+}
+@media (min-width: 90rem) {
+	.sn-paper {
+		--sn-paper-px: clamp(var(--sn-s-7), 6vw, var(--sn-s-8));
+	}
+}
+
+/* .sn-indicators y #contentSub son metadata (badges/loaders por página y
+   avisos contextuales como "Redirigido desde X") que MW inyecta dentro del
+   <article>. Visualmente NO son contenido editorial — se tratan como
+   marcadores adheridos al borde de la hoja: chips arriba a la derecha
+   asomando del paper, y un kicker line proyectado por encima.
+
+   El DOM no se mueve (mantenemos el contrato de fidelidad con MW: gadgets
+   y scripts core esperan estos contenedores como anchors estables); el
+   efecto es 100% CSS via position:absolute con el paper como coordinate
+   system. overflow:visible (default del paper) deja que protruyan. */
+.sn-paper { position: relative; }
+
+/* Indicators: chip-stickers asomando del borde superior-derecho del paper.
+   translateY(-50%) los pone mitad sobre la hoja, mitad afuera — el efecto
+   "marcador adherido". El SMW entity-examiner u otros loaders que viven
+   acá heredan el estilo de chip. */
+.sn-indicators {
+	position: absolute;
+	inset-block-start: 0;
+	inset-inline-end: clamp(var(--sn-s-4), 4vw, var(--sn-s-6));
+	transform: translateY(-50%);
+	display: flex; flex-wrap: nowrap; gap: var(--sn-s-2);
+	margin: 0;
+	z-index: 2;
+	pointer-events: none;
+}
+.sn-indicators:empty { display: none; }
+/* Ocultar indicadores "muertos" — los que vienen como wrapper con hijo
+   vacío (caso del smw-entity-examiner loader que viene <div></div>
+   adentro). Mismo patrón que ya aplica a #contentSub. */
+.sn-indicators > .mw-indicator:empty,
+.sn-indicators > .mw-indicator:has(> *:only-child:empty),
+/* También ocultar el SMW entity examiner loader específicamente — es un
+   indicador técnico de background que el lector no necesita ver. */
+.sn-indicators > .mw-indicator:has(> .smw-entity-examiner) {
+	display: none;
+}
+.sn-indicators > .mw-indicator {
+	pointer-events: auto;
+	background: var(--sn-paper);
+	border: 1px solid var(--sn-paper-edge);
+	/* Pill: mismas esquinas que el input del buscador (border-radius: 999px). */
+	border-radius: 999px;
+	padding: .25rem .7rem;
+	font-size: var(--sn-fs-xs);
+	line-height: 1.2;
+	color: var(--sn-ink-soft);
+	box-shadow: 0 2px 6px rgb(0 0 0 / .07), 0 1px 2px rgb(0 0 0 / .04);
+}
+/* Indicators con ícono (#mw-indicator-mw-helplink y variantes que core u
+   otras extensiones puedan registrar siguiendo el patrón de un span con
+   sufijo `-icon` a la izquierda del texto): le da aire al ícono para
+   que no se pegue al texto, vía `margin-right`. Anulamos el
+   `padding-right: 10px` que core fija en `.mw-helplink-icon` para que
+   el espacio quede limpio (no se acumula con el margin). El selector
+   replica el ID para empatar especificidad core (1,1,1) y ganar por
+   orden de cascada (este archivo se carga después del módulo core). */
+#mw-indicator-mw-helplink a .mw-helplink-icon,
+.sn-indicators > [id^="mw-indicator-"] a [class$="-icon"] {
+	padding-right: 0;
+	margin-right: var(--sn-s-2);
+}
+@media (max-width: 36rem) {
+	/* En móvil vuelve al flujo dentro del paper para no chocar con la chrome
+	   ni quedar comido por el header. */
+	.sn-indicators {
+		position: static; transform: none;
+		justify-content: flex-end;
+		margin-block-end: var(--sn-s-3);
+	}
+	.sn-indicators > .mw-indicator {
+		background: transparent; border: 0; box-shadow: none; padding: 0;
+	}
+}
+
+/* Aviso gestionado (Stella-Nova:Aviso): lo PRIMERO dentro de la hoja,
+   full-bleed a los bordes del papel — niega el padding (--sn-paper-py arriba,
+   --sn-paper-px a los lados) con la misma convención que .full-width. Fondo
+   --sn-warn con tinta que contrasta en ambos temas (--sn-warn-ink), esquinas
+   superiores al radio de la hoja, y botón de cerrar. Se descarta por versión:
+   el pre-pintado oculta sin parpadeo vía html[data-sn-notice-hide]; skin.js
+   persiste el cierre en localStorage. */
+.sn-notice {
+	margin: calc(-1 * var(--sn-paper-py)) calc(-1 * var(--sn-paper-px)) var(--sn-s-5);
+	border: 0;
+	border-radius: var(--sn-radius-paper) var(--sn-radius-paper) 0 0;
+	background: var(--sn-notice-bg); color: var(--sn-notice-ink);
+	display: flex; align-items: flex-start; gap: var(--sn-s-3);
+	padding: var(--sn-s-3) var(--sn-paper-px);
+	font-size: var(--sn-fs-sm);
+	/* SOBRE el contenido de la página (canvas p5 incluido), pero NUNCA sobre el
+	   menú: el aviso vive dentro de `.sn-shell` (aislado, por debajo del header),
+	   así que su `z-index` es local y no compite con el dropdown. El `z-index`
+	   lo pone sobre el canvas en navegadores modernos; el `translateZ(0)` lo
+	   promueve a su propia capa GPU para ganarle al canvas también en Macs
+	   viejos (entre dos capas compuestas el z-order SÍ se respeta). Aquí el
+	   translateZ es seguro —a diferencia del header— porque el aviso no tiene
+	   hijos que se desborden de su caja y puedan quedar recortados. */
+	position: relative;
+	z-index: 1;
+	transform: translateZ(0);
+}
+html[data-sn-notice-hide] .sn-notice { display: none; }
+/* Si alguien escribe <div class="sn-notice"> en el wikitexto, cae a media
+   página dentro de .mw-parser-output: ahí el bleed superior (pensado para el
+   <aside> que el skin pone antes del cuerpo) se montaría sobre el texto. Se
+   neutraliza; para un aviso en el contenido la clase prevista es .fondo-ambar. */
+.mw-parser-output .sn-notice { margin-block-start: 0; border-radius: 0; }
+.sn-notice-body { flex: 1; min-width: 0; }
+.sn-notice-body > :first-child { margin-top: 0; }
+.sn-notice-body > :last-child { margin-bottom: 0; }
+.sn-notice-body a { color: inherit; text-decoration: underline; }
+.sn-notice-x {
+	flex: none; cursor: pointer; color: inherit;
+	display: grid; place-items: center;
+	width: 1.9rem; height: 1.9rem; padding: 0;
+	/* El cuerpo del aviso se inset­a a --sn-paper-px (margen del contenido),
+	   pero la X va al BORDE del papel: cancelamos ese padding con margen
+	   derecho negativo y dejamos un inset pequeño y fijo (--sn-s-2) desde el
+	   borde real, constante aunque --sn-paper-px crezca en pantallas anchas. */
+	margin: -.1rem calc(var(--sn-s-2) - var(--sn-paper-px)) 0 0;
+	background: transparent; border: 0; border-radius: var(--sn-radius);
+	transition: background var(--sn-dur-1);
+}
+.sn-notice-x:hover, .sn-notice-x:focus-visible {
+	background: color-mix(in oklab, var(--sn-warn-ink) 16%, transparent);
+}
+.sn-notice-x .sn-i { color: inherit; }
+
+/* — firstHeading: el título de la página, la voz editorial del documento.
+   Mayor que cualquier h1 del cuerpo (--sn-fs-page-title). Ocupa
+   line-height = 2 baselines + margin-bottom = 1 baseline (total 3
+   baselines), todo múltiplo entero para que los párrafos que vienen
+   después calcen exactamente en la retícula. (PRUEBA 2026-06-06: bajado de
+   3 → 2 baselines; con 3 el interlineado se veía excesivo en títulos
+   multilínea. 2 es el mínimo que respeta la regla "1 o 2 baselines" del
+   grid —ver tokens.css.) El margin-top NEGATIVO de medio baseline recorta
+   el aire superior (el leading simétrico de la primera línea + el inset del
+   papel): como el título es el PRIMER hijo en flujo, un margen superior
+   negativo sube TODA la columna por igual → se preserva el ritmo interno
+   entre bloques, solo cambia dónde empieza el contenido respecto al padding
+   del papel. Sigue siendo medio baseline (cantidad limpia y reversible).
+   Sin offset cap-based: la simetría del integer-baseline conserva el
+   colapso de márgenes y permite alineación robusta en multicolumna. — */
+:is(.sn-paper, .sn-canvas) :is(h1#firstHeading, .firstHeading, .mw-first-heading) {
+	font-family: var(--sn-font-text);
+	font-weight: 300;
+	font-size: var(--sn-fs-page-title);
+	line-height: var(--sn-baseline-2);
+	letter-spacing: -.018em;
+	color: var(--sn-nova);
+	margin: calc(var(--sn-baseline) * -0.5) 0 var(--sn-baseline);
+	max-width: 34ch;
+	text-wrap: balance;
+}
+/* Solo inyecciones core (subtítulo/redirección, restaurar). Sin caja ni
+   filete: cuando hay contenido es una línea sobria; vacío no inserta nada. */
+.sn-subtitle {
+	color: var(--sn-ink-soft); font-size: var(--sn-fs-sm); margin: 0;
+	text-transform: uppercase;
+	font-stretch: condensed;
+	letter-spacing: .25ex;
+}
+/* #contentSub sin la versalita editorial: texto tal cual, sin interletraje
+   (#contentSub2 conserva el tratamiento de .sn-subtitle). */
+#contentSub.sn-subtitle { text-transform: none; letter-spacing: normal; }
+/* Vacío (caso normal, p. ej. portada: solo el #mw-content-subtitle hueco)
+   → cero altura, ninguna inserción visible. Solo cuando trae algo real
+   (aviso de redirección, enlace de restaurar) reserva un respiro.
+   ":empty" estricto NO cubre el caso de #contentSub, que MW emite con un
+   <div id="mw-content-subtitle"> dentro (hijo vacío). Se añade el caso
+   ":has(> *:only-child:empty)" para esa estructura. */
+.sn-subtitle:empty,
+.sn-subtitle:has(> *:only-child:empty) { display: none; }
+
+/* #contentSub cuando aporta contenido. Dos regímenes según altura:
+
+   (a) KICKER — subtítulo de UNA línea (aviso de redirección / contexto): se
+       proyecta arriba del paper como kicker editorial, fuera de flujo.
+       inset-inline limitado al padding lateral del paper lo alinea con la
+       columna interna.
+   (b) FLUJO — subtítulo ALTO (special pages con bloques anidados, p. ej.
+       Especial:Contribuciones: tools del usuario + "N ediciones"). El kicker
+       lo subía -100% por encima de la hoja y chocaba con la barra de
+       navegación, así que este caso vive DENTRO de la hoja, en flujo normal.
+
+   Discriminador: el caso rico mete <div> dentro de #mw-content-subtitle; el
+   aviso de redirección es texto/enlace inline directo.
+   #contentSub2 (undelete admin) queda con la regla del flujo normal. */
+.sn-paper > #contentSub:has(a):not(:has(#mw-content-subtitle > div)),
+.sn-paper > #contentSub:has(*:not(:empty)):not(:has(#mw-content-subtitle > div)) {
+	position: absolute;
+	inset-block-start: 0;
+	inset-inline: var(--sn-paper-px);
+	transform: translateY(-100%);
+	padding-block-end: var(--sn-s-2);
+	margin: 0;
+	font-size: var(--sn-fs-xs);
+	line-height: 1.4;
+	color: var(--sn-ink-soft);
+	z-index: 1;
+}
+/* (b) Subtítulo alto → cabecera en flujo, separada del listado por un filete. */
+.sn-paper > #contentSub:has(#mw-content-subtitle > div) {
+	margin: 0 0 var(--sn-s-4);
+	padding-block-end: var(--sn-s-2);
+	border-block-end: 1px solid var(--sn-hairline);
+	font-size: var(--sn-fs-sm);
+	line-height: 1.4;
+	color: var(--sn-ink-soft);
+}
+.sn-paper > #contentSub .mw-contributions-editor-info {
+	margin-block-start: var(--sn-s-1);
+	font-size: var(--sn-fs-xs);
+}
+/* En el subtítulo alto los enlaces SÍ se ven como enlaces (no el apagado
+   --sn-ink-soft del kicker): el token de link manda, como en el cuerpo. */
+.sn-paper > #contentSub:has(#mw-content-subtitle > div) a { color: var(--sn-link); }
+.sn-paper > #contentSub:has(#mw-content-subtitle > div) a:hover { color: var(--sn-link-hover); }
+.sn-paper > #contentSub:has(#mw-content-subtitle > div) a:visited { color: var(--sn-link-visited); }
+.sn-paper > #contentSub2:has(a),
+.sn-paper > #contentSub2:has(*:not(:empty)) {
+	margin: 0 0 var(--sn-s-3);
+}
+@media (max-width: 36rem) {
+	/* Móvil: el kicker corto también vuelve al flujo */
+	.sn-paper > #contentSub:has(a):not(:has(#mw-content-subtitle > div)),
+	.sn-paper > #contentSub:has(*:not(:empty)):not(:has(#mw-content-subtitle > div)) {
+		position: static; transform: none;
+		padding: 0; margin: 0 0 var(--sn-s-3);
+		font-size: var(--sn-fs-sm);
+	}
+}
+.sn-subtitle a { color: var(--sn-ink-soft); }
+
+/* ─────────────── Cuerpo: ritmo editorial ─────────────── */
+
+.sn-body { min-width: 0; font-stretch: var(--sn-text-width); }
+/* El ancho de la HOJA lo fija --sn-measure (.sn-paper-wrap). Esa es la
+   medida de lectura: TODO el contenido —párrafos, cabeceras, listas, tablas,
+   fichas, figuras— vive dentro de ella al 100 %. (Las imágenes `.full-width`
+   son la única excepción: sangran hasta --sn-shell con margen negativo.) */
+
+
+.sn-body .fw-150 { font-stretch: 150%; }
+.sn-body .fw-140 { font-stretch: 140%; }
+.sn-body .fw-130 { font-stretch: 130%; }
+.sn-body .fw-120 { font-stretch: 120%; }
+.sn-body .fw-110 { font-stretch: 110%; }
+.sn-body .fw-100 { font-stretch: 100%; }
+.sn-body .fw-90  { font-stretch: 90%; }
+.sn-body .fw-80  { font-stretch: 80%; }
+.sn-body .fw-70  { font-stretch: 70%; }
+.sn-body .fw-60  { font-stretch: 60%; }
+.sn-body .fw-50  { font-stretch: 50%; }
+
+.sn-body .fw-95  { font-stretch: 95%; }
+.sn-body .fw-85  { font-stretch: 85%; }
+.sn-body .fw-75  { font-stretch: 75%; }
+
+
+
+/* Eje 1 — TAMAÑO. El cuerpo es el valor por defecto, sin clase.
+   Ojo con la escala del lector: --sn-fs-lg y superiores YA multiplican por
+   --sn-font-scale dentro del propio token; --sn-fs-sm y --sn-fs-xs NO lo
+   hacen (ver tokens.css). Por eso unos se multiplican aquí y el otro no:
+   hacerlo en los que ya vienen escalados aplicaría la preferencia dos veces. */
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .jumbo {
+	font-size: calc(clamp(2rem, 1.5rem + 2.2vw, 3.25rem) * var(--sn-font-scale));
+	line-height: 1.12;
+}
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .lg { font-size: var(--sn-fs-lg); }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .sm { font-size: calc(var(--sn-fs-sm) * var(--sn-font-scale)); }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .xs { font-size: calc(var(--sn-fs-xs) * var(--sn-font-scale)); }
+
+/* Eje 2 — FAMILIA. La del cuerpo la elige el LECTOR desde el menú de usuario;
+   estas clases la fijan para un fragmento concreto. Úsalas cuando el contraste
+   importe, no por costumbre. */
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .serif { font-family: var(--sn-font-serif); }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .sans  { font-family: var(--sn-font-sans); }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .mono  { font-family: var(--sn-font-mono); }
+
+/* Eje 3 — ÉNFASIS. */
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .uppercase { text-transform: uppercase; letter-spacing: .04ex; }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .italic    { font-style: italic; }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .bold      { font-weight: 700; }
+
+/* Eje 4 — ALINEACIÓN. El skin justifica los <p> del cuerpo por defecto
+   (`.sn-body p`, especificidad 0,0,1,1), así que cada regla alcanza TAMBIÉN a
+   los <p>/<li> interiores (0,0,2,1 → gana) para que la clase funcione puesta
+   en un contenedor y no solo en el párrafo mismo. Lo no-justificado apaga la
+   división de palabras: partir palabras solo tiene sentido para cuadrar una
+   caja justificada. */
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) :is(.left, .center, .right) :is(p, li, figcaption) { hyphens: none; }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .left,
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .left    :is(p, li) { text-align: left; }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .center,
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .center  :is(p, li) { text-align: center; }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .right,
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .right   :is(p, li) { text-align: right; }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .justify,
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .justify :is(p, li) { text-align: justify; }
+
+/* Eje 5 — COLOR POR ROL. Nombran la FUNCIÓN, no el color, así que voltean
+   solos entre tema claro y oscuro (los tokens son light-dark()). Nunca
+   escribir un hexadecimal en su lugar. La nova es el único acento agudo del
+   sistema: se gasta con avaricia, y el color por sí solo NUNCA debe ser el
+   único portador del significado (WCAG 2.1 AA § 1.4.1) — acompañar de palabra,
+   ícono o peso. Para fondos en bloque van las clases .fondo-*, no éstas. */
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .nova   { color: var(--sn-nova); }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .ok     { color: var(--sn-ok); }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .warn   { color: var(--sn-warn); }
+:is(.sn-body, .sn-notice-body, .sn-footer-managed) .danger { color: var(--sn-danger); }
+
+
+/* Reset cascada de core: `mediawiki.skinning.interface` impone sobre h*
+   y .mw-heading* lo siguiente, que rompe la doctrina del skin:
+     · border-bottom: 1px solid #aaa  (filete bajo h1/h2 — NO va)
+     · padding: 0.5em/0.17em           (offset que descuadra el ritmo)
+     · display: flow-root              (innecesario, vuelve a block)
+   Neutralizamos para AMBAS formas: <hN> directo (markup legacy y el
+   propio firstHeading) y `.mw-headingN` que Parsoid (MW ≥ 1.39)
+   envuelve alrededor del <hN>. */
+.sn-body :is(h1, h2, h3, h4, h5, h6),
+.sn-body :is(.mw-heading, .mw-heading1, .mw-heading2, .mw-heading3, .mw-heading4, .mw-heading5, .mw-heading6) {
+	border: 0;
+	padding: 0;
+	display: block;
+	font-stretch: 100%;   /* ancho normal: la condensada (--sn-text-width) es solo del cuerpo */
+}
+/* Las cabeceras envueltas por Parsoid: el <hN> interno también a 100% (hereda
+   de .sn-body el font-stretch condensado si no se resetea aquí). */
+.sn-body :is(.mw-heading1, .mw-heading2, .mw-heading3, .mw-heading4, .mw-heading5, .mw-heading6) > :is(h1, h2, h3, h4, h5, h6) {
+	font-stretch: 100%;
+}
+/* Además, MW `elements` impone `h1..h6, .mw-heading { color:#000 }` con
+   especificidad bare (0,0,1) → en modo oscuro deja headings negros sobre
+   el papel oscuro allí donde el skin no fija color explícito (el drawer
+   `.sn-prefs`, cabeceras de modales, contenido fuera de `.sn-body`).
+   Reseteamos a `inherit` en toda la chrome del skin y en el drawer (que
+   vive fuera de `.sn-app`): cada heading lee la tinta del contexto.
+   Reglas específicas (`.sn-paper :is(h1#firstHeading,…) { color: nova }`
+   en (1,1,1); `.sn-body :is(h3,…)` en (0,1,1) DELANTE en source-order)
+   siguen ganando por especificidad/orden. */
+.sn-app :is(h1, h2, h3, h4, h5, h6, .mw-heading),
+.sn-canvas :is(h1, h2, h3, h4, h5, h6, .mw-heading) {
+	color: inherit;
+}
+/* El filete #aaa de core (elements.less, `.mw-heading1,h1,.mw-heading2,h2`)
+   NO va en NINGÚN contexto del skin. El reset de `.sn-body` de arriba ya lo
+   mata dentro del artículo; esto lo extiende a la chrome fuera del cuerpo —
+   pie editable (Stella-Nova:Pie, donde un `== Título ==` se vuelve h2),
+   modales y drawer— para que la doctrina "sin filetes" sea total. */
+.sn-app :is(h1, h2, .mw-heading1, .mw-heading2),
+.sn-canvas :is(h1, h2, .mw-heading1, .mw-heading2) {
+	border-bottom: 0;
+}
+/* Cuando Parsoid envuelve el heading: el wrapper carga la tipografía y
+   el <hN> interno hereda. Sin esto, la margin del <hN> se suma a la del
+   wrapper y aparecen dobles separaciones. */
+.sn-body :is(.mw-heading1, .mw-heading2, .mw-heading3, .mw-heading4, .mw-heading5, .mw-heading6) > :is(h1, h2, h3, h4, h5, h6) {
+	margin: 0;
+	font: inherit;
+	color: inherit;
+	letter-spacing: inherit;
+	text-transform: inherit;
+}
+
+
+.sn-body :is(h1, .mw-heading1) {
+	font-family: var(--sn-font-text);
+	font-weight: 400; line-height: var(--sn-baseline-2);
+	letter-spacing: -.016em; color: var(--sn-nova);   /* rojo, no tinta negra */
+	font-size: var(--sn-fs-display);
+	margin: var(--sn-baseline-2) 0 var(--sn-baseline);
+}
+.sn-body :is(h2, .mw-heading2) {
+	font-family: var(--sn-font-text);
+	font-weight: 700; line-height: var(--sn-baseline-2);
+	letter-spacing: -.012em; color: var(--sn-ink);
+	font-size: var(--sn-fs-xl);
+	margin: var(--sn-baseline-2) 0 var(--sn-baseline);
+}
+.sn-body :is(h3, .mw-heading3) {
+	font-family: var(--sn-font-text);
+	font-weight: 600; line-height: var(--sn-baseline);
+	letter-spacing: 0; color: var(--sn-nova);
+	font-size: var(--sn-fs-lg);
+	margin: var(--sn-baseline-2) 0 var(--sn-baseline);
+}
+.sn-body :is(h4, h5, h6, .mw-heading4, .mw-heading5, .mw-heading6) {
+	font-family: var(--sn-font-text); line-height: var(--sn-baseline);
+	letter-spacing: 0; color: var(--sn-ink);
+}
+.sn-body :is(h4, .mw-heading4) {
+	font-size: var(--sn-fs-md);
+	margin: var(--sn-baseline) 0 var(--sn-baseline); font-weight: 600;
+}
+.sn-body :is(h5, .mw-heading5) {
+	font-size: var(--sn-fs-base);
+	margin: var(--sn-baseline) 0 0; font-weight: 500;   /* el acento rojo lo da la regla transversal de abajo */
+	text-transform: uppercase; font-stretch: 85%;
+}
+.sn-body :is(h6, .mw-heading6) {
+	font-size: calc(var(--sn-fs-base) * 0.9);
+	margin: var(--sn-baseline) 0 0; font-weight: 400;
+	text-transform: uppercase; font-stretch: 85%;
+	/* tinta del contexto: el nivel más bajo del par no lleva acento. */
+}
+/* Acento carmín del h5 — TRANSVERSAL: el h5 va en --sn-nova en CUALQUIER
+   contexto del skin (cuerpo, pie editable Stella-Nova:Pie, modales, drawer
+   .sn-prefs), no sólo dentro de .sn-body; el h6 hereda la tinta del contexto.
+   Con h1 y h3 también carmín, el rojo recae en los niveles IMPARES (h1/h3/h5)
+   y la tinta en los pares (h2/h4/h6). Va al final del bloque de cabeceras para
+   ganar por orden, a igual especificidad (0,2,0), al reset `color:inherit` de
+   la chrome y al color de cuerpo de arriba. */
+.sn-body   :is(h5, .mw-heading5),
+.sn-app    :is(h5, .mw-heading5),
+.sn-canvas :is(h5, .mw-heading5),
+.sn-prefs  :is(h5, .mw-heading5) {
+	color: var(--sn-nova);
+}
+.sn-body :is(h1, h2, h3, h4, h5, h6, .mw-heading1, .mw-heading2, .mw-heading3, .mw-heading4, .mw-heading5, .mw-heading6):first-child {
+	margin-top: 0;
+}
+/* Párrafos del cuerpo: justificados con hyphenation. La hyphenation depende
+   de que el documento declare `lang` (MW pone `<html lang="es">`); para otros
+   idiomas, el motor del navegador usa su diccionario. */
+.sn-body p {
+	margin: 0 0 var(--sn-baseline);
+	text-align: justify;
+	text-justify: inter-word;
+	-webkit-hyphens: auto;
+	hyphens: auto;
+	hyphenate-limit-chars: 6 3 3;
+}
+/* Párrafo vacío que MW (core: `Parser::removeP`/limpieza de bloques) marca con
+   `.mw-empty-elt` cuando un bloque —p.ej. el `<div class="full-width">` de un
+   Widget, precedido por el salto de línea inicial que emite la extensión— deja
+   un <p></p> huérfano como primer hijo de .mw-parser-output. El CSS de core lo
+   oculta con `.mw-empty-elt{display:none}`, pero esta skin no carga esos
+   módulos, así que replicamos la regla: sin esto el <p> hereda el `margin` de
+   `.sn-body p` y abre un hueco fantasma sobre el contenido. */
+.sn-body .mw-empty-elt { display: none; }
+/* La medida de lectura ahora la fija --sn-measure en la hoja (.sn-paper-wrap),
+   una sola restricción de ancho. (Antes había aquí un `width:80%` sobre los <p>
+   de nivel superior; se retiró porque max-width:--sn-measure ya hace el trabajo
+   sin desalinear bloques ni competir con el ancho de la hoja.) */
+.sn-body :is(ul, ol) { margin: 0 0 var(--sn-baseline); padding-left: var(--sn-s-5); }
+.sn-body li { margin: 0; }
+.sn-body li::marker { color: var(--sn-ink-faint); }
+/* Enlaces del contenido: el token manda. Especificidad .sn-body a*
+   (0,0,2,x) para vencer a un `a:visited{…}` de MediaWiki:Common.css, que a
+   igual especificidad ganaría por orden.
+   NOTA DE ORDEN (verificado 2026-08-02, corrige el comentario anterior): hoy
+   el <link> del skin se emite DESPUÉS de `site.styles` —lo inyecta
+   Hooks::onBeforePageDisplay como head item `zzz-stellamereida-styles`, para
+   poder bustear caché por versión—, así que el skin ya gana los empates. El
+   comentario viejo decía lo contrario porque describía la época en que la CSS
+   del skin viajaba dentro del <link> combinado de ResourceLoader. La
+   especificidad extra se conserva igual: no depende del orden. */
+.sn-body a { color: var(--sn-link); }
+.sn-body a:hover { color: var(--sn-link-hover); }
+.sn-body a:visited { color: var(--sn-link-visited); }
+.sn-body a:visited:hover { color: var(--sn-link-hover); }
+
+/* Enlaces externos E INTERWIKI: mismos tokens que los internos (carmín) — el
+   ícono `external-link` basta como señal de "sale del sitio". Hay que
+   sobrescribir el azul que impone la feature `content-links` de core
+   (`.mw-parser-output a.external` Y `a.extiw`, especificidad 0,0,2,1). Sin la
+   variante `.extiw`, los enlaces interwiki (p. ej. `[[mw:…]]`) se quedaban en
+   el azul de core (#3366bb). El ÍCONO lo define el skin (Feather external-link)
+   y se pinta como ::after con mask, así que hereda currentColor automáticamente. */
+.sn-body a.external,
+.sn-body a.extiw,
+.sn-body .mw-parser-output a.external,
+.sn-body .mw-parser-output a.extiw {
+	color: var(--sn-link);
+	background: none !important; padding-right: 0 !important;
+}
+.sn-body a.external:hover,
+.sn-body a.extiw:hover,
+.sn-body .mw-parser-output a.external:hover,
+.sn-body .mw-parser-output a.extiw:hover { color: var(--sn-link-hover); }
+.sn-body a.external:visited,
+.sn-body a.extiw:visited,
+.sn-body .mw-parser-output a.external:visited,
+.sn-body .mw-parser-output a.extiw:visited { color: var(--sn-link-visited); }
+.sn-body a.external:visited:hover,
+.sn-body .mw-parser-output a.external:visited:hover { color: var(--sn-link-hover); }
+.sn-body a.external::after {
+	content: ""; display: inline-block;
+	width: .68em; height: .68em; margin-left: .28em;
+	vertical-align: -.02em;
+	background-color: currentColor;
+	-webkit-mask: var(--sn-ext-icon) center / contain no-repeat;
+	mask: var(--sn-ext-icon) center / contain no-repeat;
+	opacity: .75;
+}
+.sn-body a.external:hover::after { opacity: 1; }
+.sn-body a.external:is(.image, .no-icon)::after,
+.sn-body a.external:has(img)::after { content: none; }
+
+
+.sn-body blockquote {
+	margin: var(--sn-baseline) 0;
+	padding: 0 0 0 var(--sn-s-5);
+	font-family: var(--sn-font-quote); font-optical-sizing: auto;
+	font-stretch: 100%;
+	font-size: var(--sn-fs-md);
+	color: var(--sn-ink-soft); line-height: var(--sn-baseline);
+}
+.sn-body blockquote p:last-child { margin-bottom: 0; }
+/* Verso: voz editorial propia (tokens --sn-poem-*): columna más estrecha que
+   el cuerpo (font-stretch condensado), tamaño algo menor —% del cuerpo, así
+   respeta la preferencia FontSize— y peso medio. line-height sigue en el
+   baseline para no romper el ritmo pese al tamaño menor. */
+.sn-body .poem {
+	font-family: var(--sn-font-quote); font-optical-sizing: auto;
+	font-stretch: var(--sn-poem-width);
+	font-weight: var(--sn-poem-weight);
+	font-size: var(--sn-poem-size); line-height: var(--sn-baseline);
+	color: var(--sn-ink);
+	white-space: pre-wrap;
+}
+.sn-body .poem p { margin: 0 0 var(--sn-baseline); }
+/* La extensión Poem inserta <br/> tras cada línea (Poem.php). Con
+   white-space: pre-wrap el \n del código ya da el salto, así que el
+   <br/> sobra y produciría doble línea. Lo neutralizamos. */
+.sn-body .poem br { display: none; }
+/* MW feature `elements` impone `code, pre, .mw-code { color:#000;
+   background:#f8f9fa; border: 1px solid @border-color-muted }` con
+   especificidad (0,0,1). Las hex de Codex se compilan a literales (no
+   pasan por var()), así que en modo oscuro: tinta negra sobre --sn-sunk
+   (#181610) → ilegible, y filete claro #c8ccd1 → alto contraste sobre
+   papel oscuro. Tinta y fondo ya los pisábamos; el filete claro
+   sobrevivía en `code` inline. Lo normalizamos:
+   · inline (code/kbd/samp) → sin borde y sin caja sólida: wash
+     translúcido derivado de --sn-ink (~6%) que voltea solo claro/oscuro
+     y se siente parte del cuerpo, no una "pastilla" importada.
+   · bloque (pre/.mw-code)  → borde --sn-hairline (warm dark en oscuro). */
+.sn-body :is(code, kbd, samp) {
+	font-family: var(--sn-font-mono); font-size: .9em;
+	color: var(--sn-ink);
+	background: color-mix(in oklab, var(--sn-ink) 6%, transparent);
+	padding: .08em .32em;
+	border: 0;
+	border-radius: var(--sn-radius-s);
+}
+.sn-body :is(pre, .mw-code) {
+	background: var(--sn-sunk); color: var(--sn-ink);
+	border: 1px solid var(--sn-hairline);
+	border-radius: var(--sn-radius);
+	padding: var(--sn-s-4); overflow-x: auto;
+	font-family: var(--sn-font-mono); font-size: var(--sn-fs-sm); line-height: 1.5;
+}
+.sn-body pre code { background: none; padding: 0; }
+.sn-body hr {
+	border: 0; height: 1px; background: var(--sn-hairline);
+	margin: var(--sn-s-7) 0;
+}
+.sn-body :is(img, video) { max-width: 100%; height: auto; }
+/* Solo margen vertical: margin-block en vez de margin para NO pisar el
+   margin-inline:auto con que content-media centra .mw-halign-center. */
+.sn-body figure { margin-block: var(--sn-s-5); }
+
+/* .img-circle: override de MediaWiki:Common.css.
+   En Common.css la regla aplica clip-path:circle() al <figure>, NO al <img>.
+   Cuando el figure contiene <figcaption> el bounding box mide imagen+caption,
+   el centro de circle() cae más abajo que el centro de la imagen, y el
+   círculo recorta los px superiores de la imagen y devora la caption.
+
+   Lo movemos al elemento real (la imagen): clip-path al <img> directamente
+   sobre su propio cuadrado, sin contaminación del caption. La caption se
+   oculta dentro de .img-circle porque en .vcard el nombre ya aparece
+   abajo como .person-name (duplicación no aporta). */
+.sn-body .img-circle { clip-path: none; }
+.sn-body .img-circle :is(img, .mw-file-element) {
+	clip-path: circle();
+	display: block;
+}
+.sn-body .img-circle > figcaption { display: none; }
+
+/* Sinónimo en castellano: class=ancho-completo equivale a class=full-width en
+   todas las reglas de abajo.
+
+   Full-bleed: imagen/figura/wrapper con class="full-width" se revienta del
+   padding lateral del .sn-paper para ir borde-a-borde del <article>.
+   Funciona para tres patrones de wikitexto:
+     [[Archivo:foo.jpg|class=full-width]]                → clase en <img>
+     [[Archivo:foo.jpg|frameless|class=full-width]]      → en <a class="image">
+     <div class="full-width">[[Archivo:foo.jpg]]</div>   → wrapper manual
+   El truco: width:auto + max-width:none + margin-inline negativo igual al
+   padding lateral del paper (expuesto como --sn-paper-px). La imagen interna
+   se estira al 100% del nuevo ancho. Si está dentro de un .thumb la caja
+   thumb también se revienta — la leyenda queda alineada al nuevo ancho. */
+/* Match defensivo: además de `.full-width`, aceptamos el token
+   `'full-width'` (con apóstrofes) que MediaWiki preserva cuando el
+   wikitexto se escribe como `[[Imagen:foo|class='full-width']]`. El
+   selector de atributo `[class~="'full-width'"]` matchea ese token
+   tal cual. El canónico sigue siendo `class=full-width` sin comillas. */
+:is(.sn-paper, .sn-canvas) :is(
+	:is(.full-width, .ancho-completo), .thumb:is(.full-width, .ancho-completo), figure:is(.full-width, .ancho-completo),
+	[class~="'full-width'"], .thumb[class~="'full-width'"], figure[class~="'full-width'"]
+) {
+	display: block;
+	width: auto;
+	max-width: none;
+	margin-inline: calc(-1 * var(--sn-paper-px));
+	margin-block: var(--sn-s-5);
+	border-radius: 0;  /* a sangre no hay esquinas: el bleed de borde repone las del papel */
+	float: none;  /* anula el float que ponen thumb-left/right de core */
+}
+:is(.sn-paper, .sn-canvas) :is(
+	:is(.full-width, .ancho-completo), .thumb:is(.full-width, .ancho-completo), figure:is(.full-width, .ancho-completo),
+	[class~="'full-width'"], .thumb[class~="'full-width'"], figure[class~="'full-width'"]
+) :is(img, video),
+:is(.sn-paper, .sn-canvas) :is(img, video):is(:is(.full-width, .ancho-completo), [class~="'full-width'"]) {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-width: 100%;
+	margin-inline: 0;
+	border-radius: 0;
+}
+/* Si el .full-width es un <img> o un <a class="image"> directo (no envuelto
+   en .thumb), aplicar la misma regla — class va al elemento mismo. */
+:is(.sn-paper, .sn-canvas) :is(
+	a.image:is(.full-width, .ancho-completo), img:is(.full-width, .ancho-completo), video:is(.full-width, .ancho-completo),
+	a.image[class~="'full-width'"], img[class~="'full-width'"], video[class~="'full-width'"]
+) {
+	display: block;
+	width: auto;
+	max-width: none;
+	margin-inline: calc(-1 * var(--sn-paper-px));
+	margin-block: var(--sn-s-5);
+	border-radius: 0;
+}
+:is(.sn-paper, .sn-canvas) :is(a.image:is(.full-width, .ancho-completo), a.image[class~="'full-width'"]) img {
+	width: 100%; height: auto; display: block;
+}
+/* La leyenda dentro de un .thumb full-width vuelve al ancho del cuerpo para
+   no quedar pegada al borde del paper. */
+:is(.sn-paper, .sn-canvas) :is(.thumb:is(.full-width, .ancho-completo), .thumb[class~="'full-width'"]) .thumbcaption {
+	padding-inline: var(--sn-paper-px);
+	text-align: start;
+}
+
+/* El mapa de con§tel ({{#constel: class=full-width}}): su lienzo también va sin
+   esquinas redondeadas ni borde lateral. */
+:is(.sn-paper, .sn-canvas) .constel-embed:is(.full-width, .ancho-completo) .constel-map__canvas {
+	border-radius: 0;
+	border-inline-width: 0;
+}
+
+/* Combinación .ancho-completo + .fondo-*: la familia .fondo-* repone
+   `padding-inline: var(--sn-paper-px)` y `padding-block: var(--sn-baseline)`
+   para que el contenido textual de una banda a sangre vuelva al ancho de
+   lectura con ritmo vertical. En un embed de con§tel el único hijo es el
+   lienzo del mapa, que debe ir a sangre completo sin padding alguno. */
+:is(.sn-paper, .sn-canvas) .constel-embed:is(.full-width, .ancho-completo):is(.fondo-ahuesado, .fondo-coral, .fondo-verde, .fondo-ambar, .fondo-info, .fondo-noche, .fondo-dia, .fondo-opuesto) {
+	padding-inline: 0;
+	padding-block: 0;
+}
+
+/* Bleed vertical de borde: cuando .full-width es el PRIMER o ÚLTIMO elemento
+   del cuerpo (.sn-body), también revienta el padding vertical del paper
+   y redondea las esquinas para alinearse con el border-radius del <article>.
+
+   La cadena de wrappers desde .sn-body hasta el <span class="full-width"> que
+   emite MW es típicamente:
+     .sn-body > #mw-content-text > .mw-parser-output > <p> > .full-width
+   El bleed solo aplica si .full-width es :first-child (o :last-child) en
+   cada nivel — así no se dispara para imágenes que están a media página
+   dentro del primer <p> después de texto. Se enumeran los 4 niveles de
+   anidamiento típicos; basta con que uno matchee.
+
+   El colapso de margen propaga el margin-block negativo a través de los
+   wrappers (ninguno tiene padding/border vertical) hasta detenerse en
+   .sn-paper (que sí tiene padding-block). overflow:hidden clipea el <img>
+   interno al radio del paper en las esquinas tocadas.
+
+   Caveat: en páginas con <h1#firstHeading> visible, el bleed-top tira la
+   imagen hacia arriba y la superpone al título. Usar __NOTITLE__ en páginas
+   diseñadas con hero al tope, o no marcar la primera imagen como full-width.
+   .sn-indicators está ahora position:absolute (ver más arriba) y no ocupa
+   flujo, por lo que .sn-body es siempre el primer elemento de flujo dentro
+   del paper en páginas con __NOTITLE__.
+
+   Variante .mw-empty-elt: los Widgets emiten un salto de línea inicial antes de
+   su HTML de bloque, y MW deja un `<p class="mw-empty-elt">` vacío como primer
+   hijo de .mw-parser-output, justo antes del `.full-width` (p.ej. Widget:P5 como
+   hero en Discusión:Casiopea). Ese <p> va `display:none` (ver arriba) pero NO
+   sale del cómputo de :first-child, así que el `.full-width` deja de ser
+   :first-child y la cadena de arriba no dispara. Reconocemos el patrón con
+   `p.mw-empty-elt:first-child + .full-width` en cada nivel de wrapper, mismas
+   declaraciones. */
+.sn-body > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):first-child,
+.sn-body > *:first-child > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):first-child,
+.sn-body > *:first-child > *:first-child > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):first-child,
+.sn-body > *:first-child > *:first-child > *:first-child > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):first-child,
+.sn-body > p.mw-empty-elt:first-child + :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]),
+.sn-body > *:first-child > p.mw-empty-elt:first-child + :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]),
+.sn-body > *:first-child > *:first-child > p.mw-empty-elt:first-child + :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]),
+.sn-body > *:first-child > *:first-child > *:first-child > p.mw-empty-elt:first-child + :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]) {
+	margin-block-start: calc(-1 * var(--sn-paper-py));
+	border-start-start-radius: var(--sn-radius-paper);
+	border-start-end-radius:   var(--sn-radius-paper);
+	overflow: hidden;
+}
+/* Variante TemplateStyles: cuando el contenedor de contenido arranca con un
+   <style> inyectado por <templatestyles>, ese nodo ocupa el :first-child y
+   desplaza al <p> que lleva la imagen-hero, rompiendo la cadena :first-child
+   de la regla de arriba. Reconocemos ese <style> líder con `style:first-child + *`
+   para que el bleed-top igual se dispare cuando el primer elemento de flujo
+   es una imagen .full-width. Mismo cuerpo de declaraciones que la regla base. */
+.sn-body style:first-child + * > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):first-child {
+	margin-block-start: calc(-1 * var(--sn-paper-py));
+	border-start-start-radius: var(--sn-radius-paper);
+	border-start-end-radius:   var(--sn-radius-paper);
+	overflow: hidden;
+}
+/* Variante Widget solo-scripts: los Widgets (p.ej. Widget:P5 como hero/canvas
+   de la portada) emiten su <script> inline, y MW lo envuelve en un <p> que pasa
+   a ser :first-child de .mw-parser-output, justo antes del `.full-width`. Ese
+   <p> es invisible pero NO es `mw-empty-elt` (contiene <script>, no es whitespace
+   puro), así que ni la regla base ni la variante mw-empty-elt disparan y el
+   canvas queda con el hueco del padding superior. Reconocemos el patrón con
+   `p:has(>script)` cuyos únicos hijos-elemento son scripts —`:not(:has(>:not(script)))`
+   evita el caso legítimo "párrafo de texto + imagen full-width a media página".
+   Mismo cuerpo de declaraciones que la regla base. */
+.sn-body :is(p):first-child:has(> script):not(:has(> :not(script)))
+	+ :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]) {
+	margin-block-start: calc(-1 * var(--sn-paper-py));
+	border-start-start-radius: var(--sn-radius-paper);
+	border-start-end-radius:   var(--sn-radius-paper);
+	overflow: hidden;
+}
+/* …y ese mismo <p> solo-scripts DEBE además colapsar: no renderiza nada (los
+   <script> son display:none) pero como bloque SÍ ocupa caja, dejando un hueco
+   sobre el canvas y, peor, impidiendo que el margen negativo de arriba alcance
+   el borde (el bleed-top colapsa hasta el padding del papel solo si el
+   `.full-width` es el primer elemento DE FLUJO). Se oculta igual que
+   `.mw-empty-elt`; el <script> se ejecuta de todas formas (display:none no
+   impide la ejecución), así que el Widget P5 sigue inicializándose. */
+.sn-body :is(p):first-child:has(> script):not(:has(> :not(script))) {
+	display: none;
+}
+/* Con un AVISO VISIBLE arriba, el full-width primer-hijo NO revienta al borde
+   superior del papel: el aviso ya ocupa el tope y el canvas quedaría chocando /
+   tapado tras él. Vuelve al margen normal (sin radio superior ni recorte). Se
+   restaura el bleed si el aviso se descartó (html[data-sn-notice-hide]) o si no
+   hay aviso (el `~` no casa). Cubre las mismas variantes que el bleed-top:
+   directa, mw-empty-elt, <style> líder y Widget solo-scripts (Widget:P5). En
+   navegadores sin :has() (Macs muy viejos) la variante Widget del bleed-top
+   tampoco dispara, así que el canvas ya trae margen normal → mismo resultado. */
+html:not([data-sn-notice-hide]) .sn-notice ~ .sn-body > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):first-child,
+html:not([data-sn-notice-hide]) .sn-notice ~ .sn-body > *:first-child > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):first-child,
+html:not([data-sn-notice-hide]) .sn-notice ~ .sn-body > p.mw-empty-elt:first-child + :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]),
+html:not([data-sn-notice-hide]) .sn-notice ~ .sn-body style:first-child + * > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):first-child,
+html:not([data-sn-notice-hide]) .sn-notice ~ .sn-body :is(p):first-child:has(> script):not(:has(> :not(script))) + :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]) {
+	margin-block-start: var(--sn-s-5);
+	border-start-start-radius: 0;
+	border-start-end-radius: 0;
+	overflow: visible;
+}
+.sn-body > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):last-child,
+.sn-body > *:last-child > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):last-child,
+.sn-body > *:last-child > *:last-child > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):last-child,
+.sn-body > *:last-child > *:last-child > *:last-child > :is(:is(.full-width, .ancho-completo), [class~="'full-width'"]):last-child {
+	margin-block-end: calc(-1 * var(--sn-paper-py));
+	border-end-start-radius: var(--sn-radius-paper);
+	border-end-end-radius:   var(--sn-radius-paper);
+	overflow: hidden;
+}
+
+/* Override fullscreen: como `.sn-canvas-body` está centrado con
+   `max-width: --sn-shell`, las imágenes `.full-width` necesitan
+   trascender el cuerpo hasta el borde REAL del viewport. La técnica
+   `width: 100vw` + `margin-inline: calc((100% - 100vw) / 2)` posiciona
+   el elemento extendiendo a ambos lados del cuerpo centrado, alcanzando
+   los bordes del viewport sin importar lo angosto que sea el shell.
+   Wins por orden de cascada (misma especificidad que la regla
+   `:is(.sn-paper, .sn-canvas) :is(.full-width, …)` de arriba). */
+.sn-canvas :is(
+	:is(.full-width, .ancho-completo), .thumb:is(.full-width, .ancho-completo), figure:is(.full-width, .ancho-completo),
+	[class~="'full-width'"], .thumb[class~="'full-width'"], figure[class~="'full-width'"]
+) {
+	width: 100vw;
+	max-width: 100vw;
+	margin-inline: calc((100% - 100vw) / 2);
+}
+
+/* ─── Bandas de fondo a sangre lateral (.fondo-N) ───────────────────────
+   Bloque de contenido que va de lado a lado de la hoja (bleed con la MISMA
+   técnica que .full-width: margin-inline negativo = padding lateral del papel)
+   pero con el CONTENIDO de vuelta al ancho de lectura (padding inverso) y una
+   línea base de aire arriba y abajo → la banda mide un nº entero de baselines
+   y no rompe la retícula. Cada variante SOLO cambia el color de fondo, tomado
+   de un token PÁLIDO semántico que voltea claro/oscuro:
+
+     .fondo-ahuesado   hueso claro (papel-400 / tinta-700)
+     .fondo-coral      lavado carmín  (--sn-nova-wash)
+     .fondo-verde      lavado verde   (--sn-ok-wash)
+     .fondo-ambar      lavado ámbar   (--sn-warn-wash)   [rol warn]
+     .fondo-info       lavado info    (--sn-info-wash)   [rol info]
+
+   Combinable con .grilla (el FONDO sangra, la grilla maqueta las columnas
+   dentro del ancho de lectura) y con las clases de contenido. El color se
+   enruta por --sn-fondo para que el comportamiento viva en un solo lugar.
+   Uso: <div class="fondo-verde"> … </div> o <div class="fondo-coral grilla cols-3"> … </div>. */
+:is(.sn-paper, .sn-canvas) :is(.fondo-ahuesado, .fondo-coral, .fondo-verde, .fondo-ambar, .fondo-info, .fondo-noche, .fondo-dia, .fondo-opuesto) {
+	display: block;
+	background: var(--sn-fondo, var(--sn-paper-edge));
+	color: var(--sn-ink);
+	width: auto;
+	max-width: none;
+	margin-inline: calc(-1 * var(--sn-paper-px));
+	padding-inline: var(--sn-paper-px);
+	padding-block: var(--sn-baseline);
+	margin-block: var(--sn-baseline);
+}
+:is(.sn-paper, .sn-canvas) .fondo-ahuesado { --sn-fondo: light-dark(var(--sn-papel-400), var(--sn-tinta-700)); }
+:is(.sn-paper, .sn-canvas) .fondo-coral { --sn-fondo: var(--sn-nova-wash); }
+:is(.sn-paper, .sn-canvas) .fondo-verde { --sn-fondo: var(--sn-ok-wash); }
+:is(.sn-paper, .sn-canvas) .fondo-ambar { --sn-fondo: var(--sn-warn-wash); }
+:is(.sn-paper, .sn-canvas) .fondo-info  { --sn-fondo: var(--sn-info-wash); }
+
+/* ── Bandas que INVIERTEN el tema — color-scheme local ──────────────────
+   El tema se conduce por `color-scheme` + light-dark(): redeclarar
+   `color-scheme` en un contenedor hace que TODOS los tokens light-dark() de
+   su subárbol resuelvan al esquema opuesto, arrastrando texto, enlaces,
+   tablas y fichas al voltear. El fondo de la banda es el papel del esquema
+   contrario (`--sn-paper`, ya volteado). Como light-dark() solo interpola
+   COLOR, se reponen a mano los cinco tokens NO-color que varían por tema
+   (grano, las tres sombras y el grado serif) — los mismos que sobrescribe el
+   conmutador en tokens.css — y se re-declara font-variation-settings para que
+   el grado acompañe a la serif DENTRO de la banda (la propiedad se hereda ya
+   sustituida desde :root; sin re-declararla el grado no voltearía).
+
+     .fondo-noche    fuerza OSCURO (sea cual sea el tema de la página)
+     .fondo-dia      fuerza CLARO
+     .fondo-opuesto  invierte respecto al tema VIGENTE de la página
+   Uso: <div class="fondo-opuesto"> … </div> (combinable con .grilla y las
+   clases de contenido, igual que el resto de la familia .fondo-*). */
+:is(.sn-paper, .sn-canvas) :is(.fondo-noche, .fondo-dia, .fondo-opuesto) {
+	--sn-fondo: var(--sn-paper);
+}
+
+/* Objetivo OSCURO: .fondo-noche siempre; .fondo-opuesto cuando la página
+   está en claro (forzado, o auto sin preferencia oscura del SO). */
+.fondo-noche,
+:root[data-sn-theme="light"] .fondo-opuesto,
+:root[data-sn-theme="auto"]  .fondo-opuesto {
+	color-scheme: dark;
+	--sn-field-grain: .05;
+	--sn-lift-paper: 0 1px 1px rgba(0,0,0,.25), 0 3px 10px rgba(0,0,0,.35);
+	--sn-lift:       0 1px 1px rgba(0,0,0,.45), 0 8px 6px -3px rgba(0,0,0,.6);
+	--sn-lift-soft:  0 2px 12px rgba(0,0,0,.4);
+	--sn-serif-grade: 30;
+	font-variation-settings: "GRAD" var(--sn-serif-grade);
+}
+
+/* Objetivo CLARO: .fondo-dia siempre; .fondo-opuesto cuando la página está
+   en oscuro forzado (el caso auto+SO-oscuro se resuelve en la media de abajo,
+   que gana por orden a igual especificidad — mismo patrón que tokens.css). */
+.fondo-dia,
+:root[data-sn-theme="dark"] .fondo-opuesto {
+	color-scheme: light;
+	--sn-field-grain: .035;
+	--sn-lift-paper: 0 1px 1px rgba(40,33,20,.03), 0 3px 8px rgba(40,33,20,.04);
+	--sn-lift:       0 1px 1px rgba(40,33,20,.06), 0 8px 6px -3px rgba(40,33,20,.16);
+	--sn-lift-soft:  0 2px 8px rgba(40,33,20,.05);
+	--sn-serif-grade: 70;
+	font-variation-settings: "GRAD" var(--sn-serif-grade);
+}
+@media (prefers-color-scheme: dark) {
+	:root[data-sn-theme="auto"] .fondo-opuesto {
+		color-scheme: light;
+		--sn-field-grain: .035;
+		--sn-lift-paper: 0 1px 1px rgba(40,33,20,.03), 0 3px 8px rgba(40,33,20,.04);
+		--sn-lift:       0 1px 1px rgba(40,33,20,.06), 0 8px 6px -3px rgba(40,33,20,.16);
+		--sn-lift-soft:  0 2px 8px rgba(40,33,20,.05);
+		--sn-serif-grade: 70;
+		font-variation-settings: "GRAD" var(--sn-serif-grade);
+	}
+}
+/* El aire vertical lo da el padding de la banda; el margen del primer/último
+   hijo interno sobra y descuadraría los bordes. */
+:is(.sn-paper, .sn-canvas) :is(.fondo-ahuesado, .fondo-coral, .fondo-verde, .fondo-ambar, .fondo-info, .fondo-noche, .fondo-dia, .fondo-opuesto) > :first-child { margin-top: 0; }
+:is(.sn-paper, .sn-canvas) :is(.fondo-ahuesado, .fondo-coral, .fondo-verde, .fondo-ambar, .fondo-info, .fondo-noche, .fondo-dia, .fondo-opuesto) > :last-child  { margin-bottom: 0; }
+
+/* ─── .pegado: un bloque pegado al anterior ─────────────────────────────
+   Caso típico: una banda .fondo-* como pie de un mapa de con§tel o de una
+   imagen a sangre (.full-width). Sin esto queda el margen vertical del bloque
+   de arriba (--sn-s-5 en .full-width) y la salida era un margin-top negativo
+   a mano. Dos reglas: el .pegado anula su margen superior y, vía :has(), el
+   hermano anterior anula el inferior —hay que tocar los dos porque los
+   márgenes colapsan al mayor, no se suman—. Sin soporte de :has() queda el
+   aire del bloque anterior: degrada, no rompe. */
+/* Prefijo .mw-parser-output: sube a (0,3,0) para empatar con la regla base de
+   .full-width (cuyo :is() vale .thumb.full-width) y ganarle por orden. */
+:is(.sn-paper, .sn-canvas) .mw-parser-output .pegado { margin-block-start: 0; }
+:is(.sn-paper, .sn-canvas) .mw-parser-output :has(+ .pegado) { margin-block-end: 0; }
+
+/* El skin DECRETA que <canvas> e <iframe> embebidos (p5.js, widgets como
+   {{#widget:P5js}} que incrustan un sitio externo, lienzos experimentales)
+   NO llevan borde, outline NI box-shadow — ni en foco. Se neutraliza
+   también el box-shadow porque el del widget (inline, hex de 8 dígitos)
+   Firefox lo renderiza como una raya negra gruesa (causa real del bug).
+   El skin se hace dueño de esto pase lo que pase en el estilo inline del
+   widget. !important por si Common.css o el UA intentan imponerlo. (El
+   `site.styles` de la wiki carga ANTES que el <link> del skin, así que el
+   orden ya nos favorece; el !important cubre el estilo inline del widget,
+   que sí ganaría por cascada.) */
+canvas, iframe,
+.mw-body-content :is(canvas, iframe),
+.p5m-sketch, .p5m-sketch canvas,
+.sn-canvas canvas {
+	border: 0 !important;
+	outline: 0 !important;
+	box-shadow: none !important;
+}
+:is(canvas, iframe):focus, :is(canvas, iframe):focus-visible,
+.p5m-sketch:focus, .p5m-sketch:focus-visible { outline: 0 !important; }
+.p5m-sketch { background: transparent; }
+.sn-body figcaption, .sn-body .thumbcaption {
+	font-size: calc(var(--sn-fs-xs) * 0.88); color: var(--sn-ink-soft);
+	font-style: normal; margin-top: var(--sn-s-2);
+}
+
+/* — Badge — chip de metadatos (estado, etiqueta, categoría). Estaba
+   documentado en el especimen (specimen.css) pero NO se shippeaba en el
+   skin: ahora es el componente REAL. Base neutra rellena + variantes de
+   color por rol (wash + tinta del rol). El borde transparente reserva la
+   caja para que las variantes "fantasma" (p. ej. categorías sin página)
+   no cambien de tamaño al pintar un filete. Las categorías del pie
+   (.catlinks li) COMPARTEN esta base: son badges también. */
+.sn-badge, .catlinks li {
+	display: inline-flex; align-items: center;
+	padding: 2px var(--sn-s-2);
+	font-size: var(--sn-fs-xs); font-weight: 500;
+	background: var(--sn-sunk); color: var(--sn-ink-soft);
+	border: 1px solid transparent; border-radius: var(--sn-radius);
+}
+.sn-badge-nova   { background: var(--sn-nova-wash);   color: var(--sn-nova); }
+.sn-badge-ok     { background: var(--sn-ok-wash);     color: var(--sn-ok); }
+.sn-badge-warn   { background: var(--sn-warn-wash);   color: var(--sn-warn); }
+.sn-badge-danger { background: var(--sn-danger-wash); color: var(--sn-danger); }
+
+/* — Categorías — el pie las re-viste como badges (comparten la base de
+   arriba) y distingue por ESTADO de la página de categoría:
+     · existe  → fondo igual al CAMPO fuera de la hoja (--sn-field) y texto
+       en color de enlace (--sn-link): categoría real, navegable.
+     · no existe (redlink a.new) → fondo muy pálido, casi blanco, y texto
+       gris claro (--sn-ink-faint). De-énfasis: "esta categoría aún no tiene
+       página". El borde transparente (de la base) iguala la altura. */
+.catlinks, .mw-normal-catlinks {
+	margin-top: var(--sn-s-7);
+	padding-top: var(--sn-s-4);
+	/* Sin filete superior: las categorías se separan del cuerpo por el aire
+	   (margin/padding), no por una regla horizontal (doctrina "sin filetes"). */
+	font-size: var(--sn-fs-sm); color: var(--sn-ink-soft);
+}
+.catlinks ul { display: inline-flex; flex-wrap: wrap; gap: var(--sn-s-2);
+	list-style: none; margin: 0; padding: 0; }
+.catlinks li a { color: inherit; text-decoration: none; }
+/* Categoría EXISTENTE: fondo del campo (como fuera de la hoja), texto enlace. */
+.catlinks li {
+	background: var(--sn-field);
+	color: var(--sn-link);
+}
+.catlinks li a:hover { color: var(--sn-nova); }
+/* Categoría sin página (redlink a.new): fondo casi blanco, texto gris claro. */
+.catlinks li:has(a.new) {
+	background: color-mix(in oklab, var(--sn-ink) 5%, var(--sn-paper));
+	border-color: transparent;
+	color: var(--sn-ink-faint);
+}
+.catlinks li:has(a.new) a:hover { color: var(--sn-ink-soft); }
+.catlinks.catlinks-allhidden { display: none; }
+
+/* — Enlace de patrullaje nativo ("Marcar esta página como verificada") —
+   El core lo renderiza como
+     <div class="patrollink"><a><button class="cdx-button
+     cdx-button--action-progressive">…</button></a></div>   (Article.php).
+   El skin lo re-viste como nav-pill (mismo lenguaje que las categorías),
+   neutralizando el botón Codex primario. Scoped a `.patrollink`: NO afecta
+   a los demás cdx-button del wiki (VE, InputBox, Thanks, etc.). La mayor
+   especificidad (`.patrollink button.cdx-button`) le gana al CSS de Codex
+   sin necesidad de !important. */
+.patrollink { margin-top: var(--sn-s-6); }
+.patrollink a { text-decoration: none; }
+.patrollink button.cdx-button {
+	display: inline-flex; align-items: center; gap: var(--sn-s-1);
+	min-height: 0;
+	padding: .3rem .85rem;
+	font: inherit; font-size: var(--sn-fs-sm); font-weight: 500;
+	color: var(--sn-ink);
+	background: var(--sn-sunk);
+	border: 1px solid var(--sn-hairline);
+	border-radius: 999px;
+	box-shadow: none; cursor: pointer;
+	transition: background var(--sn-dur-1), border-color var(--sn-dur-1), color var(--sn-dur-1);
+}
+.patrollink a:hover button.cdx-button,
+.patrollink a:focus-visible button.cdx-button {
+	background: var(--sn-paper);
+	border-color: var(--sn-nova);
+	color: var(--sn-nova);
+}
+
+/* ──────────────── Índice (ToC NATIVO, en su sitio) ────────────────
+   No se relocaliza ni se duplica: MediaWiki lo inyecta donde marca
+   __TOC__ (o en su posición automática) y el skin solo lo VISTE para
+   que tenga el lenguaje de diseño del resto.
+
+   EXCEPCIÓN AL BASELINE GRID (decisión deliberada): el índice es una
+   TARJETA, no texto corrido. Sus márgenes/paddings usan la escala de
+   espaciado (--sn-s-*), no --sn-baseline, y su alto total es variable
+   (depende del nº de entradas), así que no calza la grilla de línea de
+   base ni se pretende que lo haga. El texto que sigue conserva su propio
+   ritmo interno; solo el origen global de la grilla se desplaza un poco
+   tras la tarjeta. NO "arreglar" pasando los márgenes a baseline: el
+   desfase por el alto interno variable seguiría existiendo. Por eso el
+   h2 interior puede llevar line-height: 1 sin romper nada. */
+.sn-body .toc, .mw-parser-output .toc {
+	display: block;            /* full-width: ocupa el 100% de la hoja */
+	width: 100%;
+	/* Todas las medidas verticales son múltiplos de --sn-baseline para caer en
+	   la retícula, incluso al maquetar el TOC en columnas junto a párrafos, así
+	   la caja mide un nº ENTERO de baselines y el colapso de márgenes con los
+	   bloques vecinos no la desalinea. Sin filete (decisión de diseño): solo el
+	   relleno hundido delimita la caja. */
+	margin: var(--sn-baseline) 0;
+	/* Sin filete: el core (mediawiki.skinning) mete `.toc { border:1px solid #aaa }`
+	   dentro de `@media screen`; nuestra regla gana en especificidad pero antes NO
+	   declaraba `border`, así que el del core seguía pintando. Lo anulamos. */
+	border: 0;
+	border-radius: var(--sn-radius);
+	background: color-mix(in oklab, var(--sn-sunk) 60%, transparent);
+	padding: 0 0 var(--sn-baseline);
+	font-size: var(--sn-fs-sm);
+}
+.sn-body .toc .toctitle {
+	position: relative;                /* ancla del label-overlay que cubre toda la barra */
+	display: flex; align-items: center; justify-content: space-between;
+	gap: var(--sn-s-3);
+	padding: 0 var(--sn-s-4);          /* vertical 0: la barra mide 1 baseline por min-height */
+	min-height: var(--sn-baseline);
+	text-align: left;
+	cursor: pointer;                   /* toda la barra togglea (ver label-overlay abajo) */
+}
+.sn-body .toc .toctitle :is(h2, h3) {
+	margin: 0; padding: 0; border: 0; font-family: var(--sn-font-text);
+	font-size: var(--sn-fs-sm); font-weight: 600;
+	line-height: var(--sn-baseline);
+	letter-spacing: 0;
+	color: var(--sn-ink-soft);
+}
+/* Colapsable: el checkbox nativo se oculta visualmente pero queda
+   enfocable por teclado; el label es un cheurón que rota y, al marcar,
+   oculta la lista (mecanismo CSS puro de MediaWiki). */
+.sn-body .toc .toctogglecheckbox {
+	position: absolute; width: 1px; height: 1px;
+	opacity: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.sn-body .toc .toctogglespan { display: flex; flex: none; }
+/* Minimal: SOLO el cheurón que gira. Se suprime cualquier texto y los
+   corchetes "[ocultar]/[mostrar]" que MediaWiki pinta vía CSS (en el
+   label o en el span); font-size:0 mata texto y el cheurón se mide en
+   rem (independiente del tamaño de fuente).
+
+   El `<label for=toctogglecheckbox>` se ESTIRA sobre toda la `.toctitle`
+   (absoluto, `inset:0`) para que un click en cualquier parte de la barra
+   —no solo el cheurón— togglee el TOC (mecanismo nativo del `for`, sin JS,
+   funciona colapsado→expandido y viceversa). El cheurón se dibuja alineado
+   a la derecha (`justify-content:flex-end` + padding), donde vivía antes. */
+.sn-body .toc .toctogglelabel {
+	position: absolute; inset: 0; z-index: 1;
+	display: flex; align-items: center; justify-content: flex-end;
+	padding-right: var(--sn-s-4); margin: 0;
+	font-size: 0; line-height: 0;
+	cursor: pointer; color: var(--sn-ink-faint);
+	transition: color var(--sn-dur-1);
+}
+.sn-body .toc .toctogglelabel:hover { color: var(--sn-ink); }
+.sn-body .toc .toctogglelabel::before,
+.sn-body .toc .toctogglespan::before,
+.sn-body .toc .toctogglespan::after { content: none !important; }
+.sn-body .toc .toctogglelabel::after {
+	content: "" !important; display: block;
+	width: .42rem; height: .42rem; margin-top: -.16rem;
+	border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+	transform: rotate(45deg);
+	transition: transform var(--sn-dur-1) var(--sn-ease);
+}
+.sn-body .toc .toctogglecheckbox:checked ~ .toctitle .toctogglelabel::after {
+	transform: rotate(-45deg); margin-top: .1rem;
+}
+.sn-body .toc .toctogglecheckbox:checked ~ ul { display: none; }
+/* Colapsado: sin lista que separar, la caja suelta su `padding-bottom` y queda
+   la barra de título (1 baseline) — la caja sigue midiendo un nº entero de
+   baselines. */
+.sn-body .toc:has(.toctogglecheckbox:checked) { padding-bottom: 0; }
+.sn-body .toc .toctogglecheckbox:focus-visible ~ .toctitle .toctogglelabel {
+	outline: 2px solid var(--sn-nova); outline-offset: 2px;
+}
+.sn-body .toc ul {
+	list-style: none; margin: 0; padding: 0 var(--sn-s-4);
+}
+.sn-body .toc ul ul {
+	margin-left: var(--sn-s-3); padding: 0 0 0 var(--sn-s-3);
+	border-left: 1px solid var(--sn-hairline-soft);
+}
+.sn-body .toc li { margin: 0; }
+.sn-body .toc li a {
+	display: flex; gap: var(--sn-s-2); padding: 0;
+	line-height: var(--sn-baseline);   /* cada fila = 1 baseline exacto (era .24rem 0 → drift acumulado) */
+	color: var(--sn-ink-soft); text-decoration: none;
+}
+.sn-body .toc li a:hover { color: var(--sn-ink); }
+.sn-body .toc .tocnumber {
+	color: var(--sn-ink-faint); font-variant-numeric: tabular-nums; flex: none;
+}
+.sn-body .toc .toctext { min-width: 0; }
+
+/* "Más" (acciones) y Variantes: bloque compacto al final de las pestañas. */
+/* ───── Pie a 3 columnas: Stella-Nova:Pie · legal · herramientas ───── */
+.sn-footer {
+	/* El pie es TRANSPARENTE: deja pasar el fondo del `body` —el "escritorio"
+	   (campo --sn-field + degradado radial + grano SVG, con
+	   background-attachment: fixed)— de modo que se ve CONTINUO con el campo
+	   que rodea a la hoja, en claro y en oscuro. Un color plano (--sn-field
+	   sin la textura/degradado del body) se leería como un parche distinto;
+	   por eso transparent y no el token. `.sn-app`, su contenedor, no pinta
+	   fondo, así que el fixed del body asoma sin obstáculo. El pie se separa
+	   de la hoja por el aire (margin-top), no por filete ni tono propio. */
+	background: transparent;
+	font-size: var(--sn-fs-sm); color: var(--sn-ink-soft);
+	margin-top: var(--sn-s-7);
+}
+/* El ancho del pie se alinea con la HOJA (--sn-measure), no con la chrome
+   (--sn-shell), para que las columnas queden bajo la columna de lectura y
+   no exhiban espacio muerto a los lados. Dos columnas en proporción 2fr 1fr:
+   ANCHA (izq) = última edición + herramientas inline; ANGOSTA (der) =
+   enlaces de sitio + bloque editable (Stella-Nova:Pie). */
+.sn-footer-inner {
+	max-width: var(--sn-measure); margin-inline: auto;
+	padding: var(--sn-s-6) var(--sn-s-4);
+	display: grid; gap: var(--sn-s-6) var(--sn-s-7);
+	grid-template-columns: 2fr 1fr;
+	align-items: start;
+}
+.sn-wide .sn-footer-inner { max-width: var(--sn-shell); }
+.sn-footer-col { min-width: 0; }
+
+/* — Columna ancha — última edición + herramientas + enlaces de sitio —
+   Todo este lado va un punto más pequeño que el resto del pie (--sn-fs-xs). */
+.sn-footer-main {
+	display: flex; flex-direction: column; gap: var(--sn-s-4);
+	font-size: var(--sn-fs-xs);
+}
+.sn-foot-lastedit { margin: 0; color: var(--sn-ink-soft); }
+.sn-foot-lastedit .sn-foot-user { color: var(--sn-link); text-decoration: none; }
+.sn-foot-lastedit .sn-foot-user:hover { color: var(--sn-link-hover); text-decoration: underline; }
+
+/* Uniformidad tipográfica de la columna ancha: TODOS los enlaces (herramientas,
+   enlaces de sitio, licencia y el summary de "Herramientas") leen igual que
+   .sn-foot-lastedit —misma familia, tamaño (--sn-fs-xs), peso y ancho—; sólo el
+   color queda semántico (link vs. texto). Anula los font-size calc(fs-sm*.8)
+   propios de cada lista. Scoped a .sn-footer-main: el pie de pantalla completa
+   conserva su propia escala. */
+.sn-footer-main :is(.sn-foot-toollist, .sn-foot-places, .sn-foot-license, .sn-foot-tools-summary) {
+	font-family: var(--sn-font-text);
+	font-size: var(--sn-fs-xs);
+	font-weight: 400;
+	font-stretch: normal;
+}
+
+/* Herramientas y más: SIN título, enlaces comunes en línea (color de enlace,
+   subrayado sólo al hover/foco), cada uno con su ícono Feather delante
+   (inyectado en PHP por id de item → ver SkinStellamereida::iconizeToollist). */
+.sn-foot-toollist {
+	list-style: none; margin: 0; padding: 0;
+	display: flex; flex-wrap: wrap; gap: var(--sn-s-1) var(--sn-s-4);
+	/* Mismo tamaño que los enlaces de sitio (.sn-foot-places), no el del
+	   cuerpo del pie: los dos grupos de enlaces leen igual. */
+	font-size: calc(var(--sn-fs-sm) * .8);
+}
+.sn-foot-toollist li { margin: 0; list-style: none; }
+.sn-foot-toollist li a {
+	display: inline-flex; align-items: center; gap: var(--sn-s-1);
+	color: var(--sn-link); text-decoration: none;
+	transition: color var(--sn-dur-1);
+}
+.sn-foot-toollist li a:hover, .sn-foot-toollist li a:focus-visible {
+	color: var(--sn-link-hover); text-decoration: underline;
+}
+/* El ícono escala con el texto del item (queda pequeño en --sn-fs-xs). */
+.sn-foot-ico { width: 1em; height: 1em; }
+/* El skinning del core pinta el enlace de feed (Atom/RSS) con un PNG de feed
+   como background-image + padding-left. Lo neutralizamos: ya le inyectamos el
+   ícono Feather "rss" delante (sn-foot-ico), así que el item lee igual que el
+   resto de la lista. */
+.sn-foot-toollist li a.feedlink { background: none; padding-left: 0; }
+
+/* Enlaces de sitio (privacidad/acerca/descargos): a 80% del cuerpo de pie. */
+.sn-foot-places {
+	list-style: none; margin: 0; padding: 0;
+	display: flex; flex-wrap: wrap; align-items: baseline;
+	gap: var(--sn-s-1) var(--sn-s-3);
+	font-size: calc(var(--sn-fs-sm) * .8);
+}
+.sn-foot-places li { margin: 0; }
+.sn-foot-places a { color: var(--sn-ink-soft); text-decoration: none; }
+.sn-foot-places a:hover { color: var(--sn-nova); }
+
+/* "Herramientas" (disclosure del pie) se define UNA sola vez para AMBOS
+   layouts en `.sn-foot-line` (sección del pie de pantalla completa, más
+   abajo): mismo grid de dos filas, misma animación, mismo ícono +/↑. */
+
+/* Licencia de la wiki (copyright de MediaWiki, $wgRights*): tras los enlaces
+   de sitio, en el mismo tono pequeño y discreto; el enlace en color de enlace. */
+.sn-foot-license {
+	margin: 0;
+	font-size: calc(var(--sn-fs-sm) * .8);
+	color: var(--sn-ink-faint);
+}
+.sn-foot-license a { color: var(--sn-link); text-decoration: none; }
+.sn-foot-license a:hover { color: var(--sn-link-hover); text-decoration: underline; }
+
+/* — Columna angosta — bloque editable (Stella-Nova:Pie) — */
+.sn-footer-side { display: flex; flex-direction: column; gap: var(--sn-s-5); }
+
+/* Bloque institucional editable (Stella-Nova:Pie), al pie de la columna. */
+.sn-footer-managed { color: var(--sn-ink); }
+.sn-footer-managed :is(h1,h2,h3,h4) {
+	font-family: var(--sn-font-text); color: var(--sn-ink);
+	font-weight: 680; letter-spacing: -.012em;
+	font-size: var(--sn-fs-md); margin: 0 0 var(--sn-s-2);
+}
+.sn-footer-managed a { color: var(--sn-link); }
+.sn-footer-managed :is(p, ul, ol) { margin: 0 0 var(--sn-s-3); }
+.sn-footer-managed > :last-child { margin-bottom: 0; }
+
+/* ── Preferencias de lectura: apéndice del menú de usuario ──
+   Ya no hay panel/diálogo aparte. Tras el separador (<hr>) del menú van
+   los dos segmentos (Tema · Tamaño de letra). */
+.sn-menu-sep {
+	/* `height: 0; background: none` neutraliza el <hr> del core (elements.less:
+	   `height: 1px; background-color: #aaa`), que si no se filtra como una caja
+	   gris bajo el filete. La línea la da SOLO el border-top. */
+	border: 0; border-top: 1px solid var(--sn-hairline-soft);
+	height: 0; background: none;
+	margin: var(--sn-s-2) 0;
+}
+.sn-menu-prefs {
+	display: flex; flex-direction: column; gap: var(--sn-s-3);
+	padding: var(--sn-s-1) var(--sn-s-3) var(--sn-s-2);
+}
+.sn-pref { border: 0; margin: 0; padding: 0; min-width: 0; }
+.sn-pref legend {
+	padding: 0 0 var(--sn-s-2); font-size: calc(var(--sn-fs-xs) * .88);
+	font-weight: 600; color: var(--sn-ink-faint);
+	text-transform: uppercase; letter-spacing: .06em;
+}
+
+/* Control segmentado */
+.sn-seg {
+	display: flex; gap: 2px; padding: 3px;
+	background: var(--sn-sunk);
+	border-radius: var(--sn-radius);
+}
+.sn-seg button {
+	flex: 1; min-width: 0; cursor: pointer;
+	/* Centrado + alto UNIFORME para los tres segmentos (tema · tamaño · familia):
+	   el min-height domina y el contenido (íconos/letras) se centra, así todos
+	   los switches quedan igual de holgados sin importar el alto del glifo. */
+	display: inline-flex; align-items: center; justify-content: center;
+	min-height: 1.9rem;
+	background: transparent; border: 0; color: var(--sn-ink-soft);
+	font: inherit; font-size: var(--sn-fs-sm);
+	padding: 0 .5rem; border-radius: calc(var(--sn-radius) - 2px);
+	transition: background var(--sn-dur-1), color var(--sn-dur-1);
+}
+.sn-seg button:hover { color: var(--sn-ink); }
+.sn-seg button[aria-pressed="true"], .sn-seg button.is-on {
+	background: var(--sn-paper); color: var(--sn-ink); font-weight: 600;
+	box-shadow: var(--sn-lift-soft);
+}
+
+/* Segmentos con contenido no-textual (íconos / letras de talla): el ícono sigue
+   el color del botón (ink-soft en reposo, ink al activo/hover) en vez de la
+   política global de íconos — aquí el ícono ES el control. (El centrado y el
+   alto uniforme viven en `.sn-seg button`.) */
+.sn-seg-icon .sn-i { color: inherit; }
+/* Tallas S·M·L: letra que crece con la talla (guiño dimensional). */
+.sn-seg-sz button { font-weight: 600; letter-spacing: .02em; line-height: 1; }
+.sn-seg-sz button[data-v="small"]  { font-size: calc(var(--sn-fs-sm) * .82); }
+.sn-seg-sz button[data-v="medium"] { font-size: var(--sn-fs-sm); }
+.sn-seg-sz button[data-v="large"]  { font-size: calc(var(--sn-fs-sm) * 1.22); }
+
+/* Familia Aa/Aa: cada botón muestra UNA 'a' en su propia familia primitiva
+   (sans / serif) para que la elección sea visual, no textual. Forzamos las
+   primitivas --sn-font-sans/--sn-font-serif, NO los alias --sn-font-text/
+   --sn-font-quote — esos cambian con la preferencia y los specimens
+   quedarían iguales al alternar (el bug a evitar). El glifo va a mayor
+   tamaño que las S·M·L para que el contraste de familia se lea bien. */
+.sn-seg-fam button { line-height: 1; }
+.sn-fam-spec {
+	font-size: calc(var(--sn-fs-sm) * 1.3);
+	font-weight: 500; line-height: 1;
+	display: inline-block;
+}
+.sn-fam-sans  { font-family: var(--sn-font-sans);  font-feature-settings: "ss01"; }
+.sn-fam-serif { font-family: var(--sn-font-serif); font-optical-sizing: auto; }
+
+/* ─────────── ExperimentalCanvas + UnifiedMenuAffordance ───────────
+   Pantalla completa (__PANTALLACOMPLETA__): la página POSEE el viewport.
+   El esqueleto se reduce a:
+     · una barra mínima (.sn-fs-bar) con el isotipo cuadrado de Casiopea
+       como único disparador → abre un modal único segmentado.
+     · el contenido del wiki (.sn-canvas-body) con padding equivalente al
+       de .sn-paper para que tipografía y márgenes vivan como en cualquier
+       otra página.
+   No hay botón "salir de pantalla completa": la salida vive en el modal
+   (Portada / Navegación). */
+.sn-canvas {
+	/* Pantalla completa: el papel cubre el viewport entero —de lado a
+	   lado y de arriba a abajo. El `.sn-canvas` NO se centra ni limita;
+	   son `.sn-canvas-body` y `.sn-fs-bar` quienes cargan la `max-width`
+	   del shell y `margin-inline: auto` para mantener el contenido en
+	   una columna legible. Así el campo (con grano) NO se asoma por los
+	   lados y la atmósfera es la de una hoja única.
+
+	   Contrato de tokens: aliasamos `--sn-paper-px/py` al `--sn-canvas-px/py`
+	   para que reglas legacy de `.sn-paper :is(.full-width, …)` operen
+	   aquí sin duplicarse. */
+	--sn-canvas-px: clamp(var(--sn-s-4), 4vw, var(--sn-s-7));
+	--sn-canvas-py: clamp(var(--sn-s-5), 4vw, var(--sn-s-7));
+	--sn-paper-px: var(--sn-canvas-px);
+	--sn-paper-py: var(--sn-canvas-py);
+	/* Separación del isotipo a la esquina: UN solo valor para el borde
+	   superior y el derecho (la esquina queda cuadrada). La comparten el
+	   riel `.sn-fs-md` y la X del modal; una página puede ajustarla
+	   (con§tel la acerca a --sn-s-3, a la altura de su barra). */
+	--sn-fs-inset: var(--sn-s-6);
+	display: block;
+	min-height: 100vh;
+	padding: var(--sn-canvas-py) var(--sn-canvas-px);
+	background: var(--sn-paper);
+	color: var(--sn-ink);
+	/* AÍSLA el cuerpo en un contexto de apilamiento propio. Cualquier contenido
+	   dinámico (canvas p5 de la home, embeds JS) queda ENCERRADO aquí abajo: por
+	   más `z-index` que se ponga, no puede escalar por encima del `.sn-header`
+	   hermano. Es la defensa "independiente de lo que inyecte el JS". */
+	isolation: isolate;
+	/* `.full-width` usa `width: 100vw` con margenes negativos calculados
+	   en `vw`. Sin `clip`, micro-desfases sub-pixel pueden disparar scroll
+	   horizontal en algún viewport. `clip` no crea contexto propio (a
+	   diferencia de `hidden`, que rompería sticky/fixed). */
+	overflow-x: clip;
+}
+/* Pantalla completa = contenido ABSOLUTAMENTE LIBRE: el cuerpo NO se centra
+   ni se limita al ancho de lectura; ocupa todo el canvas (el único margen es
+   el padding básico de `.sn-canvas`, --sn-canvas-px). La prosa ya no se acota
+   a --sn-measure: el autor estructura con el framework de grilla (.grid). */
+.sn-canvas-body {
+	max-width: none;
+	margin-inline: 0;
+}
+/* Afordancia única de pantalla completa: el isotipo SOBREPUESTO, fijo y EN
+   FRENTE del contenido, en la esquina superior derecha del viewport. Sin
+   "barra": este contenedor full-width es solo el RIEL de posición;
+   `pointer-events: none` deja pasar los clics al contenido salvo en el glifo
+   (y el menú). `flex-end` + el padding lo clavan a la esquina con la MISMA
+   separación arriba y a la derecha (`--sn-fs-inset`): antes el derecho
+   seguía a `--sn-canvas-px` (4vw) y la esquina quedaba descuadrada. */
+.sn-fs-md {
+	position: fixed; inset: 0 0 auto 0; z-index: var(--sn-z-panel);
+	display: flex; align-items: flex-start; justify-content: flex-end;
+	padding: var(--sn-fs-inset) var(--sn-fs-inset) 0;
+	pointer-events: none;
+}
+.sn-fs-md > * { pointer-events: auto; }
+/* Disparador del menú a pantalla completa: el glifo de la constelación flota
+   arriba a la derecha sobre el lienzo (que va de claro a oscuro con la
+   animación P5 y con el tema). Para garantizar contraste sobre CUALQUIER fondo
+   —sin un halo blanco fijo que no escala con el modo— el glifo se pinta como el
+   NEGATIVO del cielo que tiene detrás (ver `.sn-fs-glyph`): oscuro sobre fondo
+   claro, claro sobre fondo oscuro, color complementario sobre las órbitas. */
+.sn-fs-trigger {
+	position: relative; z-index: 0;       /* contiene el disco ::before detrás del glifo */
+	display: inline-flex; align-items: center; justify-content: center;
+	width: 3rem; height: 3rem; padding: 0;
+	background: transparent; border: 0; cursor: pointer;
+	border-radius: 50%;
+	transition: transform var(--sn-dur-2) var(--sn-ease);
+}
+/* Afordancia de hover/focus en DOS capas, ambas círculos del 110% del botón
+   (`inset` negativo), holgadas alrededor del glifo, que entran escalando:
+     · ::before — el FROST: el círculo completo aplica el mismo efecto de
+       desenfoque + saturación de la barra de menú, PERO sin relleno de color
+       (solo `backdrop-filter`), así el cristal se nota aunque no haya disco.
+     · ::after  — el ARO: dos líneas finas (1px) en `--sn-nova` separadas por
+       un hueco transparente. `border` pinta la línea interior y `outline` +
+       `outline-offset` la exterior (el offset abre la separación); pinta
+       SOBRE el frost. No se usa `double` porque reparte el ancho en tercios
+       iguales y no deja afinar la línea y ensanchar el hueco por separado.
+   Un disco con relleno opaco pesaba sobre fondos claros; el frost sin color no. */
+.sn-fs-trigger::before,
+.sn-fs-trigger::after {
+	content: "";
+	position: absolute; inset: -0.15rem; z-index: -1;   /* 3rem → 3.3rem (110%) */
+	border-radius: 50%;
+	opacity: 0; transform: scale(.7);
+	transition: opacity var(--sn-dur-1) var(--sn-ease),
+	            transform var(--sn-dur-2) var(--sn-ease);
+	pointer-events: none;
+}
+.sn-fs-trigger::before {
+	-webkit-backdrop-filter: saturate(1.6) blur(2px);
+	backdrop-filter: saturate(1.6) blur(2px);
+}
+.sn-fs-trigger::after {
+	border: .5px solid var(--sn-nova);
+	outline: .5px solid var(--sn-nova);
+	outline-offset: 2px;
+}
+.sn-fs-trigger:hover::before, .sn-fs-trigger:focus-visible::before,
+.sn-fs-trigger:hover::after,  .sn-fs-trigger:focus-visible::after {
+	opacity: 1; transform: scale(1);
+}
+.sn-fs-trigger:hover, .sn-fs-trigger:focus-visible {
+	transform: scale(1.05);
+}
+.sn-fs-trigger:focus-visible {
+	outline: 2px solid var(--sn-nova); outline-offset: 3px;
+}
+.sn-fs-glyph, .sn-fs-glyph svg {
+	display: block; width: 2.4rem; height: 2.4rem;
+}
+/* Fallback (navegadores sin backdrop-filter): glifo temático plano (el <svg>
+   inline usa currentColor = --sn-ink, oscuro en claro / claro en oscuro). */
+.sn-fs-glyph { color: var(--sn-ink); }
+.sn-fs-glyph {
+	/* Silueta de la constelación como máscara (mismas coordenadas que
+	   casiopea-icon.svg; estrellas opacas, líneas conectoras al 50%). */
+	--sn-glyph-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 148 148'%3E%3Cg transform='matrix(0.892,0,0,0.892,7.41,23.33)'%3E%3Cg transform='matrix(1.1172,0,0,1.1172,-8.92,-3.72)'%3E%3Cpath d='M 22.676 21.837 L 45.501 59.142 L 77.973 52.747 C 77.973 52.747 98.206 93.357 97.975 93.357 C 97.744 93.357 130.013 63.639 130.013 63.639' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' opacity='0.5'/%3E%3Ccircle cx='22.613' cy='21.911' r='6'/%3E%3Ccircle cx='45.826' cy='57.671' r='6'/%3E%3Ccircle cx='77.438' cy='52.751' r='6'/%3E%3Ccircle cx='97.134' cy='92.888' r='6'/%3E%3Ccircle cx='129.396' cy='63.714' r='6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+/* El glifo ES el negativo del cielo: `backdrop-filter: invert(1)` invierte el
+   backdrop real (lienzo P5, órbitas, papel) y el `mask` lo recorta a la silueta
+   de la constelación. Funciona a través del contenedor `fixed` porque
+   backdrop-filter muestrea el backdrop COMPUESTO —a diferencia de
+   `mix-blend-mode`, que queda atrapado en el stacking context del `.sn-fs-md`
+   fijo y blendearía contra transparente. Contraste universal sin halo y sin
+   variante por tema; el <svg> inline se oculta (la silueta viene del mask). */
+@supports ((backdrop-filter: invert(1)) or (-webkit-backdrop-filter: invert(1))) {
+	.sn-fs-glyph {
+		-webkit-backdrop-filter: invert(1);
+		backdrop-filter: invert(1);
+		-webkit-mask: var(--sn-glyph-mask) center / contain no-repeat;
+		        mask: var(--sn-glyph-mask) center / contain no-repeat;
+	}
+	.sn-fs-glyph svg { display: none; }
+}
+
+/* — Modal único de pantalla completa — replica el patrón modal unificado
+   (mismo look que la búsqueda/nav/prefs en compact), pero forzado a
+   presentarse fullscreen INCLUSO en desktop, porque vivimos dentro de
+   __PANTALLACOMPLETA__ y no hay cabecera donde anclar un popover. */
+.sn-md.sn-md-fs[data-sn-open] .sn-menu-list {
+	/* Top-sheet: anclado arriba, ancho completo, pero SOLO la altura que
+	   necesita el contenido (hasta un tope de viewport). El área por debajo
+	   queda libre → un click ahí cierra el menú (lo cablea skin.js). */
+	position: fixed;
+	width: 100%; height: auto; max-height: 100dvh;
+	max-width: none; min-width: 0;
+	display: flex; flex-direction: column;
+	/* Traslúcido: desenfoca y satura el fondo, MISMO lenguaje que la barra
+	   superior (algo más de blur y opacidad por ser superficie a pantalla
+	   completa, para que el menú siga siendo legible sobre el contenido). */
+	background: color-mix(in oklab, var(--sn-field) 72%, transparent);
+	-webkit-backdrop-filter: saturate(1.5) blur(16px);
+	backdrop-filter: saturate(1.5) blur(16px);
+	color: var(--sn-ink);
+	border: 0; border-bottom: 1px solid var(--sn-hairline);
+	border-radius: 0;
+	box-shadow: 0 12px 32px -16px rgb(0 0 0 / .35);
+	margin: 0; padding: 0;
+	z-index: 1000;
+	overflow: hidden;
+	opacity: 1; visibility: visible; transform: none;
+	top: 0; right: auto; bottom: auto; left: 0;
+	animation: sn-modal-in var(--sn-dur-2) var(--sn-ease) both;
+}
+/* Cabecera del modal fullscreen — mínima: SOLO el botón X flotando
+   arriba a la derecha. Sin barra, sin filete, sin título visible (el
+   contexto del modal es obvio: las propias secciones lo nombran). */
+.sn-md.sn-md-fs .sn-modal-head {
+	display: contents;
+}
+.sn-md.sn-md-fs .sn-modal-title {
+	position: absolute; width: 1px; height: 1px;
+	margin: -1px; padding: 0; overflow: hidden;
+	clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.sn-md.sn-md-fs .sn-modal-x {
+	/* EXACTAMENTE donde queda el isotipo (misma esquina, `--sn-fs-inset`),
+	   centrada sobre él: la X mide 2.5rem y el iso 3rem, de ahí el cuarto
+	   de rem. Al abrir, la X cae sobre el lugar del iso. */
+	position: absolute;
+	top: calc(var(--sn-fs-inset) + .25rem);
+	right: calc(var(--sn-fs-inset) + .25rem);
+	z-index: 2;
+	display: grid; place-items: center;
+	background: transparent; border: 0; padding: 0;
+	width: 2.5rem; height: 2.5rem;
+	color: var(--sn-ink-soft); cursor: pointer;
+	border-radius: var(--sn-radius);
+}
+.sn-md.sn-md-fs .sn-modal-x:hover,
+.sn-md.sn-md-fs .sn-modal-x:focus-visible {
+	background: var(--sn-sunk); color: var(--sn-ink);
+}
+/* Cuerpo del modal — CSS Grid con breakpoints explícitos: 1 columna por
+   defecto, 2 a ≥ 48rem, 3 a ≥ 64rem (pantallas grandes). El scroll
+   vertical funciona porque con grid (a diferencia de multicol) los
+   items se apilan en filas nuevas en lugar de desbordar lateralmente.
+   `align-content: start` evita que los items se estiren verticalmente.
+   El padding superior reserva sitio bajo la X flotante. */
+.sn-md.sn-md-fs .sn-modal-body {
+	display: grid;
+	grid-template-columns: 1fr;
+	align-content: start;
+	gap: var(--sn-s-6) var(--sn-s-8);   /* row-gap · column-gap (gutter ancho) */
+	/* Top-sheet: el cuerpo se dimensiona a su contenido (no estira el panel a
+	   pantalla completa) y solo scrollea cuando el panel topa con max-height
+	   (`flex-shrink: 1` + `min-height: 0`). */
+	flex: 0 1 auto; min-height: 0;
+	overflow-y: auto; overscroll-behavior: contain;
+	padding: calc(var(--sn-s-7) + var(--sn-s-2)) var(--sn-s-5) calc(var(--sn-s-6) + env(safe-area-inset-bottom));
+	max-width: var(--sn-shell);
+	margin-inline: auto;
+	width: 100%;
+}
+@media (min-width: 48rem) {
+	.sn-md.sn-md-fs .sn-modal-body { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 64rem) {
+	.sn-md.sn-md-fs .sn-modal-body { grid-template-columns: repeat(3, 1fr); }
+}
+/* La sección del buscador atraviesa todas las columnas como cabecera del
+   modal y el form se estira a ancho completo (sin tope `max-width`): en
+   pantalla completa el buscador va arriba, de lado a lado, no a un costado. */
+.sn-md.sn-md-fs .sn-fs-sec--search {
+	grid-column: 1 / -1;
+}
+.sn-md.sn-md-fs .sn-fs-sec--search .sn-fs-search {
+	max-width: none;
+}
+/* Secciones — bloques discretos. Sin filete horizontal: la separación
+   la dan el grid-gap y los encabezados. */
+.sn-fs-sec {
+	display: flex; flex-direction: column;
+	gap: var(--sn-s-3);
+	margin: 0;
+	min-width: 0;        /* protege el grid de 3: un enlace largo desborda
+	                        dentro de su columna en vez de ensancharla */
+}
+.sn-fs-h {
+	margin: 0;
+	font-family: var(--sn-font-text);
+	font-size: var(--sn-fs-xs); font-weight: 600;
+	text-transform: uppercase; letter-spacing: .08em;
+	color: var(--sn-ink-faint);
+}
+/* Subgrupos dentro de Navegación: cada portlet trae su label como h4. */
+.sn-fs-group {
+	display: flex; flex-direction: column; gap: var(--sn-s-2);
+}
+.sn-fs-group + .sn-fs-group { margin-top: var(--sn-s-3); }
+.sn-fs-subh {
+	margin: 0;
+	font-family: var(--sn-font-text);
+	font-size: var(--sn-fs-xs); font-weight: 600;
+	color: var(--sn-ink-soft);
+	letter-spacing: 0;
+}
+
+/* — Reset cascada: la regla genérica `.sn-menu-list :is(a, …) {
+   display: flex; padding: …; … }` (los enlaces del menú-popover del
+   chrome normal) tiene especificidad (0,2,0) y sobreescribe a nuestras
+   reglas de pills/links. Anidamos bajo `.sn-fs-menu` para subir a
+   (0,2,1)+ y devolver el control. Aplica a links comunes y a botones. */
+
+/* Nav-pills — el lenguaje secundario del modal (acciones). Cada ítem
+   es una cápsula compacta; los grupos se acomodan con flex-wrap y gap. */
+.sn-fs-menu .sn-fs-pills {
+	list-style: none; margin: 0; padding: 0;
+	display: flex; flex-wrap: wrap; gap: var(--sn-s-2);
+}
+.sn-fs-menu .sn-fs-pills li { margin: 0; padding: 0; }
+.sn-fs-menu .sn-fs-pills :is(a, button) {
+	display: inline-flex; align-items: center; gap: var(--sn-s-1);
+	padding: calc(var(--sn-s-1) - 1px) var(--sn-s-3);
+	background: var(--sn-sunk);
+	color: var(--sn-ink);
+	border: 1px solid var(--sn-hairline);
+	border-radius: 999px;
+	/* Mismo tamaño y font-stretch que los nav-links (igualados). */
+	font: inherit; font-size: var(--sn-fs-xs); font-stretch: normal;
+	text-decoration: none; cursor: pointer;
+	transition: background var(--sn-dur-1), color var(--sn-dur-1),
+		border-color var(--sn-dur-1);
+}
+.sn-fs-menu .sn-fs-pills :is(a, button):hover,
+.sn-fs-menu .sn-fs-pills :is(a, button):focus-visible {
+	background: var(--sn-paper);
+	border-color: var(--sn-ink-faint);
+	color: var(--sn-nova);
+}
+.sn-fs-menu .sn-fs-pills li.selected a,
+.sn-fs-menu .sn-fs-pills li.active a {
+	background: var(--sn-paper);
+	border-color: var(--sn-ink-faint);
+	color: var(--sn-nova);
+}
+/* MediaWiki marca enlaces "rojos" (a páginas inexistentes) con .new. */
+.sn-fs-menu .sn-fs-pills li.new a { color: var(--sn-link); }
+
+/* — Form de búsqueda dentro del modal — MISMO input que la barra superior
+   (pill: transparente en reposo → papel al foco, lupa a la derecha). */
+.sn-fs-search {
+	display: flex; align-items: center; gap: var(--sn-s-1);
+	height: var(--sn-ctl); box-sizing: border-box;
+	padding: 0 var(--sn-s-1) 0 var(--sn-s-4);
+	background: transparent;
+	border: 1px solid var(--sn-hairline);
+	border-radius: 999px;
+	transition: background var(--sn-dur-1), border-color var(--sn-dur-1);
+}
+.sn-fs-search:focus-within { background: var(--sn-paper); border-color: var(--sn-hairline); }
+.sn-fs-search :is(input[type="search"], #searchInput, .mw-searchInput) {
+	flex: 1; min-width: 0;
+	background: transparent; border: 0; outline: none;
+	color: var(--sn-ink); font: inherit;
+}
+
+/* — Pie de pantalla completa — sobre el MISMO papel del canvas. Acompaña al
+   contenido libre: NO se centra ni se acota a --sn-measure; queda alineado a
+   la IZQUIERDA con el margen básico del canvas (--sn-canvas-px). UNA sola
+   columna. Sin "última edición" ni columna derecha (Stella-Nova:Pie).
+   Reutiliza .sn-foot-toollist / .sn-foot-places / .sn-foot-license; las
+   herramientas van en un <details> discreto rotulado "Herramientas". */
+.sn-fs-footer { margin-top: var(--sn-s-7); }
+.sn-fs-footer-inner {
+	max-width: none; margin-inline: 0;
+	display: flex; flex-direction: column; gap: var(--sn-s-4);
+	font-size: var(--sn-fs-xs); color: var(--sn-ink-soft);
+}
+/* "Herramientas" — disclosure UNIFICADO para AMBOS pies (normal y pantalla
+   completa). Grid de dos filas:
+     fila 1 (arriba):  la lista de herramientas, a TODO el ancho.
+     fila 2 (abajo):   [+ Herramientas]  ·  enlaces de sitio  — en una línea.
+   La lista (.sn-foot-toollist) vive FUERA del <details>, como hermana que lo
+   sigue, así ocupa su propia fila superior mientras el rótulo "Herramientas"
+   queda inline con los enlaces de sitio (un <details> no puede partir su
+   summary y su contenido en celdas distintas del grid). El <details> es solo
+   el toggle nativo; al abrir, `[open] ~ .sn-foot-toollist` revela la fila de
+   arriba y su altura anima 0→auto (interpolate-size) EMPUJANDO la línea de
+   abajo hacia abajo. Combinador `~` + grid-areas: sin :has, sin JS. */
+.sn-foot-line {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-areas:
+		"tools  tools"
+		"label  places";
+	/* Baseline (no `end`): el summary "Herramientas" lleva un icono de 13px —más
+	   alto que el texto fs-xs— y al ser inline-flex centra icono+texto, así que
+	   alinear por caja dejaba su texto más arriba que los enlaces de sitio de la
+	   misma fila. Baseline cuadra las líneas de texto entre label y places. */
+	align-items: baseline;
+	column-gap: var(--sn-s-3);
+}
+.sn-foot-tools-dd { grid-area: label; margin: 0; }
+.sn-foot-places   { grid-area: places; justify-self: start; align-self: baseline; }
+/* Sin caja de herramientas, los enlaces de sitio ocupan la línea entera
+   desde la izquierda (no quedan corridos a la columna derecha). */
+.sn-foot-places:only-child { grid-column: 1 / -1; }
+
+/* La lista revelada: fila superior a todo el ancho. Colapsada por defecto;
+   se expande cuando el <details> hermano anterior está [open]. */
+.sn-foot-toollist {
+	grid-area: tools;
+	block-size: 0; overflow: hidden; opacity: 0; margin: 0;
+	transition: block-size var(--sn-dur-2) var(--sn-ease),
+	            opacity var(--sn-dur-2) var(--sn-ease),
+	            margin-block-end var(--sn-dur-2) var(--sn-ease);
+}
+.sn-foot-tools-dd[open] ~ .sn-foot-toollist {
+	block-size: auto; opacity: 1; margin-block-end: var(--sn-s-2);
+}
+
+/* El summary se ve como un enlace de .sn-foot-places (mismo color, tamaño y
+   peso normal), sin el marcador del UA, con su ícono de estado delante:
+   `+` colapsado, `↑` (arrow-up) abierto con la lista ya asomada arriba. */
+.sn-foot-tools-summary {
+	cursor: pointer; list-style: none;
+	/* `align-items: baseline` (no `center`): con center NINGÚN item del flex
+	   expone línea base, así que el contenedor SINTETIZA su baseline desde el
+	   borde inferior de la caja —que el icono de 13px hace más alta que el
+	   texto—, y el grid de .sn-foot-line la cuadraba contra la baseline real de
+	   los enlaces vecinos → descuadre. Con baseline, el nodo de texto participa
+	   y su línea base ES la del summary; el icono se recentra abajo con
+	   `align-self`. Sin nudges en px: escala con la tipografía. */
+	display: inline-flex; align-items: baseline; gap: var(--sn-s-1);
+	color: var(--sn-ink-soft);
+	font-size: calc(var(--sn-fs-sm) * .8);
+	font-weight: 400;
+	transition: color var(--sn-dur-1);
+}
+.sn-foot-tools-summary .sn-i { align-self: center; }   /* icono óptico al centro del texto */
+.sn-foot-tools-summary::-webkit-details-marker { display: none; }
+.sn-foot-tools-summary::marker { content: ""; }
+.sn-foot-tools-summary:hover { color: var(--sn-nova); }
+.sn-foot-tools-up { display: none; }
+.sn-foot-tools-dd[open] .sn-foot-tools-plus { display: none; }
+.sn-foot-tools-dd[open] .sn-foot-tools-up { display: inline-block; }
+
+/* ── Disclosure animado (GENÉRICO, para todo <details> del skin) ──
+   Anima apertura/cierre con la API moderna: ::details-content envuelve el
+   contenido y `interpolate-size: allow-keywords` permite transicionar el
+   block-size desde/hacia `auto`. Cubre el pie "Herramientas" (normal y
+   pantalla completa) y cualquier <details> futuro (p. ej. secciones
+   colapsables del skin). Donde no haya soporte (Firefox/Safari hoy) degrada
+   a toggle instantáneo, sin daño. La duración usa --sn-dur-2, que ya se
+   apaga con prefers-reduced-motion vía --sn-motion. Los colapsables de la
+   wiki (mw-collapsible) ya animan con su propio slide del core JS, así que
+   el comportamiento queda parejo en todo el skin. */
+:root { interpolate-size: allow-keywords; }
+details::details-content {
+	block-size: 0; overflow: hidden; opacity: 0;
+	transition: block-size var(--sn-dur-2) var(--sn-ease),
+	            opacity var(--sn-dur-2) var(--sn-ease),
+	            content-visibility var(--sn-dur-2) var(--sn-ease);
+	transition-behavior: allow-discrete;
+}
+details[open]::details-content { block-size: auto; opacity: 1; }
+
+/* ─────────────────────── Responsive ─────────────────────── */
+/* Cabecera: por arriba de 48rem (tablet vertical) la barra es una sola
+   línea con el form de búsqueda inline. Por debajo entra el modo COMPACT
+   completo (ver bloque @48rem más abajo): el form se colapsa, aparece el
+   trigger-lupa y todos los paneles se presentan como modal a pantalla
+   completa. No hay estado intermedio de cabecera envuelta a 2 líneas. */
+@media (max-width: 48rem) {
+	.sn-footer-inner { grid-template-columns: 1fr; gap: var(--sn-s-5); }
+}
+
+/* ─── COMPACT (tablet vertical y menos): una línea de íconos · modales
+   fullscreen ─── Punto de quiebre 48rem (≈ 768 px, iPad portrait) elegido
+   para que el form de búsqueda nunca llegue a envolverse en 2 líneas: por
+   encima cabe inline; por debajo se colapsa y aparece la lupa. La barra
+   superior queda como una sola línea de íconos accionables, espaciados
+   uniformemente. CADA panel emergente (Navegación · Página · Usuario ·
+   Búsqueda · Preferencias) se presenta con EL MISMO patrón: modal a
+   pantalla completa, fondo papel, cabecera sticky con título + botón
+   cerrar (X), cuerpo con scroll propio, una sola columna. No hay scrim —
+   el modal cubre todo. Cumple TransientPanel (DismissableByEscape,
+   FocusContained, SelfContainedScroll y descarte por X). El JS sincroniza
+   el mismo umbral en COMPACT_MQ. */
+@media (max-width: 48rem) {
+	/* — La barra: una línea, reparto homogéneo, sin envolver — */
+	.sn-header-bar {
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		gap: var(--sn-s-2);
+		padding-inline: var(--sn-s-3);
+	}
+	/* Íconos equidistantes: aplanamos los grupos con `display: contents` para
+	   que cada ícono (isotipo · nav · búsqueda · lápiz · página · usuario) sea
+	   ítem DIRECTO de la barra. Así el `space-between` del `.sn-header-bar`
+	   reparte todos los gaps por igual, sin los espacios diferenciados que
+	   metían los grupos (isotipo+nav juntos, lápiz+menú juntos). Sólo en móvil;
+	   en desktop los grupos siguen intactos para anclar sus popovers. */
+	.sn-brandnav, .sn-searchbox, .sn-pagecluster, .sn-usertools {
+		display: contents;
+	}
+
+	/* Layout sin márgenes: la hoja va borde-a-borde y se pega contra la
+	   barra superior arriba y contra el pie abajo — sin padding ambient en
+	   el shell, sin radius, sin bordes laterales, sin sombra (la hoja ES la
+	   pantalla). Se mantiene sólo la línea inferior, que coincide con el
+	   border-top del pie — al colapsarse con margin-top:0 forman un único
+	   filete entre hoja y pie, no doble. */
+	.sn-shell { padding: 0; }
+	.sn-paper {
+		border-radius: 0;
+		border-left: 0; border-right: 0; border-top: 0;
+		box-shadow: none;
+		margin-inline: 0;
+	}
+	.sn-footer { margin-top: 0; }
+
+	/* Isotipo: glifo cuadrado en lugar del wordmark. */
+	.sn-isotype .sn-isotype-full    { display: none; }
+	.sn-isotype .sn-isotype-compact { display: contents; }
+
+	/* Búsqueda: form colapsado, trigger (lupa) visible — sin fondo
+	   propio (igual al resto de íconos de la barra). Especificidad
+	   .sn-searchbox … para alinear con la regla base de más arriba y
+	   no quedar pisada por .sn-iconbtn. */
+	.sn-searchbox                       { flex: 0 0 auto; }
+	.sn-searchbox .sn-search            { display: none; }
+	.sn-searchbox .sn-search-trigger    { display: inline-grid; background: transparent; }
+
+	/* Triggers de menú: ícono-cuadrado del mismo tamaño que el resto, sin
+	   chevron (la abierta = modal). */
+	.sn-md-icononly { padding: 0; width: var(--sn-ctl); justify-content: center; }
+	.sn-md-icononly .sn-md-caret { display: none; }
+
+	.sn-notif { display: none; }   /* notif vive dentro del menú-usuario */
+
+	/* ───────────── PATRÓN MODAL UNIFICADO ─────────────
+	   Aplica a:
+	     · .sn-md[data-sn-open] .sn-menu-list — Navegación / Página / Usuario
+	       (el menú de usuario incluye ahora las preferencias de lectura)
+	     · html[data-sn-search-open] .sn-search — Búsqueda
+	   Mismo tamaño, mismo fondo, misma posición, misma transición. */
+	.sn-md[data-sn-open] .sn-menu-list,
+	html[data-sn-search-open] .sn-search {
+		position: fixed;
+		inset: 0;
+		width: 100%; height: 100dvh;
+		max-width: none; min-width: 0;
+		display: flex; flex-direction: column;
+		background: var(--sn-paper); color: var(--sn-ink);
+		border: 0; border-radius: 0;
+		box-shadow: none;
+		margin: 0; padding: 0;
+		z-index: 1000;
+		overflow: hidden;       /* el scroll vive en .sn-modal-body */
+		animation: sn-modal-in var(--sn-dur-2) var(--sn-ease) both;
+	}
+
+	/* Anula los estilos de popover desktop dentro del modal. */
+	.sn-md[data-sn-open] .sn-menu-list {
+		opacity: 1; visibility: visible; transform: none;
+		top: 0; right: auto; bottom: auto; left: 0;
+	}
+
+	/* — Cabecera modal: sticky arriba, título + X. — */
+	.sn-modal-head {
+		flex: none;
+		display: flex; align-items: center; justify-content: space-between;
+		gap: var(--sn-s-3);
+		padding: var(--sn-s-3) var(--sn-s-4);
+		border-bottom: 1px solid var(--sn-hairline-soft);
+		background: var(--sn-paper);
+		min-height: var(--sn-ctl);
+	}
+	.sn-modal-title {
+		margin: 0; font-family: var(--sn-font-text);
+		font-size: var(--sn-fs-md); font-weight: 600;
+		color: var(--sn-ink); letter-spacing: -.008em;
+	}
+	.sn-modal-x {
+		background: transparent; border: 0; padding: 0;
+		width: 2.25rem; height: 2.25rem; flex: none;
+		display: grid; place-items: center;
+		color: var(--sn-ink-soft); cursor: pointer;
+		border-radius: var(--sn-radius);
+	}
+	.sn-modal-x:hover, .sn-modal-x:focus-visible {
+		background: var(--sn-sunk); color: var(--sn-ink);
+	}
+
+	/* — Cuerpo del modal: scrollable, una sola columna. — */
+	.sn-modal-body {
+		flex: 1; min-height: 0;
+		overflow-y: auto; overscroll-behavior: contain;
+		padding: var(--sn-s-4) var(--sn-s-4) calc(var(--sn-s-5) + env(safe-area-inset-bottom));
+		display: flex; flex-direction: column; gap: var(--sn-s-4);
+	}
+	/* Megamenu: anula columns:2 del desktop dentro del modal. */
+	.sn-megamenu { columns: auto; column-gap: 0; max-height: none; min-width: 0; }
+	.sn-megamenu .sn-modal-body { columns: auto; }
+	.sn-mm-sec { margin: 0; }
+
+	/* — Búsqueda modal — el form ocupa toda la pantalla; el input es
+	   visible sobre papel (no transparente sobre fondo oscuro). — */
+	html[data-sn-search-open] .sn-searchbox .sn-search-close { display: inline-grid; }
+	.sn-search-close {
+		background: transparent; border: 0; padding: 0;
+		width: 2.25rem; height: 2.25rem; flex: none;
+		display: grid; place-items: center;
+		color: var(--sn-ink-soft); cursor: pointer;
+		border-radius: var(--sn-radius);
+	}
+	.sn-search-close:hover, .sn-search-close:focus-visible {
+		background: var(--sn-sunk); color: var(--sn-ink);
+	}
+	html[data-sn-search-open] .sn-search {
+		flex-direction: row; align-items: center;
+		gap: var(--sn-s-3);
+		padding: var(--sn-s-3) var(--sn-s-4);
+		border-bottom: 1px solid var(--sn-hairline-soft);
+		height: auto; min-height: var(--sn-ctl);
+	}
+	html[data-sn-search-open] .sn-search :is(input[type="search"], #searchInput, .mw-searchInput) {
+		flex: 1; min-width: 0;
+		background: var(--sn-sunk); color: var(--sn-ink);
+		border: 1px solid var(--sn-hairline);
+		border-radius: var(--sn-radius);
+		padding: var(--sn-s-3) var(--sn-s-4);
+		font-size: var(--sn-fs-md);
+		height: auto; line-height: 1.4;
+	}
+	html[data-sn-search-open] .sn-search :is(input):focus {
+		background: var(--sn-paper);
+		border-color: var(--sn-ink-faint);
+		outline: none;
+	}
+	html[data-sn-search-open] .sn-search-go {
+		color: var(--sn-ink-soft); background: transparent;
+	}
+
+	/* Bloqueo de scroll del body cuando hay cualquier modal abierto. */
+	html[data-sn-modal] { overflow: hidden; }
+	html[data-sn-modal] body { overflow: hidden; }
+}
+
+/* En DESKTOP la cabecera modal no debe verse (el dropdown popover se
+   posiciona junto al trigger; los hijos directos viven en su contenedor
+   sin envoltura). */
+@media (min-width: 36.01rem) {
+	.sn-modal-head { display: none; }
+	.sn-modal-body { display: contents; }
+	.sn-modal-x    { display: none; }
+}
+
+@keyframes sn-modal-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─────────────── Entrada orquestada (una sola) ───────────────
+   El movimiento ya no es preferencia del usuario; se respeta sólo la
+   señal del SO (prefers-reduced-motion). */
+@media (prefers-reduced-motion: no-preference) {
+	.sn-paper {
+		animation: sn-rise calc(640ms * var(--sn-motion)) var(--sn-ease) both;
+	}
+	.sn-header {
+		animation: sn-fade calc(520ms * var(--sn-motion)) var(--sn-ease) both;
+	}
+}
+@keyframes sn-rise {
+	from { opacity: 0; transform: translateY(14px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sn-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Pequeñas verdades de MediaWiki que conviene respetar */
+/* Editar (junto a títulos): nav-pill sin corchetes, distanciado del
+   título. Invisible por defecto; aparece al pasar el cursor sobre el
+   heading o al recibir foco por teclado dentro de éste. Mantiene su
+   espacio reservado (`opacity`, no `display`/`visibility`) para que el
+   heading no salte al revelarse, y para no sacar el link del tab order
+   (accesibilidad). Cubre AMBAS formas: <hN> directo (markup legacy, el
+   .mw-editsection vive como hijo del hN) y .mw-headingN (Parsoid, el
+   .mw-editsection es hermano del hN dentro del wrapper). */
+.mw-editsection {
+	display: inline-flex; align-items: center; gap: var(--sn-s-2);
+	margin-inline-start: var(--sn-s-4);
+	font-family: var(--sn-font-text); font-size: var(--sn-fs-xs);
+	font-weight: 400; vertical-align: middle;
+	/* Look IDÉNTICO en cualquier sección, sin importar el heading que lo
+	   contiene. El botón hereda del hN todas sus métricas de texto; las
+	   neutralizamos para que la píldora no cambie de tamaño entre niveles:
+	     · `line-height: 1` — clave: sin esto el enlace hereda el
+	       line-height del heading (h1/h2 = 2 baselines, h3–h6 = 1), lo que
+	       estiraba la altura de la píldora según el título. Fijo en 1, la
+	       altura = font-size + padding propios, constante.
+	     · `letter-spacing: normal` — anula el tracking negativo de los hN.
+	     · `font-weight`/`font-size`/`font-family` — propios, no del heading.
+	   (text-transform ya no hace falta — los headings del cuerpo no usan
+	   uppercase desde el refactor del baseline grid). */
+	line-height: 1;
+	letter-spacing: normal;
+	opacity: 0;
+	transition: opacity var(--sn-dur-1);
+}
+:is(h1, h2, h3, h4, h5, h6, .mw-heading, .mw-heading1, .mw-heading2, .mw-heading3, .mw-heading4, .mw-heading5, .mw-heading6):hover .mw-editsection,
+:is(h1, h2, h3, h4, h5, h6, .mw-heading, .mw-heading1, .mw-heading2, .mw-heading3, .mw-heading4, .mw-heading5, .mw-heading6):focus-within .mw-editsection {
+	opacity: 1;
+}
+/* Los corchetes `[ ]` y el divider `|` ya NO se emiten: SkinStellamereida
+   sobreescribe doEditSectionLinksHTML() y no genera esos spans (antes se
+   ocultaban con display:none, puro ruido en el DOM). Si por lo que fuera
+   reaparecieran, este es el sitio donde volverlos a ocultar. */
+.mw-editsection a {
+	display: inline-flex; align-items: center;
+	padding: .15rem var(--sn-s-2);
+	border: 1px solid transparent; border-radius: 999px;
+	color: var(--sn-ink-faint); text-decoration: none;
+	transition: background var(--sn-dur-1), border-color var(--sn-dur-1), color var(--sn-dur-1);
+}
+.mw-editsection a:hover, .mw-editsection a:focus-visible {
+	background: var(--sn-paper); border-color: var(--sn-hairline);
+	color: var(--sn-nova);
+}
+.mw-redirectedfrom, .mw-revision { color: var(--sn-ink-soft);
+	font-size: var(--sn-fs-sm); }
+.error, .mw-message-box-error { color: var(--sn-danger); }
+/* Cajas de mensaje (Codex `.cdx-message` y legacy `.mw-message-box`).
+   Stellamereida tiene su propio modo oscuro vía `color-scheme`/light-dark(), no
+   la clase `skin-theme-clientpref-night` de Vector, así que los design tokens
+   de Codex (`--color-notice`, `--background-color-error-subtle`, etc.) NUNCA
+   se voltean: quedan congelados en sus valores claros. Resultado en oscuro:
+   texto tinta de Codex (#202122) sobre nuestro fondo oscuro = ilegible, y el
+   ícono enmascarado con `--color-base` desaparece. Re-mapeamos los tokens de
+   Codex que consume la caja a tokens de la skin para que TODO (fondo, texto,
+   borde, ícono) se enrute por light-dark() y sea legible en ambos temas. */
+.mw-message-box, .cdx-message {
+	--color-base: var(--sn-ink);
+	--color-notice: var(--sn-ink);
+	--color-error: var(--sn-danger);
+	--color-warning: var(--sn-warn);
+	--color-success: var(--sn-ok);
+	--background-color-notice-subtle: var(--sn-sunk);
+	--background-color-error-subtle: color-mix(in srgb, var(--sn-danger) 12%, var(--sn-paper));
+	--background-color-warning-subtle: color-mix(in srgb, var(--sn-warn) 12%, var(--sn-paper));
+	--background-color-success-subtle: color-mix(in srgb, var(--sn-ok) 12%, var(--sn-paper));
+	--border-color-notice: var(--sn-hairline);
+	--border-color-error: var(--sn-danger);
+	--border-color-warning: var(--sn-warn);
+	--border-color-success: var(--sn-ok);
+	border-left: 3px solid var(--sn-ink-faint);
+	color: var(--sn-ink);
+	background: var(--sn-sunk); padding: var(--sn-s-3) var(--sn-s-4);
+	border-radius: 0 var(--sn-radius) var(--sn-radius) 0; margin: var(--sn-s-4) 0;
+}
+.cdx-message--error {
+	border-left-color: var(--sn-danger); color: var(--sn-danger);
+	background: var(--background-color-error-subtle);
+}
+.cdx-message--warning {
+	border-left-color: var(--sn-warn);
+	background: var(--background-color-warning-subtle);
+}
+.cdx-message--success {
+	border-left-color: var(--sn-ok);
+	background: var(--background-color-success-subtle);
+}
+
+/* ─── Especial:Buscar — la hoja core `mediawiki.special.search.styles`
+   colorea tabs, opciones y resultados con variables LESS de skin compiladas a
+   hex CLARO fijo (`@background-color-neutral-subtle`, `@border-subtle`,
+   `@color-subtle`…). Son valores de tiempo de compilación: NO responden al
+   flip runtime de `color-scheme`/light-dark() de la skin, así que en oscuro
+   quedan cajas claras y texto gris ilegible. Re-enrutamos por tokens de la
+   skin. Prefijo `.skin-stellamereida` para ganar especificidad sobre el módulo
+   core sin depender del orden de carga (ver cascada de skinStyles). ─── */
+.skin-stellamereida .mw-search-profile-tabs,
+.skin-stellamereida #mw-searchoptions,
+.skin-stellamereida .mw-search-interwiki-project,
+.skin-stellamereida .searchResultImage-thumbnail-placeholder {
+	background: var(--sn-sunk);
+	border-color: var(--sn-hairline);
+}
+.skin-stellamereida #mw-searchoptions .divider { border-bottom-color: var(--sn-hairline); }
+.skin-stellamereida .mw-search-interwiki-project { border-top-color: var(--sn-hairline); }
+.skin-stellamereida #mw-search-interwiki,
+.skin-stellamereida .mw-search-interwiki-header { border-color: var(--sn-hairline); }
+.skin-stellamereida .mw-search-result-data,
+.skin-stellamereida .results-info { color: var(--sn-ink-soft); }
+.skin-stellamereida .search-types .current a { color: var(--sn-ink); }
+
+/* ─── Botón "Exportar PDF" en contenido (.sn-print-pdf) ───
+   Afford de contenido que abre la previsualización Vivliostyle de la página
+   actual (skin.js lo engancha). Estilizado como botón discreto del skin; el
+   cursor y el rol lo hacen sentir accionable aunque sea un <span>. ─── */
+.skin-stellamereida .sn-print-pdf {
+	display: inline-flex; align-items: center; gap: var(--sn-s-2);
+	padding: var(--sn-s-2) var(--sn-s-3);
+	font: inherit; font-size: var(--sn-fs-sm); line-height: 1;
+	color: var(--sn-ink); background: var(--sn-sunk);
+	border: 1px solid var(--sn-hairline); border-radius: var(--sn-radius);
+	cursor: pointer; user-select: none;
+	transition: background var(--sn-dur-1), border-color var(--sn-dur-1), color var(--sn-dur-1);
+}
+.skin-stellamereida .sn-print-pdf::before {
+	content: ""; width: 1em; height: 1em; flex: none;
+	background: currentColor;
+	-webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 3h12v4H6zM19 8H5a3 3 0 0 0-3 3v6h4v4h12v-4h4v-6a3 3 0 0 0-3-3zm-3 11H8v-5h8zm2-6.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>') center / contain no-repeat;
+	        mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 3h12v4H6zM19 8H5a3 3 0 0 0-3 3v6h4v4h12v-4h4v-6a3 3 0 0 0-3-3zm-3 11H8v-5h8zm2-6.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>') center / contain no-repeat;
+}
+.skin-stellamereida .sn-print-pdf:hover,
+.skin-stellamereida .sn-print-pdf:focus-visible {
+	background: var(--sn-paper); border-color: var(--sn-nova); color: var(--sn-nova);
+}
+
+/* ─── Tablas de contenido: la skin es dueña del estilo de TODAS las
+   tablas — regulares (`wikitable`) y resultados de consulta semántica
+   (`smwtable`/`broadtable`). Diseño común: SIN contorno exterior y solo
+   filetes HORIZONTALES — un filete normal (`--sn-hairline`) bajo las
+   cabeceras y filetes muy finos (`--sn-hairline-soft`) entre filas; nunca
+   filetes verticales. Texto al 80% del cuerpo y todo alineado a la
+   izquierda, celdas y cabeceras por igual. Enrutado por tokens para ser
+   coherente en claro y oscuro. ─── */
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) {
+	/* En viewport angosto las tablas anchas se vuelven una CAJA DE SCROLL
+	   horizontal propia: `display: block` convierte la <table> en un bloque
+	   con overflow-x; sus filas/celdas siguen maquetando como tabla (cajas
+	   de tabla anónimas dentro del bloque), así que las columnas se alinean
+	   igual. Cuando la suma de anchos mínimos de columna excede el ancho
+	   disponible, la tabla desborda el bloque y aparece scroll-x interno —el
+	   scroll vertical de la página NO se ve afectado. `overscroll-behavior-x:
+	   contain` evita el encadenamiento del gesto al hacer pan horizontal.
+	   En tablas que caben, el bloque se ajusta al contenido (sin scroll). */
+	display: block;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	border-collapse: collapse;
+	border: 0;                       /* sin contorno exterior */
+	background: var(--sn-paper);
+	color: var(--sn-ink);
+	font-size: var(--sn-fs-table);   /* achicado unificado (≈80% de base, absoluto) */
+	/* Ritmo vertical: cada línea de celda ocupa EXACTAMENTE un baseline.
+	   No se usa el 1.65 unitless del cuerpo porque, con el font al 80%,
+	   daría 0.8 × baseline por línea → fuera de la retícula. Con el
+	   line-height absoluto = `--sn-baseline`, toda fila (de una o de
+	   muchas líneas, p. ej. listas con <br>) cae en la grilla, y su
+	   medio-interlineado reparte el aire arriba/abajo del texto. */
+	line-height: var(--sn-leading-table);
+	margin: var(--sn-baseline-2) 0;  /* margen de bloque = múltiplo entero de baseline */
+	max-width: 100%;
+}
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) :is(th, td) {
+	/* Padding SOLO horizontal: el espaciado vertical lo da el
+	   medio-interlineado del line-height = baseline. Un padding vertical
+	   tendría que ser un baseline ENTERO para no descuadrar la fila, lo
+	   que duplicaría el alto de celda; aquí el aire ya está en la línea. */
+	padding: calc((var(--sn-fs-table) * var(--sn-leading-table)) / 2);
+	border: 0;
+	/* Ancho mínimo de celda: impide que una columna se estruje por debajo de
+	   lo legible cuando la tabla excede el viewport (es lo que disparaba el
+	   scroll-x del contenedor de arriba). Ajustable. */
+	min-width: 7em;
+	/* Sin partición de palabra dentro de celdas: .sn-body hereda `hyphens:
+	   auto`, que en una columna estrujada parte el texto LETRA A LETRA en
+	   vertical (el síntoma reportado). Aquí el texto sólo quiebra en espacios
+	   → el ancho mínimo real de la columna es la palabra más larga. */
+	hyphens: manual;
+	overflow-wrap: normal;
+	word-break: normal;
+	/* Filete como box-shadow: NO ocupa layout, así el 1px no se acumula
+	   fila a fila ni desplaza la retícula (un border real sí lo haría). */
+	box-shadow: inset 0 -1px 0 var(--sn-hairline-soft);  /* filete fino entre filas */
+	text-align: left;                /* celdas y cabeceras a la izquierda */
+	vertical-align: top;
+	color: var(--sn-ink);
+}
+/* TODA celda de cabecera, esté donde esté en la tabla. El core pinta
+   `.wikitable th` con un gris CLARO literal (`background-color:#eaecf0`) y
+   tinta oscura literal, valores horneados en tiempo de compilación desde las
+   variables LESS de skin —no reaccionan a `light-dark()`. La skin ya reenruta
+   el TEXTO a `--sn-ink`, así que en modo oscuro quedaba tinta clara sobre
+   fondo gris claro: cabecera ilegible. El caso que lo destapa es la tabla de
+   «cabecera por fila» (primera columna escrita con `!`), cuyas `th` NO están
+   en la primera fila y por eso escapaban a la regla de abajo, que solo cubría
+   `thead`/primera fila. Aquí se apaga el relleno del core para todas las `th`
+   y el peso tipográfico queda como única marca de cabecera, coherente con el
+   diseño sin rellenos ni filetes verticales. */
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) th {
+	background: transparent;
+	color: var(--sn-ink);
+	font-weight: 600;
+}
+/* Fila(s) de cabecera: sin relleno de fondo, filete NORMAL (más marcado)
+   separando cabeceras del cuerpo. Cubre <thead> y la 1ª fila de <th>
+   cuando no hay <thead> — el caso típico de los resultados #ask de SMW. */
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) > thead > tr > th,
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) > tbody > tr:first-child > th,
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) > tr:first-child > th {
+	background: transparent;
+	font-weight: 600;
+	box-shadow: inset 0 -1px 0 var(--sn-hairline);     /* filete normal cabecera→cuerpo */
+}
+/* Corrección para la tabla de «cabecera por fila»: si la primera fila MEZCLA
+   `th` y `td` no es una fila de cabecera, sino una fila normal cuya primera
+   celda es su rótulo → su filete inferior vuelve al fino de entre-filas, para
+   no dejar un filete marcado bajo la primera fila y ninguno bajo las demás.
+   Va en regla aparte (y no como `:not(:has(...))` sobre la regla de arriba)
+   porque un navegador sin `:has()` descarta la regla entera: así lo que se
+   pierde es solo este ajuste, no el filete de cabecera. `:not(:last-child)`
+   protege la tabla de una sola fila, que no debe cerrar con filete. */
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) > :is(thead, tbody) > tr:first-child:not(:last-child):has(> td) > th,
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) > tr:first-child:not(:last-child):has(> td) > th {
+	box-shadow: inset 0 -1px 0 var(--sn-hairline-soft);
+}
+/* Sin borde exterior: la última fila no lleva filete inferior (se leería
+   como contorno de cierre). */
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) > :is(tbody, tfoot) > tr:last-child > :is(th, td),
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) > tr:last-child > :is(th, td) {
+	box-shadow: none;
+}
+.sn-body :is(table.wikitable, table.smwtable, table.broadtable) > caption {
+	caption-side: top; text-align: left;
+	line-height: var(--sn-baseline);   /* caption = 1 baseline, mantiene la grilla */
+	color: var(--sn-ink-soft);
+}
+/* Realce de fila al pasar el cursor: útil para seguir filas anchas en las
+   tablas de resultados. */
+.sn-body :is(table.smwtable, table.broadtable) > tbody > tr:hover > td {
+	background: color-mix(in oklab, var(--sn-nova-wash) 45%, transparent);
+}
+/* ─── Cabeceras ordenables (jquery.tablesorter, clase `.sortable`) ───
+   Se descarta el cromo de flechas del core (sus SVG `sort_*.svg` y sus
+   variantes invertidas para modo oscuro). En su lugar, íconos Feather
+   (chevron) pintados como `mask` + `background-color` tokenizado: el color
+   sigue a `--sn-ink*` y se adapta solo a claro/oscuro, sin SVG aparte.
+   Estado neutro = doble chevron tenue (afford. de "ordenable"); activo =
+   chevron up (ascendente) / down (descendente) a tinta plena. */
+.sn-body table.sortable {
+	/* chevron-up + chevron-down (neutro) */
+	--sn-sort-both: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='8 9 12 5 16 9'/%3E%3Cpolyline points='8 15 12 19 16 15'/%3E%3C/svg%3E");
+	/* chevron-up (ascendente) */
+	--sn-sort-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='18 15 12 9 6 15'/%3E%3C/svg%3E");
+	/* chevron-down (descendente) */
+	--sn-sort-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+/* Anula el background-image de flecha del core (antes y después del JS). */
+.sn-body table.sortable th.headerSort,
+.sn-body .sortable:not(.jquery-tablesorter) > * > tr:first-child > th {
+	background-image: none !important;
+}
+.sn-body table.sortable th.headerSort {
+	cursor: pointer;
+	position: relative;
+	padding-right: 1.7em;
+	transition: background-color var(--sn-dur-1) var(--sn-ease);
+}
+.sn-body table.sortable th.headerSort::after {
+	content: "";
+	position: absolute;
+	right: .45em; top: 50%;
+	width: 1em; height: 1em;
+	transform: translateY(-50%);
+	background-color: var(--sn-ink-faint);
+	-webkit-mask: var(--sn-sort-both) no-repeat center / contain;
+	mask: var(--sn-sort-both) no-repeat center / contain;
+	transition: background-color var(--sn-dur-1) var(--sn-ease);
+}
+.sn-body table.sortable th.headerSortUp::after {
+	-webkit-mask-image: var(--sn-sort-up); mask-image: var(--sn-sort-up);
+	background-color: var(--sn-ink);
+}
+.sn-body table.sortable th.headerSortDown::after {
+	-webkit-mask-image: var(--sn-sort-down); mask-image: var(--sn-sort-down);
+	background-color: var(--sn-ink);
+}
+/* Hover: realce del fondo de la cabecera y del ícono. */
+.sn-body table.sortable th.headerSort:hover {
+	background-color: color-mix(in oklab, var(--sn-nova-wash) 50%, transparent);
+}
+.sn-body table.sortable th.headerSort:hover::after {
+	background-color: var(--sn-ink);
+}
+
+/* `.toccolours`: caja auxiliar (no es tabla de datos) — solo enrutado de
+   color/borde por tokens, sin el diseño de filetes de arriba. */
+.sn-body .toccolours {
+	background: var(--sn-sunk); color: var(--sn-ink);
+	border: 1px solid var(--sn-hairline);
+}
+
+/* `table.template` / `table.plantilla` (alias bilingüe): ficha vertical
+   clave→valor (NO es tabla de datos; migrada desde MediaWiki:Common.css).
+   Cabecera = etiqueta a la derecha en versalita tenue; sin filetes. */
+.sn-body table:is(.template, .plantilla) {
+	/* `display: table` REAFIRMA el modelo de tabla: la regla de tablas de datos
+	   anchas (`table.wikitable…`) le pone `display:block` para el scroll-x, y
+	   una ficha (wikitable + plantilla) lo heredaba → con block, `width:100%`
+	   solo estira la caja y las celdas se encogen al contenido. Las fichas
+	   verticales clave→valor no necesitan scroll: vuelven a `table` y llenan. */
+	display: table;
+	width: 100%; margin: var(--sn-baseline-2) auto;
+	border: 0;
+	/* Tamaño en un solo lugar: --sn-fs-sm (sin el font-size:89% del tr, que
+	   componía 0.8×0.89≈0.71×base). La ficha es texto auxiliar → escalón sm. */
+	font-size: var(--sn-fs-sm);
+	/* Interlínea SUB-MÚLTIPLO de la grilla: un baseline completo se ve aireado
+	   a este tamaño, así que la ficha corre a 3/4 de baseline. La retícula se
+	   reencuentra cada 4 líneas (4 × 0.75 = 3 baselines), así que sigue on-grid
+	   en bloques de 4 — y los márgenes exteriores son baselines enteros. */
+	line-height: var(--sn-leading-table);
+}
+.sn-body table:is(.template, .plantilla) > tbody > tr { vertical-align: top; letter-spacing: 0.045ex;}
+.sn-body table:is(.template, .plantilla) > tbody > tr > :is(th, td) {
+	border: 0;
+	padding: 0 calc(var(--sn-baseline) / 4);
+}
+/* `:first-child` para empatar la especificidad (0,3,4) de la regla de
+   "fila de cabecera" de wikitable, que si no marca esta primera th a 600.
+   En una ficha la primera fila es un par clave→valor, no una cabecera. */
+.sn-body table:is(.template, .plantilla) > tbody > tr > th,
+.sn-body table:is(.template, .plantilla) > tbody > tr:first-child > th {
+	width: auto; min-width: 110px;
+	padding-right: 1ex;
+	font-size: var(--sn-fs-xs);
+	text-transform: uppercase;
+	text-align: right;
+	font-weight: 400;
+	letter-spacing: .03ex;
+	/* gris neutro (sin la calidez café de --sn-ink-faint), misma luminosidad */
+	color: light-dark(#8c8c8c, #6f6f6f); background: transparent;
+}
+/* SMW pinta ciertos valores (p. ej. el campo Código) como `<div class="smwpre">`
+   con caja de <pre>: padding 1em, borde azul punteado, fondo gris y color negro
+   fijo. Dentro de la ficha eso rompe la fila. Lo despojamos a texto plano: sin
+   caja, monospaced del skin, un punto más pesado, y color/interlínea heredados
+   del cuerpo (así sigue al tema claro/oscuro). */
+.sn-body table:is(.template, .plantilla) .smwpre {
+	margin: 0; padding: 0;
+	border: 0; background: none;
+	font-family: var(--sn-font-mono);
+	font-weight: 600;
+	color: inherit;
+	line-height: inherit;
+}
+/* ── Marcos de imagen, miniaturas y galerías — tokenización + modo oscuro ──
+   El módulo de medios del core (mediawiki.skinning.content.media y
+   mediawiki.page.gallery.styles) hornea sus colores como LITERALES claros
+   (`#ccc`, `#f9f9f9`, `#eaecf0`, `#efefef`) compilados desde LESS — NO como
+   `var(--…)`. Por eso el remapeo Codex→--sn-* de tokens.css (que sí voltea
+   vía light-dark) no los alcanza: en oscuro el marco quedaba gris claro y la
+   leyenda como texto claro sobre fondo casi blanco (ilegible). Aquí
+   reescribimos marco + leyenda con tokens --sn-* que SÍ voltean, y subimos la
+   especificidad lo justo para ganarle a los selectores del core.
+   `border-color` (no `border`) preserva los `border-bottom:0`/`border-top:0`
+   con que el core une imagen y leyenda en una sola tarjeta. La superficie
+   `--sn-sunk 60%` es la MISMA que usa la miniatura legacy → paridad visual
+   entre miniaturas Parsoid (figure) y de wikitexto clásico (.thumbinner). */
+
+/* Miniaturas Parsoid: <figure typeof="mw:File/Thumb|Frame"> + su leyenda. */
+.sn-body :is(figure[typeof~="mw:File/Thumb"], figure[typeof~="mw:File/Frame"]),
+.sn-body :is(figure[typeof~="mw:File/Thumb"], figure[typeof~="mw:File/Frame"]) > figcaption {
+	background-color: var(--sn-papel-100);
+	border: 0;
+	/* Padding parejo en los 4 lados para que la leyenda no se pegue al borde
+	   de la imagen ni a los costados de la tarjeta. */
+	padding: var(--sn-s-2);
+	/* El marco del core es CONTINUO: el <figure> lleva borde salvo abajo y la
+	   leyenda (table-caption) lleva borde salvo arriba, y ambas se tocan. El
+	   `margin-top` genérico de `.sn-body figcaption` (pensado para imágenes SIN
+	   marco) abre un hueco que parte el frame en dos. Aquí lo anulamos: la
+	   leyenda va pegada al pie de la imagen sobre el mismo fondo de papel. */
+	margin-top: 0;
+}
+/* Esquinas apenas redondeadas en toda la tarjeta. El radio va al <figure>
+   contenedor con overflow:hidden para que recorte imagen + leyenda juntas. */
+.sn-body :is(figure[typeof~="mw:File/Thumb"], figure[typeof~="mw:File/Frame"]) {
+	border-radius: var(--sn-radius-s);
+	overflow: hidden;
+}
+
+/* La "lupa de ampliar" del core (magnify-clip*.svg, un SVG claro fijo que no
+   voltea) la flotaba en cada leyenda enmarcada vía `figcaption::before` +
+   `.mw-file-description::after`. Es cromo heredado que Vector moderno ya
+   quitó; lo retiramos para que no aparezca el ícono claro sobre el marco. */
+.sn-body figure[typeof~="mw:File/Thumb"] > figcaption::before,
+.sn-body figure[typeof~="mw:File/Thumb"] > :is(.mw-file-description, .mw-file-magnify)::after {
+	content: none;
+}
+
+/* Miniaturas de wikitexto clásico (.thumbinner) y tamaños por defecto. */
+.sn-body :is(.thumbinner, .mw-default-size, figure.mw-default-size) {
+	background: var(--sn-papel-100);
+	border: 0;
+	border-radius: var(--sn-radius-s);
+	overflow: hidden;
+}
+
+/* Sin filete en la imagen interna (mw-file-element / .thumbimage / border=):
+   solo el fondo de papel enmarca, ningún borde de píxel. El SEGUNDO selector
+   es imprescindible: core (content.media-screen.less) pinta el filete con
+   `figure[typeof~='mw:File/Thumb'] > :not(figcaption) .mw-file-element`
+   (especificidad 0,2,2); el genérico `figure img` (0,2,1) NO lo gana. Replicamos
+   el selector de core con prefijo `.sn-body` (0,3,2) para vencerlo. */
+.sn-body :is(.thumbimage, .thumbborder, figure img, .mw-image-border img),
+.sn-body :is(figure[typeof~="mw:File/Thumb"], figure[typeof~="mw:File/Frame"]) > :not(figcaption) .mw-file-element {
+	border: 0;
+}
+
+/* Galerías tradicionales (mediawiki.page.gallery.styles, carga on-demand en
+   páginas con <gallery>): cada caja `li.gallerybox div.thumb` trae
+   `border:@border-subtle; background:@background-color-neutral-subtle`
+   horneados a literal claro. Las variantes packed/nolines los ponen a
+   `transparent`/`border:0` con mayor especificidad (0,3,3), así que esta
+   regla (0,3,2) sólo viste la galería tradicional y las deja intactas. */
+.sn-body li.gallerybox div.thumb {
+	background-color: var(--sn-papel-100);
+	border: 0;
+	border-radius: var(--sn-radius-s);
+	overflow: hidden;
+}
+/* Pie de cada miniatura de galería: al grado más pequeño del skin. */
+.sn-body .gallerytext {
+	font-size: calc(var(--sn-fs-xs) * 0.88);
+}
+/* Bordes/fondos genéricos de wikitexto de uso común. (El <hr> ya se define
+   arriba, en `.sn-body hr`; aquí no se repite.) */
+.sn-body :is(.mw-references-wrap, .reflist, .references) {
+	color: var(--sn-ink-soft);
+}
+
+/* Cajas auxiliares de páginas especiales (leyenda de "Cambios recientes",
+   notas de "Páginas especiales", etc.) — `.mw-specialpages-notes` viene
+   pegada a `.mw-changeslist-legend` en el mismo elemento, así que un solo
+   selector las cubre. Se homologan al lenguaje visual de la TOC:
+   fondo papel, filete `--sn-hairline-soft` casi imperceptible, esquinas
+   `--sn-radius` y mismo ritmo de padding/margen. El `float: right` que
+   trae core en `.mw-changeslist-legend` se respeta (es el patrón
+   esperado en Cambios Recientes); aquí cambiamos su vestimenta Y la
+   desflotamos (ver `.mw-changeslist-legend` abajo). */
+.sn-body :is(.mw-changeslist-legend, .mw-specialpages-notes) {
+	margin: var(--sn-s-4) 0 var(--sn-s-6);
+	padding: var(--sn-s-3) var(--sn-s-4);
+	border: 1px solid var(--sn-hairline-soft);
+	border-radius: var(--sn-radius);
+	background: var(--sn-paper);
+	color: var(--sn-ink);
+	font-size: var(--sn-fs-sm);
+	line-height: var(--sn-leading);
+}
+/* Desflotada: el core la trae `float: right; clear: right; margin-left: 1em`
+   (mediawiki.special.changeslist.legend.less) y rcfilters la flota también.
+   La queremos como bloque normal de ancho completo, no pegada a la derecha
+   sobre la lista. */
+.sn-body .mw-changeslist-legend {
+	float: none;
+	clear: none;
+	margin-left: 0;
+	max-width: none;
+}
+.sn-body :is(.mw-changeslist-legend, .mw-specialpages-notes) summary {
+	cursor: pointer;
+	font-weight: 600;
+	color: var(--sn-ink);
+}
+.sn-body :is(.mw-changeslist-legend, .mw-specialpages-notes) dl {
+	margin: var(--sn-s-2) 0 0;
+}
+
+/* Historial de página: el core (mediawiki.action.history.styles) marca las
+   revisiones elegidas para el diff con `background-color:
+   @background-color-neutral-subtle` + `color: @color-base` + `outline: 1px
+   dashed #a2a9b1`, todos horneados a hex CLARO desde LESS skin-variables → en
+   oscuro la fila queda clara e ilegible. Se revisten con tokens que voltean.
+   El id `#pagehistory` da specificity de sobra; con `.sn-body` delante gana. */
+.sn-body #pagehistory li.selected {
+	background: var(--sn-sunk);
+	color: var(--sn-ink);
+	outline: 1px dashed var(--sn-hairline);
+}
+
+/* ─── Botones de wikitexto (.wiki-btn) — portados de MediaWiki:Common.css ───
+   Patrón de la portada y guías: un <span class="wiki-btn [red|green]"> que
+   envuelve un enlace wiki. Vive aquí (no en Common.css) para que herede los
+   tokens del skin y voltee claro/oscuro solo. Cambios respecto al original
+   de producción: borde 1px (era 2px), forma de píldora (border-radius 2ex),
+   y TODO color tokenizado. La variante `.blue` (#059BE6) se ELIMINÓ — no
+   tenía token equivalente y no la usa ninguna página.
+
+   Texto sobre relleno = `--sn-nova-ink`: voltea solo (blanco en claro,
+   casi-negro en oscuro) y sirve a las tres variantes porque los tres
+   rellenos (ink-soft, nova, ok) son oscuros en claro y claros en oscuro.
+
+   ROBUSTEZ: el color del texto al hover se fija en el BOTÓN mismo
+   (`.wiki-btn:hover { color }`), no en un `<a>` hijo. Así funciona en los
+   TRES usos reales: (1) span que envuelve un enlace `[[…]]`, donde el `<a>`
+   hereda el color por `color: inherit`; (2) span SIN enlace —p. ej. un
+   toggle `mw-customtoggle-* link-toggle wiki-btn`— cuyo texto va suelto en
+   el span; y (3) la clase aplicada directo a un `<a>`. Antes el volteo a
+   blanco colgaba de `.wiki-btn:hover a`, así que el caso (2) quedaba con
+   texto del color de la variante sobre su mismo relleno (ilegible). Cada
+   variante repite el color en su `:hover` porque `.wiki-btn.red/.green`
+   (base, 0,3,0) empata en especificidad al `:hover` genérico y le ganaría
+   por orden. */
+.sn-body .wiki-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	/* ON-GRID: alto EXACTO de una línea base (--sn-baseline = fs-base ×
+	   leading = el alto del renglón del cuerpo). Como el botón mide lo mismo
+	   que la línea que lo contiene, NO engorda el renglón ni desplaza la
+	   grilla, esté suelto o en medio de un párrafo. El relleno es SOLO
+	   horizontal → el alto interior es idéntico en los tres usos (span+enlace,
+	   span suelto, <a> directo); el vertical lo fija `height`, no el padding.
+	   box-sizing:border-box (global) mete el borde de 1px dentro del alto. */
+	height: var(--sn-baseline);
+	padding: 0 1.5ex;
+	line-height: 1;
+	vertical-align: middle;
+	border-radius: 2ex;
+	border: 1px solid var(--sn-ink-soft);
+	background-color: transparent;
+	color: var(--sn-ink-soft);
+	font-weight: 700;
+	white-space: nowrap;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color .2s ease-in-out, border-color .2s ease-in-out, color .2s ease-in-out;
+}
+.sn-body .wiki-btn:hover,
+.sn-body .wiki-btn:focus-within {
+	background-color: var(--sn-ink-soft);
+	border-color: var(--sn-ink-soft);
+	color: var(--sn-nova-ink);
+}
+.sn-body .wiki-btn a {
+	font-weight: 700;
+	line-height: 1;                 /* homologa con el texto suelto del span (el alto lo fija el botón) */
+	color: inherit !important;
+	text-decoration: none !important;
+	white-space: nowrap;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	display: inline-block;
+	transition: text-shadow .2s ease-in-out;
+}
+.sn-body .wiki-btn:hover a,
+.sn-body .wiki-btn:focus-within a,
+.sn-body .wiki-btn a:hover,
+.sn-body .wiki-btn a:focus {
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+/* Variante roja (la nova del skin). */
+.sn-body .wiki-btn.red {
+	border-color: var(--sn-nova);
+	color: var(--sn-nova);
+}
+.sn-body .wiki-btn.red:hover,
+.sn-body .wiki-btn.red:focus-within {
+	background-color: var(--sn-nova);
+	border-color: var(--sn-nova);
+	color: var(--sn-nova-ink);
+}
+/* Variante verde (token de éxito). */
+.sn-body .wiki-btn.green {
+	border-color: var(--sn-ok);
+	color: var(--sn-ok);
+}
+.sn-body .wiki-btn.green:hover,
+.sn-body .wiki-btn.green:focus-within {
+	background-color: var(--sn-ok);
+	border-color: var(--sn-ok);
+	color: var(--sn-nova-ink);
+}
+/* Tamaño grande (`.grande` / alias `.lg`): llamada a la acción que va SOLA
+   (portada, guía de descarga), no en medio de un párrafo. Dos líneas base de
+   alto y el doble de relleno horizontal; el radio sigue a la mitad del alto
+   para que siga siendo píldora. Sigue ON-GRID: ocupa exactamente dos
+   renglones. Se combina con .red / .green. */
+.sn-body .wiki-btn.grande,
+.sn-body .wiki-btn.lg {
+	height: calc(var(--sn-baseline) * 2);
+	padding: 0 3ex;
+	border-radius: var(--sn-baseline);
+}
+
+/* ─── Grilla / grid: framework de layout semántico para wikitexto.
+   Reemplaza el patrón `.row > .col-md-*` del skin Bootstrap anterior.
+   Nombre bilingüe: `.grid` (canónico) y `.grilla` (alias, retrocompat).
+   Uso esperado:
+
+       <div class="grid cols-2"> … </div>
+       <div class="grid cols-3 gap-l"> … </div>
+       <div class="grid cols-auto"> … </div>      ← tarjetas auto-fit
+       <div class="grid cols1-2"> … </div>        ← 1/3 + 2/3
+       <div class="grid stack gap-s"> … </div>    ← pila vertical
+       <div class="grid cols-3 full"> … </div>    ← a todo el campo
+       <div class="grilla cols-3"> … </div>       ← alias español (igual)
+
+   Modificadores combinables:
+     · Columnas .......... cols-1…6 · cols-auto · cols1-2 · cols2-1
+     · Espaciado ......... gap-0 · gap-s · gap-m (=def) · gap-l
+     · Flujo ............. por filas (default) · flujo-v (llena columnas) · stack (1 col)
+     · Alineación celda .. align-top/center/bottom/baseline (+ arriba/centro/abajo)
+     · Margen contenedor . sin-margen / flush (anula el margen vertical)
+     · Ancho ............. full / completa (rompe --sn-measure a todo el campo)
+
+   Funciona tanto en chrome normal como en __PANTALLACOMPLETA__: ambos
+   wrappers de contenido llevan `.sn-body`. `minmax(0, 1fr)` evita
+   desbordes cuando una celda lleva contenido sin wrap (URLs, código).
+   Degradación: en pantallas medias (≤ 64rem) las grillas más densas
+   (cols-4/5/6) reducen el número de columnas; por debajo de 48rem
+   (tablet vertical) todas caen a una sola columna — las asimétricas
+   cols1-2 / cols2-1 también colapsan a una columna ahí. */
+.sn-body :is(.grid, .grilla) {
+	--sn-grid-gap: var(--sn-s-5);   /* default generoso (1.5rem), común a ambos ejes; gap-s/m/l lo ajustan */
+	/* Gaps por EJE: por defecto ambos siguen a --sn-grid-gap; las clases
+	   gap-h-N y gap-v-N los separan. horizontal (gap-h) = espacio entre
+	   COLUMNAS (dentro de la fila); vertical (gap-v) = espacio entre FILAS.
+	   En `gap` el 1.er valor es row-gap (vertical) y el 2.º column-gap
+	   (horizontal). */
+	--sn-grid-gap-h: var(--sn-grid-gap);
+	--sn-grid-gap-v: var(--sn-grid-gap);
+	display: grid;
+	gap: var(--sn-grid-gap-v) var(--sn-grid-gap-h);
+	/* margin-block (longhand), NO el shorthand `margin`: el shorthand fijaba
+	   margin-inline:0 y, al combinar `.grilla` con una banda `.fondo-*`, borraba
+	   el bleed lateral (margin-inline negativo) de la banda. Con el longhand la
+	   grilla sólo toca el eje de bloque y respeta el sangrado. */
+	margin-block: var(--sn-s-4);
+}
+/* Robustez ante el <p> de MediaWiki: cuando el contenido de la grilla es una
+   SECUENCIA INLINE (varios <span class="wiki-btn">, [[enlaces]], texto…),
+   el parser lo envuelve TODO en un único <p>, que pasa a ser la sola celda de
+   la grilla → colapsa el layout (una fila, sin efecto de cols-N ni gap-N). Si ese
+   <p> es el único hijo, lo hacemos `display: contents`: su caja desaparece y
+   sus hijos (los spans/enlaces) se vuelven las celdas REALES de la grilla, así
+   cols-auto y gap-h/gap-v vuelven a funcionar. No afecta a las grillas cuyos
+   hijos ya son bloques (divs, figuras, fichas): ahí no hay un <p>:only-child. */
+.sn-body :is(.grid, .grilla) > p:only-child { display: contents; }
+.sn-body :is(.grid, .grilla).cols-1 { grid-template-columns: minmax(0, 1fr); }
+.sn-body :is(.grid, .grilla).cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sn-body :is(.grid, .grilla).cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sn-body :is(.grid, .grilla).cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.sn-body :is(.grid, .grilla).cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.sn-body :is(.grid, .grilla).cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+/* Auto-fit: tantas columnas (≥ 16rem) como quepan; ideal para tarjetas. */
+.sn-body :is(.grid, .grilla).cols-auto {
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+/* Asimétricas: pareja de columnas en proporción 1:2 / 2:1 (tercios). */
+.sn-body :is(.grid, .grilla).cols1-2 { grid-template-columns: 1fr 2fr; }
+.sn-body :is(.grid, .grilla).cols2-1 { grid-template-columns: 2fr 1fr; }
+
+/* Espaciado entre celdas, AMBOS ejes (override del default --sn-s-5). */
+.sn-body :is(.grid, .grilla).gap-0 { --sn-grid-gap: 0; }
+.sn-body :is(.grid, .grilla).gap-s { --sn-grid-gap: var(--sn-s-2); }
+.sn-body :is(.grid, .grilla).gap-m { --sn-grid-gap: var(--sn-s-4); }
+.sn-body :is(.grid, .grilla).gap-l { --sn-grid-gap: var(--sn-s-6); }
+
+/* Gap por EJE (override del común). Se combinan entre sí y con gap-*:
+   p.ej. `grid cols-3 gap-h-s gap-v-l` = columnas juntas, filas aireadas.
+     · gap-h-* = horizontal, entre COLUMNAS (dentro de cada fila)
+     · gap-v-* = vertical,   entre FILAS
+   Misma escala 0/s/m/l que gap-*. */
+.sn-body :is(.grid, .grilla).gap-h-0 { --sn-grid-gap-h: 0; }
+.sn-body :is(.grid, .grilla).gap-h-s { --sn-grid-gap-h: var(--sn-s-2); }
+.sn-body :is(.grid, .grilla).gap-h-m { --sn-grid-gap-h: var(--sn-s-4); }
+.sn-body :is(.grid, .grilla).gap-h-l { --sn-grid-gap-h: var(--sn-s-6); }
+.sn-body :is(.grid, .grilla).gap-v-0 { --sn-grid-gap-v: 0; }
+.sn-body :is(.grid, .grilla).gap-v-s { --sn-grid-gap-v: var(--sn-s-2); }
+.sn-body :is(.grid, .grilla).gap-v-m { --sn-grid-gap-v: var(--sn-s-4); }
+.sn-body :is(.grid, .grilla).gap-v-l { --sn-grid-gap-v: var(--sn-s-6); }
+
+/* Flujo vertical (column-major): los elementos LLENAN cada columna de
+   arriba abajo y al terminarla saltan a la siguiente, en vez de ir por
+   filas (que es como reparte `grid` por defecto). Comparar:
+       por filas (default):   por columnas (flujo-v):
+         1 2 3                   1 4 7
+         4 5 6                   2 5 8
+   Se apoya en columnas CSS (multicol), NO en `grid-auto-flow: column`,
+   porque grid no reparte un nº arbitrario de celdas en vertical sin que
+   le fijes las filas a mano (ceil(n/cols), que CSS no sabe calcular);
+   multicol balancea solo. El nº de columnas lo toma de cols-N; sin
+   cols-N usa 2. Para apilar en UNA sola columna usa `.stack`, no esto. */
+.sn-body :is(.grid, .grilla).flujo-v {
+	display: block;
+	column-count: 2;
+	column-gap: var(--sn-grid-gap-h);   /* la separación entre columnas sigue al eje horizontal */
+}
+.sn-body :is(.grid, .grilla).flujo-v.cols-1 { column-count: 1; }
+.sn-body :is(.grid, .grilla).flujo-v.cols-2 { column-count: 2; }
+.sn-body :is(.grid, .grilla).flujo-v.cols-3 { column-count: 3; }
+.sn-body :is(.grid, .grilla).flujo-v.cols-4 { column-count: 4; }
+.sn-body :is(.grid, .grilla).flujo-v.cols-5 { column-count: 5; }
+.sn-body :is(.grid, .grilla).flujo-v.cols-6 { column-count: 6; }
+/* No partir una celda (tarjeta, figura, lista) entre dos columnas. */
+.sn-body :is(.grid, .grilla).flujo-v > * { break-inside: avoid; }
+
+/* Pila vertical: una sola columna apilada (alias retrocompat `.stack`).
+   A diferencia de `.flujo-v`, esto NO reparte en varias columnas: fuerza
+   1 columna aunque haya cols-N. Pensado para usarse solo. */
+.sn-body :is(.grid, .grilla).stack {
+	grid-template-columns: minmax(0, 1fr);
+	grid-auto-flow: row;
+}
+
+/* Alineación vertical del contenido de cada celda (default: stretch). */
+.sn-body :is(.grid, .grilla):is(.align-top, .arriba)        { align-items: start; }
+.sn-body :is(.grid, .grilla):is(.align-center, .centro)     { align-items: center; }
+.sn-body :is(.grid, .grilla):is(.align-bottom, .abajo)      { align-items: end; }
+.sn-body :is(.grid, .grilla).align-baseline                 { align-items: baseline; }
+
+/* Margen contenedor: anular el margen vertical por defecto. */
+.sn-body :is(.grid, .grilla):is(.sin-margen, .flush) { margin: 0; }
+
+/* Full-bleed: la grilla trasciende --sn-measure y ocupa todo el campo,
+   con la misma técnica que `.full-width` (width 100vw + margen inline
+   negativo calculado relativo al 100% del contenedor). Sirve igual en la
+   hoja normal y en el canvas de __PANTALLACOMPLETA__. */
+.sn-body :is(.grid, .grilla):is(.full, .completa) {
+	width: 100vw;
+	max-width: 100vw;
+	margin-inline: calc((100% - 100vw) / 2);
+}
+
+@media (max-width: 64rem) {
+	.sn-body :is(.grid, .grilla).cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.sn-body :is(.grid, .grilla).cols-5,
+	.sn-body :is(.grid, .grilla).cols-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	/* Mismo desescalado para el flujo vertical (multicol). */
+	.sn-body :is(.grid, .grilla).flujo-v.cols-4 { column-count: 2; }
+	.sn-body :is(.grid, .grilla).flujo-v.cols-5,
+	.sn-body :is(.grid, .grilla).flujo-v.cols-6 { column-count: 3; }
+}
+@media (max-width: 48rem) {
+	/* Móvil: TODO a una sola columna —grid o flujo vertical (multicol),
+	   simétrico o asimétrico—. Sin esto, una grilla densa queda ilegible en
+	   teléfono. Las asimétricas cols1-2 / cols2-1 también colapsan. */
+	.sn-body :is(.grid, .grilla):is(.cols-2, .cols-3, .cols-4, .cols-5, .cols-6, .cols1-2, .cols2-1) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	/* OJO especificidad: la regla de 64rem `.flujo-v.cols-4` lleva 2 clases
+	   (0,4,0); para ganarle aquí y forzar 1 columna, estos selectores deben
+	   igualar esa especificidad (`.flujo-v` + `:is(.cols-N)` = 0,4,0) y venir
+	   DESPUÉS en la fuente. Un simple `.flujo-v` (0,3,0) NO basta: perdería
+	   contra el desescalado a 2 col y nunca bajaría a 1. */
+	.sn-body :is(.grid, .grilla).flujo-v,
+	.sn-body :is(.grid, .grilla).flujo-v:is(.cols-1, .cols-2, .cols-3, .cols-4, .cols-5, .cols-6, .cols1-2, .cols2-1) {
+		column-count: 1;
+	}
+}
+
+
+/* Marco tokenizado POR DEFECTO. Cuando se edita una página que NO es
+   wikitexto —CSS/JS/JSON, p. ej. `Plantilla:…/style.css`— WikiEditor no
+   realza el área: el textarea queda desnudo (`#wpTextbox1.mw-editfont-
+   monospace`), sin el chrome `.wikiEditor-ui` que aportaba el borde. Antes
+   este bloque forzaba `border:0` asumiendo ese chrome, así que el editor de
+   esas páginas se veía sin marco (no "respetaba" el estilo tokenizado). Ahora
+   el textarea trae SU PROPIO marco (borde + radio + papel); cuando WikiEditor
+   sí lo envuelve, la regla de más abajo se lo quita para no duplicarlo. */
+#wpTextbox1,
+.mw-editfont-monospace,
+.wikiEditor-ui-text textarea,
+textarea.mw-editfont-monospace {
+	font-family: var(--sn-font-mono) !important;
+	font-size: var(--sn-fs-sm);
+	line-height: 1.5;
+	padding: 1ex !important;
+	color: var(--sn-ink);
+	background: var(--sn-edit-surface);
+	border: 1px solid var(--sn-hairline);
+	border-radius: var(--sn-radius);
+	box-shadow: none !important;
+}
+/* WikiEditor SÍ envuelve el textarea (edición de wikitexto): el frame del
+   chrome ya da borde y redondez → el textarea interior va sin marco para no
+   duplicarlos. Especificidad mayor + después en orden → gana sobre la base. */
+.wikiEditor-ui .wikiEditor-ui-text #wpTextbox1,
+.wikiEditor-ui .wikiEditor-ui-text textarea {
+	border: 0;
+	border-radius: 0;
+}
+/* El anillo de foco lo da el chrome de WikiEditor cuando envuelve; en el
+   textarea desnudo (CSS/JS/JSON) el foco lo marca su propio borde en nova
+   (border:0 en contexto WikiEditor → ahí no se ve, no estorba). */
+#wpTextbox1:focus, .wikiEditor-ui-text textarea:focus { outline: none; }
+#wpTextbox1:focus { border-color: var(--sn-nova); }
+/* Los componentes OOUI (botones, campos, casillas, diálogos) del editor
+   y de todo el wiki se reskinea de forma centralizada y token-driven en
+   resources/skinStyles/oojs-ui.css (registrado contra los módulos
+   oojs-ui-* en skin.json). Aquí no se parchea OOUI. */
+
+/* ajustes específicos para Casiopea */
+
+/* Desplegables */
+.mw-customtoggle{
+	color: var(--sn-nova);
+}
+
+/* ─── Cabeceras de sección colapsables (mw-customtoggle + .title-toggle) ───
+   La portada las arma con el patrón nativo de MediaWiki: el título lleva
+   `.mw-customtoggle-ID .title-toggle` y el cuerpo es un `.mw-collapsible`
+   hermano del heading. Le damos affordance EXPLÍCITA: feather `plus` cuando
+   está colapsada, `minus` cuando está expandida, ambas con :hover.
+
+   Estado fiable = `.mw-collapsed` sobre el `.mw-collapsible` hermano. Ojo:
+   makeCollapsible NO marca el custom toggler con `-collapsed/-expanded`
+   (usa defaultOpts {} para togglers a medida), así que el estado se lee del
+   collapsible y se keyea con `:has(+ …)` desde el heading hacia su hermano.
+   Icono = feather pintado como `mask` + `currentColor`, como los chevrons de
+   `table.sortable`: sigue al color del texto (nova → nova-hover) y al tema. */
+.sn-body :is(h1, h2, h3, h4, h5, h6) .title-toggle {
+	--sn-plus:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E");
+	--sn-minus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E");
+	--sn-down:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cpolyline points='19 12 12 19 5 12'/%3E%3C/svg%3E");
+	cursor: pointer;
+	color: var(--sn-nova);
+	transition: color var(--sn-dur-1) var(--sn-ease);
+}
+.sn-body :is(h1, h2, h3, h4, h5, h6) .title-toggle::after {
+	content: "";
+	display: inline-block;
+	width: .72em; height: .72em;
+	margin-left: .5ex;
+	vertical-align: -.06em;
+	background-color: currentColor;            /* sigue al color del título */
+	-webkit-mask: var(--sn-plus) no-repeat center / contain;
+	mask: var(--sn-plus) no-repeat center / contain;
+	transition: transform var(--sn-dur-1) var(--sn-ease);
+}
+/* Expandida: el collapsible hermano ya no tiene `.mw-collapsed` → flecha-abajo
+   (arrow-down completa, no chevron): "esto está abierto / hay contenido debajo". */
+.sn-body :is(h1, h2, h3, h4, h5, h6):has(+ .mw-collapsible:not(.mw-collapsed)) .title-toggle::after {
+	-webkit-mask-image: var(--sn-down); mask-image: var(--sn-down);
+}
+/* Hover (en ambos estados): el título profundiza a nova-hover —el icono lo
+   hereda por currentColor— y el signo crece un punto para acusar el recibo. */
+.sn-body :is(h1, h2, h3, h4, h5, h6) .title-toggle:hover {
+	color: var(--sn-link-hover);
+}
+.sn-body :is(h1, h2, h3, h4, h5, h6) .title-toggle:hover::after {
+	transform: scale(1.18);
+}
+/* ─── Filete inferior de las cabeceras toggle (reemplaza al <hr>) ───
+   Antes cada sección colapsable se separaba con un <hr>, que metía un baseline
+   propio y descuadraba la retícula. En su lugar, la cabecera que ESCONDE algo
+   (la que contiene `.title-toggle`) dibuja ella misma un filete a todo el ancho,
+   asentado DENTRO de su margin-bottom (= 1 baseline en h2/h3, ver arriba), a
+   media interlínea de la línea de base siguiente. Así el título "que abre" se
+   distingue sin gastar una fila del grid, y al quitar los <hr> el ritmo vertical
+   queda intacto. El `::after` del heading está libre — el icono ± vive en
+   `.title-toggle::after`, no aquí. */
+.sn-body :is(h1, h2, h3, h4, h5, h6):has(.title-toggle) {
+	position: relative;
+}
+.sn-body :is(h1, h2, h3, h4, h5, h6):has(.title-toggle)::after {
+	content: "";
+	position: absolute;
+	left: 0; right: 0;
+	/* Centrado en el margin-bottom. A `0` lo pega bajo el texto;
+	   a `calc(var(--sn-baseline) * -1)` lo lleva a la línea de base siguiente. */
+	bottom: calc(var(--sn-baseline) * -0.5);
+	border-top: var(--sn-hair);                /* 1px solid var(--sn-hairline) */
+	pointer-events: none;
+}
+/* ─── EXPERIMENTAL: estado expandido de la sección toggle ───
+   Al dejar de estar `.mw-collapsed` el collapsible hermano (mismo selector que
+   usa el icono ±): el filete inferior de la cabecera DESAPARECE (ya no separa)
+   y cabecera + cuerpo quedan pegados (margin 0 entre ambos), leyéndose como un
+   solo bloque. (El borde vertical derecho que aunaba ambos se retiró por
+   decisión de diseño.) */
+.sn-body :is(h1, h2, h3, h4, h5, h6):has(.title-toggle):has(+ .mw-collapsible:not(.mw-collapsed))::after {
+	display: none;                              /* sin filete cuando está abierto */
+}
+.sn-body :is(h1, h2, h3, h4, h5, h6):has(.title-toggle):has(+ .mw-collapsible:not(.mw-collapsed)) {
+	margin-bottom: 0;                           /* cierra el hueco hacia el cuerpo */
+}
+.sn-body :is(h1, h2, h3, h4, h5, h6):has(.title-toggle) + .mw-collapsible:not(.mw-collapsed) {
+	margin-top: 0;
+}
+/* ── Acordeón real de colapsables (apertura Y cierre animados) ──
+   Implementado por JS (skin.js → bindCollapse), NO por CSS. makeCollapsible
+   togglea el cuerpo con display seco, así que animamos `height` 0↔scrollHeight
+   midiendo en sus eventos jQuery, con overflow:hidden SOLO durante la transición
+   (al terminar se restaura height:auto/overflow). Se evita a propósito el truco
+   CSS grid-template-rows: exigiría envolver los hijos y forzar display:grid sobre
+   el colapsable, lo que rompería contenedores de contenido que son su propio
+   layout —p.ej. `.curso-fotos`, que es `display:flex`—. Sin wrapper ni override
+   de display, el layout del contenido queda intacto y nada se recorta en reposo. */
+
+/* Marca CCA: misma composición y tamaño en escritorio y móvil. */
+.sn-isotype svg.cca-mark { height: 2.75rem; width: auto; }

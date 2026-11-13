@@ -1,6 +1,6 @@
 <?php
 /**
- * Stella Nova — hooks. PHP al mínimo (doctrina §2): solo el cableado que
+ * Stellamereida — hooks. PHP al mínimo (doctrina §2): solo el cableado que
  * el comportamiento del spec exige y que no puede vivir en CSS/JS.
  *
  *  · __PANTALLACOMPLETA__  → behaviour switch (spec PageRender.mode).
@@ -14,7 +14,7 @@
  * @license Artistic-2.0
  */
 
-namespace MediaWiki\Skins\StellaNova;
+namespace MediaWiki\Skins\Stellamereida;
 
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
@@ -33,26 +33,26 @@ class Hooks {
 	 *  (sans|serif — alternancia editorial). Índice, secciones colapsables
 	 *  y reducción de movimiento se retiraron como preferencia. */
 	private const PREFS = [
-		'stellanova-theme'  => '',
-		'stellanova-font'   => '',
-		'stellanova-family' => '',
+		'stellamereida-theme'  => '',
+		'stellamereida-font'   => '',
+		'stellamereida-family' => '',
 	];
 
 	/**
 	 * Registra los módulos ResourceLoader del skin con la ruta remota
 	 * calculada del DIRECTORIO REAL donde está instalado el skin, no de un
-	 * nombre fijo. Así "basta clonar" en cualquier carpeta (StellaNova,
-	 * stella-nova, lo que sea) y las URLs de las fuentes (y demás assets del
+	 * nombre fijo. Así "basta clonar" en cualquier carpeta (Stellamereida,
+	 * stellamereida, lo que sea) y las URLs de las fuentes (y demás assets del
 	 * módulo) resuelven solas: $wgStylePath + '/' + <carpeta-real>/resources.
 	 *
 	 * Por qué aquí y no en skin.json: `remoteSkinPath` en skin.json es un
-	 * literal estático ("StellaNova/resources"); si la carpeta no se llama
+	 * literal estático ("Stellamereida/resources"); si la carpeta no se llama
 	 * así, los woff2 dan 404 (MediaWiki no deriva la ruta sola — confirmado
 	 * en ResourceLoader\FileModule::extractBasePaths). Calcularla en PHP es
 	 * la única forma robusta al nombre de carpeta.
 	 *
 	 * OJO: NO usar __DIR__ — resuelve symlinks, así que en una instalación
-	 * con la carpeta enlazada (p.ej. skins/StellaNova → repo stella-nova)
+	 * con la carpeta enlazada (p.ej. skins/Stellamereida → repo stellamereida)
 	 * devolvería el nombre real del repo y las URLs 404. La ruta REGISTRADA
 	 * por wfLoadSkin (ExtensionRegistry) preserva el nombre tal como el wiki
 	 * sirve la carpeta — sirve tanto para el symlink de dev como para el
@@ -61,14 +61,14 @@ class Hooks {
 	 * @param ResourceLoader $rl
 	 */
 	public static function onResourceLoaderRegisterModules( ResourceLoader $rl ): void {
-		$jsonPath = ExtensionRegistry::getInstance()->getAllThings()['StellaNova']['path'] ?? null;
+		$jsonPath = ExtensionRegistry::getInstance()->getAllThings()['Stellamereida']['path'] ?? null;
 		// Fallback: si no se halla por nombre, __DIR__ (correcto en clon directo).
 		$skinDir = $jsonPath !== null ? dirname( $jsonPath ) : dirname( __DIR__ );
 		$paths = [
 			'localBasePath'  => $skinDir . '/resources',
 			'remoteSkinPath' => basename( $skinDir ) . '/resources',
 		];
-		$rl->register( 'skins.stellanova.styles', $paths + [
+		$rl->register( 'skins.stellamereida.styles', $paths + [
 			'class'    => SkinModule::class,
 			'features' => [
 				'normalize'      => true,
@@ -84,11 +84,11 @@ class Hooks {
 			'styles' => [
 				'fonts.css'       => [],
 				'tokens.css'      => [],
-				'stella-nova.css' => [],
+				'stellamereida.css' => [],
 				'print.css'       => [ 'media' => 'print' ],
 			],
 		] );
-		$rl->register( 'skins.stellanova.scripts', $paths + [
+		$rl->register( 'skins.stellamereida.scripts', $paths + [
 			'scripts'      => [ 'skin.js' ],
 			'dependencies' => [ 'mediawiki.api' ],
 		] );
@@ -97,7 +97,7 @@ class Hooks {
 		// pulsar «Versión para imprimir». Trae el polyfill vendorizado + la
 		// integración + el cromo en pantalla del overlay. paged.js necesita
 		// `mediawiki.util` (mw.util.getUrl para la URL absoluta de la página).
-		$rl->register( 'skins.stellanova.print', $paths + [
+		$rl->register( 'skins.stellamereida.print', $paths + [
 			'scripts'      => [ 'lib/vivliostyle.global.js', 'print-preview.js' ],
 			'styles'       => [ 'print-preview.css' ],
 			'dependencies' => [ 'mediawiki.util' ],
@@ -111,31 +111,31 @@ class Hooks {
 	 * @param string[] &$ids
 	 */
 	public static function onGetDoubleUnderscoreIDs( array &$ids ): void {
-		$ids[] = 'stellanova_fullscreen';
-		$ids[] = 'stellanova_wide';
+		$ids[] = 'stellamereida_fullscreen';
+		$ids[] = 'stellamereida_wide';
 	}
 
 
 	/**
 	 * Puente parser→skin: si la página declaró el modo, lo dejamos en la
-	 * OutputPage para que SkinStellaNova lo lea sin volver a consultar props.
+	 * OutputPage para que SkinStellamereida lo lea sin volver a consultar props.
 	 *
 	 * @param OutputPage $out
 	 * @param ParserOutput $pOut
 	 */
 	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ): void {
 		$prop = method_exists( $pOut, 'getPageProperty' )
-			? $pOut->getPageProperty( 'stellanova_fullscreen' )
-			: $pOut->getProperty( 'stellanova_fullscreen' );
+			? $pOut->getPageProperty( 'stellamereida_fullscreen' )
+			: $pOut->getProperty( 'stellamereida_fullscreen' );
 		if ( $prop !== null && $prop !== false ) {
-			$out->setProperty( 'stellanova-fullscreen', true );
+			$out->setProperty( 'stellamereida-fullscreen', true );
 		}
 		// __PAGINAANCHA__: layout estándar con la hoja ensanchada. Basta una
 		// clase en <body>; el CSS (`.sn-wide`) resuelve el ancho. En
 		// fullscreen no aplica (el canvas ya no está acotado a la medida).
 		$wide = method_exists( $pOut, 'getPageProperty' )
-			? $pOut->getPageProperty( 'stellanova_wide' )
-			: $pOut->getProperty( 'stellanova_wide' );
+			? $pOut->getPageProperty( 'stellamereida_wide' )
+			: $pOut->getProperty( 'stellamereida_wide' );
 		if ( $wide !== null && $wide !== false ) {
 			$out->addBodyClasses( 'sn-wide' );
 		}
@@ -147,7 +147,7 @@ class Hooks {
 			? $pOut->getPageProperty( 'notitle' )
 			: $pOut->getProperty( 'notitle' );
 		if ( $notitle !== null && $notitle !== false ) {
-			$out->setProperty( 'stellanova-notitle', true );
+			$out->setProperty( 'stellamereida-notitle', true );
 		}
 	}
 
@@ -197,7 +197,7 @@ class Hooks {
 	 * @param Skin $skin
 	 */
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): void {
-		if ( $skin->getSkinName() !== 'stellanova' ) {
+		if ( $skin->getSkinName() !== 'stellamereida' ) {
 			return;
 		}
 
@@ -212,9 +212,9 @@ class Hooks {
 		// deliberada: el skin es autocontenido y desplegable sin editar
 		// config del servidor).
 		$stylePath = $skin->getConfig()->get( 'StylePath' );
-		$favicon = $stylePath . '/StellaNova/resources/favicon.svg';
+		$favicon = $stylePath . '/stellamereida/resources/favicon.svg';
 		$out->addHeadItem(
-			'stellanova-favicon',
+			'stellamereida-favicon',
 			'<link rel="icon" type="image/svg+xml" href="' . htmlspecialchars( $favicon ) . '">'
 		);
 
@@ -225,7 +225,7 @@ class Hooks {
 		// expira el TTL, sin que el hard-refresh ayude porque la caché es
 		// compartida). Solución sin acceso al servidor: cargamos la CSS del skin
 		// nosotros, con un `version` derivado del mtime de los .css → cada deploy
-		// cambia la URL → MISS → CSS fresca. `skins.stellanova.styles` se quitó de
+		// cambia la URL → MISS → CSS fresca. `skins.stellamereida.styles` se quitó de
 		// skin.json `styles` para que MediaWiki no la incluya además (sin doble
 		// carga). El módulo se sigue registrando en onResourceLoaderRegisterModules.
 		$lang = $skin->getLanguage()->getCode();
@@ -242,16 +242,16 @@ class Hooks {
 				$rl,
 				new \MediaWiki\Request\FauxRequest( [
 					'lang'    => $lang,
-					'modules' => 'skins.stellanova.styles',
+					'modules' => 'skins.stellamereida.styles',
 					'only'    => 'styles',
-					'skin'    => 'stellanova',
+					'skin'    => 'stellamereida',
 				] )
 			);
 			// makeVersionQuery produce EXACTAMENTE el string que RL valida en
 			// respond() (getVersionHash de un solo módulo no coincide con la
 			// versión combinada). Coincidir → RL concede caché larga inmutable.
-			if ( $rl->getModule( 'skins.stellanova.styles' ) ) {
-				$version = $rl->makeVersionQuery( $rlCtx, [ 'skins.stellanova.styles' ] );
+			if ( $rl->getModule( 'skins.stellamereida.styles' ) ) {
+				$version = $rl->makeVersionQuery( $rlCtx, [ 'skins.stellamereida.styles' ] );
 			}
 		} catch ( \Throwable $e ) {
 			$version = null;
@@ -260,7 +260,7 @@ class Hooks {
 			$resDir = self::skinResourcesDir();
 			$mtime = 0;
 			if ( $resDir !== null ) {
-				foreach ( [ 'fonts.css', 'tokens.css', 'stella-nova.css', 'print.css' ] as $f ) {
+				foreach ( [ 'fonts.css', 'tokens.css', 'stellamereida.css', 'print.css' ] as $f ) {
 					$p = $resDir . '/' . $f;
 					if ( is_file( $p ) ) {
 						$mtime = max( $mtime, (int)filemtime( $p ) );
@@ -273,14 +273,14 @@ class Hooks {
 			$skin->getConfig()->get( 'LoadScript' ),
 			[
 				'lang'    => $lang,
-				'modules' => 'skins.stellanova.styles',
+				'modules' => 'skins.stellamereida.styles',
 				'only'    => 'styles',
-				'skin'    => 'stellanova',
+				'skin'    => 'stellamereida',
 				'version' => $version,
 			]
 		);
 		$out->addHeadItem(
-			'zzz-stellanova-styles',
+			'zzz-stellamereida-styles',
 			'<link rel="stylesheet" href="' . htmlspecialchars( $href ) . '">'
 		);
 
@@ -293,7 +293,7 @@ class Hooks {
 		if ( $isNamed ) {
 			$lookup = \MediaWiki\MediaWikiServices::getInstance()->getUserOptionsLookup();
 			foreach ( array_keys( self::PREFS ) as $key ) {
-				$short = substr( $key, strlen( 'stellanova-' ) );
+				$short = substr( $key, strlen( 'stellamereida-' ) );
 				$server[$short] = (string)$lookup->getOption( $user, $key );
 			}
 		}
@@ -303,10 +303,10 @@ class Hooks {
 		// el aviso, reaparece. El pre-pintado lo usa para ocultar sin FOUC.
 		$noticeId = self::noticeVersion();
 
-		$out->addJsConfigVars( 'wgStellaNova', [
+		$out->addJsConfigVars( 'wgStellamereida', [
 			'identity'   => $identity,
 			'persist'    => $isNamed ? 'account' : 'browser',
-			'apiPrefix'  => 'stellanova-',
+			'apiPrefix'  => 'stellamereida-',
 			'server'     => $server,
 			'noticeId'   => $noticeId,
 		] );
@@ -336,7 +336,7 @@ class Hooks {
 			'if(C.noticeId){try{if(localStorage.getItem("sn-notice-dismissed")===C.noticeId)' .
 			'd.setAttribute("data-sn-notice-hide","");}catch(e){}}' .
 			'}catch(e){}})();</script>';
-		$out->addHeadItem( 'stellanova-prepaint', $script );
+		$out->addHeadItem( 'stellamereida-prepaint', $script );
 
 		// Tema de Mermaid, owned por el skin. La extensión Mermaid renderiza el
 		// SVG client-side y DIMENSIONA cada caja midiendo el texto con la fuente
@@ -350,7 +350,7 @@ class Hooks {
 		// (flip claro/oscuro); aquí solo va el tamaño/medición. Defensivo: nunca
 		// debe romper la página. Ver [[skinstyles-cascade-gotcha]].
 		$mscript = '<script>(function(){try{' .
-			'var S="IBM Plex Sans, system-ui, sans-serif",Z="14px";' .
+			'var S="Avenida, system-ui, sans-serif",Z="14px";' .
 			'function M(c){c=c||{};var t=c.themeVariables||{};c.fontFamily=S;' .
 			'c.themeVariables=Object.assign({},t,{fontFamily:t.fontFamily||S,fontSize:t.fontSize||Z});' .
 			'return c;}' .
@@ -359,7 +359,7 @@ class Hooks {
 			'var _m;Object.defineProperty(window,"mermaid",{configurable:true,' .
 			'get:function(){return _m;},set:function(v){_m=W(v);}});' .
 			'}catch(e){}})();</script>';
-		$out->addHeadItem( 'stellanova-mermaid-theme', $mscript );
+		$out->addHeadItem( 'stellamereida-mermaid-theme', $mscript );
 	}
 
 	/**
@@ -371,7 +371,7 @@ class Hooks {
 	 * @return string|null
 	 */
 	private static function skinResourcesDir(): ?string {
-		$jsonPath = ExtensionRegistry::getInstance()->getAllThings()['StellaNova']['path'] ?? null;
+		$jsonPath = ExtensionRegistry::getInstance()->getAllThings()['Stellamereida']['path'] ?? null;
 		$skinDir = $jsonPath !== null ? dirname( $jsonPath ) : dirname( __DIR__ );
 		$res = $skinDir . '/resources';
 		return is_dir( $res ) ? $res : null;
@@ -380,7 +380,7 @@ class Hooks {
 	/**
 	 * Id de la última revisión de Stella-Nova:Aviso (o '' si no existe).
 	 * Barato: getLatestRevID no parsea. Réplica mínima de la resolución de
-	 * namespace de SkinStellaNova::resolveFragment (namespace dedicado si
+	 * namespace de SkinStellamereida::resolveFragment (namespace dedicado si
 	 * está declarado; si no, página homónima en el espacio principal).
 	 *
 	 * @return string

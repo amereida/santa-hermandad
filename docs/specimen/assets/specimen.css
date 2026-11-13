@@ -1,4 +1,4 @@
-/* specimen.css — andamio del espécimen Stella Nova.
+/* specimen.css — andamio del espécimen Stellamereida.
    Sólo lo necesario para presentar los componentes en grilla y para la
    barra de control superior. NO redefine tokens — los usa. */
 
@@ -304,8 +304,8 @@ body.spec { display: flex; flex-direction: column; min-height: 100vh; }
    familia .fondo-* del skin, documentada en "Bandas de fondo".) */
 
 /* Badges: .sn-badge (+ variantes -nova/-ok/-warn/-danger) ahora es componente
-   REAL del skin (resources/stella-nova.css), no specimen-only. El especimen
-   carga stella-nova.css → los ejemplos se pintan con el componente shippeado;
+   REAL del skin (resources/stellamereida.css), no specimen-only. El especimen
+   carga stellamereida.css → los ejemplos se pintan con el componente shippeado;
    no se redefine aquí para no duplicar/divergir. */
 .sn-pill { display: inline-flex; align-items: center; padding: 2px var(--sn-s-3);
            font-size: var(--sn-fs-xs); background: var(--sn-sunk);
@@ -331,7 +331,7 @@ body.spec { display: flex; flex-direction: column; min-height: 100vh; }
 
 /* Tablas: SIN andamio propio del espécimen. El estilo real de
    `.wikitable` / `.smwtable` / `.broadtable` y de las fichas
-   `table.plantilla` vive en stella-nova.css (que el espécimen carga) y se
+   `table.plantilla` vive en stellamereida.css (que el espécimen carga) y se
    aplica dentro de `.sn-body`. Una regla `.wikitable` local aquí solo
    introduciría inexactitudes (p.ej. filas alternadas, que el skin NO usa:
    su diseño son filetes horizontales uniformes, cabecera transparente). */
@@ -370,7 +370,7 @@ body.spec { display: flex; flex-direction: column; min-height: 100vh; }
 .spec-subnav a:hover { color: var(--sn-ink); }
 .spec-subnav a[aria-current="page"] { color: var(--sn-ink); background: var(--sn-paper); }
 /* El CONTENIDO del paper (h1/h2/párrafos/enlaces/cita/aviso .sn-notice) NO se
-   re-estila aquí: lo pinta la CSS REAL del skin (stella-nova.css, que el
+   re-estila aquí: lo pinta la CSS REAL del skin (stellamereida.css, que el
    espécimen carga). El contenido del layout vive dentro de `.sn-body`, así que
    hereda tipografía, jerarquía de cabeceras, enlaces, blockquote y el aviso
    `.sn-notice` tal cual el skin — sin CSS custom que diverja. Antes esta zona
@@ -385,7 +385,7 @@ code { background: var(--sn-sunk); padding: 1px 4px; border-radius: 2px;
        font-size: 0.9em; }
 pre code { background: transparent; padding: 0; }
 
-/* `.poem` ya está estilada por stella-nova.css (familia display,
+/* `.poem` ya está estilada por stellamereida.css (familia display,
    white-space: pre-wrap, `.poem br { display: none }`). No redefinir aquí. */
 
 /* — Bloque "uso": código wikitexto a la izquierda, render a la derecha
@@ -456,7 +456,7 @@ pre code { background: transparent; padding: 0; }
   color: var(--sn-ink-soft);
 }
 
-/* Iconbutton mínimo (el stella-nova.css real lo cubre, pero el demo aislado
+/* Iconbutton mínimo (el stellamereida.css real lo cubre, pero el demo aislado
    no siempre está dentro de los selectores anclados al chrome) */
 .sn-iconbtn { display: inline-grid; place-items: center;
               width: var(--sn-ctl); height: var(--sn-ctl);

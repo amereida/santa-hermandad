@@ -1,5 +1,5 @@
 /* ============================================================
- * skinStyles/edit.css — Stella Nova
+ * skinStyles/edit.css — Stellamereida
  *
  * Tokeniza el CROMO DEL FORMULARIO DE EDICIÓN DEL CORE: la caja de
  * opciones (resumen + casillas + botones), los caracteres especiales,
@@ -20,7 +20,7 @@
  * de edición, así que se registran contra `+mediawiki.action.edit.styles`
  * (módulo que el core añade en cualquier action=edit, sea o no wikitexto).
  * El marco del propio <textarea> #wpTextbox1 ya se tokeniza —y voltea—
- * en `stella-nova.css` (CSS global del skin), así que aquí no se repite.
+ * en `stellamereida.css` (CSS global del skin), así que aquí no se repite.
  *
  * ESPECIFICIDAD. El `+` de ResourceModuleSkinStyles carga este CSS DESPUÉS
  * del módulo del core, así que (0,1,0) basta para ganarle a su (0,1,0).

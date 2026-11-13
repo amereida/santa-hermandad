@@ -1,4 +1,4 @@
-# Stella Nova — para diseñadoras y diseñadores
+# Stellamereida — para diseñadoras y diseñadores
 
 Guía para intervenir el sistema visual del skin sin tocar PHP ni
 configuración de MediaWiki. Si vienes del Taller de Diseño y solo
@@ -18,7 +18,7 @@ Mapa:
 | Quiero cambiar… | En qué archivo está |
 |---|---|
 | **Variables / tokens** (color, espaciado, tipografía, sombras, radios, movimiento; claro/oscuro; las 5 preferencias por `data-attribute`) | [`resources/tokens.css`](../resources/tokens.css) |
-| **Layout y componentes** (cabecera, pie, menús, panel de preferencias, "página de papel"…) | [`resources/stella-nova.css`](../resources/stella-nova.css) |
+| **Layout y componentes** (cabecera, pie, menús, panel de preferencias, "página de papel"…) | [`resources/stellamereida.css`](../resources/stellamereida.css) |
 | **Impresión** | [`resources/print.css`](../resources/print.css) |
 | **Estilos de extensiones** (22 extensiones absorbidas, sin reestructurar su DOM) | [`resources/skinStyles/`](../resources/skinStyles/) — ver [`EXTENSIONES.md`](EXTENSIONES.md) |
 | **Íconos** (sprite Feather inline; símbolos `#sn-i-*`) | [`includes/templates/SnIcons.mustache`](../includes/templates/SnIcons.mustache) |
@@ -42,53 +42,16 @@ ver los cambios al instante:
 
 ## Tipografía
 
-**IBM Plex Sans** (sans del cuerpo · UI · todas las cabeceras h1–h6;
-**variable**, dos ejes wght 100–700 + wdth 75–100) · **Roboto Serif**
-(serif del cuerpo cuando el lector la elige desde el menú, citas y
-`<poem>` por defecto; **variable**, cuatro ejes wght 100–900 + wdth
-75–100 + opsz 8–60 + GRAD −50–100) · **IBM Plex Mono** (código).
+**Avenida**, autoalojada en `resources/fonts/Avenida/`: seis pesos estáticos
+(275, 400, 500, 600, 700, 900), redonda e itálica, normal y condensada.
+`resources/fonts.css` declara los 24 WOFF2. Cuerpo, UI, cabeceras y citas usan
+Avenida normal; el código usa monospace del sistema.
 
-Todas auto-alojadas (sin CDN en runtime): `@font-face` en
-[`resources/fonts.css`](../resources/fonts.css), archivos `woff2` en
-[`resources/fonts/`](../resources/fonts/). Subset `latin` (U+0000-00FF)
-cubre el español sin `latin-ext`.
-
-Dos capas de tokens en [`tokens.css`](../resources/tokens.css):
-**primitivas** (las dos familias reales) y **semánticas** (alias que
-consume el resto del skin, y que el menú del usuario invierte para
-alternar la familia del cuerpo entre sans y serif).
-
-- `--sn-font-sans` (primitiva) — IBM Plex Sans.
-- `--sn-font-serif` (primitiva) — Roboto Serif.
-- `--sn-font-mono` (primitiva) — IBM Plex Mono.
-- `--sn-font-text` = `var(--sn-font-sans)` por defecto. Cambia a
-  `var(--sn-font-serif)` cuando `data-sn-family="serif"`. Lo consumen el
-  cuerpo, el chrome, los botones, los menús y las cabeceras.
-- `--sn-font-display` = `var(--sn-font-text)`. Alias: la doctrina del
-  skin es "todo sans en cabeceras". Si en el futuro quieres reintroducir
-  un display distinto, cambia la línea del alias y nada más.
-- `--sn-font-quote` = `var(--sn-font-serif)` por defecto. Cambia a
-  `var(--sn-font-sans)` cuando `data-sn-family="serif"`. Lo consumen
-  `<blockquote>` y `.poem` para mantener el contraste editorial frente
-  al cuerpo (siempre a ancho natural, `font-stretch: 100%`).
-- `--sn-serif-grade` (eje GRAD de Roboto Serif) — engrosa el trazo de la
-  serif sin mover la caja del texto. Aplicado a toda la cascada vía
-  `font-variation-settings: "GRAD"` en `:root` (sans/mono ignoran el eje).
-  `0` en claro; `30` en oscuro para compensar el aclaramiento óptico del
-  texto claro sobre fondo negro.
-
-**Ancho del cuerpo (`--sn-text-width`, default 80%).** Las dos familias de
-texto declaran el mismo rango `wdth 75–100`, así que el cuerpo condensa por
-igual elija el lector sans o serif. Las cabeceras y las citas/`<poem>` se
-resetean a `100%` (la condensada es solo del cuerpo corrido). Mono no tiene
-eje de ancho → lo ignora.
-
-El alternador (botón "Aa / Aa" con specimens en cada familia) vive en
-el menú del usuario junto al tema y al tamaño de letra; persiste como
-opción de cuenta `stellanova-family` para registrados y en localStorage
-(`sn-pref-family`) para anónimo/temporal. La resolución antes del primer
-paint la hace el script de pre-pintado en
-[`Hooks.php`](../includes/Hooks.php#L284-L302).
+Los componentes consumen `--sn-font-text`, `--sn-font-display` y
+`--sn-font-quote`. Los alias primitivos sans/serif se conservan para
+compatibilidad y ambos apuntan a Avenida. La familia condensada se declara
+como `Avenida Condensed`; estas fuentes no tienen ejes variables `wdth` ni
+`GRAD`, por lo que las clases `fw-*` no interpolan el ancho.
 
 ## Íconos
 
@@ -124,8 +87,8 @@ el número crece con la oscuridad. Familias:
 
 | Familia | Qué es | Stops |
 |---|---|---|
-| **papel** | neutros cálidos claros (la hoja, sus pliegues) | 50–800 |
-| **tinta** | neutros cálidos oscuros (pizarra y tinta china del atelier) | 300–950 |
+| **papel** | naranja muy pálido (la hoja, sus pliegues) | 50–800 |
+| **tinta** | verdes petróleo profundos (superficies nocturnas) | 300–950 |
 | **rojo** | la sangre del carmín (nova y links del claro) | 500–900 |
 | **coral** | el rosa cálido del modo noche | 300–400 |
 | **azul** | único frío del skin (link en oscuro) | 200–300 |
@@ -197,10 +160,10 @@ ninguno**. La capa primitiva es puramente aditiva por debajo.
 Mini-sitio estático autocontenido para iterar el sistema visual **sin
 levantar la wiki ni tocar PHP**. Navegable en línea:
 
-**[hspencer.github.io/stella-nova/specimen/](https://hspencer.github.io/stella-nova/specimen/)**
+**[hspencer.github.io/stellamereida/specimen/](https://hspencer.github.io/stellamereida/specimen/)**
 
 Localmente en [`docs/specimen/`](specimen/) (también empaquetado como
-`stella-nova-specimen-v<version>.zip` listo para enviar al taller de
+`stellamereida-specimen-v<version>.zip` listo para enviar al taller de
 diseño). Tres páginas:
 
 - `index.html` — tokens, escalas, sombras (auto-generadas desde

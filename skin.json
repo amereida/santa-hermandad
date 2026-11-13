@@ -1,78 +1,78 @@
 {
 	"manifest_version": 2,
-	"name": "StellaNova",
-	"namemsg": "skinname-stellanova",
+	"name": "Stellamereida",
+	"namemsg": "skinname-stellamereida",
 	"version": "0.9.3",
 	"author": [
 		"[https://herbertspencer.net Herbert Spencer González]",
 		".:TIG:. Taller de Investigaciones Gráficas, e[ad] Escuela de Arquitectura y Diseño, Pontificia Universidad Católica de Valparaíso",
 		"Corporación Cultural Amereida"
 	],
-	"url": "https://github.com/hspencer/stella-nova",
-	"descriptionmsg": "stellanova-desc",
+	"url": "https://github.com/amereida/stellamereida",
+	"descriptionmsg": "stellamereida-desc",
 	"license-name": "Artistic-2.0",
 	"type": "skin",
 	"requires": {
 		"MediaWiki": ">= 1.43.0"
 	},
 	"config": {
-		"StellaNovaIsotypePath": {
+		"StellamereidaIsotypePath": {
 			"value": null,
 			"description": "Ruta ABSOLUTA en el sistema de archivos del servidor a un SVG monocromo colorizable (usa currentColor) para el isotipo/wordmark del header. El skin lo lee e inyecta inline, por lo que se tematiza claro/oscuro. Si es null o el archivo no es legible, usa el bundle resources/casiopea.svg. Ver README (seccion \"Logo / isotipo\")."
 		},
-		"StellaNovaIconPath": {
+		"StellamereidaIconPath": {
 			"value": null,
-			"description": "Ruta ABSOLUTA en el sistema de archivos del servidor al glifo compacto (cuadrado, sin wordmark) para viewports estrechos y la barra de pantalla completa. Mismas reglas que StellaNovaIsotypePath; fallback al bundle resources/casiopea-icon.svg."
+			"description": "Ruta ABSOLUTA en el sistema de archivos del servidor al glifo compacto (cuadrado, sin wordmark) para viewports estrechos y la barra de pantalla completa. Mismas reglas que StellamereidaIsotypePath; fallback al bundle resources/casiopea-icon.svg."
 		}
 	},
 	"AutoloadNamespaces": {
-		"MediaWiki\\Skins\\StellaNova\\": "includes/"
+		"MediaWiki\\Skins\\Stellamereida\\": "includes/"
 	},
 	"ValidSkinNames": {
-		"stellanova": {
-			"class": "MediaWiki\\Skins\\StellaNova\\SkinStellaNova",
+		"stellamereida": {
+			"class": "MediaWiki\\Skins\\Stellamereida\\SkinStellamereida",
 			"args": [
 				{
-					"name": "stellanova",
+					"name": "stellamereida",
 					"responsive": true,
 					"templateDirectory": "includes/templates",
 					"styles": [],
 					"scripts": [
-						"skins.stellanova.scripts"
+						"skins.stellamereida.scripts"
 					],
 					"messages": [
 						"sitetitle",
 						"searchbutton",
 						"tagline",
 						"toc",
-						"stellanova-skip-to-content",
-						"stellanova-skip-to-nav",
-						"stellanova-sidebar",
-						"stellanova-home",
-						"stellanova-escape",
-						"stellanova-menu",
-						"stellanova-mainpage",
-						"stellanova-search",
-						"stellanova-thispage",
-						"stellanova-user",
-						"stellanova-temp-account",
-						"stellanova-managed-nav",
-						"stellanova-pagetools",
-						"stellanova-nav",
-						"stellanova-page",
-						"stellanova-close",
-						"stellanova-auto",
-						"stellanova-pref-theme",
-						"stellanova-theme-light",
-						"stellanova-theme-dark",
-						"stellanova-pref-font",
-						"stellanova-sz-s",
-						"stellanova-sz-m",
-						"stellanova-sz-l",
-						"stellanova-pref-family",
-						"stellanova-family-sans",
-						"stellanova-family-serif",
-						"stellanova-tools"
+						"stellamereida-skip-to-content",
+						"stellamereida-skip-to-nav",
+						"stellamereida-sidebar",
+						"stellamereida-home",
+						"stellamereida-escape",
+						"stellamereida-menu",
+						"stellamereida-mainpage",
+						"stellamereida-search",
+						"stellamereida-thispage",
+						"stellamereida-user",
+						"stellamereida-temp-account",
+						"stellamereida-managed-nav",
+						"stellamereida-pagetools",
+						"stellamereida-nav",
+						"stellamereida-page",
+						"stellamereida-close",
+						"stellamereida-auto",
+						"stellamereida-pref-theme",
+						"stellamereida-theme-light",
+						"stellamereida-theme-dark",
+						"stellamereida-pref-font",
+						"stellamereida-sz-s",
+						"stellamereida-sz-m",
+						"stellamereida-sz-l",
+						"stellamereida-pref-family",
+						"stellamereida-family-sans",
+						"stellamereida-family-serif",
+						"stellamereida-tools"
 					],
 					"menus": [
 						"user-menu",
@@ -89,26 +89,26 @@
 		}
 	},
 	"MessagesDirs": {
-		"StellaNova": [
+		"Stellamereida": [
 			"i18n"
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"StellaNovaMagic": "StellaNova.i18n.magic.php"
+		"StellamereidaMagic": "Stellamereida.i18n.magic.php"
 	},
 	"Hooks": {
-		"GetDoubleUnderscoreIDs": "MediaWiki\\Skins\\StellaNova\\Hooks::onGetDoubleUnderscoreIDs",
-		"OutputPageParserOutput": "MediaWiki\\Skins\\StellaNova\\Hooks::onOutputPageParserOutput",
-		"GetPreferences": "MediaWiki\\Skins\\StellaNova\\Hooks::onGetPreferences",
-		"UserGetDefaultOptions": "MediaWiki\\Skins\\StellaNova\\Hooks::onUserGetDefaultOptions",
-		"BeforePageDisplay": "MediaWiki\\Skins\\StellaNova\\Hooks::onBeforePageDisplay",
-		"ResourceLoaderRegisterModules": "MediaWiki\\Skins\\StellaNova\\Hooks::onResourceLoaderRegisterModules"
+		"GetDoubleUnderscoreIDs": "MediaWiki\\Skins\\Stellamereida\\Hooks::onGetDoubleUnderscoreIDs",
+		"OutputPageParserOutput": "MediaWiki\\Skins\\Stellamereida\\Hooks::onOutputPageParserOutput",
+		"GetPreferences": "MediaWiki\\Skins\\Stellamereida\\Hooks::onGetPreferences",
+		"UserGetDefaultOptions": "MediaWiki\\Skins\\Stellamereida\\Hooks::onUserGetDefaultOptions",
+		"BeforePageDisplay": "MediaWiki\\Skins\\Stellamereida\\Hooks::onBeforePageDisplay",
+		"ResourceLoaderRegisterModules": "MediaWiki\\Skins\\Stellamereida\\Hooks::onResourceLoaderRegisterModules"
 	},
-	"_comment_ResourceModules": "skins.stellanova.styles y .scripts se registran en PHP (Hooks::onResourceLoaderRegisterModules) con remoteSkinPath calculado de la carpeta REAL del skin (robusto al nombre del directorio al clonar). Ademas, `styles` esta vacio a proposito: la CSS critica del skin NO la carga MediaWiki en su <link> combinado (que va SIN version y se cachea rancio tras cada deploy), sino Hooks::onBeforePageDisplay con un <link> propio cuyo `version` es el hash de contenido de RL → caché larga inmutable + bust automático en cada cambio de CSS, sin acceso al servidor.",
+	"_comment_ResourceModules": "skins.stellamereida.styles y .scripts se registran en PHP (Hooks::onResourceLoaderRegisterModules) con remoteSkinPath calculado de la carpeta REAL del skin (robusto al nombre del directorio al clonar). Ademas, `styles` esta vacio a proposito: la CSS critica del skin NO la carga MediaWiki en su <link> combinado (que va SIN version y se cachea rancio tras cada deploy), sino Hooks::onBeforePageDisplay con un <link> propio cuyo `version` es el hash de contenido de RL → caché larga inmutable + bust automático en cada cambio de CSS, sin acceso al servidor.",
 	"ResourceModuleSkinStyles": {
-		"stellanova": {
+		"stellamereida": {
 			"localBasePath": "resources",
-			"remoteSkinPath": "StellaNova/resources",
+			"remoteSkinPath": "stellamereida/resources",
 			"+ext.3DAlloy": "skinStyles/3dalloy.css",
 			"+ext.MsUpload": "skinStyles/msupload.less",
 			"+ext.ReplaceTextStyles": "skinStyles/replacetext.less",

@@ -1,0 +1,242 @@
+[
+  {
+    "source": "Standard/AvenirNextLTPro-Bold.otf",
+    "source_sha256": "2b20d4c635b2864626d74b7e436a75bd33fee60b673801f385804dce4474d8a9",
+    "file": "fonts/Avenida-Bold.woff2",
+    "family": "Avenida",
+    "weight": 700,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 32060
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-BoldIt.otf",
+    "source_sha256": "bbbfd725a0556a8d4c593854bd70fa2a4ccb74761c8bc71b19b576b1f6c4aa4e",
+    "file": "fonts/Avenida-BoldItalic.woff2",
+    "family": "Avenida",
+    "weight": 700,
+    "style": "italic",
+    "glyphs": 556,
+    "bytes": 32968
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-Demi.otf",
+    "source_sha256": "e857395afbb57a4d98d41ab908acd7ce0773f311391d832aecdb6b8938eb4e2f",
+    "file": "fonts/Avenida-Demi.woff2",
+    "family": "Avenida",
+    "weight": 600,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 31568
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-DemiIt.otf",
+    "source_sha256": "8aa8e31594374014938fe38a7d3dc20f918d8425c9d6d96ca096a779cc6a6825",
+    "file": "fonts/Avenida-DemiItalic.woff2",
+    "family": "Avenida",
+    "weight": 600,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 32824
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-Heavy.otf",
+    "source_sha256": "c8c22e046d6dec532ac681be9a99f4935db310d18cb4f2c557d09953618392d1",
+    "file": "fonts/Avenida-Heavy.woff2",
+    "family": "Avenida",
+    "weight": 900,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 31096
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-HeavyIt.otf",
+    "source_sha256": "03c77dd6a234416515db0608963f036ab9ca6c5d6994dfeb422ab7fde1b7d796",
+    "file": "fonts/Avenida-HeavyItalic.woff2",
+    "family": "Avenida",
+    "weight": 900,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 32936
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-It.otf",
+    "source_sha256": "42b0620b30dc51b360cfedb093c269bb19fe4a1f44d5dbf1172b0480190ba0ba",
+    "file": "fonts/Avenida-Italic.woff2",
+    "family": "Avenida",
+    "weight": 400,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 31404
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-Medium.otf",
+    "source_sha256": "5327a9e80c6e85c6b4b330f3c1022723e776f0bbd1e4b9c0fbed2bab2fc4dd23",
+    "file": "fonts/Avenida-Medium.woff2",
+    "family": "Avenida",
+    "weight": 500,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 31204
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-MediumIt.otf",
+    "source_sha256": "a473593e5ad72204779760838271dd65a5128dd0da3b7384456859ba52984264",
+    "file": "fonts/Avenida-MediumItalic.woff2",
+    "family": "Avenida",
+    "weight": 500,
+    "style": "italic",
+    "glyphs": 556,
+    "bytes": 32616
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-Regular.otf",
+    "source_sha256": "9574dfd39b6b0850ab64b5fe73a44ca54a6a2208a2b721fb4a423aba347c1308",
+    "file": "fonts/Avenida-Regular.woff2",
+    "family": "Avenida",
+    "weight": 400,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 30808
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-UltLt.otf",
+    "source_sha256": "8bbe49869ec95ec184d96eadae3c07124bb78ff8ec9d31d33cae4a91d00e6c1c",
+    "file": "fonts/Avenida-UltraLight.woff2",
+    "family": "Avenida",
+    "weight": 275,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 30076
+  },
+  {
+    "source": "Standard/AvenirNextLTPro-UltLtIt.otf",
+    "source_sha256": "4d1b5d04d318c9b8521cef60281e9e25ca1470db982f73dc24c1c8c051faadc2",
+    "file": "fonts/Avenida-UltraLightItalic.woff2",
+    "family": "Avenida",
+    "weight": 275,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 30584
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-BoldCn.otf",
+    "source_sha256": "03d7d0bdcda9cd62dba9c070f722bf8fba5980a58b1b32263552054115797ba6",
+    "file": "fonts/AvenidaCondensed-Bold.woff2",
+    "family": "Avenida Condensed",
+    "weight": 700,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 31880
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-BoldCnIt.otf",
+    "source_sha256": "910756f99dcfe9f039f1fcee49b6336e65bab36048e2d240fadc4ddbe8375014",
+    "file": "fonts/AvenidaCondensed-BoldItalic.woff2",
+    "family": "Avenida Condensed",
+    "weight": 700,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 33316
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-Cn.otf",
+    "source_sha256": "1bc72235646379b2efcf359061f2e9693e3112226adbd08ea72de292988b9869",
+    "file": "fonts/AvenidaCondensed-Regular.woff2",
+    "family": "Avenida Condensed",
+    "weight": 400,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 31484
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-CnIt.otf",
+    "source_sha256": "4762a39cfc9c8533c4056834d4b18242a4da535a9e30895a3f6645f3e2026a32",
+    "file": "fonts/AvenidaCondensed-Italic.woff2",
+    "family": "Avenida Condensed",
+    "weight": 400,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 32696
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-DemiCn.otf",
+    "source_sha256": "cde55e31aefe9d6f6fa7293d9c28f463d6d486944ee5abdcba4046384e3daf39",
+    "file": "fonts/AvenidaCondensed-Demi.woff2",
+    "family": "Avenida Condensed",
+    "weight": 600,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 31840
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-DemiCnIt.otf",
+    "source_sha256": "252c228552e2a222b7e649fd8e216ffe8a38c3a8454bf07f0a92a9936137033e",
+    "file": "fonts/AvenidaCondensed-DemiItalic.woff2",
+    "family": "Avenida Condensed",
+    "weight": 600,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 33152
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-HeavyCn.otf",
+    "source_sha256": "0bcaf247e1560c5ea40eea6ccf2eed322d2018cf64abc5ff8dbada4ba5abf3f4",
+    "file": "fonts/AvenidaCondensed-Heavy.woff2",
+    "family": "Avenida Condensed",
+    "weight": 900,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 31828
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-HeavyCnIt.otf",
+    "source_sha256": "e4837e6207ee578c1e9e9eb88986aeede9c96069daffa270d377e10a089670ac",
+    "file": "fonts/AvenidaCondensed-HeavyItalic.woff2",
+    "family": "Avenida Condensed",
+    "weight": 900,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 32552
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-MediumCn.otf",
+    "source_sha256": "b02e7838a7b439b765ac8749b24daf71f80b55e878679647b2659321e32507d4",
+    "file": "fonts/AvenidaCondensed-Medium.woff2",
+    "family": "Avenida Condensed",
+    "weight": 500,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 31208
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-MediumCnIt.otf",
+    "source_sha256": "c8c52771cece8a3a3326cef88034b93509762dbbf9bd462e2e1f3727b3da5c92",
+    "file": "fonts/AvenidaCondensed-MediumItalic.woff2",
+    "family": "Avenida Condensed",
+    "weight": 500,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 32220
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-UltLtCn.otf",
+    "source_sha256": "dd0e280c6099f645f381c705a119659c4cca09484b536ed30ae8a3fde13d9243",
+    "file": "fonts/AvenidaCondensed-UltraLight.woff2",
+    "family": "Avenida Condensed",
+    "weight": 275,
+    "style": "normal",
+    "glyphs": 555,
+    "bytes": 30108
+  },
+  {
+    "source": "Condensed/AvenirNextLTPro-UltLtCnIt.otf",
+    "source_sha256": "d19cade2a76660e2d5070ee4d1e5fbcf949d3a5fa865bb755386563b23216c4e",
+    "file": "fonts/AvenidaCondensed-UltraLightItalic.woff2",
+    "family": "Avenida Condensed",
+    "weight": 275,
+    "style": "italic",
+    "glyphs": 555,
+    "bytes": 31228
+  }
+]

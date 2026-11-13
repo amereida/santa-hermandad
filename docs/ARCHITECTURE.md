@@ -1,4 +1,4 @@
-# Stella Nova — Arquitectura y principios
+# Stellamereida — Arquitectura y principios
 
 Doctrina que rige el desarrollo del skin. Doc canónico (vive en el repo del
 skin, publicable). El plan accionable está en [`DEVELOPMENT.md`](DEVELOPMENT.md).
@@ -13,7 +13,7 @@ heredar de Chameleon. Solo el contrato mínimo de MediaWiki (`SkinMustache` +
 referencia, no se copian.
 
 El **contrato de comportamiento** vive en
-[`../specs/stella-nova.allium`](../specs/stella-nova.allium) (Allium, validado con
+[`../specs/stellamereida.allium`](../specs/stellamereida.allium) (Allium, validado con
 `allium check`): este doc fija doctrina y principios; el spec, la
 especificación verificable de *qué hace* el skin (preferencias, chrome,
 identidad, modo de página, fidelidad estructural). Ante desacuerdo, el
@@ -33,7 +33,7 @@ casi sin PHP y favorece código testeable. Es la dirección oficial.
   (`Hooks::onResourceLoaderRegisterModules`) para derivar su `remoteSkinPath`
   de la carpeta real — única forma robusta al nombre del directorio, ya que
   el `remoteSkinPath` de `skin.json` es un literal estático y rompería las
-  URLs de las fuentes si la carpeta no se llama `StellaNova`.
+  URLs de las fuentes si la carpeta no se llama `Stellamereida`.
 - Clase base `SkinMustache` (en MW 1.43 es **clase global** `SkinMustache`,
   no `MediaWiki\Skin\SkinMustache`). PHP al mínimo (config, wiring, hooks).
 - Hooks en clase separada (`…Hooks.php`), no mezclados con layout.
@@ -47,7 +47,7 @@ casi sin PHP y favorece código testeable. Es la dirección oficial.
   `<img>`, que el core no tematiza. Aquí se invierte para conservar el tema:
   el skin **lee un SVG monocromo del disco y lo incrusta inline** (así
   `currentColor` resuelve la variante clara/oscura sin dos archivos). La ruta
-  es config propia del skin —`$wgStellaNovaIsotypePath` / `$wgStellaNovaIconPath`
+  es config propia del skin —`$wgStellamereidaIsotypePath` / `$wgStellamereidaIconPath`
   (rutas de sistema de archivos, no URLs)— y si no se define cae al bundle
   `resources/casiopea*.svg`, de modo que el repo corre out-of-the-box. Se
   prefiere config propia a `$wgLogos` a propósito: `$wgLogos` entrega una URL

@@ -1,7 +1,7 @@
-# Stella Nova — espécimen gráfico v0.9.3
+# Stellamereida — espécimen gráfico v0.9.3
 
 Mini-sitio estático con todas las variables de diseño, los componentes y una diagramación simulada del
-skin **Stella Nova** para iteración con el taller de diseño.
+skin **Stellamereida** para iteración con el taller de diseño.
 
 ## Cómo verlo
 
@@ -32,7 +32,7 @@ No necesita servidor. Las fuentes y CSS van inlinados en `assets/`.
 ## Cómo actualizar el espécimen
 
 Cuando el skin cambia (nuevos tokens, componentes o ajustes de `tokens.css` /
-`stella-nova.css`), el espécimen se regenera con un solo comando desde la raíz
+`stellamereida.css`), el espécimen se regenera con un solo comando desde la raíz
 del repo del skin:
 
 ```bash
@@ -40,7 +40,7 @@ python3 scripts/build-specimen.py
 ```
 
 El script borra y recompone `docs/specimen/` y empaqueta un zip nuevo
-`stella-nova-specimen-v<version>.zip`. **`notes.md` se preserva** entre
+`stellamereida-specimen-v<version>.zip`. **`notes.md` se preserva** entre
 rebuilds, así que las anotaciones del taller de diseño no se pierden. Las
 `overrides` que hayas escrito en los HTML **sí se pierden** (los HTML se
 reescriben); copialas a `notes.md` o a un parche antes de regenerar si querés
@@ -51,7 +51,7 @@ Flujo típico de iteración:
 1. Diseñador recibe el zip, anota en `notes.md` y propone cambios en `overrides`.
 2. Devuelve el zip.
 3. Mantenedor traslada los cambios validados a `resources/tokens.css` /
-   `resources/stella-nova.css` del skin.
+   `resources/stellamereida.css` del skin.
 4. Mantenedor corre `python3 scripts/build-specimen.py` para regenerar el
    espécimen sincronizado y manda el nuevo zip.
 

@@ -1,58 +1,4 @@
-/* Stella Nova — sistema de tokens (custom properties).
- *
- * Metáfora rectora: "página de papel". Una hoja cálida flota sobre un campo
- * gris ahuesado (el atelier de la e[ad]); un único punto de luz carmín es la
- * nova. Editorial, sobrio, cálido. IBM Plex Sans (sans del cuerpo · UI ·
- * cabeceras, variable de dos ejes) · Roboto Serif (serif del cuerpo cuando
- * el lector la elige desde el menú, citas y poemas; variable de cuatro ejes
- * wght 100–900 + wdth 62.5–100 + opsz 8–60 + GRAD −50–100) · IBM Plex Mono
- * (código).
- * Ritmo vertical sobre la interlínea del cuerpo: la unidad es
- * `--sn-baseline`, todo line-height/margen vertical de bloque es un múltiplo.
- *
- * ── Tres capas (Material 3: reference → system → component) ──────────────
- *
- *   1. PRIMITIVAS (reference). Paleta cromática nombrada por lo que el
- *      color ES (papel, tinta, rojo, coral, azul, malva, verde, masking,
- *      blanco), con stops 50–950 donde el número crece con la oscuridad.
- *      Agnósticas del tema: se definen UNA SOLA VEZ en :root. No tocar
- *      salvo para añadir/retirar un color del taller.
- *
- *   2. SEMÁNTICA (system). Roles del skin (--sn-paper, --sn-ink,
- *      --sn-nova, --sn-link, --sn-danger, …): cada rol apunta a UNA
- *      primitiva por tema vía light-dark(). El conmutador es color-scheme,
- *      conducido por [data-sn-theme]. Aquí se decide CUÁL es la tinta del
- *      cuerpo en cada tema, qué papel sostiene el chrome, etc. Capa que
- *      un diseñador del taller tocaría para reasignar un acento sin
- *      cambiar primitivas.
- *
- *   3. COMPONENTE (system, suprasemántica). Tokens de control
- *      (--sn-btn-*, --sn-field-*, --sn-on-*, --sn-opt-*, --sn-focus-*) y
- *      la capa Codex / WikimediaUI (--color-*, --background-color-*,
- *      --border-color-*). Consumen variables semánticas, NUNCA primitivas
- *      directas. Heredan automáticamente el flip de tema.
- *
- * Contratos externos en niveles SEMÁNTICA y COMPONENTE: los consumen los
- * TemplateStyles por plantilla (Plantilla:X/style.css), un espejo en
- * producción de MediaWiki:Common.css y OOUI. NO renombrar ni eliminar
- * variables --sn-* semánticas existentes, ni los alias Codex. La capa
- * primitiva es PURAMENTE ADITIVA por debajo.
- *
- * ── Conmutación de tema ──────────────────────────────────────────────────
- *
- * DEFAULT = CLARO. El esquema del SO NO oscurece por sí solo: solo se
- * aplica oscuro si el usuario lo elige explícitamente
- * (data-sn-theme="dark") o si elige seguir al SO (data-sn-theme="auto") y
- * el SO está en oscuro. Sin preferencia guardada → claro. (Diverge del
- * paso `os_scheme` del spec para el tema; decisión de producto del
- * usuario, 2026-05-18.)
- *
- * El flip lo conduce `color-scheme` en :root y light-dark() en cada rol
- * de color. Cada rol semántico de color se escribe UNA sola vez. Solo
- * cuatro tokens NO usan light-dark() (--sn-field-grain y los tres
- * --sn-lift*): varían en geometría además de color, y se redefinen
- * explícitamente en los selectores de tema al final del archivo.
- */
+
 
 :root {
 	/* ═══════════════════════════════════════════════════════════════════
@@ -61,30 +7,40 @@
 	   color), no por uso. Stops 50–950 con luminancia creciente.
 	   ═══════════════════════════════════════════════════════════════════ */
 
-	/* — Primitiva · papel — neutros cálidos claros (la hoja, sus pliegues, su sombra) */
-	--sn-papel-50:  #fcfbf7;
-	--sn-papel-75:  #f4f2ed;   /* fondo de página + pie (--sn-field claro) */
-	--sn-papel-100: #f3f0e7;
-	--sn-papel-200: #efece2;
-	--sn-papel-300: #ece7da;
-	--sn-papel-400: #e8e4da;
-	--sn-papel-500: #e7e1d3;
-	--sn-papel-600: #ddd6c7;
-	--sn-papel-700: #a39a86;
-	--sn-papel-800: #968c7c;
+	/* — Primitiva · papel — naranja luminoso muy diluido (hoja, pliegues y sombra) */
+	--sn-papel-50:  #fff9f3;
+	--sn-papel-75:  #fff1e5;   /* fondo de página + pie (--sn-field claro) */
+	--sn-papel-100: #ffeddd;
+	--sn-papel-200: #ffe7d3;
+	--sn-papel-300: #ffe1c9;
+	--sn-papel-400: #f8dbc5;
+	--sn-papel-500: #f0d4bd;
+	--sn-papel-600: #dfc5b0;
+	--sn-papel-700: #a78f80;
+	--sn-papel-800: #927b70;
 
-	/* — Primitiva · tinta — neutros cálidos oscuros (pizarra y tinta china del atelier) */
-	--sn-tinta-300: #756d5d;
-	--sn-tinta-400: #6b6357;
-	--sn-tinta-500: #353123;
-	--sn-tinta-600: #2c2410;
-	--sn-tinta-650: #2a2719;
-	--sn-tinta-700: #262318;
-	--sn-tinta-750: #221f1a;   /* la tinta canónica del cuerpo (claro) */
-	--sn-tinta-800: #1e1c15;
-	--sn-tinta-850: #1a0f0b;   /* casi-negro para tinta sobre acento (oscuro) */
-	--sn-tinta-900: #181610;
-	--sn-tinta-950: #141209;
+	/* — Primitiva · tinta — verdes petróleo profundos para las superficies nocturnas */
+	--sn-tinta-300: #6c8582;
+	--sn-tinta-400: #5c7471;
+	--sn-tinta-500: #354b48;
+	--sn-tinta-600: #2c4140;
+	--sn-tinta-650: #293d3b;
+	--sn-tinta-700: #243735;
+	--sn-tinta-750: #203230;   /* peldaño intermedio de petróleo */
+	--sn-tinta-800: #1b2b2a;
+	--sn-tinta-850: #102321;   /* casi-negro para tinta sobre acento (oscuro) */
+	--sn-tinta-900: #172624;
+	--sn-tinta-950: #12211f;
+
+	/* — Primitiva · morado — tinta diurna, apenas violeta */
+	--sn-morado-500: #76617a;
+	--sn-morado-600: #6b5870;
+	--sn-morado-900: #322738;
+
+	/* — Primitiva · rosa — tinta nocturna y sus intensidades */
+	--sn-rosa-50:  #f5e9ee;
+	--sn-rosa-200: #c7b5bf;
+	--sn-rosa-500: #ad97a3;
 
 	/* — Primitiva · rojo — sangre del carmín (single source para nova y link claros) */
 	--sn-rojo-500: #ae2d13;    /* la nova y el link nacen del mismo carmín */
@@ -131,7 +87,7 @@
 
 	color-scheme: light;
 
-	/* — Semántica · campo y papel — luz cálida (el papel tiene cuerpo, no es #fff puro) */
+	/* — Semántica · campo y papel — lavado naranja en claro, petróleo en oscuro */
 	--sn-field:        light-dark(var(--sn-papel-75), var(--sn-tinta-950));
 	--sn-field-grain:  0.035;          /* opacidad del grano de papel; override por tema al final */
 	--sn-paper:        light-dark(var(--sn-papel-50),  var(--sn-tinta-800));
@@ -169,9 +125,9 @@
 	--sn-edit-surface: color-mix(in oklab, var(--sn-ink) 3%, var(--sn-paper));
 
 	/* — Semántica · tinta — texto, secundarios, filetes */
-	--sn-ink:          light-dark(var(--sn-tinta-750), var(--sn-papel-300));
-	--sn-ink-soft:     light-dark(var(--sn-tinta-400), var(--sn-papel-700));
-	--sn-ink-faint:    light-dark(var(--sn-papel-800), var(--sn-tinta-300));
+	--sn-ink:          light-dark(var(--sn-morado-900), var(--sn-rosa-50));
+	--sn-ink-soft:     light-dark(var(--sn-morado-600), var(--sn-rosa-200));
+	--sn-ink-faint:    light-dark(var(--sn-morado-500), var(--sn-rosa-500));
 	--sn-hairline:     light-dark(var(--sn-papel-600), var(--sn-tinta-500));
 	--sn-hairline-soft:light-dark(var(--sn-papel-500), var(--sn-tinta-650));
 
@@ -180,7 +136,7 @@
 	--sn-nova-ink:     light-dark(var(--sn-blanco),    var(--sn-tinta-850));
 	/* nova-wash: lavados muy específicos (selección, fondo activo, foco-ring).
 	   No promovidos a primitivas con nombre porque no se reutilizan en otro rol. */
-	--sn-nova-wash:    light-dark(#f7e9e6,             #2b1c1d);
+	--sn-nova-wash:    light-dark(#ffeadc,             #293a36);
 
 	/* — Semántica · enlaces — rojos en AMBOS temas (carmín en claro, coral rojo
 	   en oscuro). El visitado es levemente más oscuro que el enlace base: en
@@ -226,7 +182,7 @@
 	/* ═══════════════════════════════════════════════════════════════════
 	   CAPA 3a — COMPONENTE: controles del skin
 	   Botones, campos, casillas, foco. Único origen de verdad para
-	   stella-nova.css y skinStyles/oojs-ui.css. Consumen SOLO variables
+	   stellamereida.css y skinStyles/oojs-ui.css. Consumen SOLO variables
 	   semánticas (capa 2), nunca primitivas: heredan el flip automático.
 	   ═══════════════════════════════════════════════════════════════════ */
 	/* — Componente · botones — neutro (enmarcado, acción secundaria) */
@@ -261,19 +217,11 @@
 	/* Velo de diálogos modales */
 	--sn-scrim:             color-mix(in oklab, var(--sn-ink) 45%, transparent);
 
-	/* — Tipografía — dos familias para texto. IBM Plex Sans (sans del cuerpo,
-	   UI y TODAS las cabeceras; VARIABLE, dos ejes wght 100–700 + wdth 75–100)
-	   y Roboto Serif (serif del cuerpo cuando el lector la elige desde el
-	   menú; siempre en citas/poemas; VARIABLE, cuatro ejes wght 100–900 +
-	   wdth 62.5–100 + opsz 8–60 + GRAD −50–100). IBM Plex Mono para código.
-	   Auto-alojadas (fonts.css). `--sn-font-display` queda
-	   como alias de `--sn-font-text`: la doctrina del skin es "todo sans en
-	   cabeceras"; el alias permite reintroducir un display distinto tocando
-	   solo el token. */
+
 	/* Primitivas tipográficas: las dos familias reales (no se redefinen al alternar). */
-	--sn-font-sans:  'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-	--sn-font-serif: 'Roboto Serif', 'Iowan Old Style', Palatino, 'Times New Roman', Georgia, serif;
-	--sn-font-mono:  'IBM Plex Mono', ui-monospace, 'SFMono-Regular', 'Cascadia Code', Menlo, Consolas, monospace;
+	--sn-font-sans: 'Avenida', system-ui, sans-serif;
+	--sn-font-serif: 'Avenida', system-ui, sans-serif;
+	--sn-font-mono: ui-monospace, monospace;
 	/* Semánticas: alias que el resto del skin consume.
 	   --sn-font-text  → familia del cuerpo + UI + cabeceras (default: sans).
 	   --sn-font-quote → familia de citas y <poem>            (default: serif).
@@ -287,28 +235,11 @@
 	--sn-font-display: var(--sn-font-text);
 	--sn-font-quote: var(--sn-font-serif);
 
-	/* Grado (eje GRAD de Roboto Serif): engrosa el trazo SIN cambiar el ancho
-	   ni el avance del texto — la caja no se mueve, solo el peso percibido.
-	   Únicamente la serif tiene este eje; sans y mono lo ignoran. Se aplica a
-	   TODA la cascada vía font-variation-settings en :root (línea siguiente),
-	   para que acompañe a la serif dondequiera que aparezca: citas/poemas y el
-	   cuerpo+UI cuando el lector alterna a familia serif. Default 0; sube en
-	   modo oscuro para compensar el aclaramiento óptico del texto claro sobre
-	   fondo negro (los overrides de tema más abajo). */
+
 	--sn-serif-grade: 70;
 	font-variation-settings: "GRAD" var(--sn-serif-grade);
 
-	/* Ancho del cuerpo (eje wdth, vía font-stretch). 100% = normal. Las DOS
-	   familias de texto lo consumen, pero NO comparten piso: IBM Plex Sans
-	   baja a wdth 75; Roboto Serif se re-instanció con piso 62.5 para que el
-	   modo serif pueda apretar más (el override de familia más abajo cambia
-	   este token). Este default (80%) es el del modo sans.
-	   Aplica a párrafos, listas y tablas (el cuerpo de .sn-body); las
-	   CABECERAS y las CITAS se resetean a 100% aparte (doctrina: condensada
-	   solo en el cuerpo corrido, no en titulares ni cita). El VERSO tiene su
-	   propio ancho (--sn-poem-width, abajo). Mono no tiene eje de ancho →
-	   font-stretch lo ignora sin daño. Sube a 100% para desactivar la
-	   condensación; baja para más densidad (sans hasta 75, serif hasta 62.5). */
+
 	--sn-text-width: 80%;
 
 	/* Verso (<poem>): tratamiento editorial propio, distinto del cuerpo y de
@@ -326,13 +257,13 @@
 	   preferencia de usuario): cambiarlo desparametriza el ajuste al
 	   baseline grid. */
 	--sn-font-scale: 1;
-	--sn-leading: 1.61;
+	--sn-leading: 1.72;
 	--sn-leading-table: 1.305;
 
 	--sn-fs-root:  calc(1rem * var(--sn-font-scale));
 	--sn-fs-xs:    clamp(.72rem, .70rem + .10vw, .78rem);
 	--sn-fs-sm:    clamp(.82rem, .79rem + .14vw, .90rem);
-	--sn-fs-base:  calc(clamp(1.04rem, 1rem + .18vw, 1.1rem) * var(--sn-font-scale));
+	--sn-fs-base:  calc(clamp(.96rem, .94rem + .12vw, 1rem) * var(--sn-font-scale));
 	--sn-fs-md:    calc(clamp(1.15rem, 1.1rem + .24vw, 1.28rem) * var(--sn-font-scale));
 	--sn-fs-lg:    calc(clamp(1.2rem, 1.12rem + .40vw, 1.42rem) * var(--sn-font-scale));
 	--sn-fs-xl:    calc(clamp(1.35rem, 1.22rem + .55vw, 1.62rem) * var(--sn-font-scale));
@@ -381,7 +312,7 @@
 
 	/* Ancho máximo de la HOJA (no del texto: el contenido va al 100%).
 	   Fijo, no es preferencia de usuario. */
-	--sn-measure: 64rem;         /* (ex 46~50) medida de lectura: única restricción de ancho de la hoja (~75-80 car. en Plex Sans). Sustituye al viejo truco `width:80%` sobre los <p>. Súbelo/bájalo a gusto. */
+	--sn-measure: 64rem;
 	--sn-rail: 15.5rem;           /* (sin uso; reservado)                   */
 	--sn-shell: 81rem;            /* ancho máximo del conjunto (header/pie) */
 	/* Alto de la cabecera sticky: isotipo (2rem) + padding vertical de
@@ -451,7 +382,7 @@
 	   Si la variable Codex no está definida en el documento, el var() cae
 	   al hex hardcodeado — y esos hex NO respetan el tema (vienen del tema
 	   claro Codex). Resultado en modo oscuro: texto #202122 sobre fondo
-	   #181610 (contraste <1.1:1, ilegible), fondos #eaf3ff dentro de
+	   #172624 (contraste <1.1:1, ilegible), fondos #eaf3ff dentro de
 	   controles oscuros, etc.
 	   Aquí declaramos las variables Codex como ALIAS a tokens semánticos
 	   (--sn-*). Como --sn-* ya voltea entre claro/oscuro vía light-dark(),
@@ -475,7 +406,7 @@
 	--color-inverted:       var(--sn-paper);
 	--color-inverted-fixed: var(--sn-paper);
 
-	/* Acento progresivo (en Stella Nova: carmín en claro, azul en
+	/* Acento progresivo (en Stellamereida: carmín en claro, azul en
 	   oscuro — el flip vive en --sn-link). Hover/active derivados con
 	   color-mix hacia la tinta del tema, así "presionado" siempre
 	   significa "intensificado" en ambos esquemas. */
@@ -496,7 +427,7 @@
 	/* Fondos.
 	   La pareja `neutral` / `neutral-subtle` la usan diálogos y formularios
 	   de core para distinguir un contenedor "atenuado" del fondo base. En
-	   Stella Nova ambos caen a `--sn-sunk` (la única gradación que la hoja
+	   Stellamereida ambos caen a `--sn-sunk` (la única gradación que la hoja
 	   sostiene sin perder ritmo); si el día de mañana queremos un tercer
 	   tono, conviene introducir `--sn-sunk-soft` y diferenciarlos aquí. */
 	--background-color-base:                 var(--sn-paper);
@@ -624,54 +555,6 @@
 :root[data-sn-font="small"]  { --sn-font-scale: .92; }
 :root[data-sn-font="medium"] { --sn-font-scale: 1; }
 :root[data-sn-font="large"]  { --sn-font-scale: 1.14; }
-
-/* ── Familia tipográfica (preferencia del lector). Default = sans
-   (cuerpo+UI en IBM Plex Sans, citas/<poem> en Roboto Serif). Al elegir
-   "serif" desde el menú del usuario, se invierten los dos alias y, en
-   cascada, todos los componentes que los consumen voltean a la vez:
-     · cuerpo + UI + cabeceras → Roboto Serif
-     · citas + <poem>          → IBM Plex Sans
-   Las primitivas --sn-font-sans/--sn-font-serif no se tocan: las dos
-   familias siguen disponibles, sólo cambia QUIÉN consume cuál. ── */
-:root[data-sn-family="serif"] {
-	--sn-font-text:  var(--sn-font-serif);
-	--sn-font-quote: var(--sn-font-sans);
-	/* Normaliza el TAMAÑO aparente de la serif al de la sans. Con
-	   `font-optical-sizing: auto`, a tamaño de cuerpo el eje opsz de Roboto
-	   Serif baja y su x-height REAL sube (≈0.53–0.56) → "crece" frente a IBM
-	   Plex Sans (x-height ≈0.516). `font-size-adjust` fuerza la x-height
-	   RENDERIZADA al objetivo de la sans, conservando el trazo óptico. Solo
-	   en modo serif (el modo sans por defecto queda intacto). El valor es la
-	   relación x-height/em de IBM Plex Sans; ajústalo para afinar. */
-	--sn-serif-size-adjust: 0.516;
-	font-size-adjust: var(--sn-serif-size-adjust);
-	/* Roboto Serif renderiza más ANCHA y PESADA que IBM Plex Sans al mismo
-	   ajuste. Se angosta el cuerpo serif al wdth más condensado del woff2
-	   re-instanciado (62.5%, su piso; ver fonts.css) para apretar su mancha
-	   por debajo de lo que llega el sans (que solo baja a 75). El peso (normal
-	   y negrita) se afina abajo. */
-	--sn-text-width: 62.5%;
-}
-/* El monoespaciado (IBM Plex Mono) conserva su propio tamaño en modo serif:
-   no se normaliza a la x-height de la sans. */
-:root[data-sn-family="serif"] :is(code, pre, kbd, samp, tt, .mw-code) {
-	font-size-adjust: none;
-}
-/* Serif: cuerpo más fino (350) y negrita proporcionalmente más liviana (600,
-   no 700), para calibrar el contraste normal↔negrita ahora que el cuerpo serif
-   es menos pesado. `:where()` neutraliza la especificidad del selector de
-   familia para NO pisar los pesos propios de las cabeceras.
-   Tracking negativo: encima de la condensación por eje wdth (--sn-text-width
-   en su piso 62.5%, ver arriba) se aprieta el avance — letra y, sobre todo,
-   palabra (la serif abre demasiado los espacios al condensar). En `ex` para
-   que escale con el tamaño de fuente del lector. Solo el cuerpo: cabeceras y
-   citas conservan su avance natural. */
-:where(:root[data-sn-family="serif"]) .sn-body {
-	font-weight: 350;
-	letter-spacing: -0.01ex;
-	word-spacing: -0.13ex;
-}
-:where(:root[data-sn-family="serif"]) .sn-body :is(b, strong) { font-weight: 600; }
 
 /* ── Movimiento: sólo la señal del SO (ya no es preferencia del usuario;
    reduced-motion sigue siendo 1ª clase). ── */

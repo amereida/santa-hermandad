@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 148">
 	<!--
-		Stella Nova — favicon. Autocontenido (doctrina ARCHITECTURE §2): viaja
+		Stellamereida — favicon. Autocontenido (doctrina ARCHITECTURE §2): viaja
 		con el skin, sin depender de $wgFavicon en LocalSettings. Misma geometría
 		que casiopea-icon.svg (la constelación), pero con colores EXPLÍCITOS en
 		vez de currentColor: un favicon se renderiza aislado, fuera del DOM, así

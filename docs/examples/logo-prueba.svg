@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	Logo de PRUEBA (wordmark) para validar el flujo de configuración del isotipo
-	de Stella Nova ($wgStellaNovaIsotypePath). Cumple el contrato del README
+	de Stellamereida ($wgStellamereidaIsotypePath). Cumple el contrato del README
 	(sección "Logo / isotipo"): todo en currentColor, fondo transparente,
 	monocromo, autocontenido, aria-hidden. Es DELIBERADAMENTE distinto del
 	isotipo de Casiopea (formas geométricas, no la constelación) para que el

@@ -1,13 +1,21 @@
 # Changelog
 
-Todos los cambios notables de **Stella Nova** se documentan aquí.
+Todos los cambios notables de **Stellamereida** se documentan aquí.
 
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 Mientras el skin esté en `0.x`, el versionado es **`0.MINOR.PATCH`**: `MINOR`
 sube con cambios de comportamiento o estructura; `PATCH`, con correcciones y
 ajustes editoriales. La fuente de verdad del comportamiento es
-[`specs/stella-nova.allium`](specs/stella-nova.allium); cada entrada que toque
+[`specs/stellamereida.allium`](specs/stellamereida.allium); cada entrada que toque
 comportamiento debería reflejarse también ahí.
+
+## [Unreleased]
+
+### Changed
+- Renombrado a Stellamereida para Corporación Cultural Amereida.
+- Avenida autoalojada reemplaza las fuentes anteriores, también en Mermaid.
+- Paleta clara naranja muy pálida con tinta morada; oscura petróleo con tinta rosa pálida.
+- Estilos propios de la portada retirados del skin y gestionados con TemplateStyles en la wiki local.
 
 ## [0.9.3] — 2026-10-21
 
@@ -202,14 +210,14 @@ comportamiento debería reflejarse también ahí.
   (`uppercase`/`italic`/`bold`), alineación (`left`/`center`/`right`/`justify`)
   y color por rol (`nova`/`ok`/`warn`/`danger`)— vivían en el
   `MediaWiki:Common.css` de cada wiki. Ahora los define
-  `resources/stella-nova.css`, con alcance
+  `resources/stellamereida.css`, con alcance
   `:is(.sn-body, .sn-notice-body, .sn-footer-managed)`.
 
   Tres razones, todas verificadas:
 
   1. **La exportación a PDF las perdía.** `print-preview.js` enlaza a propósito
      los archivos limpios del skin (`fonts.css` + `tokens.css` +
-     `stella-nova.css`) y **no** el módulo `site.styles`, que es donde
+     `stellamereida.css`) y **no** el módulo `site.styles`, que es donde
      MediaWiki sirve el `Common.css` de la wiki. Una página con
      `class="jumbo center nova"` se veía bien en pantalla y salía sin ninguna
      de las tres clases en el PDF. Ahora las hereda gratis.
@@ -230,7 +238,7 @@ comportamiento debería reflejarse también ahí.
   del mismo tamaño con la preferencia en S, M o L. La versión que ahora trae el
   skin sí lo aplica.
 - **El espécimen dejó de replicar el CSS de estas clases.** `build-specimen.py`
-  ya enlazaba `assets/stella-nova.css` (copia literal del archivo del skin), así
+  ya enlazaba `assets/stellamereida.css` (copia literal del archivo del skin), así
   que el espejo `HELPERS_CSS` era redundante — y era donde había divergido. Lo
   que se ve en el espécimen es ahora exactamente el CSS que corre en la wiki.
 - **El espécimen versionado estaba cuatro versiones atrasado** (v0.6.18 con el
@@ -240,7 +248,7 @@ comportamiento debería reflejarse también ahí.
   `Common.css` de la wiki (módulo `site`) carga *después* del skin. Fue cierto
   mientras la CSS del skin viajaba dentro del `<link>` combinado de
   ResourceLoader; desde que `Hooks::onBeforePageDisplay` la inyecta como head
-  item `zzz-stellanova-styles` (para bustear caché por versión), el orden es el
+  item `zzz-stellamereida-styles` (para bustear caché por versión), el orden es el
   inverso — verificado sobre el HTML servido. Corregidos; ninguna regla cambia,
   la especificidad extra no dependía del orden. Anotado también que el
   `Common.css` de producción ya no trae las reglas de `a.new`/`a:visited` que
@@ -260,7 +268,7 @@ comportamiento debería reflejarse también ahí.
   en `skin.mustache`. La navegación del sitio la arma el skin desde los
   portlets de `MediaWiki:Sidebar` (`sn-sitenav` al menú de cabecera, `p-tb` al
   pie), que es donde los editores ya la administran; el slot duplicaba esa
-  capacidad sin aportar nada observable. Fuera de `SkinStellaNova::CHROME`, del
+  capacidad sin aportar nada observable. Fuera de `SkinStellamereida::CHROME`, del
   `enum ChromeSlot` del spec y de la documentación. Producción **no** tenía
   creada esa página, así que el retiro no afecta a ninguna wiki en uso; si
   alguna instalación la tiene, queda inerte y se puede borrar.
@@ -276,7 +284,7 @@ comportamiento debería reflejarse también ahí.
   `<link>` del skin se emite después de `site.styles`, así que a igual
   especificidad (0,0,2,0) gana el skin y las reglas viejas quedan sombreadas.
   Pero dejarlas duplicadas invita a que vuelvan a divergir. Lo que **sí** cambia
-  es dónde se retocan: a partir de aquí, en `resources/stella-nova.css`; desde
+  es dónde se retocan: a partir de aquí, en `resources/stellamereida.css`; desde
   `Common.css` ya no se pueden sobrescribir sin `!important`.
 
 ## [0.7.2] — 2026-07-31
@@ -340,7 +348,7 @@ comportamiento debería reflejarse también ahí.
 
 ### Added
 - **Logo/isotipo configurable (des-hardcodeado)**: dos opciones nuevas de
-  `skin.json` — `$wgStellaNovaIsotypePath` (wordmark) y `$wgStellaNovaIconPath`
+  `skin.json` — `$wgStellamereidaIsotypePath` (wordmark) y `$wgStellamereidaIconPath`
   (glifo compacto) — apuntan a un **SVG en el sistema de archivos del servidor**
   que el skin lee e incrusta *inline* (para conservar el tematizado
   claro/oscuro vía `currentColor`; un `<img>` de `$wgLogos` no se puede
@@ -413,19 +421,19 @@ comportamiento debería reflejarse también ahí.
   FOUC de Ace. Un solo número para calibrar el despegue del papel.
 
 ### Changed
-- **`--sn-lift` reformulado** (`resources/tokens.css`, `resources/stella-nova.css`):
+- **`--sn-lift` reformulado** (`resources/tokens.css`, `resources/stellamereida.css`):
   el gesto de elevación pasa de sombra difusa a sombra **corta y desplazada**
   — `0 1px 1px` de contacto + `0 8px 6px -3px` de elevación, en vez de los
   `8px 24px` (claro) y la tercera capa de `24px 60px` (oscuro). Blur ~6px y
   spread negativo: el objeto se lee levantado, no rodeado de halo. En oscuro
   sube la opacidad (.45/.6) para compensar el menor desenfoque. Afecta a los
   seis puntos donde se declara el token (base + overrides de tema en
-  `tokens.css`; `.fondo-noche`/`.fondo-dia`/media-query en `stella-nova.css`).
+  `tokens.css`; `.fondo-noche`/`.fondo-dia`/media-query en `stellamereida.css`).
   `--sn-lift-paper` y `--sn-lift-soft` **no cambian**. Consumidores: menú de
   usuario, sugerencias de PageForms, jQuery UI, notificaciones, tooltips SMW,
   InlineComments.
 - **El textarea de edición se iguala al bloque de código**
-  (`resources/stella-nova.css`, `resources/skinStyles/wikieditor.css`,
+  (`resources/stellamereida.css`, `resources/skinStyles/wikieditor.css`,
   `resources/skinStyles/codeeditor.css`): cuerpo **`--sn-fs-sm`** (antes
   `--sn-fs-base`) e interlínea **1.5** (antes 1.65) — los mismos valores que
   `.sn-body pre`, con la misma monoespaciada que ya compartían. Editar
@@ -442,7 +450,7 @@ comportamiento debería reflejarse también ahí.
 ## [0.6.16] — 2026-07-16
 
 ### Added
-- **Escala completa de `fw-*`** (`resources/stella-nova.css`): las clases de
+- **Escala completa de `fw-*`** (`resources/stellamereida.css`): las clases de
   ancho de fuente ahora van **de 10 en 10 entre `fw-50` y `fw-150`** (`fw-50`
   `fw-60` `fw-70` `fw-80` `fw-90` `fw-100` `fw-110` `fw-120` `fw-130` `fw-140`
   `fw-150`), en vez del rango 80–100 de v0.6.14. Los pasos de 5 previos
@@ -488,13 +496,13 @@ comportamiento debería reflejarse también ahí.
   negro sobre negro. Se re-tiñe con `--sn-icon` (voltea con el tema).
 
 ### Changed
-- **TOC sin filete** (`resources/stella-nova.css`): se retira el `box-shadow`
+- **TOC sin filete** (`resources/stellamereida.css`): se retira el `box-shadow`
   inset propio y se anula el `border:1px solid #aaa` que el core
   (`mediawiki.skinning`) mete dentro de `@media screen` — nuestra regla ganaba en
   especificidad pero no declaraba `border`. La caja queda delimitada solo por el
   relleno hundido. Con `box-sizing:border-box` (global) el borde no afectaba el
   alto exterior, así que la retícula de baseline se mantiene intacta.
-- **TOC: toda la barra de título togglea** (`resources/stella-nova.css`): el
+- **TOC: toda la barra de título togglea** (`resources/stellamereida.css`): el
   `<label for=toctogglecheckbox>` se estira sobre toda la `.toctitle`
   (`position:absolute; inset:0`), con el cheurón alineado a la derecha. Ahora un
   click en cualquier parte de la barra colapsa/descolapsa el índice, no solo el
@@ -503,7 +511,7 @@ comportamiento debería reflejarse también ahí.
 ## [0.6.14] — 2026-07-13
 
 ### Added
-- **Clases helper de ancho de fuente `fw-*`** (`resources/stella-nova.css`):
+- **Clases helper de ancho de fuente `fw-*`** (`resources/stellamereida.css`):
   `fw-100 fw-95 fw-90 fw-85 fw-80`, donde `fw-NN` = `font-stretch: NN%` sobre el
   eje `wdth` de las fuentes variables. Opt-in desde wikitexto/plantillas
   (`class="fw-90"`), combinables con los helpers tipográficos. **Motivo:** el
@@ -723,7 +731,7 @@ comportamiento debería reflejarse también ahí.
 ### Changed
 - **Metadatos en `Special:Version`.** El autor pasa a la columna *Authors* como
   enlace con su filiación (e[ad] Escuela de Arquitectura y Diseño, PUCV); la
-  descripción (`stellanova-desc`, es/en) se reescribe sin el nombre del autor y
+  descripción (`stellamereida-desc`, es/en) se reescribe sin el nombre del autor y
   conservando el enlace al repositorio.
 
 ## [0.4.0] — 2026-06-13
@@ -738,7 +746,7 @@ comportamiento debería reflejarse también ahí.
 - **Grilla `flujo-v` en columnas (multicol).** El modificador de pila vertical
   ahora fluye su contenido en columnas reales, y se permite posicionar
   imágenes dentro del flujo.
-- **Pie y cromo del core afinados.** Vestimenta Stella Nova para
+- **Pie y cromo del core afinados.** Vestimenta Stellamereida para
   notificaciones (Echo), leyendas de páginas especiales, el escritorio y el
   menú «Herramientas».
 
@@ -882,7 +890,7 @@ comportamiento debería reflejarse también ahí.
   canvas no tenía pie; ahora lleva uno sobre el mismo papel, al ancho de
   lectura (`--sn-measure`), en una sola columna a todo el ancho (sin columna
   derecha ni "última edición"). Herramientas en un `<details>` discreto
-  rotulado «Herramientas» (mensaje nuevo `stellanova-tools`), luego enlaces
+  rotulado «Herramientas» (mensaje nuevo `stellamereida-tools`), luego enlaces
   de sitio y licencia.
 - **Licencia de la wiki en el pie.** Tras los enlaces de sitio
   (`.sn-foot-places`) se muestra el copyright de MediaWiki (item
@@ -894,7 +902,7 @@ comportamiento debería reflejarse también ahí.
 
 ### Changed
 - **Formularios (PageForms) armonizados.** Las etiquetas `<th>` van a la
-  derecha y a `--sn-fs-xs` — con prefijo `.skin-stellanova` para ganarle a la
+  derecha y a `--sn-fs-xs` — con prefijo `.skin-stellamereida` para ganarle a la
   regla propia de PageForms `.formtable th { text-align: left }` (misma
   especificidad, ganaba por orden). Los checkboxes/radios (`.checkboxLabel`,
   envueltos en widget OOUI): etiqueta a `--sn-fs-xs`, AIRE entre la casilla y
@@ -916,7 +924,7 @@ comportamiento debería reflejarse también ahí.
   de pantalla completa nunca renderizaba el título; ahora lo muestra salvo
   que la página declare además `__NOTITLE__` (control explícito, más limpio).
   El skin lee la page-prop `notitle` (`Hooks::onOutputPageParserOutput` →
-  `stellanova-notitle` → dato `sn-notitle`) y la plantilla omite el título
+  `stellamereida-notitle` → dato `sn-notitle`) y la plantilla omite el título
   solo en ese caso; así un hero `.full-width` con `__NOTITLE__` sigue siendo
   el primer hijo y conserva su bleed a tope. El estilo de `firstHeading` se
   extiende a `.sn-canvas`. La sección Usuario del menú de pantalla completa
@@ -943,7 +951,7 @@ comportamiento debería reflejarse también ahí.
   filetes muy finos (`--sn-hairline-soft`) entre filas, nunca verticales;
   texto al 80% del cuerpo y alineación a la izquierda en celdas y
   cabeceras. El estilo visual de las tablas SMW se centraliza en
-  `stella-nova.css`; `skinStyles/smw.css` conserva solo el desbordamiento
+  `stellamereida.css`; `skinStyles/smw.css` conserva solo el desbordamiento
   por contenedor. La ficha vertical `table.plantilla` se porta desde
   `MediaWiki:Common.css` a la skin (etiqueta a la derecha, versalita
   tenue, sin filetes).
@@ -1082,7 +1090,7 @@ comportamiento debería reflejarse también ahí.
   (`--sn-sunk`), íconos OOUI (SVG monocromos por `background-image`)
   invertidos con `filter` en oscuro, y arreglo de cascada — los overrides
   perdían por orden de fuente ante el módulo grande `ext.wikiEditor`; ahora
-  prefijados con `.skin-stellanova` para ganar siempre. Bordes a
+  prefijados con `.skin-stellamereida` para ganar siempre. Bordes a
   `--sn-hairline`, textos negros `#222` a `--sn-ink`.
 - **Sin azul en el cromo del editor.** Links de toolbar/booklet/copyright y
   acentos OOUI `progressive` (botones Guardar/Previsualizar) redefinidos a
@@ -1097,7 +1105,7 @@ comportamiento debería reflejarse también ahí.
 - **El logo del skin SIEMPRE gana.** Se retiró el override de `$wgLogos`
   (`WikiOverride`): el isotipo embebido del skin se usa siempre, ignorando
   LocalSettings. En producción `$wgLogos` traía el logo del skin viejo y
-  tapaba el de Stella Nova.
+  tapaba el de Stellamereida.
 
 ### Fixed
 - **Cache-busting de la CSS crítica, sin acceso al servidor.** La CSS del skin
@@ -1122,10 +1130,10 @@ comportamiento debería reflejarse también ahí.
 
 ### Added
 - **Rutas de assets robustas al nombre de carpeta.** Los módulos
-  `skins.stellanova.styles` / `.scripts` se registran en PHP
+  `skins.stellamereida.styles` / `.scripts` se registran en PHP
   (`Hooks::onResourceLoaderRegisterModules`) calculando su `remoteSkinPath` del
   directorio real donde el wiki sirve el skin. Basta clonar en cualquier
-  carpeta (`StellaNova`, `stella-nova`, symlink) y las URLs de las fuentes
+  carpeta (`Stellamereida`, `stellamereida`, symlink) y las URLs de las fuentes
   resuelven solas.
 
 ### Changed
@@ -1196,10 +1204,10 @@ comportamiento debería reflejarse también ahí.
 ### Added
 - Esqueleto inicial: `SkinMustache` + `skin.json` + `tokens.css`; spec Allium.
 
-[0.1.0]: https://github.com/hspencer/stella-nova/releases/tag/v0.1.0
-[0.0.9]: https://github.com/hspencer/stella-nova/releases/tag/v0.0.9
-[0.0.8]: https://github.com/hspencer/stella-nova/releases/tag/v0.0.8
-[0.0.7]: https://github.com/hspencer/stella-nova/releases/tag/v0.0.7
-[0.0.6]: https://github.com/hspencer/stella-nova/releases/tag/v0.0.6
-[0.0.3]: https://github.com/hspencer/stella-nova/releases/tag/v0.0.3
-[0.0.1]: https://github.com/hspencer/stella-nova/releases/tag/v0.0.1
+[0.1.0]: https://github.com/amereida/stellamereida/releases/tag/v0.1.0
+[0.0.9]: https://github.com/amereida/stellamereida/releases/tag/v0.0.9
+[0.0.8]: https://github.com/amereida/stellamereida/releases/tag/v0.0.8
+[0.0.7]: https://github.com/amereida/stellamereida/releases/tag/v0.0.7
+[0.0.6]: https://github.com/amereida/stellamereida/releases/tag/v0.0.6
+[0.0.3]: https://github.com/amereida/stellamereida/releases/tag/v0.0.3
+[0.0.1]: https://github.com/amereida/stellamereida/releases/tag/v0.0.1

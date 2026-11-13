@@ -1,5 +1,5 @@
 {{!
-	Stella Nova — plantilla raíz. Cumple SkinRenderFidelity: emite TODAS
+	Stellamereida — plantilla raíz. Cumple SkinRenderFidelity: emite TODAS
 	las data keys estándar de SkinMustache 1.43 aunque no las estilice, no
 	recorta ni reestructura el HTML de extensiones, y respeta los puntos de
 	inyección (html-after-content, indicadores, catlinks, html-subtitle).
@@ -9,13 +9,13 @@
 	parciales); las interpolaciones con ruta-punto sí son válidas. No poner
 	sintaxis de plantilla dentro de comentarios: el primer cierre la trunca.
 
-	Datos propios (SkinStellaNova::getTemplateData):
+	Datos propios (SkinStellamereida::getTemplateData):
 	  is-sn-fullscreen · sn-isotype{href,svg,svg-icon} · sn-identity ·
 	  sn-prefs{…} · sn-chrome{notice,footer}{is-published,html}
 }}
 {{{html-headelement}}}
-<a class="sn-skip" href="#content">{{msg-stellanova-skip-to-content}}</a>
-{{^is-sn-fullscreen}}<a class="sn-skip" href="#sn-nav">{{msg-stellanova-skip-to-nav}}</a>{{/is-sn-fullscreen}}
+<a class="sn-skip" href="#content">{{msg-stellamereida-skip-to-content}}</a>
+{{^is-sn-fullscreen}}<a class="sn-skip" href="#sn-nav">{{msg-stellamereida-skip-to-nav}}</a>{{/is-sn-fullscreen}}
 
 {{#is-sn-fullscreen}}
 {{!	ExperimentalCanvas: la página posee el viewport. La única
@@ -29,14 +29,14 @@
 		<div class="sn-md sn-md-fs sn-fs-md">
 			<button type="button" class="sn-fs-trigger" aria-expanded="false"
 				aria-haspopup="dialog" data-sn-menu
-				title="{{msg-stellanova-menu}}" aria-label="{{msg-stellanova-menu}}">
+				title="{{msg-stellamereida-menu}}" aria-label="{{msg-stellamereida-menu}}">
 				{{#sn-isotype}}<span class="sn-fs-glyph">{{{svg-icon}}}</span>{{/sn-isotype}}
 			</button>
-			<div class="sn-menu-list sn-fs-menu" aria-label="{{msg-stellanova-menu}}">
+			<div class="sn-menu-list sn-fs-menu" aria-label="{{msg-stellamereida-menu}}">
 				<header class="sn-modal-head">
-					<h2 class="sn-modal-title">{{msg-stellanova-menu}}</h2>
+					<h2 class="sn-modal-title">{{msg-stellamereida-menu}}</h2>
 					<button type="button" class="sn-modal-x" data-sn-menu-close
-						aria-label="{{msg-stellanova-close}}" title="{{msg-stellanova-close}}">
+						aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
 						<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
 					</button>
 				</header>
@@ -49,7 +49,7 @@
 
 					{{#data-search-box}}
 					<section class="sn-fs-sec sn-fs-sec--search" aria-labelledby="sn-fs-h-search">
-						<h3 id="sn-fs-h-search" class="sn-fs-h">{{msg-stellanova-search}}</h3>
+						<h3 id="sn-fs-h-search" class="sn-fs-h">{{msg-stellamereida-search}}</h3>
 						<form class="sn-fs-search" role="search" action="{{form-action}}"
 							id="searchform" aria-label="{{msg-searchbutton}}">
 							{{{html-input}}}
@@ -67,9 +67,9 @@
 						portlet aporta su label como h4 y sus items como
 						enlaces inline-comma). }}
 					<section class="sn-fs-sec" aria-labelledby="sn-fs-h-nav">
-						<h3 id="sn-fs-h-nav" class="sn-fs-h">{{msg-stellanova-nav}}</h3>
+						<h3 id="sn-fs-h-nav" class="sn-fs-h">{{msg-stellamereida-nav}}</h3>
 						<ul class="sn-fs-pills">
-							<li class="mw-list-item"><a href="{{sn-isotype.href}}">{{msg-stellanova-mainpage}}</a></li>
+							<li class="mw-list-item"><a href="{{sn-isotype.href}}">{{msg-stellamereida-mainpage}}</a></li>
 						</ul>
 						{{#sn-has-sitenav}}
 						{{#sn-sitenav}}
@@ -82,7 +82,7 @@
 					</section>
 
 					<section class="sn-fs-sec" aria-labelledby="sn-fs-h-page">
-						<h3 id="sn-fs-h-page" class="sn-fs-h">{{msg-stellanova-thispage}}</h3>
+						<h3 id="sn-fs-h-page" class="sn-fs-h">{{msg-stellamereida-thispage}}</h3>
 						<ul class="sn-fs-pills">
 							{{#sn-edit}}<li class="mw-list-item"><a href="{{href}}">{{label}}</a></li>{{/sn-edit}}
 							{{#sn-editcode}}<li class="mw-list-item"><a href="{{href}}">{{label}}</a></li>{{/sn-editcode}}
@@ -96,33 +96,26 @@
 					{{#data-portlets}}
 					{{#data-user-menu}}
 					<section class="sn-fs-sec" aria-labelledby="sn-fs-h-user">
-						<h3 id="sn-fs-h-user" class="sn-fs-h">{{msg-stellanova-user}}</h3>
+						<h3 id="sn-fs-h-user" class="sn-fs-h">{{msg-stellamereida-user}}</h3>
 						<ul class="sn-fs-pills" id="{{id}}">{{{html-items}}}</ul>
 						{{!	Preferencias de lectura (Tema · Tamaño · Familia), las
 							mismas que en el menú de usuario de las páginas normales.
 							skin.js engancha [data-sn-pref] a nivel documento. }}
 						<div class="sn-menu-prefs">
 							<fieldset class="sn-pref">
-								<legend>{{msg-stellanova-pref-theme}}</legend>
+								<legend>{{msg-stellamereida-pref-theme}}</legend>
 								<div class="sn-seg sn-seg-icon" role="group" data-sn-pref="theme" data-sn-os="{{sn-prefs.os-scheme}}">
-									<button type="button" data-v="light" title="{{msg-stellanova-theme-light}}" aria-label="{{msg-stellanova-theme-light}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-sun"/></svg></button>
-									<button type="button" data-v="auto" title="{{msg-stellanova-auto}}" aria-label="{{msg-stellanova-auto}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg></button>
-									<button type="button" data-v="dark" title="{{msg-stellanova-theme-dark}}" aria-label="{{msg-stellanova-theme-dark}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-moon"/></svg></button>
+									<button type="button" data-v="light" title="{{msg-stellamereida-theme-light}}" aria-label="{{msg-stellamereida-theme-light}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-sun"/></svg></button>
+									<button type="button" data-v="auto" title="{{msg-stellamereida-auto}}" aria-label="{{msg-stellamereida-auto}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg></button>
+									<button type="button" data-v="dark" title="{{msg-stellamereida-theme-dark}}" aria-label="{{msg-stellamereida-theme-dark}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-moon"/></svg></button>
 								</div>
 							</fieldset>
 							<fieldset class="sn-pref">
-								<legend>{{msg-stellanova-pref-font}}</legend>
+								<legend>{{msg-stellamereida-pref-font}}</legend>
 								<div class="sn-seg sn-seg-sz" role="group" data-sn-pref="font">
-									<button type="button" data-v="small" title="{{msg-stellanova-sz-s}}" aria-label="{{msg-stellanova-sz-s}}"><span aria-hidden="true">S</span></button>
-									<button type="button" data-v="medium" title="{{msg-stellanova-sz-m}}" aria-label="{{msg-stellanova-sz-m}}"><span aria-hidden="true">M</span></button>
-									<button type="button" data-v="large" title="{{msg-stellanova-sz-l}}" aria-label="{{msg-stellanova-sz-l}}"><span aria-hidden="true">L</span></button>
-								</div>
-							</fieldset>
-							<fieldset class="sn-pref">
-								<legend>{{msg-stellanova-pref-family}}</legend>
-								<div class="sn-seg sn-seg-fam" role="group" data-sn-pref="family">
-									<button type="button" data-v="sans" title="{{msg-stellanova-family-sans}}" aria-label="{{msg-stellanova-family-sans}}"><span class="sn-fam-spec sn-fam-sans" aria-hidden="true">a</span></button>
-									<button type="button" data-v="serif" title="{{msg-stellanova-family-serif}}" aria-label="{{msg-stellanova-family-serif}}"><span class="sn-fam-spec sn-fam-serif" aria-hidden="true">a</span></button>
+									<button type="button" data-v="small" title="{{msg-stellamereida-sz-s}}" aria-label="{{msg-stellamereida-sz-s}}"><span aria-hidden="true">S</span></button>
+									<button type="button" data-v="medium" title="{{msg-stellamereida-sz-m}}" aria-label="{{msg-stellamereida-sz-m}}"><span aria-hidden="true">M</span></button>
+									<button type="button" data-v="large" title="{{msg-stellamereida-sz-l}}" aria-label="{{msg-stellamereida-sz-l}}"><span aria-hidden="true">L</span></button>
 								</div>
 							</fieldset>
 						</div>
@@ -162,7 +155,7 @@
 					<summary class="sn-foot-tools-summary" aria-controls="{{id}}">
 						<svg class="sn-i sn-foot-tools-plus" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sn-i-plus"/></svg>
 						<svg class="sn-i sn-foot-tools-up" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sn-i-arrow-up"/></svg>
-						{{msg-stellanova-tools}}
+						{{msg-stellamereida-tools}}
 					</summary>
 				</details>
 				<ul class="sn-foot-toollist" id="{{id}}">{{{html-items}}}</ul>
@@ -190,25 +183,25 @@
 				según el viewport — mismo enlace, misma etiqueta. }}
 			<div class="sn-brandnav">
 				<a class="sn-isotype" href="{{sn-isotype.href}}"
-					aria-label="{{msg-stellanova-home}}" title="{{msg-stellanova-home}}">
+					aria-label="{{msg-stellamereida-home}}" title="{{msg-stellamereida-home}}">
 					{{#sn-isotype}}<span class="sn-isotype-full">{{{svg}}}</span><span class="sn-isotype-compact">{{{svg-icon}}}</span>{{/sn-isotype}}
 				</a>
 
 				{{!	Navegación del SITIO (Escuela/Wiki/Navegación…). La caja
 					de herramientas ("Herramientas y más") vive en el pie. }}
 				{{#sn-has-sitenav}}
-				<nav class="sn-md sn-sitenav" id="sn-nav" tabindex="-1" aria-label="{{msg-stellanova-nav}}">
+				<nav class="sn-md sn-sitenav" id="sn-nav" tabindex="-1" aria-label="{{msg-stellamereida-nav}}">
 					<button type="button" class="sn-md-trigger sn-md-icononly" aria-expanded="false"
 						aria-haspopup="true" data-sn-menu
-						title="{{msg-stellanova-nav}}" aria-label="{{msg-stellanova-nav}}">
+						title="{{msg-stellamereida-nav}}" aria-label="{{msg-stellamereida-nav}}">
 						<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-menu"/></svg>
 						<svg class="sn-i sn-md-caret" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><use href="#sn-i-chevron-down"/></svg>
 					</button>
-					<div class="sn-menu-list sn-megamenu" aria-label="{{msg-stellanova-sidebar}}">
+					<div class="sn-menu-list sn-megamenu" aria-label="{{msg-stellamereida-sidebar}}">
 						<header class="sn-modal-head">
-							<h2 class="sn-modal-title">{{msg-stellanova-nav}}</h2>
+							<h2 class="sn-modal-title">{{msg-stellamereida-nav}}</h2>
 							<button type="button" class="sn-modal-x" data-sn-menu-close
-								aria-label="{{msg-stellanova-close}}" title="{{msg-stellanova-close}}">
+								aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
 								<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
 							</button>
 						</header>
@@ -241,7 +234,7 @@
 				<form class="sn-search" role="search" action="{{form-action}}" id="searchform"
 					aria-label="{{msg-searchbutton}}">
 					<button type="button" class="sn-search-close" data-sn-search-close
-						aria-label="{{msg-stellanova-close}}" title="{{msg-stellanova-close}}">
+						aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
 						<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
 					</button>
 					{{{html-input}}}
@@ -270,18 +263,18 @@
 				</a>
 				{{/sn-edit}}
 
-				<nav class="sn-md sn-pagemenu" aria-label="{{msg-stellanova-pagetools}}">
+				<nav class="sn-md sn-pagemenu" aria-label="{{msg-stellamereida-pagetools}}">
 					<button type="button" class="sn-md-trigger sn-md-icononly"
 						aria-expanded="false" aria-haspopup="true" data-sn-menu
-						title="{{msg-stellanova-page}}" aria-label="{{msg-stellanova-pagetools}}">
+						title="{{msg-stellamereida-page}}" aria-label="{{msg-stellamereida-pagetools}}">
 						<svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-file"/></svg>
 						<svg class="sn-i sn-md-caret" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><use href="#sn-i-chevron-down"/></svg>
 					</button>
 					<div class="sn-menu-list">
 						<header class="sn-modal-head">
-							<h2 class="sn-modal-title">{{msg-stellanova-pagetools}}</h2>
+							<h2 class="sn-modal-title">{{msg-stellamereida-pagetools}}</h2>
 							<button type="button" class="sn-modal-x" data-sn-menu-close
-								aria-label="{{msg-stellanova-close}}" title="{{msg-stellanova-close}}">
+								aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
 								<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
 							</button>
 						</header>
@@ -310,7 +303,7 @@
 			{{!	Herramientas del usuario (tri-estado; core decide el set) }}
 			<div class="sn-usertools">
 				{{#sn-prefs}}{{#is-temporary}}
-				<span class="sn-tempbadge" title="{{msg-stellanova-temp-account}}">
+				<span class="sn-tempbadge" title="{{msg-stellamereida-temp-account}}">
 					<svg class="sn-i" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg>
 				</span>
 				{{/is-temporary}}{{/sn-prefs}}
@@ -330,7 +323,7 @@
 						<header class="sn-modal-head">
 							<h2 class="sn-modal-title">{{label}}</h2>
 							<button type="button" class="sn-modal-x" data-sn-menu-close
-								aria-label="{{msg-stellanova-close}}" title="{{msg-stellanova-close}}">
+								aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
 								<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
 							</button>
 						</header>
@@ -342,26 +335,19 @@
 							<hr class="sn-menu-sep">
 							<div class="sn-menu-prefs">
 								<fieldset class="sn-pref">
-									<legend>{{msg-stellanova-pref-theme}}</legend>
+									<legend>{{msg-stellamereida-pref-theme}}</legend>
 									<div class="sn-seg sn-seg-icon" role="group" data-sn-pref="theme" data-sn-os="{{sn-prefs.os-scheme}}">
-										<button type="button" data-v="light" title="{{msg-stellanova-theme-light}}" aria-label="{{msg-stellanova-theme-light}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-sun"/></svg></button>
-										<button type="button" data-v="auto" title="{{msg-stellanova-auto}}" aria-label="{{msg-stellanova-auto}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg></button>
-										<button type="button" data-v="dark" title="{{msg-stellanova-theme-dark}}" aria-label="{{msg-stellanova-theme-dark}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-moon"/></svg></button>
+										<button type="button" data-v="light" title="{{msg-stellamereida-theme-light}}" aria-label="{{msg-stellamereida-theme-light}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-sun"/></svg></button>
+										<button type="button" data-v="auto" title="{{msg-stellamereida-auto}}" aria-label="{{msg-stellamereida-auto}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg></button>
+										<button type="button" data-v="dark" title="{{msg-stellamereida-theme-dark}}" aria-label="{{msg-stellamereida-theme-dark}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-moon"/></svg></button>
 									</div>
 								</fieldset>
 								<fieldset class="sn-pref">
-									<legend>{{msg-stellanova-pref-font}}</legend>
+									<legend>{{msg-stellamereida-pref-font}}</legend>
 									<div class="sn-seg sn-seg-sz" role="group" data-sn-pref="font">
-										<button type="button" data-v="small" title="{{msg-stellanova-sz-s}}" aria-label="{{msg-stellanova-sz-s}}"><span aria-hidden="true">S</span></button>
-										<button type="button" data-v="medium" title="{{msg-stellanova-sz-m}}" aria-label="{{msg-stellanova-sz-m}}"><span aria-hidden="true">M</span></button>
-										<button type="button" data-v="large" title="{{msg-stellanova-sz-l}}" aria-label="{{msg-stellanova-sz-l}}"><span aria-hidden="true">L</span></button>
-									</div>
-								</fieldset>
-								<fieldset class="sn-pref">
-									<legend>{{msg-stellanova-pref-family}}</legend>
-									<div class="sn-seg sn-seg-fam" role="group" data-sn-pref="family">
-										<button type="button" data-v="sans" title="{{msg-stellanova-family-sans}}" aria-label="{{msg-stellanova-family-sans}}"><span class="sn-fam-spec sn-fam-sans" aria-hidden="true">a</span></button>
-										<button type="button" data-v="serif" title="{{msg-stellanova-family-serif}}" aria-label="{{msg-stellanova-family-serif}}"><span class="sn-fam-spec sn-fam-serif" aria-hidden="true">a</span></button>
+										<button type="button" data-v="small" title="{{msg-stellamereida-sz-s}}" aria-label="{{msg-stellamereida-sz-s}}"><span aria-hidden="true">S</span></button>
+										<button type="button" data-v="medium" title="{{msg-stellamereida-sz-m}}" aria-label="{{msg-stellamereida-sz-m}}"><span aria-hidden="true">M</span></button>
+										<button type="button" data-v="large" title="{{msg-stellamereida-sz-l}}" aria-label="{{msg-stellamereida-sz-l}}"><span aria-hidden="true">L</span></button>
 									</div>
 								</fieldset>
 							</div>
@@ -388,7 +374,7 @@
 				<aside class="sn-notice" role="note" data-sn-notice="{{version}}">
 					<div class="sn-notice-body">{{{html}}}</div>
 					<button type="button" class="sn-notice-x" data-sn-notice-close
-						aria-label="{{msg-stellanova-close}}" title="{{msg-stellanova-close}}">
+						aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
 						<svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
 					</button>
 				</aside>
@@ -460,7 +446,7 @@
 						<summary class="sn-foot-tools-summary" aria-controls="{{id}}">
 							<svg class="sn-i sn-foot-tools-plus" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sn-i-plus"/></svg>
 							<svg class="sn-i sn-foot-tools-up" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sn-i-arrow-up"/></svg>
-							{{msg-stellanova-tools}}
+							{{msg-stellamereida-tools}}
 						</summary>
 					</details>
 					<ul class="sn-foot-toollist" id="{{id}}">{{{html-items}}}</ul>

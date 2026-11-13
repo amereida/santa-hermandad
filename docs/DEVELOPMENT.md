@@ -1,14 +1,14 @@
-# Stella Nova — Plan de desarrollo
+# Stellamereida — Plan de desarrollo
 
 Plan accionable. Principios en [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Cómo se desarrolla (entorno local Casiopea)
 
-- Repo **independiente** en `~/Sites/casiopea/skins/stella-nova/` (este).
-  Symlink `…/casiopea/w/skins/StellaNova → ../../skins/stella-nova` lo conecta
+- Repo **independiente** en `~/Sites/casiopea/skins/stellamereida/` (este).
+  Symlink `…/casiopea/w/skins/Stellamereida → ../../skins/stellamereida` lo conecta
   a la wiki local sin copiar nada.
 - Editar aquí → recargar navegador. `$wgDefaultSkin` **no** se cambia: se
-  compara A/B con `?useskin=stellanova` vs `?useskin=vector-2022` en cualquier
+  compara A/B con `?useskin=stellamereida` vs `?useskin=vector-2022` en cualquier
   URL (también seleccionable en `Especial:Preferencias`).
 - En dev: `$wgResourceLoaderDebug=true` para ver CSS/JS sin minificar.
 - Páginas reales de prueba (Fase 5, set mínimo): "Bitácora de Huinay",
@@ -17,7 +17,7 @@ Plan accionable. Principios en [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Estado
 
-- [x] **M0 — Skeleton**: `skin.json`, `SkinStellaNova` (extends `SkinMustache`),
+- [x] **M0 — Skeleton**: `skin.json`, `SkinStellamereida` (extends `SkinMustache`),
   `skin.mustache` semántico, tokens/layout/print/JS, i18n en/es, repo git +
   remote (sin push). Renderiza sin errores PHP, seleccionable.
 - [x] **M1 — skinStyles SMW/SRF/PageForms**: `resources/skinStyles/{smw,srf,
@@ -33,7 +33,7 @@ Plan accionable. Principios en [`ARCHITECTURE.md`](ARCHITECTURE.md).
   todas las data keys de SkinMustache 1.43 (`SkinRenderFidelity`).
 - [x] **M3 — Tokens + tema**: `tokens.css` definitivo; **default claro**,
   oscuro solo por elección explícita / `auto`+SO (ver Decisiones); fuentes
-  auto-alojadas (IBM Plex, `fonts.css`, sin CDN runtime).
+  auto-alojadas (Avenida, `fonts.css`, sin CDN runtime).
 - [x] **M4 — Responsive + navegación**: mobile-first; dropdown colapsable →
   modal a pantalla completa en viewport compact; búsqueda como modal; sin
   overflow horizontal; preferencias (tema + tamaño + familia) en el menú de
@@ -45,7 +45,7 @@ Plan accionable. Principios en [`ARCHITECTURE.md`](ARCHITECTURE.md).
 - [ ] M8 — Verificación final y publicación
 
 `__PANTALLACOMPLETA__` operativo (behaviour switch, patrón NoTitle):
-fija page-property → `SkinStellaNova` suprime chrome salvo escape.
+fija page-property → `SkinStellamereida` suprime chrome salvo escape.
 
 ## Roadmap
 
@@ -92,7 +92,7 @@ Decidir herramienta (pendiente del PLAN del proyecto).
 - [ ] Móvil/responsive sin overflow horizontal.
 - [ ] Contraste WCAG AA mínimo.
 - [ ] Sin errores en consola en páginas comunes.
-- [ ] Instalable en Casiopea limpia con `wfLoadSkin('StellaNova')` sin pasos
+- [ ] Instalable en Casiopea limpia con `wfLoadSkin('Stellamereida')` sin pasos
       manuales extra.
 
 ## Decisiones
@@ -101,47 +101,14 @@ Decidir herramienta (pendiente del PLAN del proyecto).
   (`license-name`), `COPYING` (texto íntegro + aviso en castellano) y el README.
   Excepción: `resources/skinStyles/{mermaid,pagenotice}.css` conservan su
   GPL-2.0-or-later de origen (compatible con Artistic, indicada en su cabecera).
-- Remoto: **GitHub `eadpucv/stella-nova`** (`origin` configurado, **sin push**
-  aún — empujar cuando M1+ esté presentable).
+- Remoto: **GitHub `amereida/stellamereida`** (`origin`).
 - Testing/CI: herramienta por definir (M7).
-- **Tipografía** (rev. 2026-06-01): familia única **IBM Plex**. **IBM Plex
-  Sans** (cuerpo · UI · todas las cabeceras h1–h6) — **variable de DOS ejes**:
-  un único woff2 por estilo (normal/italic) cubre el eje **wght 100–700** Y el
-  eje **wdth 75–100** (`plexsans-latin-wdthwght-*.woff2`, build de dos ejes de
-  Google Fonts). Así cualquier peso Y cualquier ancho interpolan de verdad; el
-  cuerpo se condensa vía `font-stretch` (eje wdth) sin variantes extra. (La
-  build `@fontsource-variable` antigua solo exponía wght — esos
-  `plexsans-latin-wght-*.woff2` ignoraban `font-stretch` y se retiraron.)
-  **Roboto Serif** (serif del cuerpo cuando el lector la elige desde el
-  menú; citas y `<poem>` por defecto) — **variable de cuatro ejes**
-  **wght 100–900 + wdth 75–100 + opsz 8–60 + GRAD −50–100**
-  (`robotoserif-latin-wghtwdthgrad-*.woff2`, TTF OFL de Google Fonts
-  instanciado con fonttools: opsz/wdth recortados de 8–144 / 50–150 a 8–60
-  / 75–100 para no cargar masters de despliegue ni anchos extremos que el
-  skin no usa) + **IBM Plex Mono** (código). Auto-alojadas en `resources/fonts/` (sin CDN en runtime;
-  **versionadas en git** — su ausencia rompía el tema). Las URLs las
-  calcula `Hooks::onResourceLoaderRegisterModules` de la carpeta real
-  (robusto al nombre del directorio). Subset latin: U+0000-00FF cubre el
-  español sin latin-ext. Tokens en dos capas: primitivas
-  (`--sn-font-sans`, `--sn-font-serif`, `--sn-font-mono`) y semánticas
-  (`--sn-font-text` = sans del cuerpo, `--sn-font-quote` = serif de citas,
-  `--sn-font-display` = alias de text). La preferencia `family` (sans|serif)
-  invierte los dos alias en cascada: cuerpo+UI voltean a serif y
-  citas/`<poem>` voltean a sans. Ambas familias de texto comparten el rango
-  `wdth 75–100`, así que el cuerpo condensa (`--sn-text-width`) elija el
-  lector la familia que elija; las citas/`<poem>` se resetean a `100%`
-  (contraste a ancho natural). El **grado** de la serif (eje GRAD) lo
-  conduce `--sn-serif-grade`, aplicado a `:root` vía
-  `font-variation-settings: "GRAD"` (0 en claro, 30 en oscuro). IBM Plex
-  Sans tope en 700; Roboto Serif tope en 900: pesos fuera del eje se
-  recortan al máximo. Historial:
-  Work Sans + Newsreader → Anthropic Sans + Anthropic Serif → Alegreya Sans +
-  Alegreya (2026-05-25, rama `fonts`) → IBM Plex Sans (variable wght) + IBM
-  Plex Serif (2026-05-29) → IBM Plex Sans variable de dos ejes wght+wdth
-  (2026-05-31) → IBM Plex Sans + **Source Serif 4 variable** + alternador
-  sans/serif desde el menú del usuario (2026-06-03) → IBM Plex Sans +
-  **Roboto Serif variable de cuatro ejes** (wght+wdth+opsz+GRAD), serif que
-  condensa con el cuerpo y grade auto en oscuro (2026-06-06).
+- **Tipografía** (2026-11-13): Avenida autoalojada en `resources/fonts/Avenida/`,
+  24 WOFF2 estáticas: normal y condensada, seis pesos (275, 400, 500, 600,
+  700, 900) en redonda e itálica. Cuerpo, UI, cabeceras y citas usan Avenida;
+  código usa monospace del sistema. Los alias sans/serif se conservan para
+  compatibilidad; actualmente ambos apuntan a Avenida. No hay ejes variables
+  de ancho ni grado. `fonts.css` declara los archivos y Mermaid usa Avenida.
 - **Sin `text-transform: uppercase` en cabeceras del cuerpo** (rev.
   2026-05-25): h3 (subsección en nova) y h5/h6 (labels secundarios)
   perdieron el uppercase; ahora la jerarquía visual la hacen tamaño,
@@ -178,7 +145,7 @@ Decidir herramienta (pendiente del PLAN del proyecto).
   gestionado) bajó al **pie**, como mapa del sitio en columnas. Sin riel,
   sin hamburguesa, sin dropdowns de nivel superior en el header (las
   pestañas no se truncan: hacen scroll horizontal en pantallas chicas).
-  Presentación, no comportamiento; `specs/stella-nova.allium` ya declara
+  Presentación, no comportamiento; `specs/stellamereida.allium` ya declara
   riel/dropdown/posición fuera de alcance (regiones intactas).
   ARCHITECTURE §4 ("sidebar persistente") = doctrina histórica supeditada.
 - **La hoja (`.sn-paper`)** (2026-05-18): radio mínimo
@@ -187,7 +154,7 @@ Decidir herramienta (pendiente del PLAN del proyecto).
 - **Tema: default claro, el SO no oscurece solo** (2026-05-18, decisión del
   usuario): sin preferencia guardada → claro, aunque el SO esté en oscuro;
   oscuro solo con elección explícita o `auto` (seguir al SO). **Reflejado
-  en `specs/stella-nova.allium`** (2026-05-18): `enum ThemeChoice {light|
+  en `specs/stellamereida.allium`** (2026-05-18): `enum ThemeChoice {light|
   dark|auto}`, `Preferences.theme: ThemeChoice?`, `ViewingSession.
   active_theme` condicional (`auto → os_scheme ?? light`; `light|dark`
   forzado; sin elección → `light`) y `@guarantee Precedence`. Ya no es

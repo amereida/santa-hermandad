@@ -1,9 +1,9 @@
-# Stella Nova — esquemas de layout
+# Stellamereida — esquemas de layout
 
 Mapa visual de los layouts que produce el skin. Cada esquema corresponde
 a un estado de presentación distinto (chrome completo, compact, canvas,
 drawer abierto). Los nombres entre corchetes son selectores CSS reales
-del skin (mirables en [`resources/stella-nova.css`](../resources/stella-nova.css)
+del skin (mirables en [`resources/stellamereida.css`](../resources/stellamereida.css)
 y en la plantilla [`includes/templates/skin.mustache`](../includes/templates/skin.mustache)).
 
 Breakpoints clave (mismos valores en CSS y en JS):

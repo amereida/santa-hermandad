@@ -1,4 +1,4 @@
-/* Stella Nova · skinStyles → PageForms.
+/* Stellamereida · skinStyles → PageForms.
  *
  * Los formularios viven dentro de html-body-content; el skin no recorta su
  * markup ni sus TemplateStyles. Solo armoniza inputs/botones con el papel.
@@ -24,17 +24,17 @@
    del 100% y arrastra toda la tabla fuera de la página. Con `fixed` las
    columnas respetan el ancho de la tabla y los campos (con max-width:100%)
    se acotan a su celda. */
-.skin-stellanova .formtable, .skin-stellanova table.formtable {
+.skin-stellamereida .formtable, .skin-stellamereida table.formtable {
 	border-collapse: separate; border-spacing: 0 var(--sn-s-3);
 	width: 100%;
 	table-layout: fixed;
 }
 /* Etiqueta = <th> (o 1ª celda). Alineada a la derecha y más chica. El prefijo
-   `.skin-stellanova` sube la especificidad por encima de la regla propia de
+   `.skin-stellamereida` sube la especificidad por encima de la regla propia de
    PageForms `.formtable th { text-align: left }` (misma especificidad → ganaba
    por orden de cascada). */
-.skin-stellanova .formtable > tbody > tr > td:first-child,
-.skin-stellanova .formtable th {
+.skin-stellamereida .formtable > tbody > tr > td:first-child,
+.skin-stellamereida .formtable th {
 	width: 28%;                        /* columna de etiqueta (table-layout: fixed) */
 	vertical-align: top; padding-right: var(--sn-s-4);
 	text-align: right;                 /* etiqueta alineada hacia el campo */
@@ -46,7 +46,7 @@
    `<label class="checkboxLabel"><input>&nbsp;Texto</label>` (radios: análogo).
    Etiqueta más chica (--sn-fs-xs), AIRE entre la casilla y el texto (el `&nbsp;`
    solo no basta) y separación entre opciones. */
-.skin-stellanova :is(.checkboxLabel, .radioButtonItem),
+.skin-stellamereida :is(.checkboxLabel, .radioButtonItem),
 :is(.pfForm, .createbox) label:has(> input:is([type="checkbox"], [type="radio"])) {
 	display: inline-block;
 	margin-inline-end: var(--sn-s-4);
@@ -56,7 +56,7 @@
 }
 /* El "aire" va a la casilla VISIBLE (hijo directo del label): el span del
    widget OOUI, o el <input> pelado si no hay OOUI. */
-.skin-stellanova :is(.checkboxLabel, .radioButtonItem)
+.skin-stellamereida :is(.checkboxLabel, .radioButtonItem)
 	> :is(input, .oo-ui-checkboxInputWidget, .oo-ui-radioInputWidget),
 :is(.pfForm, .createbox) label:has(> input:is([type="checkbox"], [type="radio"])) > input {
 	margin-inline-end: var(--sn-s-2);
@@ -161,13 +161,13 @@ input.createboxInput, textarea.createboxInput, select.createboxInput,
    ganan (PF no los repite en esos selectores), solo el color de borde perdía.
    Se re-tiñe con `--sn-hairline` desde una especificidad mayor (ID + clase =
    1,2,x) y orden posterior. `:focus` y `[readonly]` incluidos. */
-.skin-stellanova #pfForm :is( input, textarea, select ):not( [type="checkbox"] ):not( [type="radio"] ) {
+.skin-stellamereida #pfForm :is( input, textarea, select ):not( [type="checkbox"] ):not( [type="radio"] ) {
 	border-color: var(--sn-hairline);
 }
-.skin-stellanova #pfForm :is( input, textarea, select ):focus {
+.skin-stellamereida #pfForm :is( input, textarea, select ):focus {
 	border-color: var(--sn-nova);
 }
-.skin-stellanova #pfForm input[readonly] {
+.skin-stellamereida #pfForm input[readonly] {
 	background: var(--sn-field-bg-disabled); color: var(--sn-ink-soft);
 }
 
