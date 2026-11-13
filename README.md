@@ -58,6 +58,9 @@ El checkout principal está en `~/Sites/casiopea/skins/stellamereida/`.
 `~/Sites/casiopea/w/skins/stellamereida` enlaza a ese directorio. Los worktrees
 para tareas van fuera de `skins/`; no deben quedar como destino permanente
 de la wiki. Las fuentes del skin viven en `resources/fonts/Avenida/`.
+Stella Nova se conserva como skin instalado en `w/skins/StellaNova`, disponible
+junto a Stellamereida en **Preferencias → Apariencia**, sin duplicar carpetas
+de desarrollo bajo `skins/`.
 
 Los estilos específicos de la portada se editan en la wiki local:
 `Plantilla:Ciudad Abierta/estilos.css`, cargada mediante TemplateStyles desde

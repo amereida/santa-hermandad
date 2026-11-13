@@ -17,6 +17,9 @@ comportamiento debería reflejarse también ahí.
 - Paleta clara naranja muy pálida con tinta morada; oscura petróleo con tinta rosa pálida.
 - Estilos propios de la portada retirados del skin y gestionados con TemplateStyles en la wiki local.
 
+### Fixed
+- Imágenes normales: sin la franja de fondo de `.mw-default-size`; sus cajas y enlaces abarcan la imagen completa. Miniaturas y galerías usan fondos que cambian con el tema.
+
 ## [0.9.3] — 2026-10-21
 
 ### Added
