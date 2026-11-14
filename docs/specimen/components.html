@@ -1,75 +1,59 @@
 <!DOCTYPE html>
-<html lang="es" data-sn-theme="light">
+<html lang="es" data-sh-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Componentes — Stellamereida v0.9.3</title>
-<link rel="icon" href="assets/icons/casiopea-icon.svg" type="image/svg+xml">
+<title>Componentes — Santa Hermandad v0.9.3</title>
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
-<link rel="stylesheet" href="assets/stellamereida.css">
+<link rel="stylesheet" href="assets/santa-hermandad.css">
 <link rel="stylesheet" href="assets/specimen.css">
 <!-- ── overrides ────────────────────────────────────────────────────────────
      El taller de diseño pega aquí redefiniciones de variables de diseño para proponer
      cambios. Sobreescriben tokens.css sin tocar el archivo fuente. Ejemplo:
-       :root { --sn-nova: #c33; --sn-fs-display: 2.4rem; }
+       :root { --sh-nova: #c33; --sh-fs-display: 2.4rem; }
      ─────────────────────────────────────────────────────────────────── -->
 <style id="overrides">
-/* :root { --sn-nova: #cc3344; } */
+/* :root { --sh-nova: #cc3344; } */
 </style>
 </head>
 <body class="spec">
-<svg xmlns="http://www.w3.org/2000/svg" class="sn-iconsprite" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" width="0" height="0">
-	<symbol id="sn-i-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
-	<symbol id="sn-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
-	<symbol id="sn-i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
-	<symbol id="sn-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
-	<symbol id="sn-i-corner-up-left" viewBox="0 0 24 24"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></symbol>
-	<symbol id="sn-i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
-	<symbol id="sn-i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
-	<symbol id="sn-i-chevron-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
-	<symbol id="sn-i-chevron-up" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></symbol>
-	<symbol id="sn-i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
-	<symbol id="sn-i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
-	<symbol id="sn-i-edit" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></symbol>
-	<symbol id="sn-i-file-plus" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></symbol>
-	<symbol id="sn-i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
-	<symbol id="sn-i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
-	<symbol id="sn-i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
-	<symbol id="sn-i-external-link" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
-	<symbol id="sn-i-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
-	<symbol id="sn-i-arrow-up" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
-	<symbol id="sn-i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
-	<symbol id="sn-i-git-merge" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></symbol>
-	<symbol id="sn-i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></symbol>
-	<symbol id="sn-i-printer" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
-	<symbol id="sn-i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
-	<symbol id="sn-i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
-	<symbol id="sn-i-user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></symbol>
-	<symbol id="sn-i-user-x" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></symbol>
-	<symbol id="sn-i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
-	<symbol id="sn-i-file-text" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></symbol>
-	<symbol id="sn-i-book-open" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+<svg xmlns="http://www.w3.org/2000/svg" class="sh-iconsprite" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden" width="0" height="0">
+	<symbol id="sh-i-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+	<symbol id="sh-i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+	<symbol id="sh-i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+	<symbol id="sh-i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+	<symbol id="sh-i-corner-up-left" viewBox="0 0 24 24"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></symbol>
+	<symbol id="sh-i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+	<symbol id="sh-i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+	<symbol id="sh-i-chevron-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+	<symbol id="sh-i-chevron-up" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></symbol>
+	<symbol id="sh-i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+	<symbol id="sh-i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+	<symbol id="sh-i-edit" viewBox="0 0 24 24"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></symbol>
+	<symbol id="sh-i-file-plus" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></symbol>
+	<symbol id="sh-i-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+	<symbol id="sh-i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
+	<symbol id="sh-i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+	<symbol id="sh-i-external-link" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+	<symbol id="sh-i-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+	<symbol id="sh-i-arrow-up" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+	<symbol id="sh-i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
+	<symbol id="sh-i-git-merge" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></symbol>
+	<symbol id="sh-i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></symbol>
+	<symbol id="sh-i-printer" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+	<symbol id="sh-i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+	<symbol id="sh-i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+	<symbol id="sh-i-user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></symbol>
+	<symbol id="sh-i-user-x" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></symbol>
+	<symbol id="sh-i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+	<symbol id="sh-i-file-text" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></symbol>
+	<symbol id="sh-i-book-open" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
 </svg>
 <header class="spec-top">
-  <a class="spec-brand" href="index.html" aria-label="Stellamereida — Inicio">
-    <svg class="spec-brand-icon" width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 148" fill="currentColor" aria-hidden="true" focusable="false">
-	<style>
-		.sn-i-line { stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: .45; }
-		.sn-i-star { fill: currentColor; }
-	</style>
-	<g transform="matrix(0.892, 0, 0, 0.892, 7.41, 23.33)">
-		<g transform="matrix(1.1172, 0, 0, 1.1172, -8.92, -3.72)">
-			<path class="sn-i-line" d="M 22.676 21.837 L 45.501 59.142 L 77.973 52.747 C 77.973 52.747 98.206 93.357 97.975 93.357 C 97.744 93.357 130.013 63.639 130.013 63.639"/>
-			<circle class="sn-i-star" cx="22.613" cy="21.911" r="6"/>
-			<circle class="sn-i-star" cx="45.826" cy="57.671" r="6"/>
-			<circle class="sn-i-star" cx="77.438" cy="52.751" r="6"/>
-			<circle class="sn-i-star" cx="97.134" cy="92.888" r="6"/>
-			<circle class="sn-i-star" cx="129.396" cy="63.714" r="6"/>
-		</g>
-	</g>
-</svg>
-    <span class="spec-brand-name">Stellamereida</span>
+  <a class="spec-brand" href="index.html" aria-label="Santa Hermandad — Inicio">
+
+    <span class="spec-brand-name">Santa Hermandad</span>
     <span class="spec-brand-ver">v0.9.3</span>
   </a>
   <nav class="spec-nav" aria-label="Secciones del espécimen"><a href="index.html">Fundamentos</a><a href="components.html" aria-current="page">Componentes</a><a href="aplicados.html">Estilos aplicados</a></nav>
@@ -86,7 +70,7 @@
 <main class="spec-main">
 
 <section class="comp">
-  <h1 class="display">Stellamereida · componentes</h1>
+  <h1 class="display">Santa Hermandad · componentes</h1>
   <p class="lede">Espécimen de primitivos del skin. Cada bloque documenta los
   variables de diseño en juego y muestra el componente con texto simulado.</p>
 </section>
@@ -98,27 +82,27 @@
   <div class="demo">
     <div class="colophon">
       <div class="colophon-row">
-        <div class="colophon-name" style="font-family: var(--sn-font-text);">Aa Bb Cc · 0123</div>
+        <div class="colophon-name" style="font-family: var(--sh-font-text);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
           <strong>Avenida</strong> · estática, pesos 275, 400, 500, 600, 700 y 900<br>
-          Variable <code>--sn-font-sans</code> (primitiva). Alias semánticos:
-          <code>--sn-font-text</code> = cuerpo + UI + cabeceras,
-          <code>--sn-font-display</code> = alias de text.
+          Variable <code>--sh-font-sans</code> (primitiva). Alias semánticos:
+          <code>--sh-font-text</code> = cuerpo + UI + cabeceras,
+          <code>--sh-font-display</code> = alias de text.
         </div>
       </div>
       <div class="colophon-row">
-        <div class="colophon-name" style="font-family: var(--sn-font-serif);">Aa Bb Cc · 0123</div>
+        <div class="colophon-name" style="font-family: var(--sh-font-serif);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
           <strong>Avenida</strong> · citas y poemas<br>
-          <code>--sn-font-quote</code> conserva el alias de citas.
+          <code>--sh-font-quote</code> conserva el alias de citas.
           Ambos alias de familia usan Avenida; no hay ejes variables.
         </div>
       </div>
       <div class="colophon-row">
-        <div class="colophon-name" style="font-family: var(--sn-font-mono);">Aa Bb Cc · 0123</div>
+        <div class="colophon-name" style="font-family: var(--sh-font-mono);">Aa Bb Cc · 0123</div>
         <div class="colophon-meta">
           <strong>Monospace del sistema</strong> · monospace técnico<br>
-          Variable <code>--sn-font-mono</code><br>
+          Variable <code>--sh-font-mono</code><br>
           Uso: código, valores numéricos, identificadores
         </div>
       </div>
@@ -128,12 +112,12 @@
 
 <section class="comp">
   <h2>Cabeceras</h2>
-  <p class="meta">Todas las cabeceras (H1–H6) en <code>--sn-font-text</code>
+  <p class="meta">Todas las cabeceras (H1–H6) en <code>--sh-font-text</code>
   — Avenida, familia única. Sus alturas de línea son múltiplos enteros
-  de <code>--sn-baseline</code> (la interlínea del cuerpo): H1/H2 ocupan
-  2 baselines, H3–H6 uno. Escala: <code>--sn-fs-display</code>
-  (1.5–2.0 rem) → <code>--sn-fs-base</code> (el cuerpo, en H5/H6, que nunca
-  bajan del tamaño de lectura). El acento carmín (<code>--sn-nova</code>) recae
+  de <code>--sh-baseline</code> (la interlínea del cuerpo): H1/H2 ocupan
+  2 baselines, H3–H6 uno. Escala: <code>--sh-fs-display</code>
+  (1.5–2.0 rem) → <code>--sh-fs-base</code> (el cuerpo, en H5/H6, que nunca
+  bajan del tamaño de lectura). El acento carmín (<code>--sh-nova</code>) recae
   en los niveles <strong>impares</strong> — H1, H3 y H5; los pares (H2, H4, H6)
   van en tinta. Ese acento es <strong>transversal</strong>: el H5 sale carmín en
   cualquier contexto del skin (cuerpo, pie, modales), no sólo en el artículo.</p>
@@ -143,7 +127,7 @@
 ==== Agrupación menor ====
 ===== Apostilla =====
 ====== Referencia inline ======</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <h1 id="firstHeading" class="firstHeading">Heading 1 · display editorial</h1>
       <h2>Heading 2 · sección principal</h2>
       <h3>Heading 3 · sub-sección</h3>
@@ -176,11 +160,11 @@
   <code>&lt;p&gt;</code> que genera la wiki: una clase en el <code>&lt;div&gt;</code>
   contenedor se hereda al párrafo interno (tamaño, familia, énfasis, color); la
   <strong>alineación</strong> se propaga al <code>&lt;p&gt;</code> de forma
-  explícita porque <code>.sn-body p</code> fija <code>justify</code>.</p>
-  <p class="meta">Alcance <code>:is(.sn-body, .sn-notice-body,
-  .sn-footer-managed)</code>: el cuerpo del artículo —hoja normal y
+  explícita porque <code>.sh-body p</code> fija <code>justify</code>.</p>
+  <p class="meta">Alcance <code>:is(.sh-body, .sh-notice-body,
+  .sh-footer-managed)</code>: el cuerpo del artículo —hoja normal y
   <code>__PANTALLACOMPLETA__</code>— <em>y</em> los dos fragmentos del marco
-  administrable (<code>Stella-Nova:Aviso</code> y <code>Stella-Nova:Pie</code>),
+  administrable (<code>SantaHermandad:Aviso</code> y <code>SantaHermandad:Pie</code>),
   que antes quedaban fuera y obligaban a escribir <code>style=</code> inline.
   Al vivir en el skin también viajan a la <strong>exportación a PDF</strong>: la
   previsualización paginada enlaza los archivos del skin, no el
@@ -189,14 +173,14 @@
   <h3 class="spec-subh">Tamaño — <code>jumbo</code> · <code>lg</code> · <code>sm</code> · <code>xs</code></h3>
   <p class="meta">Escala alrededor del cuerpo (que es el tamaño por defecto, sin
   clase). Respetan la preferencia S/M/L del lector
-  (<code>--sn-font-scale</code>); <code>jumbo</code> es el titular.</p>
+  (<code>--sh-font-scale</code>); <code>jumbo</code> es el titular.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">&lt;p class="jumbo"&gt;Titular jumbo&lt;/p&gt;
 &lt;p class="lg"&gt;Destacado (lg)&lt;/p&gt;
 Cuerpo normal, sin clase.
 &lt;p class="sm"&gt;Secundario (sm)&lt;/p&gt;
 &lt;p class="xs"&gt;Pie / nota (xs)&lt;/p&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <p class="jumbo">Titular jumbo</p>
         <p class="lg">Destacado (lg)</p>
@@ -212,7 +196,7 @@ Cuerpo normal, sin clase.
 <pre class="howto-code">&lt;span class="serif"&gt;Forzado a serif&lt;/span&gt;
 &lt;span class="sans"&gt;Forzado a sans&lt;/span&gt;
 &lt;span class="mono"&gt;Forzado a mono&lt;/span&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <p><span class="serif">Forzado a serif</span> ·
            <span class="sans">Forzado a sans</span> ·
@@ -226,7 +210,7 @@ Cuerpo normal, sin clase.
 <pre class="howto-code">&lt;span class="uppercase"&gt;Versalita real&lt;/span&gt;
 &lt;span class="italic"&gt;Cursiva&lt;/span&gt;
 &lt;span class="bold"&gt;Negrita&lt;/span&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <p><span class="uppercase">Versalita real</span> ·
            <span class="italic">Cursiva</span> ·
@@ -251,7 +235,7 @@ envuelva en su &lt;p&gt;, queda centrado.
 del cuerpo: la clase solo hace falta para
 volver a justificar dentro de un bloque
 alineado de otro modo)&lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <div class="center"><p>Texto centrado. Aunque la wiki lo envuelva en su <code>&lt;p&gt;</code>, queda centrado.</p></div>
         <div class="right"><p>Alineado a la derecha.</p></div>
@@ -272,7 +256,7 @@ alineado de otro modo)&lt;/div&gt;</pre>
 &lt;span class="ok"&gt;Correcto&lt;/span&gt;
 &lt;span class="warn"&gt;Atención&lt;/span&gt;
 &lt;span class="danger"&gt;Error&lt;/span&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <p><span class="nova bold">Marca / acento</span> ·
            <span class="ok bold">Correcto</span> ·
@@ -284,21 +268,21 @@ alineado de otro modo)&lt;/div&gt;</pre>
 
   <h4 class="spec-subh">Muestrario de roles</h4>
   <div class="grilla cols-2 gap-m">
-    <figure class="sw" style="--sw-c: var(--sn-nova);">
+    <figure class="sw" style="--sw-c: var(--sh-nova);">
       <span class="sw-chip" aria-hidden="true"></span>
-      <figcaption><code class="sw-var">--sn-nova</code><span class="sw-note">marca · enlaces · clase <code>.nova</code></span></figcaption>
+      <figcaption><code class="sw-var">--sh-nova</code><span class="sw-note">marca · enlaces · clase <code>.nova</code></span></figcaption>
     </figure>
-    <figure class="sw" style="--sw-c: var(--sn-ok);">
+    <figure class="sw" style="--sw-c: var(--sh-ok);">
       <span class="sw-chip" aria-hidden="true"></span>
-      <figcaption><code class="sw-var">--sn-ok</code><span class="sw-note">correcto · «ok» del taller · <code>.ok</code></span></figcaption>
+      <figcaption><code class="sw-var">--sh-ok</code><span class="sw-note">correcto · «ok» del taller · <code>.ok</code></span></figcaption>
     </figure>
-    <figure class="sw" style="--sw-c: var(--sn-warn);">
+    <figure class="sw" style="--sw-c: var(--sh-warn);">
       <span class="sw-chip" aria-hidden="true"></span>
-      <figcaption><code class="sw-var">--sn-warn</code><span class="sw-note">atención · aviso · <code>.warn</code></span></figcaption>
+      <figcaption><code class="sw-var">--sh-warn</code><span class="sw-note">atención · aviso · <code>.warn</code></span></figcaption>
     </figure>
-    <figure class="sw" style="--sw-c: var(--sn-danger);">
+    <figure class="sw" style="--sw-c: var(--sh-danger);">
       <span class="sw-chip" aria-hidden="true"></span>
-      <figcaption><code class="sw-var">--sn-danger</code><span class="sw-note">error · acción destructiva · <code>.danger</code></span></figcaption>
+      <figcaption><code class="sw-var">--sh-danger</code><span class="sw-note">error · acción destructiva · <code>.danger</code></span></figcaption>
     </figure>
   </div>
 
@@ -321,7 +305,7 @@ Taller de Amereida · 2026
 Un párrafo de entrada, en serif y un
 punto mayor que el cuerpo.
 &lt;/p&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <div class="jumbo serif center nova fw-90"><p>Travesía a Punta Arenas</p></div>
         <div class="sm uppercase center"><p>Taller de Amereida · 2026</p></div>
@@ -333,17 +317,17 @@ punto mayor que el cuerpo.
   </div>
 
   <h3 class="spec-subh">También en el marco administrable</h3>
-  <p class="meta">Novedad de la v0.8.0. <code>Stella-Nova:Pie</code> y
-  <code>Stella-Nova:Aviso</code> se parsean sin el envoltorio
+  <p class="meta">Novedad de la v0.8.0. <code>SantaHermandad:Pie</code> y
+  <code>SantaHermandad:Aviso</code> se parsean sin el envoltorio
   <code>.mw-parser-output</code>, así que el alcance viejo de
   <code>Common.css</code> no llegaba y esas páginas terminaban escritas con
   <code>style=</code> inline —invisible al tema claro/oscuro y a la escala del
   lector—. Ahora aceptan el mismo vocabulario que el cuerpo.</p>
   <div class="grilla cols-2 spec-usage">
-<pre class="howto-code">&lt;!-- antes, en Stella-Nova:Pie --&gt;
+<pre class="howto-code">&lt;!-- antes, en SantaHermandad:Pie --&gt;
 &lt;span style="font-size: 1.6em;
   font-weight: 300;
-  color: var(--sn-nova)"&gt;e[ad]&lt;/span&gt;
+  color: var(--sh-nova)"&gt;e[ad]&lt;/span&gt;
 
 &lt;!-- ahora --&gt;
 &lt;span class="lg nova"&gt;e[ad]&lt;/span&gt;
@@ -351,8 +335,8 @@ punto mayor que el cuerpo.
 Pontificia Universidad Católica
 de Valparaíso
 &lt;/div&gt;</pre>
-    <div class="sn-paper demo">
-      <div class="sn-footer-managed">
+    <div class="sh-paper demo">
+      <div class="sh-footer-managed">
         <p><span class="lg nova">e[ad]</span><br>
         Escuela de Arquitectura y Diseño<br>
         <span class="xs uppercase">Pontificia Universidad Católica de Valparaíso</span></p>
@@ -376,7 +360,7 @@ de Valparaíso
     una combinación se repite en muchas páginas, deja de ser un helper y
     corresponde una plantilla con su <code>TemplateStyles</code>.</p>
     <p><strong>Ancho tipográfico.</strong> Las clases de familia cambian la
-    familia pero heredan el ancho del cuerpo (<code>--sn-text-width</code>, 80 %
+    familia pero heredan el ancho del cuerpo (<code>--sh-text-width</code>, 80 %
     en sans y 62,5 % en serif). Un <code>class="serif"</code> leído en modo sans
     sale a 80 %, más ancho de lo que la serif se diseñó. Si el ancho importa,
     fijalo: <code>class="serif fw-60"</code>.</p>
@@ -398,7 +382,7 @@ de Valparaíso
   <code>fw-75</code> <code>fw-85</code> <code>fw-95</code> (pasos de 5 heredados
   de v0.6.14). <code>font-stretch</code> hereda → en un <code>&lt;div&gt;</code>
   el ancho fluye a los párrafos internos.</p>
-  <div class="spec-notes" style="border-left:3px solid var(--sn-nova);padding-left:1em">
+  <div class="spec-notes" style="border-left:3px solid var(--sh-nova);padding-left:1em">
     <p>Avenida es estática: las clases <code>fw-*</code> se conservan por
     compatibilidad, pero no interpolan su ancho. La variante condensada es
     una familia separada: <code>Avenida Condensed</code>.</p>
@@ -415,7 +399,7 @@ de Valparaíso
 Un bloque entero: el ancho
 se hereda a los &lt;p&gt; internos.
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <p style="margin:0"><span class="fw-150">Aa Hh — 150 (clampa en sans)</span></p>
         <p style="margin:0"><span class="fw-130">Aa Hh — 130 (clampa en sans)</span></p>
@@ -441,10 +425,10 @@ se hereda a los &lt;p&gt; internos.
 
 <section class="comp">
   <h2>Cuerpo de texto</h2>
-  <p class="meta">Familia <code>--sn-font-text</code> · cuerpo
-  <code>--sn-fs-base</code> (1.00–1.05 rem fluido) · interlínea
-  <code>--sn-leading</code> (1.65, fijo) · medida de la hoja
-  <code>--sn-measure</code> (58 rem, fijo). Los párrafos van
+  <p class="meta">Familia <code>--sh-font-text</code> · cuerpo
+  <code>--sh-fs-base</code> (1.00–1.05 rem fluido) · interlínea
+  <code>--sh-leading</code> (1.65, fijo) · medida de la hoja
+  <code>--sh-measure</code> (58 rem, fijo). Los párrafos van
   justificados con <code>hyphens: auto</code> (depende del
   <code>lang</code> del documento).</p>
   <div class="grilla cols-2 spec-usage">
@@ -457,7 +441,7 @@ o simplemente https://wiki.ead.pucv.cl.
 
 Salto de párrafo: una línea en blanco.
 Filete horizontal: cuatro guiones al inicio: ----</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
       eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
       ad minim veniam, quis nostrud <a href="#">exercitation ullamco</a>
@@ -474,7 +458,7 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
   </div>
   <div class="spec-notes">
     <p>Enlaces: interno (carmín · azul en oscuro) · externo (con ícono
-    <code>--sn-ext-icon</code>) · rojo (página inexistente, clase
+    <code>--sh-ext-icon</code>) · rojo (página inexistente, clase
     <code>.new</code> automática que MediaWiki añade al detectar el
     enlace muerto).</p>
     <p>Para citar texto inline usá <code>&lt;cite&gt;…&lt;/cite&gt;</code>
@@ -486,8 +470,8 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
 
 <section class="comp">
   <h2>Listas</h2>
-  <p class="meta">Sangría heredada de <code>--sn-s-5</code> · marcadores en
-  <code>--sn-ink-soft</code> · espaciado vertical <code>--sn-s-1</code>.</p>
+  <p class="meta">Sangría heredada de <code>--sh-s-5</code> · marcadores en
+  <code>--sh-ink-soft</code> · espaciado vertical <code>--sh-s-1</code>.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">* Ítem de lista no ordenada
 * Otro ítem
@@ -505,7 +489,7 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
 
 : Texto sangrado (sin término)
 :: Doble sangría</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <ul>
         <li>Lorem ipsum dolor sit amet</li>
         <li>Consectetur adipiscing elit
@@ -545,9 +529,9 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
   <code>.smwtable</code> / <code>.broadtable</code>): diseño minimalista de
   <strong>solo filetes horizontales</strong> — nunca verticales ni contorno
   exterior. Cabecera <em>transparente</em> con un filete normal
-  (<code>--sn-hairline</code>) que la separa del cuerpo; entre filas, filete fino
-  (<code>--sn-hairline-soft</code>) uniforme — <strong>sin colores alternados</strong>.
-  Texto a <code>--sn-fs-table</code> (≈80% del cuerpo), todo alineado a la
+  (<code>--sh-hairline</code>) que la separa del cuerpo; entre filas, filete fino
+  (<code>--sh-hairline-soft</code>) uniforme — <strong>sin colores alternados</strong>.
+  Texto a <code>--sh-fs-table</code> (≈80% del cuerpo), todo alineado a la
   izquierda, sobre la grilla de línea base. En tablas anchas la
   <code>&lt;table&gt;</code> se vuelve su propia caja de scroll horizontal. Las de
   resultados (<code>smwtable</code>) realzan la fila bajo el cursor.</p>
@@ -556,25 +540,25 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
 |+ Título descriptivo de la tabla
 ! Variable !! Rol !! Familia
 |-
-| --sn-fs-display || H1 display || text
+| --sh-fs-display || H1 display || text
 |-
-| --sn-fs-xl || H2 || text
+| --sh-fs-xl || H2 || text
 |-
-| --sn-fs-lg || H3 || text
+| --sh-fs-lg || H3 || text
 |-
-| --sn-fs-base || Cuerpo || text
+| --sh-fs-base || Cuerpo || text
 |}</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <table class="wikitable">
         <caption>Escala tipográfica del sistema</caption>
         <thead>
           <tr><th>Variable</th><th>Rol</th><th>Familia</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>--sn-fs-display</code></td><td>H1 display</td><td>text</td></tr>
-          <tr><td><code>--sn-fs-xl</code></td><td>H2</td><td>text</td></tr>
-          <tr><td><code>--sn-fs-lg</code></td><td>H3</td><td>text</td></tr>
-          <tr><td><code>--sn-fs-base</code></td><td>Cuerpo</td><td>text</td></tr>
+          <tr><td><code>--sh-fs-display</code></td><td>H1 display</td><td>text</td></tr>
+          <tr><td><code>--sh-fs-xl</code></td><td>H2</td><td>text</td></tr>
+          <tr><td><code>--sh-fs-lg</code></td><td>H3</td><td>text</td></tr>
+          <tr><td><code>--sh-fs-base</code></td><td>Cuerpo</td><td>text</td></tr>
         </tbody>
       </table>
     </div>
@@ -601,7 +585,7 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
 ! Profesor
 | Herbert Spencer
 |}</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <table class="wikitable plantilla">
         <tbody>
           <tr><th>Tipo de Proyecto</th><td>Proyecto de Curso</td></tr>
@@ -630,12 +614,12 @@ Filete horizontal: cuatro guiones al inicio: ----</pre>
 <section class="comp">
   <h2>Cita y poema</h2>
   <p class="meta"><code>&lt;blockquote&gt;</code> y <code>&lt;poem&gt;</code>
-  (extensión Poem) consumen <code>--sn-font-quote</code>, que por defecto
+  (extensión Poem) consumen <code>--sh-font-quote</code>, que por defecto
   apunta a Avenida, igual que el cuerpo. El poema lleva
   <code>white-space: pre-wrap</code>, lo que conserva los espacios del
   wikitexto como materia significante (no son adorno: son la
   espacialidad del verso). Fragmento de la <em>Aventura de Amereida</em>
-  (1967) usado en la portada de Casiopea.</p>
+  (1967) usado en la portada de Amereida.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">&lt;blockquote&gt;
 Texto de la cita en uno o más párrafos.
@@ -652,7 +636,7 @@ Texto de la cita en uno o más párrafos.
         el mar incierto
              las gentes desnudas entre sus dioses
 &lt;/poem&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <blockquote>
         <p>el descubrimiento no nos descubre nuestro propio continente,
         sino que nos da el continente propio.</p>
@@ -684,11 +668,11 @@ Texto de la cita en uno o más párrafos.
 
 <section class="comp">
   <h2>Código</h2>
-  <p class="meta">Familia <code>--sn-font-mono</code> · fondo
-  <code>--sn-sunk</code>.<br>
+  <p class="meta">Familia <code>--sh-font-mono</code> · fondo
+  <code>--sh-sunk</code>.<br>
   Inline: padding 1px / 4px · radio 2 px · 0.9 em.<br>
-  Bloque: padding <code>--sn-s-3</code> / <code>--sn-s-4</code> · radio
-  <code>--sn-radius</code> · scroll horizontal en overflow.</p>
+  Bloque: padding <code>--sh-s-3</code> / <code>--sh-s-4</code> · radio
+  <code>--sh-radius</code> · scroll horizontal en overflow.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">Código inline: &lt;code&gt;const x = 1&lt;/code&gt;.
 
@@ -703,7 +687,7 @@ Bloque preformateado explícito:
 texto monoespaciado, conserva
 saltos de línea y espacios.
 &lt;/pre&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <p>Inline: <code>const lorem = ipsum(dolor)</code> dentro de un párrafo.</p>
       <pre><code>// Bloque pre &gt; code
 function loremIpsum(dolor, sit) {
@@ -725,39 +709,39 @@ function loremIpsum(dolor, sit) {
 
 <section class="comp">
   <h2>Botones</h2>
-  <p class="meta">Capa semántica <code>--sn-btn-*</code> · altura
-  <code>--sn-ctl</code> (2.4 rem) · radio <code>--sn-radius</code> ·
-  tipografía <code>--sn-fs-sm</code> · foco con la nova
-  (<code>--sn-focus-ring</code>). La nova <strong>no rellena</strong>
+  <p class="meta">Capa semántica <code>--sh-btn-*</code> · altura
+  <code>--sh-ctl</code> (2.4 rem) · radio <code>--sh-radius</code> ·
+  tipografía <code>--sh-fs-sm</code> · foco con la nova
+  (<code>--sh-focus-ring</code>). La nova <strong>no rellena</strong>
   botones — sólo aro de foco.</p>
   <div class="demo demo-buttons">
     <div class="btn-row">
       <span class="btn-row-label">Primario</span>
-      <button type="button" class="sn-btn sn-btn-primary">Acción principal</button>
-      <button type="button" class="sn-btn sn-btn-primary" data-state="hover">Hover</button>
-      <button type="button" class="sn-btn sn-btn-primary" disabled>Deshabilitado</button>
+      <button type="button" class="sh-btn sh-btn-primary">Acción principal</button>
+      <button type="button" class="sh-btn sh-btn-primary" data-state="hover">Hover</button>
+      <button type="button" class="sh-btn sh-btn-primary" disabled>Deshabilitado</button>
     </div>
     <div class="btn-row">
       <span class="btn-row-label">Neutro</span>
-      <button type="button" class="sn-btn">Acción secundaria</button>
-      <button type="button" class="sn-btn" data-state="hover">Hover</button>
-      <button type="button" class="sn-btn" disabled>Deshabilitado</button>
+      <button type="button" class="sh-btn">Acción secundaria</button>
+      <button type="button" class="sh-btn" data-state="hover">Hover</button>
+      <button type="button" class="sh-btn" disabled>Deshabilitado</button>
     </div>
     <div class="btn-row">
       <span class="btn-row-label">Destructivo</span>
-      <button type="button" class="sn-btn sn-btn-danger">Acción destructiva</button>
-      <button type="button" class="sn-btn sn-btn-danger" data-state="hover">Hover</button>
+      <button type="button" class="sh-btn sh-btn-danger">Acción destructiva</button>
+      <button type="button" class="sh-btn sh-btn-danger" data-state="hover">Hover</button>
     </div>
     <div class="btn-row">
       <span class="btn-row-label">Ícono</span>
-      <button type="button" class="sn-iconbtn" aria-label="Editar">
-        <svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-edit"/></svg>
+      <button type="button" class="sh-iconbtn" aria-label="Editar">
+        <svg class="sh-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sh-i-edit"/></svg>
       </button>
-      <button type="button" class="sn-iconbtn" aria-label="Historial">
-        <svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg>
+      <button type="button" class="sh-iconbtn" aria-label="Historial">
+        <svg class="sh-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sh-i-clock"/></svg>
       </button>
-      <button type="button" class="sn-iconbtn" aria-label="Más opciones">
-        <svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-list"/></svg>
+      <button type="button" class="sh-iconbtn" aria-label="Más opciones">
+        <svg class="sh-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sh-i-list"/></svg>
       </button>
     </div>
   </div>
@@ -769,19 +753,19 @@ function loremIpsum(dolor, sit) {
     acción. Los botones de ícono pueblan el cluster a la derecha del
     título cuando la usuaria tiene permisos sobre la página.</p>
     <p>Si una plantilla necesita un botón propio, lo mejor es envolver
-    un enlace con la clase <code>sn-btn</code>:
-    <code>&lt;span class="sn-btn"&gt;[[Página|Texto]]&lt;/span&gt;</code>.</p>
+    un enlace con la clase <code>sh-btn</code>:
+    <code>&lt;span class="sh-btn"&gt;[[Página|Texto]]&lt;/span&gt;</code>.</p>
   </div>
 </section>
 
 <section class="comp">
   <h2>Formularios</h2>
-  <p class="meta">Capa semántica <code>--sn-field-*</code> · borde
-  <code>--sn-field-border</code> · foco con
-  <code>--sn-focus-border</code> + <code>--sn-focus-ring</code> ·
-  placeholder en <code>--sn-field-placeholder</code>.</p>
+  <p class="meta">Capa semántica <code>--sh-field-*</code> · borde
+  <code>--sh-field-border</code> · foco con
+  <code>--sh-focus-border</code> + <code>--sh-focus-ring</code> ·
+  placeholder en <code>--sh-field-placeholder</code>.</p>
   <div class="demo">
-    <form class="sn-form" onsubmit="event.preventDefault();">
+    <form class="sh-form" onsubmit="event.preventDefault();">
       <p>
         <label for="ft1">Input text</label>
         <input id="ft1" type="text" value="Lorem ipsum dolor sit amet">
@@ -810,10 +794,10 @@ function loremIpsum(dolor, sit) {
         <label><input type="radio" name="vis" checked> Radio activo</label>
         <label><input type="radio" name="vis"> Radio inactivo</label>
       </p>
-      <p class="sn-form-actions">
-        <button type="submit" class="sn-btn sn-btn-primary">Aceptar</button>
-        <button type="button" class="sn-btn">Secundario</button>
-        <button type="button" class="sn-btn sn-btn-ghost">Cancelar</button>
+      <p class="sh-form-actions">
+        <button type="submit" class="sh-btn sh-btn-primary">Aceptar</button>
+        <button type="button" class="sh-btn">Secundario</button>
+        <button type="button" class="sh-btn sh-btn-ghost">Cancelar</button>
       </p>
     </form>
   </div>
@@ -832,10 +816,10 @@ function loremIpsum(dolor, sit) {
 <section class="comp">
   <h2>Pestañas de página</h2>
   <p class="meta">Bandeja de acciones del artículo · pestaña activa marcada
-  con filete inferior <code>--sn-nova</code> (2 px) · enlace rojo (página
-  inexistente) en <code>--sn-link</code>.</p>
+  con filete inferior <code>--sh-nova</code> (2 px) · enlace rojo (página
+  inexistente) en <code>--sh-link</code>.</p>
   <div class="demo">
-    <nav class="sn-tabs" aria-label="Pestañas de página">
+    <nav class="sh-tabs" aria-label="Pestañas de página">
       <ul>
         <li class="selected"><a href="#">Pestaña activa</a></li>
         <li><a href="#">Pestaña</a></li>
@@ -856,33 +840,33 @@ function loremIpsum(dolor, sit) {
 
 <section class="comp">
   <h2 id="insignias">Insignias (badges) y contadores</h2>
-  <p class="meta">Badge: tipografía <code>--sn-fs-xs</code> peso 500, radio
-  <code>--sn-radius</code> · fondo wash correspondiente a la señal.<br>
-  Pill (<code>sn-pill</code>): <code>--sn-radius-pill</code> + familia mono para valores
-  numéricos. <strong>Ojo:</strong> hoy <code>sn-pill</code> sólo existe en el CSS de este
+  <p class="meta">Badge: tipografía <code>--sh-fs-xs</code> peso 500, radio
+  <code>--sh-radius</code> · fondo wash correspondiente a la señal.<br>
+  Pill (<code>sh-pill</code>): <code>--sh-radius-pill</code> + familia mono para valores
+  numéricos. <strong>Ojo:</strong> hoy <code>sh-pill</code> sólo existe en el CSS de este
   espécimen; el skin no la define, así que en la wiki no hace nada.</p>
   <div class="grilla cols-2 spec-usage">
-<pre class="howto-code">&lt;span class="sn-badge"&gt;Neutro&lt;/span&gt;
-&lt;span class="sn-badge sn-badge-nova"&gt;Nova&lt;/span&gt;
-&lt;span class="sn-badge sn-badge-ok"&gt;Activo&lt;/span&gt;
-&lt;span class="sn-badge sn-badge-warn"&gt;En revisión&lt;/span&gt;
-&lt;span class="sn-badge sn-badge-danger"&gt;Bloqueado&lt;/span&gt;
+<pre class="howto-code">&lt;span class="sh-badge"&gt;Neutro&lt;/span&gt;
+&lt;span class="sh-badge sh-badge-nova"&gt;Nova&lt;/span&gt;
+&lt;span class="sh-badge sh-badge-ok"&gt;Activo&lt;/span&gt;
+&lt;span class="sh-badge sh-badge-warn"&gt;En revisión&lt;/span&gt;
+&lt;span class="sh-badge sh-badge-danger"&gt;Bloqueado&lt;/span&gt;
 
-&lt;span class="sn-pill"&gt;42 ítems&lt;/span&gt;</pre>
+&lt;span class="sh-pill"&gt;42 ítems&lt;/span&gt;</pre>
     <div class="demo demo-inline">
-      <span class="sn-badge">Neutro</span>
-      <span class="sn-badge sn-badge-nova">Nova</span>
-      <span class="sn-badge sn-badge-ok">OK</span>
-      <span class="sn-badge sn-badge-warn">Aviso</span>
-      <span class="sn-badge sn-badge-danger">Error</span>
-      <span class="sn-pill">000 ítems</span>
-      <span class="sn-pill">000 ítems</span>
+      <span class="sh-badge">Neutro</span>
+      <span class="sh-badge sh-badge-nova">Nova</span>
+      <span class="sh-badge sh-badge-ok">OK</span>
+      <span class="sh-badge sh-badge-warn">Aviso</span>
+      <span class="sh-badge sh-badge-danger">Error</span>
+      <span class="sh-pill">000 ítems</span>
+      <span class="sh-pill">000 ítems</span>
     </div>
   </div>
   <div class="spec-notes">
     <p>Badges para estados cortos (palabras); pills para contadores
     numéricos (familia mono; pendiente de pasar al skin). Variantes:
-    <code>sn-badge-nova</code> · <code>-ok</code> · <code>-warn</code>
+    <code>sh-badge-nova</code> · <code>-ok</code> · <code>-warn</code>
     · <code>-danger</code>. Útiles para marcar el estado de una etapa,
     un proyecto o una observación dentro de fichas y plantillas.</p>
   </div>
@@ -890,8 +874,8 @@ function loremIpsum(dolor, sit) {
 
 <section class="comp">
   <h2>Tabla de contenidos</h2>
-  <p class="meta">Numeración en <code>--sn-font-mono</code> ·
-  <code>--sn-fs-xs</code> · filete izquierdo en <code>--sn-nova</code>
+  <p class="meta">Numeración en <code>--sh-font-mono</code> ·
+  <code>--sh-fs-xs</code> · filete izquierdo en <code>--sh-nova</code>
   marca la sección activa.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">== Sección uno ==
@@ -905,8 +889,8 @@ __TOC__       inserta el índice en este punto.
 __NOTOC__     suprime el índice de la página.
 __FORCETOC__  fuerza el índice aun con &lt; 4 cabeceras.</pre>
     <div class="demo">
-      <nav class="sn-toc" aria-label="Tabla de contenidos">
-        <h3 class="sn-toc-h">Contenidos</h3>
+      <nav class="sh-toc" aria-label="Tabla de contenidos">
+        <h3 class="sh-toc-h">Contenidos</h3>
         <ol>
           <li><a href="#"><span class="num">1</span> Sección uno</a></li>
           <li><a href="#" class="active"><span class="num">2</span> Sección dos · activa</a>
@@ -933,27 +917,27 @@ __FORCETOC__  fuerza el índice aun con &lt; 4 cabeceras.</pre>
 </section>
 
 <section class="comp">
-  <h2 id="aviso">Aviso administrado (.sn-notice)</h2>
-  <p class="meta"><code>aside.sn-notice</code> · banner que el skin inyecta al
+  <h2 id="aviso">Aviso administrado (.sh-notice)</h2>
+  <p class="meta"><code>aside.sh-notice</code> · banner que el skin inyecta al
   <strong>tope del paper</strong> desde el fragmento administrable
-  <code>Stella-Nova:Aviso</code>. Se revienta al borde superior de la hoja
-  (mismo bleed que <code>.full-width</code>), fondo <code>--sn-notice-bg</code> /
-  tinta <code>--sn-notice-ink</code> (ámbar tenue que voltea con el tema) y trae
+  <code>SantaHermandad:Aviso</code>. Se revienta al borde superior de la hoja
+  (mismo bleed que <code>.full-width</code>), fondo <code>--sh-notice-bg</code> /
+  tinta <code>--sh-notice-ink</code> (ámbar tenue que voltea con el tema) y trae
   su botón de cierre; el lector lo descarta y no reaparece esa revisión.</p>
   <div class="grilla cols-2 spec-usage">
-<pre class="howto-code">Se edita en Stella-Nova:Aviso
+<pre class="howto-code">Se edita en SantaHermandad:Aviso
 (no se teclea en el artículo).
 El skin lo envuelve en:
-&lt;aside class="sn-notice"&gt;
-  &lt;div class="sn-notice-body"&gt;…&lt;/div&gt;
-  &lt;button class="sn-notice-x"&gt;×&lt;/button&gt;
+&lt;aside class="sh-notice"&gt;
+  &lt;div class="sh-notice-body"&gt;…&lt;/div&gt;
+  &lt;button class="sh-notice-x"&gt;×&lt;/button&gt;
 &lt;/aside&gt;</pre>
-    <div class="sn-paper sn-body demo demo--bleed">
-      <aside class="sn-notice" role="note">
-        <div class="sn-notice-body"><strong>Aviso.</strong> Lorem ipsum dolor
+    <div class="sh-paper sh-body demo demo--bleed">
+      <aside class="sh-notice" role="note">
+        <div class="sh-notice-body"><strong>Aviso.</strong> Lorem ipsum dolor
         sit amet, con <a href="#">enlaces</a> si hace falta.</div>
-        <button type="button" class="sn-notice-x" aria-label="Cerrar">
-          <svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
+        <button type="button" class="sh-notice-x" aria-label="Cerrar">
+          <svg class="sh-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sh-i-x"/></svg>
         </button>
       </aside>
       <p>El cuerpo del artículo continúa debajo del aviso, al ancho de lectura.</p>
@@ -982,7 +966,7 @@ El skin lo envuelve en:
 [[Archivo:foo.jpg|frameless|class=full-width]]
 &lt;div class="full-width"&gt;[[Archivo:foo.jpg]]&lt;/div&gt;
 [[Archivo:foo.jpg|class=ancho-completo]]</pre>
-    <div class="sn-paper sn-body demo demo--bleed">
+    <div class="sh-paper sh-body demo demo--bleed">
       <p>Párrafo del cuerpo, con el ancho de lectura normal de la hoja.</p>
       <div class="full-width spec-bleed">imagen a sangre · borde a borde · sin esquinas</div>
       <p>El párrafo siguiente regresa al ancho de lectura.</p>
@@ -994,7 +978,7 @@ El skin lo envuelve en:
   es el <strong>primer</strong> elemento de flujo del cuerpo, además del
   relleno lateral revienta el relleno <strong>superior</strong> de la hoja: se
   pega al borde de arriba y hereda el radio de esquina del papel
-  (<code>--sn-radius-paper</code>). Lo mismo, hacia abajo, si es el
+  (<code>--sh-radius-paper</code>). Lo mismo, hacia abajo, si es el
   <strong>último</strong>. Es el patrón «imagen de cabecera» de fichas de obra,
   travesía o proyecto, y el del mapa de con§tel en la portada.</p>
   <div class="grilla cols-2 spec-usage">
@@ -1004,7 +988,7 @@ Primer párrafo de la ficha…
 
 …último párrafo.
 [[Archivo:cierre.jpg|class=full-width]]</pre>
-    <div class="sn-paper sn-body demo demo--bleed demo--bleed-v">
+    <div class="sh-paper sh-body demo demo--bleed demo--bleed-v">
       <div class="full-width spec-bleed spec-bleed--hero">imagen de cabecera · primer elemento del cuerpo<br>sangra arriba y a los lados · hereda el radio de la hoja</div>
       <p>Primer párrafo de la ficha. El texto conserva el ancho de lectura y el
       relleno de la hoja; sólo la imagen fue al borde.</p>
@@ -1015,16 +999,16 @@ Primer párrafo de la ficha…
 
   <div class="spec-notes">
     <p><strong>Cómo funciona.</strong> La hoja expone su relleno como contrato
-    (<code>--sn-paper-px</code> / <code>--sn-paper-py</code>); la clase lo
+    (<code>--sh-paper-px</code> / <code>--sh-paper-py</code>); la clase lo
     niega con <code>margin-inline</code> y, en el primer/último elemento, con
     <code>margin-block</code> negativos. Sólo opera dentro de
-    <code>.sn-paper</code> / <code>.sn-canvas</code>. También casa la forma con
+    <code>.sh-paper</code> / <code>.sh-canvas</code>. También casa la forma con
     apóstrofes <code>'full-width'</code> que MediaWiki preserva en
     <code>[[Imagen:…|class='full-width']]</code>. Un elemento a sangre no lleva
     esquinas redondeadas; sólo el primero y el último reponen las de la hoja.</p>
     <p><strong>Para que el sangrado a tope se dispare.</strong> (1) La imagen
     debe ser el primer elemento <em>de flujo</em> en toda la cadena desde
-    <code>.sn-body</code>: el párrafo que la envuelve también debe ser el
+    <code>.sh-body</code>: el párrafo que la envuelve también debe ser el
     primero. El skin tolera tres intrusos habituales que no ocupan flujo pero
     sí cuentan como primer hijo: el <code>&lt;style&gt;</code> que inyecta
     TemplateStyles, el <code>&lt;p&gt;</code> vacío que deja un widget y el
@@ -1033,10 +1017,10 @@ Primer párrafo de la ficha…
     superpone a <code>firstHeading</code>: hay que sumar
     <code>__NOTITLE__</code>; sin esa palabra mágica el sangrado superior no
     se ve y el síntoma es «no revienta arriba». (3) Si hay un aviso
-    administrado visible (<code>Stella-Nova:Aviso</code>), el sangrado superior
+    administrado visible (<code>SantaHermandad:Aviso</code>), el sangrado superior
     se suspende para no chocar con él, y vuelve cuando el lector lo descarta.</p>
     <p><strong>En pantalla completa</strong> (<code>__PANTALLACOMPLETA__</code>,
-    contenedor <code>.sn-canvas</code>) la imagen no va al borde de la hoja
+    contenedor <code>.sh-canvas</code>) la imagen no va al borde de la hoja
     sino al borde real de la ventana (<code>width: 100vw</code>). La leyenda de
     un <code>thumb</code> a sangre vuelve al ancho de lectura para no quedar
     pegada al borde. Subir originales de <strong>1600&nbsp;px</strong> de ancho
@@ -1073,14 +1057,14 @@ Primer párrafo de la ficha…
 &lt;div class="fondo-info xs serif pegado"&gt;
   '''Mapa de anotaciones hechas con Con§tel.'''
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo demo--bleed">
+    <div class="sh-paper sh-body demo demo--bleed">
       <div class="mw-parser-output">
         <p>Párrafo del cuerpo, al ancho de lectura normal de la hoja.</p>
-        <div class="fondo-ahuesado"><p><code>fondo-ahuesado</code> — hueso claro (<code>--sn-papel-400</code>).</p></div>
-        <div class="fondo-coral"><p><code>fondo-coral</code> — lavado carmín (<code>--sn-nova-wash</code>).</p></div>
-        <div class="fondo-verde"><p><code>fondo-verde</code> — lavado verde (<code>--sn-ok-wash</code>).</p></div>
-        <div class="fondo-ambar"><p><code>fondo-ambar</code> — lavado ámbar (<code>--sn-warn-wash</code>).</p></div>
-        <div class="fondo-info"><p><code>fondo-info</code> — lavado info (<code>--sn-info-wash</code>).</p></div>
+        <div class="fondo-ahuesado"><p><code>fondo-ahuesado</code> — hueso claro (<code>--sh-papel-400</code>).</p></div>
+        <div class="fondo-coral"><p><code>fondo-coral</code> — lavado carmín (<code>--sh-nova-wash</code>).</p></div>
+        <div class="fondo-verde"><p><code>fondo-verde</code> — lavado verde (<code>--sh-ok-wash</code>).</p></div>
+        <div class="fondo-ambar"><p><code>fondo-ambar</code> — lavado ámbar (<code>--sh-warn-wash</code>).</p></div>
+        <div class="fondo-info"><p><code>fondo-info</code> — lavado info (<code>--sh-info-wash</code>).</p></div>
         <p>Combinada con grilla, el fondo sangra y las columnas quedan al ancho de lectura:</p>
         <div class="fondo-coral grilla cols-3">
           <div><strong>Escuela</strong><br>columna 1</div>
@@ -1101,8 +1085,8 @@ Primer párrafo de la ficha…
     <code>ancho-completo</code> a la banda: ya sangra sola.</p>
     <p>Vive en el skin (no en <code>Common.css</code>), así que voltea
     claro/oscuro sola. El alto es un múltiplo entero de
-    <code>--sn-baseline</code> → no rompe la retícula. Sólo sangra dentro de
-    <code>.sn-paper</code> / <code>.sn-canvas</code>. Al combinar con
+    <code>--sh-baseline</code> → no rompe la retícula. Sólo sangra dentro de
+    <code>.sh-paper</code> / <code>.sh-canvas</code>. Al combinar con
     <code>.grilla</code>, la grilla usa <code>margin-block</code> (no el
     shorthand <code>margin</code>) para no pisar el sangrado lateral de la
     banda.</p>
@@ -1114,7 +1098,7 @@ Primer párrafo de la ficha…
   <p class="meta">Clase de wikitexto migrada desde <code>Common.css</code> al
   tema. Botón &laquo;outline&raquo;: contorno fino (1&nbsp;px) en forma de
   píldora; al pasar el cursor se rellena y el texto voltea a
-  <code>--sn-nova-ink</code>. Tres variantes: por defecto (gris),
+  <code>--sh-nova-ink</code>. Tres variantes: por defecto (gris),
   <code>red</code> y <code>green</code>. Color 100&nbsp;% por variables de diseño → voltea
   claro/oscuro. <strong>Robusto a tres usos</strong>: envolviendo un enlace,
   como <em>span suelto</em> (p.ej. un toggle) o aplicado directo a un
@@ -1134,7 +1118,7 @@ Primer párrafo de la ficha…
 &lt;span class="wiki-btn red grande"&gt;
   [https://github.com/mediafranca/luca/releases Descargar Luca]&lt;/span&gt;
 (disponible para Windows, Mac y Linux).</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="demo-inline">
         <span class="wiki-btn"><a href="#">Por defecto</a></span>
         <span class="wiki-btn red"><a href="#">Rojo</a></span>
@@ -1147,20 +1131,20 @@ Primer párrafo de la ficha…
   </div>
 
   <div class="spec-notes">
-    <p>Color 100&nbsp;% tokenizado: por defecto → <code>--sn-ink-soft</code>;
-    <code>red</code> → <code>--sn-nova</code>; <code>green</code> →
-    <code>--sn-ok</code>. Al hover/foco el botón se rellena y el texto pasa a
-    <code>--sn-nova-ink</code> (voltea: blanco en claro, casi-negro en oscuro).
+    <p>Color 100&nbsp;% tokenizado: por defecto → <code>--sh-ink-soft</code>;
+    <code>red</code> → <code>--sh-nova</code>; <code>green</code> →
+    <code>--sh-ok</code>. Al hover/foco el botón se rellena y el texto pasa a
+    <code>--sh-nova-ink</code> (voltea: blanco en claro, casi-negro en oscuro).
     El color del hover se fija en el <strong>botón mismo</strong>, no en un
     enlace hijo, así que un <code>&lt;span&gt;</code> suelto (un toggle
     <code>mw-customtoggle-*</code>, sin <code>&lt;a&gt;</code> dentro) también
     voltea a blanco — antes se quedaba con el texto del color de la variante
     sobre su propio relleno.</p>
     <p>El alto es <strong>exacto de una línea base</strong>
-    (<code>--sn-baseline</code>) con relleno solo horizontal: el interior calza
+    (<code>--sh-baseline</code>) con relleno solo horizontal: el interior calza
     igual en los tres usos y el botón no rompe la retícula, suelto o en medio de
     un párrafo. La variante <code>blue</code> se retiró (sin variable equivalente, sin uso).
-    Debe vivir dentro de <code>.sn-body</code>.</p>
+    Debe vivir dentro de <code>.sh-body</code>.</p>
     <p><strong>Más relleno.</strong> No sirve poner <code>padding</code> a mano:
     el alto está fijado por <code>height</code>, así que el relleno vertical no
     agranda el botón. Para una llamada a la acción que va sola (descarga,
@@ -1197,7 +1181,7 @@ Primer párrafo de la ficha…
   Celda 1
   Celda 2
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grid cols-2">
         <div class="spec-cell">Celda 1</div>
         <div class="spec-cell">Celda 2</div>
@@ -1210,7 +1194,7 @@ Primer párrafo de la ficha…
 <pre class="howto-code">&lt;div class="grid cols-3"&gt;
 …tres hijos directos…
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grid cols-3">
         <div class="spec-cell">1</div>
         <div class="spec-cell">2</div>
@@ -1224,7 +1208,7 @@ Primer párrafo de la ficha…
 <pre class="howto-code">&lt;div class="grid cols-auto gap-l"&gt;
 …tantas columnas (≥ 16 rem) como quepan…
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grid cols-auto gap-l">
         <div class="spec-cell">auto 1</div>
         <div class="spec-cell">auto 2</div>
@@ -1240,7 +1224,7 @@ Primer párrafo de la ficha…
 Bloque amplio (dos tercios)
 Bloque angosto (un tercio)
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grid cols2-1 align-center">
         <div class="spec-cell">2/3 — bloque amplio<br>con dos líneas</div>
         <div class="spec-cell">1/3</div>
@@ -1253,7 +1237,7 @@ Bloque angosto (un tercio)
 <pre class="howto-code">&lt;div class="grid stack gap-s"&gt;
 …celdas apiladas en columna…
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grid stack gap-s">
         <div class="spec-cell">fila 1</div>
         <div class="spec-cell">fila 2</div>
@@ -1267,7 +1251,7 @@ Bloque angosto (un tercio)
 <pre class="howto-code">&lt;div class="grid cols-3 gap-0"&gt;
 …sin separación entre celdas…
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grid cols-3 gap-0">
         <div class="spec-cell">1</div>
         <div class="spec-cell">2</div>
@@ -1286,7 +1270,7 @@ Bloque angosto (un tercio)
 <pre class="howto-code">&lt;div class="grid cols-3 gap-h-0 gap-v-l"&gt;
 …columnas pegadas, filas aireadas…
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grid cols-3 gap-h-0 gap-v-l">
         <div class="spec-cell">1</div>
         <div class="spec-cell">2</div>
@@ -1303,7 +1287,7 @@ Bloque angosto (un tercio)
 <pre class="howto-code">&lt;div class="grilla cols-2"&gt;
 …equivalente a class="grid cols-2"…
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grilla cols-2">
         <div class="spec-cell">Celda 1</div>
         <div class="spec-cell">Celda 2</div>
@@ -1320,7 +1304,7 @@ Bloque angosto (un tercio)
 <pre class="howto-code">&lt;div class="grid cols-3 full"&gt;
 …ocupa todo el campo…
 &lt;/div&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="grid cols-3">
         <div class="spec-cell">1</div>
         <div class="spec-cell">2</div>
@@ -1333,15 +1317,15 @@ Bloque angosto (un tercio)
     <p>Cada hijo directo de <code>.grid</code> es una celda; URLs
     largas o bloques de código no desbordan
     (<code>minmax(0, 1fr)</code>). El gap por defecto es
-    <code>--sn-s-5</code> (1.5 rem) en ambos ejes; se ajusta uniforme con
+    <code>--sh-s-5</code> (1.5 rem) en ambos ejes; se ajusta uniforme con
     <code>.gap-0/s/m/l</code> o por eje con <code>.gap-h-*</code> (columnas) y
     <code>.gap-v-*</code> (filas), combinables entre sí.</p>
     <p>Funciona con el marco normal y en <code>__PANTALLACOMPLETA__</code>:
-    ambos contenedores llevan <code>.sn-body</code>, que es donde el
+    ambos contenedores llevan <code>.sh-body</code>, que es donde el
     skin define la regla. En pantalla completa el contenido es libre
     (sin columna central), así que <code>.grid</code> es la herramienta
     recomendada para maquetar ahí. Si la grilla aparece "rota" (en una
-    sola columna), revisar que esté dentro de <code>.sn-body</code>.</p>
+    sola columna), revisar que esté dentro de <code>.sh-body</code>.</p>
   </div>
 </section>
 
@@ -1351,7 +1335,7 @@ Bloque angosto (un tercio)
   <code>[[Archivo:…|thumb|…]]</code>. MediaWiki moderno (Parsoid) emite
   <code>&lt;figure typeof="mw:File/Thumb"&gt;</code> con su
   <code>&lt;figcaption&gt;</code>; el skin une imagen y leyenda en una sola
-  tarjeta sobre papel, esquinas <code>--sn-radius-s</code>, y la leyenda voltea
+  tarjeta sobre papel, esquinas <code>--sh-radius-s</code>, y la leyenda voltea
   con el tema. <code>tright</code>/<code>tleft</code> la flotan.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">[[Archivo:Obra.jpg|thumb|right|
@@ -1359,7 +1343,7 @@ Bloque angosto (un tercio)
 
 Texto del cuerpo que fluye alrededor
 de la miniatura flotada…</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <figure typeof="mw:File/Thumb" class="mw-default-size tright" style="float:right;width:200px;margin:0 0 .5rem 1rem;">
           <a href="#"><img class="mw-file-element" decoding="async" width="200" height="125" alt="" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='320'%20height='200'%3E%3Crect%20width='320'%20height='200'%20fill='%23cfc9c0'/%3E%3Ccircle%20cx='240'%20cy='56'%20r='22'%20fill='%23b7afa3'/%3E%3Cpath%20d='M0%20200%20110%2096%20168%20150%20214%20110%20320%20200Z'%20fill='%23a79f93'/%3E%3C/svg%3E"></a>
@@ -1387,7 +1371,7 @@ de la miniatura flotada…</pre>
   <code>ul.gallery.mw-gallery-traditional</code> con una
   <code>li.gallerybox</code> por imagen. La diagramación la aporta el módulo
   <code>mediawiki.page.gallery.styles</code> (replicado aquí); el skin viste el
-  recuadro de cada caja (papel + <code>--sn-radius-s</code>) y achica el pie al
+  recuadro de cada caja (papel + <code>--sh-radius-s</code>) y achica el pie al
   grado más pequeño.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">&lt;gallery&gt;
@@ -1395,7 +1379,7 @@ Archivo:A.jpg|Primera obra
 Archivo:B.jpg|Segunda obra
 Archivo:C.jpg|Tercera obra
 &lt;/gallery&gt;</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <ul class="gallery mw-gallery-traditional">
           <li class="gallerybox" style="width: 130px;">
@@ -1438,7 +1422,7 @@ Archivo:C.jpg|Tercera obra
  | format=template
  | template=Portafolio
 }}</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <div class="grilla cols-auto gap-m">
           <div class="portafolio">
@@ -1478,7 +1462,7 @@ Archivo:C.jpg|Tercera obra
  | format=template
  | template=Ficha Personal
 }}</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <div class="grilla cols-auto gap-m">
           <div class="ficha-personal">
@@ -1502,7 +1486,7 @@ Archivo:C.jpg|Tercera obra
   <div class="spec-notes">
     <p>La foto se recorta en círculo (<code>.img-circle</code> del skin +
     <code>border-radius:50%</code> de la plantilla); el nombre usa
-    <code>--sn-fs-xs</code> en versalita y la bio el mismo grado pequeño.</p>
+    <code>--sh-fs-xs</code> en versalita y la bio el mismo grado pequeño.</p>
   </div>
 </section>
 
@@ -1513,11 +1497,11 @@ Archivo:C.jpg|Tercera obra
   tarjeta de una fila que se apila en columna desde un
   <code>{{#ask:… |format=template |template=Documento miniatura}}</code>. Toda la
   tarjeta enlaza a su página (<em>stretched link</em>) y en hover pinta
-  <code>--sn-nova-wash</code>. <strong>Cierra en la retícula:</strong> los textos
-  corren a <code>line-height: var(--sn-baseline)</code> y el relleno vertical usa
-  <code>var(--sn-baseline-half)</code> a cada lado — media interlínea × 2 = una
+  <code>--sh-nova-wash</code>. <strong>Cierra en la retícula:</strong> los textos
+  corren a <code>line-height: var(--sh-baseline)</code> y el relleno vertical usa
+  <code>var(--sh-baseline-half)</code> a cada lado — media interlínea × 2 = una
   línea base entera —, de modo que la altura de la tarjeta es múltiplo de
-  <code>--sn-baseline</code> y una columna larga <em>no acumula desfase</em>, ni
+  <code>--sh-baseline</code> y una columna larga <em>no acumula desfase</em>, ni
   siquiera con la preferencia de tamaño de letra en sus extremos.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">{{#ask: [[Categoría:Documento]]
@@ -1527,7 +1511,7 @@ Archivo:C.jpg|Tercera obra
  | format=template
  | template=Documento miniatura
 }}</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <div class="dm">
           <div class="dm-titulo"><a href="#">Cartografía de un borde costero</a></div>
@@ -1555,8 +1539,8 @@ Archivo:C.jpg|Tercera obra
   <div class="spec-notes">
     <p>El filete que separa cada tarjeta es un <code>box-shadow</code> inset de
     media línea, no un margen — el ritmo lo fija sólo el relleno
-    <code>--sn-baseline-half</code>. Antes de esta variable la plantilla aproximaba
-    con <code>--sn-s-3</code> (0.75&nbsp;rem, fijo en <code>rem</code>): quedaba
+    <code>--sh-baseline-half</code>. Antes de esta variable la plantilla aproximaba
+    con <code>--sh-s-3</code> (0.75&nbsp;rem, fijo en <code>rem</code>): quedaba
     corto ~0.1&nbsp;rem por tarjeta y el error se acumulaba columna abajo.</p>
   </div>
 </section>
@@ -1567,8 +1551,8 @@ Archivo:C.jpg|Tercera obra
   (TemplateStyles). Hermana de <code>.dm</code> para cursos:
   <code>h4</code> enlazado + profesores (itálica) + alumnos, apilada en columna
   desde un <code>{{#ask:… |template=Listado de Cursos}}</code>. Mismo contrato de
-  retícula que <code>.dm</code> — textos a <code>--sn-baseline</code> y relleno
-  <code>var(--sn-baseline-half)</code> — así la columna de cursos también cierra
+  retícula que <code>.dm</code> — textos a <code>--sh-baseline</code> y relleno
+  <code>var(--sh-baseline-half)</code> — así la columna de cursos también cierra
   en baselines enteras.</p>
   <div class="grilla cols-2 spec-usage">
 <pre class="howto-code">{{#ask: [[Categoría:Curso]]
@@ -1577,7 +1561,7 @@ Archivo:C.jpg|Tercera obra
  | format=template
  | template=Listado de Cursos
 }}</pre>
-    <div class="sn-paper sn-body demo">
+    <div class="sh-paper sh-body demo">
       <div class="mw-parser-output">
         <div class="curso-listado">
           <h4><a href="#">Taller de Amereida</a></h4>
@@ -1600,10 +1584,10 @@ Archivo:C.jpg|Tercera obra
   <div class="spec-notes">
     <p>Consumidora de la misma variable que <code>.dm</code>: cualquier tarjeta de
     plantilla que deba calzar en la retícula usa
-    <code>padding: var(--sn-baseline-half) var(--sn-s-3)</code> — nunca
-    <code>var(--sn-s-3)</code> en el eje vertical, porque la escala
-    <code>--sn-s-*</code> es fija en <code>rem</code> y no sigue a
-    <code>--sn-font-scale</code>.</p>
+    <code>padding: var(--sh-baseline-half) var(--sh-s-3)</code> — nunca
+    <code>var(--sh-s-3)</code> en el eje vertical, porque la escala
+    <code>--sh-s-*</code> es fija en <code>rem</code> y no sigue a
+    <code>--sh-font-scale</code>.</p>
   </div>
 </section>
 
@@ -1611,13 +1595,13 @@ Archivo:C.jpg|Tercera obra
   <h2>Inventario de clases instrumentales</h2>
   <p class="meta">Clases que no describen contenido sino que <em>instrumentan</em>
   la maqueta: se escriben en el wikitexto o en una plantilla y el skin les da
-  comportamiento. Es la lista completa de lo que trae Stellamereida v0.9, con sus
+  comportamiento. Es la lista completa de lo que trae Santa Hermandad v0.9, con sus
   sinónimos en castellano cuando existen. El conjunto se mantiene chico a
   propósito; antes de pedir una clase nueva, revisar si alguna de estas sirve.
   Las que tienen demostración en este espécimen enlazan a su sección; las que
   no la tienen, dicen por qué.</p>
 
-  <div class="sn-paper sn-body demo spec-inventory">
+  <div class="sh-paper sh-body demo spec-inventory">
     <table class="wikitable">
       <caption>Texto: seis ejes que se combinan en un mismo <code>class=</code></caption>
       <thead><tr><th>Clase</th><th>Cómo se escribe</th><th>Qué hace · uso previsto</th><th>Ver</th></tr></thead>
@@ -1757,13 +1741,13 @@ Archivo:C.jpg|Tercera obra
             <td><code>&lt;span class="wiki-btn red"&gt;[[Página|Ir]]&lt;/span&gt;</code><br><code>&lt;span class="wiki-btn red grande"&gt;[https://… Descargar]&lt;/span&gt;</code></td>
             <td>Botón de contorno en píldora, alto exacto de una línea base; al pasar el cursor se rellena. Sirve envolviendo un enlace, como <code>span</code> suelto (disparador de un desplegable) o sobre un <code>&lt;a&gt;</code>. Con <code>grande</code> mide dos líneas base y dobla el relleno horizontal, para una llamada que va sola. <em>Uso previsto:</em> llamadas a la acción en portada y guías.</td>
             <td><a href="#wiki-btn">demo</a></td></tr>
-        <tr><td><code>sn-notice</code></td>
-            <td>la emite el skin (<code>&lt;aside class="sn-notice"&gt;</code>)</td>
-            <td>Aviso administrado: banda ámbar a sangre, lo primero dentro de la hoja, con botón de cerrar. <em>Uso previsto:</em> solo el fragmento administrable <code>Stella-Nova:Aviso</code>. Para un aviso dentro del contenido se usa <code>fondo-ambar</code>.</td>
+        <tr><td><code>sh-notice</code></td>
+            <td>la emite el skin (<code>&lt;aside class="sh-notice"&gt;</code>)</td>
+            <td>Aviso administrado: banda ámbar a sangre, lo primero dentro de la hoja, con botón de cerrar. <em>Uso previsto:</em> solo el fragmento administrable <code>SantaHermandad:Aviso</code>. Para un aviso dentro del contenido se usa <code>fondo-ambar</code>.</td>
             <td><a href="#aviso">demo</a></td></tr>
-        <tr><td><code>sn-badge</code> (+ <code>sn-badge-nova</code> / <code>-ok</code> / <code>-warn</code> / <code>-danger</code>)</td>
-            <td><code>&lt;span class="sn-badge sn-badge-ok"&gt;Activo&lt;/span&gt;</code></td>
-            <td>Insignia breve (una palabra) con el lavado de su señal. <em>Uso previsto:</em> estado de una etapa, proyecto u observación dentro de fichas. (<code>sn-pill</code> aparece en este espécimen pero el skin aún no la define.)</td>
+        <tr><td><code>sh-badge</code> (+ <code>sh-badge-nova</code> / <code>-ok</code> / <code>-warn</code> / <code>-danger</code>)</td>
+            <td><code>&lt;span class="sh-badge sh-badge-ok"&gt;Activo&lt;/span&gt;</code></td>
+            <td>Insignia breve (una palabra) con el lavado de su señal. <em>Uso previsto:</em> estado de una etapa, proyecto u observación dentro de fichas. (<code>sh-pill</code> aparece en este espécimen pero el skin aún no la define.)</td>
             <td><a href="#insignias">demo</a></td></tr>
         <tr><td><code>mw-customtoggle-*</code> + <code>mw-collapsible</code> · <code>title-toggle</code></td>
             <td><code>&lt;h2&gt;&lt;span class="mw-customtoggle-x title-toggle"&gt;Título&lt;/span&gt;&lt;/h2&gt;</code> + <code>&lt;div class="mw-collapsible mw-collapsed" id="mw-customcollapsible-x"&gt;</code></td>
@@ -1776,8 +1760,8 @@ Archivo:C.jpg|Tercera obra
       <caption>Accesibilidad e impresión</caption>
       <thead><tr><th>Clase</th><th>Cómo se escribe</th><th>Qué hace · uso previsto</th><th>Ver</th></tr></thead>
       <tbody>
-        <tr><td><code>sn-vh</code></td>
-            <td><code>&lt;span class="sn-vh"&gt;Buscar&lt;/span&gt;</code></td>
+        <tr><td><code>sh-vh</code></td>
+            <td><code>&lt;span class="sh-vh"&gt;Buscar&lt;/span&gt;</code></td>
             <td>Oculto visualmente pero presente para lectores de pantalla. <em>Uso previsto:</em> etiquetar íconos y botones sin texto visible en plantillas y fragmentos administrables.</td>
             <td>—</td></tr>
         <tr><td><code>noprint</code></td>
@@ -1793,11 +1777,11 @@ Archivo:C.jpg|Tercera obra
       <tbody>
         <tr><td><code>__PANTALLACOMPLETA__</code><br>sinónimo <code>__FULLSCREEN__</code></td>
             <td>en cualquier lugar del wikitexto; sensible a mayúsculas</td>
-            <td>Modo lienzo: suprime cabecera, pie y portlets; queda el cuerpo y una salida mínima (isotipo, tecla Escape). El contenedor pasa de <code>.sn-paper</code> a <code>.sn-canvas</code>. <em>Uso previsto:</em> páginas con <code>canvas</code> o <code>iframe</code> a ventana completa y portadas a borde de pantalla. No oculta el título por sí sola.</td>
+            <td>Modo lienzo: suprime cabecera, pie y portlets; queda el cuerpo y una salida mínima (isotipo, tecla Escape). El contenedor pasa de <code>.sh-paper</code> a <code>.sh-canvas</code>. <em>Uso previsto:</em> páginas con <code>canvas</code> o <code>iframe</code> a ventana completa y portadas a borde de pantalla. No oculta el título por sí sola.</td>
             <td><a href="aplicados-diagramaciones.html">diagramaciones</a></td></tr>
         <tr><td><code>__PAGINAANCHA__</code><br>sinónimo <code>__WIDEPAGE__</code></td>
             <td>ídem</td>
-            <td>Marco estándar con la hoja ensanchada de la medida de lectura al ancho del conjunto (<code>body.sn-wide</code>). <em>Uso previsto:</em> tablas, grillas o grafos que no caben en la columna de lectura. Si además hay <code>__PANTALLACOMPLETA__</code>, gana pantalla completa.</td>
+            <td>Marco estándar con la hoja ensanchada de la medida de lectura al ancho del conjunto (<code>body.sh-wide</code>). <em>Uso previsto:</em> tablas, grillas o grafos que no caben en la columna de lectura. Si además hay <code>__PANTALLACOMPLETA__</code>, gana pantalla completa.</td>
             <td>—</td></tr>
         <tr><td><code>__NOTITLE__</code> (extensión NoTitle)</td>
             <td>ídem</td>
@@ -1819,12 +1803,12 @@ Archivo:C.jpg|Tercera obra
       <thead><tr><th>Clase</th><th>Origen</th><th>Estado</th><th>Ver</th></tr></thead>
       <tbody>
         <tr><td><code>poem</code></td><td>extensión Poem (<code>&lt;poem&gt;</code>)</td>
-            <td>Reconocida: toma la familia de contraste (<code>--sn-font-quote</code>) como <code>blockquote</code>.</td>
+            <td>Reconocida: toma la familia de contraste (<code>--sh-font-quote</code>) como <code>blockquote</code>.</td>
             <td>—</td></tr>
         <tr><td><code>external</code> · <code>thumb</code> · <code>thumbcaption</code> · <code>gallery</code> · <code>catlinks</code></td><td>MediaWiki</td>
             <td>Tematizadas automáticamente; no hay que escribirlas.</td>
             <td><a href="#thumb">thumb</a> · <a href="#galeria">galería</a></td></tr>
-        <tr><td><code>dm</code> · <code>curso-listado</code> · <code>curso-fotos</code> · tarjeta Portafolio · ficha Personal</td><td>plantillas de Casiopea</td>
+        <tr><td><code>dm</code> · <code>curso-listado</code> · <code>curso-fotos</code> · tarjeta Portafolio · ficha Personal</td><td>plantillas de Amereida</td>
             <td>No son instrumentales: son componentes de plantilla con su propio TemplateStyles. Se muestran más arriba para iterar su diseño.</td>
             <td>—</td></tr>
         <tr><td><code>row</code> · <code>col-md-*</code></td><td>skin anterior (Bootstrap)</td>
@@ -1842,7 +1826,7 @@ Archivo:C.jpg|Tercera obra
 <footer class="spec-foot">
   <p>
     Espécimen generado por <code>scripts/build-specimen.py</code> ·
-    Stellamereida v0.9.3 ·
+    Santa Hermandad v0.9.3 ·
     <a href="notes.md">notes.md</a> (notas del taller de diseño) ·
     <a href="https://wiki.ead.pucv.cl">wiki.ead.pucv.cl</a>
   </p>
@@ -1854,14 +1838,14 @@ Archivo:C.jpg|Tercera obra
   (function () {
     var html = document.documentElement;
     var apply = function (kind, value) {
-      html.setAttribute('data-sn-' + kind, value);
-      localStorage.setItem('sn-spec-' + kind, value);
+      html.setAttribute('data-sh-' + kind, value);
+      localStorage.setItem('sh-spec-' + kind, value);
       document.querySelectorAll('[data-' + kind + ']').forEach(function (b) {
         b.setAttribute('aria-pressed', b.dataset[kind] === value ? 'true' : 'false');
       });
     };
     ['theme'].forEach(function (k) {
-      var saved = localStorage.getItem('sn-spec-' + k);
+      var saved = localStorage.getItem('sh-spec-' + k);
       if (saved) apply(k, saved);
       document.querySelectorAll('[data-' + k + ']').forEach(function (b) {
         b.addEventListener('click', function () { apply(k, b.dataset[k]); });

@@ -1,65 +1,108 @@
-# Santa Hermandad — espécimen gráfico v0.9.3
+# Santa Hermandad — espécimen gráfico
 
-Mini-sitio estático con todas las variables de diseño, los componentes y una diagramación simulada del
-skin **Santa Hermandad** para iteración con el taller de diseño.
+Skin para MediaWiki diseñado para la **Corporación Cultural Amereida** ([amereida.cl](http://amereida.cl)).
+Hermano de [Stella Nova](https://github.com/hspencer/stella-nova), del cual toma su fundamento
+tipográfico y estructural.
 
-## Cómo verlo
+Este mini-sitio muestra las variables de diseño, los componentes y diagramaciones
+simuladas del skin para iteración con el taller de diseño.
 
-Abrí cualquiera de los HTML directamente en el navegador:
+**Ver online →** https://amereida.github.io/santa-hermandad/specimen/
 
-- `index.html` — fundamentos (paleta, tipografía, escala, sombras).
-- `components.html` — componentes (botones, inputs, toolbar, etc.).
-- `aplicados.html` — estilos aplicados: página tipo con el marco completo.
-- `aplicados-tipografia.html`, `-grilla`, `-tablas`, `-imagenes`,
-  `-diagramaciones` — una página simulada por categoría, con sus variaciones.
+
+## Páginas
+
+| Archivo | Contenido |
+|---------|-----------|
+| `index.html` | Fundamentos: paleta, tipografía, escala, sombras |
+| `components.html` | Componentes: botones, inputs, toolbar, menús |
+| `aplicados.html` | Página tipo con el marco completo del skin |
+| `aplicados-tipografia.html` | Tipografía en contexto: cuerpo, cabeceras, verso, cita |
+| `aplicados-grilla.html` | Grilla baseline y ritmo vertical |
+| `aplicados-tablas.html` | Tablas de datos y wikitables |
+| `aplicados-imagenes.html` | Imágenes, galerías y thumbnails |
+| `aplicados-diagramaciones.html` | Layouts de contenido y columnas |
 
 No necesita servidor. Las fuentes y CSS van inlinados en `assets/`.
 
+
+## Tokens de color
+
+Los colores se organizan en tres capas. Solo la **capa semántica** se usa en
+componentes y plantillas wiki; las primitivas son vocabulario interno.
+
+### Capa 1 — Primitivas
+
+Nombradas por matiz, no por uso. Stops numerados por luminancia.
+
+| Primitiva | Carácter |
+|-----------|----------|
+| `--sh-papel-*` | Naranja luminoso diluido (la hoja, los pliegues) |
+| `--sh-tinta-*` | Verde petróleo profundo (superficies nocturnas) |
+| `--sh-morado-*` | Violeta apenas (tinta diurna) |
+| `--sh-rosa-*` | Rosa pálido (redlinks, tinta nocturna) |
+| `--sh-rojo-*` | Carmín (nova y enlaces claros) |
+| `--sh-coral-*` | Rosa cálido (nova y enlaces oscuros) |
+| `--sh-azul-*` | Único frío (enlaces nocturnos) |
+| `--sh-verde-*` | Ok del taller |
+| `--sh-masking-*` | Cinta amarilla del taller (avisos) |
+
+### Capa 2 — Semántica
+
+Cada token apunta a primitivas con `light-dark()`: el flip de tema es automático.
+
+**Superficies** — `--sh-field` (fondo de página), `--sh-paper` (hoja),
+`--sh-paper-edge` (borde), `--sh-paper-raised` (tarjetas), `--sh-sunk` (code blocks),
+`--sh-edit-surface` (textarea de wikitexto).
+
+**Texto** — `--sh-ink` (principal), `--sh-ink-soft` (secundario),
+`--sh-ink-faint` (terciario/placeholder), `--sh-hairline` (filetes).
+
+**Acento** — `--sh-nova` (único acento, usado con avaricia),
+`--sh-nova-ink` (texto sobre nova), `--sh-nova-wash` (lavado suave).
+
+**Enlaces** — `--sh-link`, `--sh-link-hover`, `--sh-link-visited`,
+`--sh-link-new` (página inexistente).
+
+**Señales** — `--sh-ok`, `--sh-warn`, `--sh-danger` + sus lavados (`*-wash`).
+
+**Íconos** — `--sh-icon` (reposo, ~55% de tinta), `--sh-icon-active` (plena).
+
+### Capa 3 — Componente
+
+Derivada de la semántica:
+
+- **3a. Controles**: `--sh-btn-*` (botones), `--sh-field-*` (inputs),
+  `--sh-on-*` (checkbox/radio activos), `--sh-focus-*` (foco = nova).
+- **3b. Alias Codex**: mapeo de variables WikimediaUI a tokens `--sh-*`
+  para que OOUI respete el tema.
+
+
 ## Cómo proponer cambios
 
-1. Abrí el HTML en un editor.
-2. Edita el bloque `<style id="overrides">` al inicio y redefiní variables:
+1. Abre el HTML y edita el bloque `<style id="overrides">`:
    ```css
    :root {
-     --sn-nova: #c33;
-     --sn-fs-display: 2.4rem;
+     --sh-nova: #c33;
+     --sh-fs-display: 2.4rem;
    }
    ```
-3. Recargá. Los cambios se propagan a todo el documento.
-4. Anotaciones libres van en `notes.md`.
-5. Guardá y mandá de vuelta.
+2. Recarga — los cambios se propagan.
+3. Anota en `notes.md` y devuelve.
 
-## Cómo actualizar el espécimen
 
-Cuando el skin cambia (nuevos tokens, componentes o ajustes de `tokens.css` /
-`santa-hermandad.css`), el espécimen se regenera con un solo comando desde la raíz
-del repo del skin:
+## Regenerar el espécimen
 
 ```bash
 python3 scripts/build-specimen.py
 ```
 
-El script borra y recompone `docs/specimen/` y empaqueta un zip nuevo
-`santa-hermandad-specimen-v<version>.zip`. **`notes.md` se preserva** entre
-rebuilds, así que las anotaciones del taller de diseño no se pierden. Las
-`overrides` que hayas escrito en los HTML **sí se pierden** (los HTML se
-reescriben); copialas a `notes.md` o a un parche antes de regenerar si querés
-conservarlas.
+Recompone `docs/specimen/` desde `resources/tokens.css` y `resources/santa-hermandad.css`.
+`notes.md` se preserva; los `overrides` en los HTML se pierden.
 
-Flujo típico de iteración:
-
-1. Diseñador recibe el zip, anota en `notes.md` y propone cambios en `overrides`.
-2. Devuelve el zip.
-3. Mantenedor traslada los cambios validados a `resources/tokens.css` /
-   `resources/santa-hermandad.css` del skin.
-4. Mantenedor corre `python3 scripts/build-specimen.py` para regenerar el
-   espécimen sincronizado y manda el nuevo zip.
 
 ## GitHub Pages
 
-Si el repo tiene Pages activado en `branch: main, folder: /docs`, el
-espécimen queda disponible en:
+Rama `main`, carpeta `/docs`:
 
-    https://<usuario>.github.io/<repo>/specimen/
-
-(Esta carpeta es navegable por sí sola; no requiere build adicional.)
+    https://amereida.github.io/santa-hermandad/specimen/

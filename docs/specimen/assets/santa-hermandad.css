@@ -690,7 +690,7 @@ html[data-sh-notice-hide] .sh-notice { display: none; }
    colapso de márgenes y permite alineación robusta en multicolumna. — */
 :is(.sh-paper, .sh-canvas) :is(h1#firstHeading, .firstHeading, .mw-first-heading) {
 	font-family: var(--sh-font-text);
-	font-weight: 300;
+	font-weight: 400;
 	font-size: var(--sh-fs-page-title);
 	line-height: var(--sh-baseline-2);
 	letter-spacing: -.018em;
@@ -1366,7 +1366,7 @@ html:not([data-sh-notice-hide]) .sh-notice ~ .sh-body :is(p):first-child:has(> s
 	padding-block: var(--sh-baseline);
 	margin-block: var(--sh-baseline);
 }
-:is(.sh-paper, .sh-canvas) .fondo-ahuesado { --sh-fondo: light-dark(var(--sh-papel-400), var(--sh-tinta-700)); }
+:is(.sh-paper, .sh-canvas) .fondo-ahuesado { --sh-fondo: color-mix(in oklab, var(--sh-ink) 12%, var(--sh-paper)); }
 :is(.sh-paper, .sh-canvas) .fondo-coral { --sh-fondo: var(--sh-nova-wash); }
 :is(.sh-paper, .sh-canvas) .fondo-verde { --sh-fondo: var(--sh-ok-wash); }
 :is(.sh-paper, .sh-canvas) .fondo-ambar { --sh-fondo: var(--sh-warn-wash); }
@@ -1684,24 +1684,23 @@ canvas, iframe,
 	   de la hoja por el aire (margin-top), no por filete ni tono propio. */
 	background: transparent;
 	font-size: var(--sh-fs-sm); color: var(--sh-ink-soft);
-	margin-top: var(--sh-s-7);
+	margin-top: var(--sh-s-2);
+	margin-bottom: var(--sh-baseline);
 }
-/* El ancho del pie se alinea con la HOJA (--sh-measure), no con la chrome
-   (--sh-shell), para que las columnas queden bajo la columna de lectura y
-   no exhiban espacio muerto a los lados. Dos columnas en proporción 2fr 1fr:
-   ANCHA (izq) = última edición + herramientas inline; ANGOSTA (der) =
-   enlaces de sitio + bloque editable (Santa Hermandad:Pie). */
+/* El ancho del pie se alinea con la HOJA (--sh-measure). Dos columnas 1fr 7fr:
+   ANGOSTA (izq) = bloque editable (Santa Hermandad:Pie); ANCHA (der) =
+   herramientas + enlaces de sitio + última edición en línea. */
 .sh-footer-inner {
 	max-width: var(--sh-measure); margin-inline: auto;
-	padding: var(--sh-s-6) var(--sh-s-4);
-	display: grid; gap: var(--sh-s-6) var(--sh-s-7);
-	grid-template-columns: 2fr 1fr;
-	align-items: start;
+	padding: var(--sh-s-4) var(--sh-s-4);
+	display: grid; gap: var(--sh-s-4) var(--sh-s-7);
+	grid-template-columns: 1fr 7fr;
+	align-items: last baseline;
 }
 .sh-wide .sh-footer-inner { max-width: var(--sh-shell); }
 .sh-footer-col { min-width: 0; }
 
-/* — Columna ancha — última edición + herramientas + enlaces de sitio —
+/* — Columna ancha (derecha) — última edición + herramientas + enlaces de sitio —
    Todo este lado va un punto más pequeño que el resto del pie (--sh-fs-xs). */
 .sh-footer-main {
 	display: flex; flex-direction: column; gap: var(--sh-s-4);
@@ -1761,6 +1760,7 @@ canvas, iframe,
 .sh-foot-places li { margin: 0; }
 .sh-foot-places a { color: var(--sh-ink-soft); text-decoration: none; }
 .sh-foot-places a:hover { color: var(--sh-nova); }
+#footer-places-disclaimers { display: none; }
 
 /* "Herramientas" (disclosure del pie) se define UNA sola vez para AMBOS
    layouts en `.sh-foot-line` (sección del pie de pantalla completa, más
@@ -1776,7 +1776,7 @@ canvas, iframe,
 .sh-foot-license a { color: var(--sh-link); text-decoration: none; }
 .sh-foot-license a:hover { color: var(--sh-link-hover); text-decoration: underline; }
 
-/* — Columna angosta — bloque editable (Santa Hermandad:Pie) — */
+/* — Columna angosta (izquierda) — bloque editable (Santa Hermandad:Pie) — */
 .sh-footer-side { display: flex; flex-direction: column; gap: var(--sh-s-5); }
 
 /* Bloque institucional editable (Santa Hermandad:Pie), al pie de la columna. */
@@ -2217,29 +2217,18 @@ canvas, iframe,
    el toggle nativo; al abrir, `[open] ~ .sh-foot-toollist` revela la fila de
    arriba y su altura anima 0→auto (interpolate-size) EMPUJANDO la línea de
    abajo hacia abajo. Combinador `~` + grid-areas: sin :has, sin JS. */
-.sh-foot-line {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	grid-template-areas:
-		"tools  tools"
-		"label  places";
-	/* Baseline (no `end`): el summary "Herramientas" lleva un icono de 13px —más
-	   alto que el texto fs-xs— y al ser inline-flex centra icono+texto, así que
-	   alinear por caja dejaba su texto más arriba que los enlaces de sitio de la
-	   misma fila. Baseline cuadra las líneas de texto entre label y places. */
-	align-items: baseline;
-	column-gap: var(--sh-s-3);
+/* Herramientas (disclosure) + enlaces de sitio + última edición: una sola
+   línea de texto. La toollist expandida es un bloque encima. */
+.sh-foot-tools-dd { display: inline; margin: 0; }
+.sh-foot-places {
+	display: inline; list-style: none; margin: 0; padding: 0;
 }
-.sh-foot-tools-dd { grid-area: label; margin: 0; }
-.sh-foot-places   { grid-area: places; justify-self: start; align-self: baseline; }
-/* Sin caja de herramientas, los enlaces de sitio ocupan la línea entera
-   desde la izquierda (no quedan corridos a la columna derecha). */
-.sh-foot-places:only-child { grid-column: 1 / -1; }
-
-/* La lista revelada: fila superior a todo el ancho. Colapsada por defecto;
-   se expande cuando el <details> hermano anterior está [open]. */
+.sh-foot-places li { display: inline; margin-inline-start: var(--sh-s-3); }
+.sh-foot-places li:first-child { margin-inline-start: 0; }
+.sh-foot-lastedit { display: inline; margin: 0; margin-inline-start: var(--sh-s-3); }
+/* La lista revelada: bloque a todo el ancho encima de la línea inline.
+   Colapsada por defecto; se expande cuando el <details> está [open]. */
 .sh-foot-toollist {
-	grid-area: tools;
 	block-size: 0; overflow: hidden; opacity: 0; margin: 0;
 	transition: block-size var(--sh-dur-2) var(--sh-ease),
 	            opacity var(--sh-dur-2) var(--sh-ease),
@@ -3432,5 +3421,5 @@ textarea.mw-editfont-monospace {
    layout —p.ej. `.curso-fotos`, que es `display:flex`—. Sin wrapper ni override
    de display, el layout del contenido queda intacto y nada se recorta en reposo. */
 
-/* Marca CCA: misma composición y tamaño en escritorio y móvil. */
-.sh-isotype svg.cca-mark { height: 2.75rem; width: auto; }
+/* Marca CCA: rojo nova en la navbar, tamaño uniforme desktop/mobile. */
+.sh-isotype svg.cca-mark { height: 2.75rem; width: auto; color: var(--sh-nova); }

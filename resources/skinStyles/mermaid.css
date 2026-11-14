@@ -29,10 +29,10 @@
 .skin-santa-hermandad .ext-mermaid {
 	/* Escala de papel del skin envuelta en light-dark() para que el diagrama
 	   siga el tema. Claro = papel pedido; oscuro = tinta espejada. */
-	--mm-node:    light-dark(var(--sh-papel-200), var(--sh-tinta-700));
-	--mm-frame:   light-dark(var(--sh-papel-300), var(--sh-tinta-650));
-	--mm-section: light-dark(var(--sh-papel-400), var(--sh-tinta-600));
-	--mm-edge:    light-dark(var(--sh-papel-700), var(--sh-tinta-400));
+	--mm-node:    color-mix(in oklab, var(--sh-ink) 8%, var(--sh-paper));
+	--mm-frame:   color-mix(in oklab, var(--sh-ink) 12%, var(--sh-paper));
+	--mm-section: color-mix(in oklab, var(--sh-ink) 16%, var(--sh-paper));
+	--mm-edge:    color-mix(in oklab, var(--sh-ink) 35%, var(--sh-paper));
 }
 
 .skin-santa-hermandad .ext-mermaid svg {
@@ -272,21 +272,21 @@
    más allá del 8º Mermaid repite su propia paleta — aceptable). El orden
    de los sectores y de las muestras de la leyenda coincide en el DOM. */
 .skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(1),
-.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(1) rect { fill: var(--sh-tinta-600)   !important; }
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(1) rect { fill: #2c4140 !important; }
 .skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(2),
-.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(2) rect { fill: var(--sh-masking-500) !important; }
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(2) rect { fill: #d9a14b !important; }
 .skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(3),
-.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(3) rect { fill: var(--sh-verde-500)   !important; }
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(3) rect { fill: #2f6f43 !important; }
 .skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(4),
-.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(4) rect { fill: var(--sh-rojo-600)    !important; }
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(4) rect { fill: #b21e3e !important; }
 .skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(5),
-.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(5) rect { fill: var(--sh-azul-300)    !important; }
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(5) rect { fill: #8fb4e8 !important; }
 .skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(6),
-.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(6) rect { fill: var(--sh-malva-400)   !important; }
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(6) rect { fill: #a99cae !important; }
 .skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(7),
-.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(7) rect { fill: var(--sh-tinta-400)   !important; }
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(7) rect { fill: #5c7471 !important; }
 .skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(8),
-.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(8) rect { fill: var(--sh-masking-700) !important; }
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(8) rect { fill: #8a5a12 !important; }
 
 /* ─── Títulos genéricos (gantt/pie/otros) ─── */
 .skin-santa-hermandad .ext-mermaid .titleText {

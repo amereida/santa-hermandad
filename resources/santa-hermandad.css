@@ -1366,7 +1366,7 @@ html:not([data-sh-notice-hide]) .sh-notice ~ .sh-body :is(p):first-child:has(> s
 	padding-block: var(--sh-baseline);
 	margin-block: var(--sh-baseline);
 }
-:is(.sh-paper, .sh-canvas) .fondo-ahuesado { --sh-fondo: light-dark(var(--sh-papel-400), var(--sh-tinta-700)); }
+:is(.sh-paper, .sh-canvas) .fondo-ahuesado { --sh-fondo: color-mix(in oklab, var(--sh-ink) 12%, var(--sh-paper)); }
 :is(.sh-paper, .sh-canvas) .fondo-coral { --sh-fondo: var(--sh-nova-wash); }
 :is(.sh-paper, .sh-canvas) .fondo-verde { --sh-fondo: var(--sh-ok-wash); }
 :is(.sh-paper, .sh-canvas) .fondo-ambar { --sh-fondo: var(--sh-warn-wash); }
