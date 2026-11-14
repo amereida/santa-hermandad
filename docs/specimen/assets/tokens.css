@@ -161,7 +161,7 @@
 	--sn-warn-ink:     light-dark(var(--sn-papel-50),    var(--sn-tinta-850));
 	--sn-danger:       light-dark(var(--sn-rojo-600),    var(--sn-coral-400));
 
-	/* Aviso editorial (banner .sn-notice gestionado desde Stella-Nova:Aviso):
+	/* Aviso editorial (banner .sn-notice gestionado desde StellAmereida:Aviso):
 	   fondo ámbar pálido propio (no se confunde con --sn-warn-wash). En claro
 	   fondo masking-300 y tinta tinta-600; en oscuro se invierte (fondo
 	   masking-900, tinta masking-300) — la misma primitiva ámbar reaparece. */

@@ -41,7 +41,7 @@ Breakpoints clave (mismos valores en CSS y en JS):
 │ ││                  ││ .sn-indicators (absolute, esquina sup. der.)   │ │  │ │
 │ ││                  ││                                                │ │  │ │
 │ ││                  ││ {{html-site-notice}}  ← core                   │ │  │ │
-│ ││                  ││ <aside class="sn-notice">{Stella-Nova:Aviso}   │ │  │ │
+│ ││                  ││ <aside class="sn-notice">{StellAmereida:Aviso}   │ │  │ │
 │ ││                  ││                                                │ │  │ │
 │ ││                  ││ ┃ firstHeading (color --sn-nova, carmín)       │ │  │ │
 │ ││                  ││ ┃ ── (subtitle / kicker contentSub si aplica) ─│ │  │ │
@@ -66,7 +66,7 @@ Breakpoints clave (mismos valores en CSS y en JS):
 │ │└─────────────────────────────────────────────────────────────────────────┘ │
 │ │                                                                            │
 │ │┌─ .sn-footer (ancho = .sn-shell, 3 cols 1fr 1fr 1fr) ─────────────────┐    │
-│ ││ Stella-Nova:Pie   │ data-info        │  🛠 Herram. y más               │   │
+│ ││ StellAmereida:Pie   │ data-info        │  🛠 Herram. y más               │   │
 │ ││ (gestionado)      │ data-places      │  (toolbox p-tb)                 │   │
 │ │└──────────────────────────────────────────────────────────────────────┘    │
 │ └────────────────────────────────────────────────────────────────────────────┘
@@ -116,7 +116,7 @@ Notas:
 │ │└──────────────────────────────────────────┘     │
 │ │                                                 │
 │ │┌─ .sn-footer (3 cols colapsan a 1) ──────┐      │
-│ ││ Stella-Nova:Pie                          │      │
+│ ││ StellAmereida:Pie                          │      │
 │ ││ legal                                    │      │
 │ ││ Herram. y más                            │      │
 │ │└──────────────────────────────────────────┘     │

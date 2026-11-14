@@ -619,7 +619,7 @@ html[data-sn-modal] .sn-header {
 	}
 }
 
-/* Aviso gestionado (Stella-Nova:Aviso): lo PRIMERO dentro de la hoja,
+/* Aviso gestionado (StellAmereida:Aviso): lo PRIMERO dentro de la hoja,
    full-bleed a los bordes del papel — niega el padding (--sn-paper-py arriba,
    --sn-paper-px a los lados) con la misma convención que .full-width. Fondo
    --sn-warn con tinta que contrasta en ambos temas (--sn-warn-ink), esquinas
@@ -895,7 +895,7 @@ html[data-sn-notice-hide] .sn-notice { display: none; }
 /* El filete #aaa de core (elements.less, `.mw-heading1,h1,.mw-heading2,h2`)
    NO va en NINGÚN contexto del skin. El reset de `.sn-body` de arriba ya lo
    mata dentro del artículo; esto lo extiende a la chrome fuera del cuerpo —
-   pie editable (Stella-Nova:Pie, donde un `== Título ==` se vuelve h2),
+   pie editable (StellAmereida:Pie, donde un `== Título ==` se vuelve h2),
    modales y drawer— para que la doctrina "sin filetes" sea total. */
 .sn-app :is(h1, h2, .mw-heading1, .mw-heading2),
 .sn-canvas :is(h1, h2, .mw-heading1, .mw-heading2) {
@@ -954,7 +954,7 @@ html[data-sn-notice-hide] .sn-notice { display: none; }
 	/* tinta del contexto: el nivel más bajo del par no lleva acento. */
 }
 /* Acento carmín del h5 — TRANSVERSAL: el h5 va en --sn-nova en CUALQUIER
-   contexto del skin (cuerpo, pie editable Stella-Nova:Pie, modales, drawer
+   contexto del skin (cuerpo, pie editable StellAmereida:Pie, modales, drawer
    .sn-prefs), no sólo dentro de .sn-body; el h6 hereda la tinta del contexto.
    Con h1 y h3 también carmín, el rojo recae en los niveles IMPARES (h1/h3/h5)
    y la tinta en los pares (h2/h4/h6). Va al final del bloque de cabeceras para
@@ -1672,7 +1672,7 @@ canvas, iframe,
 .sn-body .toc .toctext { min-width: 0; }
 
 /* "Más" (acciones) y Variantes: bloque compacto al final de las pestañas. */
-/* ───── Pie a 3 columnas: Stella-Nova:Pie · legal · herramientas ───── */
+/* ───── Pie a 3 columnas: StellAmereida:Pie · legal · herramientas ───── */
 .sn-footer {
 	/* El pie es TRANSPARENTE: deja pasar el fondo del `body` —el "escritorio"
 	   (campo --sn-field + degradado radial + grano SVG, con
@@ -1690,7 +1690,7 @@ canvas, iframe,
    (--sn-shell), para que las columnas queden bajo la columna de lectura y
    no exhiban espacio muerto a los lados. Dos columnas en proporción 2fr 1fr:
    ANCHA (izq) = última edición + herramientas inline; ANGOSTA (der) =
-   enlaces de sitio + bloque editable (Stella-Nova:Pie). */
+   enlaces de sitio + bloque editable (StellAmereida:Pie). */
 .sn-footer-inner {
 	max-width: var(--sn-measure); margin-inline: auto;
 	padding: var(--sn-s-6) var(--sn-s-4);
@@ -1776,10 +1776,10 @@ canvas, iframe,
 .sn-foot-license a { color: var(--sn-link); text-decoration: none; }
 .sn-foot-license a:hover { color: var(--sn-link-hover); text-decoration: underline; }
 
-/* — Columna angosta — bloque editable (Stella-Nova:Pie) — */
+/* — Columna angosta — bloque editable (StellAmereida:Pie) — */
 .sn-footer-side { display: flex; flex-direction: column; gap: var(--sn-s-5); }
 
-/* Bloque institucional editable (Stella-Nova:Pie), al pie de la columna. */
+/* Bloque institucional editable (StellAmereida:Pie), al pie de la columna. */
 .sn-footer-managed { color: var(--sn-ink); }
 .sn-footer-managed :is(h1,h2,h3,h4) {
 	font-family: var(--sn-font-text); color: var(--sn-ink);
@@ -2197,7 +2197,7 @@ canvas, iframe,
 /* — Pie de pantalla completa — sobre el MISMO papel del canvas. Acompaña al
    contenido libre: NO se centra ni se acota a --sn-measure; queda alineado a
    la IZQUIERDA con el margen básico del canvas (--sn-canvas-px). UNA sola
-   columna. Sin "última edición" ni columna derecha (Stella-Nova:Pie).
+   columna. Sin "última edición" ni columna derecha (StellAmereida:Pie).
    Reutiliza .sn-foot-toollist / .sn-foot-places / .sn-foot-license; las
    herramientas van en un <details> discreto rotulado "Herramientas". */
 .sn-fs-footer { margin-top: var(--sn-s-7); }
@@ -3432,5 +3432,5 @@ textarea.mw-editfont-monospace {
    layout —p.ej. `.curso-fotos`, que es `display:flex`—. Sin wrapper ni override
    de display, el layout del contenido queda intacto y nada se recorta en reposo. */
 
-/* Marca CCA: misma composición y tamaño en escritorio y móvil. */
-.sn-isotype svg.cca-mark { height: 2.75rem; width: auto; }
+/* Marca CCA: rojo nova en la navbar, tamaño uniforme desktop/mobile. */
+.sn-isotype svg.cca-mark { height: 2.75rem; width: auto; color: var(--sn-nova); }

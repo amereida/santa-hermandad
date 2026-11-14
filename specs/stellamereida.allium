@@ -45,7 +45,7 @@
 --      movimiento reducido (prefers-reduced-motion) se sigue respetando, pero
 --      sólo a nivel CSS (@media) — sin estado ni override de usuario, ya no es
 --      preferencia del skin y queda como presentación (lista de exclusión).
---   2. Chrome administrable desde páginas wiki del namespace Stella-Nova
+--   2. Chrome administrable desde páginas wiki del namespace StellAmereida
 --      (pie, barra lateral, aviso): visibilidad y autorización CRUD. El
 --      AVISO añade además descartabilidad: el visitante puede cerrarlo y el
 --      descarte se recuerda POR VERSIÓN del contenido (al editar el aviso,
@@ -408,7 +408,7 @@ entity PageRender {
 
 config {
     skin_version: String = "0.4.3"      -- debe coincidir con skin.json
-    chrome_namespace: String = "Stella-Nova"
+    chrome_namespace: String = "StellAmereida"
     interface_editor_group: String = "editores-de-interfaz"
 }
 

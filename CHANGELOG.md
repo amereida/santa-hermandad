@@ -224,8 +224,8 @@ comportamiento debería reflejarse también ahí.
      MediaWiki sirve el `Common.css` de la wiki. Una página con
      `class="jumbo center nova"` se veía bien en pantalla y salía sin ninguna
      de las tres clases en el PDF. Ahora las hereda gratis.
-  2. **El chrome administrable no las alcanzaba.** `Stella-Nova:Pie` y
-     `Stella-Nova:Aviso` se renderizan con `OutputPage::parseAsContent`, que
+  2. **El chrome administrable no las alcanzaba.** `StellAmereida:Pie` y
+     `StellAmereida:Aviso` se renderizan con `OutputPage::parseAsContent`, que
      **no** envuelve en `.mw-parser-output`; el alcance viejo
      (`.mw-parser-output .clase`) no llegaba y esas páginas terminaban escritas
      con `style=` inline —ciego al tema claro/oscuro y a la escala del lector—.
@@ -265,7 +265,7 @@ comportamiento debería reflejarse también ahí.
   **chrome administrable** (el antes/después del `style=` inline del pie).
 
 ### Removed
-- **Slot de chrome `sidebar` (`Stella-Nova:Barra lateral`).** El skin lo
+- **Slot de chrome `sidebar` (`StellAmereida:Barra lateral`).** El skin lo
   resolvía en **cada request** —comprobación de existencia + parse de la
   página— y la plantilla **nunca lo consumía**: no había ni un `{{#sidebar}}`
   en `skin.mustache`. La navegación del sitio la arma el skin desde los
@@ -306,7 +306,7 @@ comportamiento debería reflejarse también ahí.
   menú quedaba protegido únicamente por el `will-change` roto.
 
 ### Added
-- **El aviso (`Stella-Nova:Aviso`) queda por encima del contenido de la página
+- **El aviso (`StellAmereida:Aviso`) queda por encima del contenido de la página
   —canvas p5 incluido— pero NUNCA sobre el menú.** El aviso vive dentro de
   `.sn-shell` (aislado, bajo el header), así que su `z-index` es local y no
   compite con el dropdown. Se le da `position: relative; z-index` (sobre el
@@ -317,7 +317,7 @@ comportamiento debería reflejarse también ahí.
   (no chocaría/quedaría tras él); se restaura el bleed si el aviso se descarta.
 - **Seguridad del chrome administrable (namespace dedicado):** documentación
   completa en el README (sección *Chrome administrable y seguridad del
-  namespace*) — declarar `Stella-Nova` vía `$wgExtraNamespaces` +
+  namespace*) — declarar `StellAmereida` vía `$wgExtraNamespaces` +
   `$wgNamespaceProtection`, migración sin páginas huérfanas y la regla operativa
   **«para retirar un aviso, vaciar — no borrar»** (el skin ya oculta el slot con
   contenido en blanco). Cierra el vector de vandalismo sitio-completo del aviso.
@@ -1151,7 +1151,7 @@ comportamiento debería reflejarse también ahí.
 ### Added
 - **Favicon definido desde el skin** (`resources/favicon.svg`), autocontenido y
   adaptable claro/oscuro, inyectado sin tocar `$wgFavicon`.
-- **Aviso de sitio descartable** (`Stella-Nova:Aviso`): banda full-bleed como
+- **Aviso de sitio descartable** (`StellAmereida:Aviso`): banda full-bleed como
   primer elemento de la hoja, con botón de cerrar. El descarte se recuerda **por
   versión de revisión** (al editar el aviso, reaparece) y es por-navegador;
   oculto sin parpadeo vía pre-pintado.
@@ -1200,7 +1200,7 @@ comportamiento debería reflejarse también ahí.
 
 ### Added
 - M1–M4: `skinStyles` por extensión, layout, tema claro/oscuro, tipografía y
-  chrome administrable desde páginas wiki del namespace `Stella-Nova`.
+  chrome administrable desde páginas wiki del namespace `StellAmereida`.
 
 ## [0.0.1] — 2026-05-18
 

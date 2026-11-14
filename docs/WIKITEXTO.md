@@ -323,7 +323,7 @@ botones, módulos interactivos que no tienen sentido en papel.
 
 Tono de aviso editorial: filete carmín a la izquierda, fondo lavado
 (`--sn-nova-wash`), texto en cuerpo `sm`. Se usa principalmente para
-el fragmento administrable `Stella-Nova:Aviso` (que se inyecta en lo
+el fragmento administrable `StellAmereida:Aviso` (que se inyecta en lo
 alto del paper), pero está disponible para cualquier wikitexto:
 
 ```wiki
@@ -431,7 +431,7 @@ hereda al párrafo; la **alineación** además se propaga al `<p>` interno.
 
 Alcance: `:is(.sn-body, .sn-notice-body, .sn-footer-managed)` — el cuerpo del
 artículo (hoja normal y `__PANTALLACOMPLETA__`) **y** los dos fragmentos del
-chrome administrable (`Stella-Nova:Aviso`, `Stella-Nova:Pie`).
+chrome administrable (`StellAmereida:Aviso`, `StellAmereida:Pie`).
 
 > **Cambio de hogar (v0.8.0).** Hasta la v0.7.2 estas clases vivían en el
 > `MediaWiki:Common.css` de cada wiki y el skin no las conocía. Se movieron al
@@ -441,7 +441,7 @@ chrome administrable (`Stella-Nova:Aviso`, `Stella-Nova:Pie`).
 >   los archivos limpios del skin, **no** el `Common.css` de la wiki: una página
 >   con `class="jumbo center nova"` se veía bien en pantalla y perdía las tres
 >   clases en el PDF.
-> - **El chrome administrable.** `Stella-Nova:Pie` y `Stella-Nova:Aviso` se
+> - **El chrome administrable.** `StellAmereida:Pie` y `StellAmereida:Aviso` se
 >   parsean sin el envoltorio `.mw-parser-output`, así que el alcance viejo no
 >   llegaba y esas páginas se escribían con `style=` inline.
 >

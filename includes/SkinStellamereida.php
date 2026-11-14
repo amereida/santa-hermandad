@@ -413,8 +413,8 @@ class SkinStellamereida extends SkinMustache {
 	 * Resuelve un InterfaceFragment: existe + contenido != null + no en
 	 * blanco (spec). is_blank ≈ tras recortar espacios y comentarios HTML
 	 * no queda nada (cierre razonable de la pregunta abierta del spec).
-	 * Prefiere el namespace dedicado "Stella-Nova"; si no está declarado,
-	 * cae a la página homónima del espacio principal ("Stella-Nova:Pie")
+	 * Prefiere el namespace dedicado "StellAmereida"; si no está declarado,
+	 * cae a la página homónima del espacio principal ("StellAmereida:Pie")
 	 * para que el contenido ya creado se refleje igual. Vacío/ausente →
 	 * no publicado (spec ManagedChrome.HiddenWhenUnpublished). Defensivo:
 	 * cualquier fallo degrada a no-publicado, nunca rompe el render.
@@ -427,7 +427,7 @@ class SkinStellamereida extends SkinMustache {
 		try {
 			$services = MediaWikiServices::getInstance();
 			$nsInfo = $services->getContentLanguage();
-			$nsId = $nsInfo->getNsIndex( 'Stella-Nova' );
+			$nsId = $nsInfo->getNsIndex( 'StellAmereida' );
 			if ( $nsId !== false && $nsId !== null ) {
 				// Caso ideal (spec): namespace dedicado, escritura
 				// restringida vía $wgNamespaceProtection.
@@ -436,12 +436,12 @@ class SkinStellamereida extends SkinMustache {
 				// Fallback pragmático: el namespace no está declarado en
 				// LocalSettings, así que la página creada vive en el
 				// espacio principal con dos puntos en el título
-				// ("Stella-Nova:Pie"). Se refleja igual para que el editor
+				// ("StellAmereida:Pie"). Se refleja igual para que el editor
 				// la vea sin tocar config. NOTA: sin el namespace declarado
 				// NO hay restricción de escritura del spec
 				// (RestrictChromeNamespaceWrites) — declararlo en
 				// LocalSettings es lo recomendado para paridad/seguridad.
-				$title = Title::newFromText( 'Stella-Nova:' . $pageName );
+				$title = Title::newFromText( 'StellAmereida:' . $pageName );
 			}
 			if ( !$title || !$title->exists() ) {
 				return $blank;

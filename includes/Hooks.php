@@ -298,7 +298,7 @@ class Hooks {
 			}
 		}
 
-		// Versión del aviso gestionado (Stella-Nova:Aviso): id de su última
+		// Versión del aviso gestionado (StellAmereida:Aviso): id de su última
 		// revisión. El banner descartado se recuerda por versión; al editar
 		// el aviso, reaparece. El pre-pintado lo usa para ocultar sin FOUC.
 		$noticeId = self::noticeVersion();
@@ -378,7 +378,7 @@ class Hooks {
 	}
 
 	/**
-	 * Id de la última revisión de Stella-Nova:Aviso (o '' si no existe).
+	 * Id de la última revisión de StellAmereida:Aviso (o '' si no existe).
 	 * Barato: getLatestRevID no parsea. Réplica mínima de la resolución de
 	 * namespace de SkinStellamereida::resolveFragment (namespace dedicado si
 	 * está declarado; si no, página homónima en el espacio principal).
@@ -388,10 +388,10 @@ class Hooks {
 	private static function noticeVersion(): string {
 		try {
 			$nsId = MediaWikiServices::getInstance()->getContentLanguage()
-				->getNsIndex( 'Stella-Nova' );
+				->getNsIndex( 'StellAmereida' );
 			$title = ( $nsId !== false && $nsId !== null )
 				? Title::makeTitleSafe( $nsId, 'Aviso' )
-				: Title::newFromText( 'Stella-Nova:Aviso' );
+				: Title::newFromText( 'StellAmereida:Aviso' );
 			if ( $title && $title->exists() ) {
 				return (string)$title->getLatestRevID();
 			}
