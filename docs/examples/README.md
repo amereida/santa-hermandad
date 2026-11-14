@@ -1,7 +1,7 @@
 # Ejemplos — logo de prueba
 
 Assets para **validar el flujo de configuración del logo** (opción
-`$wgStellamereidaIsotypePath` / `$wgStellamereidaIconPath`) antes de poner un logo
+`$wgSanta HermandadIsotypePath` / `$wgSanta HermandadIconPath`) antes de poner un logo
 real. Cumplen el contrato del [README principal](../../README.md) → sección
 *Logo / isotipo* (todo `currentColor`, fondo transparente, monocromo,
 autocontenido) y son **a propósito distintos** del isotipo de Casiopea, para
@@ -9,8 +9,8 @@ que el cambio se note a simple vista.
 
 | Archivo | Config a probar | Proporción |
 |---|---|---|
-| `logo-prueba.svg` | `$wgStellamereidaIsotypePath` (wordmark) | 4.5:1 (`viewBox 0 0 450 100`) |
-| `logo-prueba-icono.svg` | `$wgStellamereidaIconPath` (glifo compacto) | 1:1 (`viewBox 0 0 100 100`) |
+| `logo-prueba.svg` | `$wgSanta HermandadIsotypePath` (wordmark) | 4.5:1 (`viewBox 0 0 450 100`) |
+| `logo-prueba-icono.svg` | `$wgSanta HermandadIconPath` (glifo compacto) | 1:1 (`viewBox 0 0 100 100`) |
 
 **No son logos de producción.** Sirven solo para confirmar que la cadena
 config → SVG en disco → incrustado inline → tematizado claro/oscuro funciona en

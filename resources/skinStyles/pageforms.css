@@ -1,4 +1,4 @@
-/* Stellamereida · skinStyles → PageForms.
+/* Santa Hermandad · skinStyles → PageForms.
  *
  * Los formularios viven dentro de html-body-content; el skin no recorta su
  * markup ni sus TemplateStyles. Solo armoniza inputs/botones con el papel.
@@ -16,7 +16,7 @@
  * si alguna versión/inline lo usa). Ver [[dark-mode-special-pages-audit]].
  */
 
-.pfForm, .pf-form-wrapper, .createbox { font-size: var(--sn-fs-base); max-width: 100%; }
+.pfForm, .pf-form-wrapper, .createbox { font-size: var(--sh-fs-base); max-width: 100%; }
 
 /* La rejilla del formulario: respeta su tabla, suaviza el ritmo.
    `table-layout: fixed` es CLAVE: con `auto` un campo ancho (un input con
@@ -24,42 +24,42 @@
    del 100% y arrastra toda la tabla fuera de la página. Con `fixed` las
    columnas respetan el ancho de la tabla y los campos (con max-width:100%)
    se acotan a su celda. */
-.skin-stellamereida .formtable, .skin-stellamereida table.formtable {
-	border-collapse: separate; border-spacing: 0 var(--sn-s-3);
+.skin-santa-hermandad .formtable, .skin-santa-hermandad table.formtable {
+	border-collapse: separate; border-spacing: 0 var(--sh-s-3);
 	width: 100%;
 	table-layout: fixed;
 }
 /* Etiqueta = <th> (o 1ª celda). Alineada a la derecha y más chica. El prefijo
-   `.skin-stellamereida` sube la especificidad por encima de la regla propia de
+   `.skin-santa-hermandad` sube la especificidad por encima de la regla propia de
    PageForms `.formtable th { text-align: left }` (misma especificidad → ganaba
    por orden de cascada). */
-.skin-stellamereida .formtable > tbody > tr > td:first-child,
-.skin-stellamereida .formtable th {
+.skin-santa-hermandad .formtable > tbody > tr > td:first-child,
+.skin-santa-hermandad .formtable th {
 	width: 28%;                        /* columna de etiqueta (table-layout: fixed) */
-	vertical-align: top; padding-right: var(--sn-s-4);
+	vertical-align: top; padding-right: var(--sh-s-4);
 	text-align: right;                 /* etiqueta alineada hacia el campo */
-	font-weight: 600; font-size: var(--sn-fs-xs);
-	color: var(--sn-ink); white-space: normal;
+	font-weight: 600; font-size: var(--sh-fs-xs);
+	color: var(--sh-ink); white-space: normal;
 }
-.formtable td { padding-block: var(--sn-s-1); }
+.formtable td { padding-block: var(--sh-s-1); }
 /* Checkboxes / radios — PageForms emite
    `<label class="checkboxLabel"><input>&nbsp;Texto</label>` (radios: análogo).
-   Etiqueta más chica (--sn-fs-xs), AIRE entre la casilla y el texto (el `&nbsp;`
+   Etiqueta más chica (--sh-fs-xs), AIRE entre la casilla y el texto (el `&nbsp;`
    solo no basta) y separación entre opciones. */
-.skin-stellamereida :is(.checkboxLabel, .radioButtonItem),
+.skin-santa-hermandad :is(.checkboxLabel, .radioButtonItem),
 :is(.pfForm, .createbox) label:has(> input:is([type="checkbox"], [type="radio"])) {
 	display: inline-block;
-	margin-inline-end: var(--sn-s-4);
-	font-size: var(--sn-fs-xs);
-	line-height: var(--sn-baseline);
-	color: var(--sn-ink);
+	margin-inline-end: var(--sh-s-4);
+	font-size: var(--sh-fs-xs);
+	line-height: var(--sh-baseline);
+	color: var(--sh-ink);
 }
 /* El "aire" va a la casilla VISIBLE (hijo directo del label): el span del
    widget OOUI, o el <input> pelado si no hay OOUI. */
-.skin-stellamereida :is(.checkboxLabel, .radioButtonItem)
+.skin-santa-hermandad :is(.checkboxLabel, .radioButtonItem)
 	> :is(input, .oo-ui-checkboxInputWidget, .oo-ui-radioInputWidget),
 :is(.pfForm, .createbox) label:has(> input:is([type="checkbox"], [type="radio"])) > input {
-	margin-inline-end: var(--sn-s-2);
+	margin-inline-end: var(--sh-s-2);
 }
 
 /* Campos: misma materia que la búsqueda y los selects del panel. `box-sizing:
@@ -77,78 +77,78 @@
 input.createboxInput, textarea.createboxInput, select.createboxInput,
 .formInput input {
 	box-sizing: border-box;
-	font: inherit; color: var(--sn-ink);
-	background: var(--sn-paper);
-	border: 1px solid var(--sn-hairline);
-	border-radius: var(--sn-radius);
-	padding: .45rem var(--sn-s-3);
+	font: inherit; color: var(--sh-ink);
+	background: var(--sh-paper);
+	border: 1px solid var(--sh-hairline);
+	border-radius: var(--sh-radius);
+	padding: .45rem var(--sh-s-3);
 	max-width: 100%;
 	vertical-align: middle;
 }
 :is(.pfForm, .createbox) textarea, textarea.createboxInput { width: 100%;
-	line-height: var(--sn-leading); }
+	line-height: var(--sh-leading); }
 /* Altura UNIFORME para los controles de una sola línea (textarea y tokens
    multilínea conservan su propio alto). */
 :is(.pfForm, .createbox) :is(input:not([type]), input[type="text"],
 	input[type="number"], input[type="search"], input[type="url"],
 	input[type="email"], input[type="date"], select):not([multiple]),
 :is(.pfForm, .createbox) input.createboxInput:not([type="checkbox"]):not([type="radio"]):not([multiple]) {
-	min-height: var(--sn-ctl);
+	min-height: var(--sh-ctl);
 }
 /* Widgets de tokens (select2) y selects múltiples: acotados al contenedor pese
    al width inline (p. ej. 600px) → nunca rebasan el ancho de la página. */
 :is(.pfForm, .createbox) :is(.select2-container, .pfTokens, select[multiple]) { max-width: 100%; }
 :is(.pfForm, .createbox) :is(input, textarea, select):focus {
-	outline: none; border-color: var(--sn-nova);
-	box-shadow: 0 0 0 3px var(--sn-nova-wash);
+	outline: none; border-color: var(--sh-nova);
+	box-shadow: 0 0 0 3px var(--sh-nova-wash);
 }
 :is(.pfForm, .createbox) input::placeholder,
 .pf-form-wrapper input::placeholder {
-	color: var(--sn-ink-faint);
+	color: var(--sh-ink-faint);
 }
 
 /* OOUI dentro de PageForms — solo acentos, sin romper su layout */
 :is(.pfForm, .createbox) .oo-ui-inputWidget-input:focus,
 .oo-ui-textInputWidget.oo-ui-widget-enabled .oo-ui-inputWidget-input:focus {
-	border-color: var(--sn-nova);
-	box-shadow: 0 0 0 2px var(--sn-nova-wash);
+	border-color: var(--sh-nova);
+	box-shadow: 0 0 0 2px var(--sh-nova-wash);
 }
 .oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button {
-	background: var(--sn-ink); border-color: var(--sn-ink); color: var(--sn-paper);
+	background: var(--sh-ink); border-color: var(--sh-ink); color: var(--sh-paper);
 }
 
 /* Plantillas múltiples (instancias repetibles): tarjetas en papel */
 .multipleTemplateList .multipleTemplate, .multipleTemplateInstance {
-	border: 1px solid var(--sn-hairline-soft);
-	border-radius: var(--sn-radius);
-	background: color-mix(in oklab, var(--sn-sunk) 45%, transparent);
-	padding: var(--sn-s-4); margin-bottom: var(--sn-s-3);
+	border: 1px solid var(--sh-hairline-soft);
+	border-radius: var(--sh-radius);
+	background: color-mix(in oklab, var(--sh-sunk) 45%, transparent);
+	padding: var(--sh-s-4); margin-bottom: var(--sh-s-3);
 }
 .multipleTemplateAdder, .pf-multipleTemplateAdder {
-	color: var(--sn-nova); cursor: pointer; font-weight: 600;
+	color: var(--sh-nova); cursor: pointer; font-weight: 600;
 }
-.removeTemplate, .multipleTemplateRemover { color: var(--sn-ink-faint); cursor: pointer; }
-.removeTemplate:hover, .multipleTemplateRemover:hover { color: var(--sn-danger); }
+.removeTemplate, .multipleTemplateRemover { color: var(--sh-ink-faint); cursor: pointer; }
+.removeTemplate:hover, .multipleTemplateRemover:hover { color: var(--sh-danger); }
 
 /* Botones de envío / acciones del formulario */
 :is(.pfForm, .createbox) .editButtons input[type="submit"],
 :is(.pfForm, .createbox) .mw-htmlform-submit, .pfSubmitButton, input#wpSave,
 .pf_CreateBox input[type="submit"] {
-	background: var(--sn-ink); color: var(--sn-paper);
-	border: 0; border-radius: var(--sn-radius);
-	padding: .55rem var(--sn-s-5); font: inherit; font-weight: 500;
-	cursor: pointer; transition: background var(--sn-dur-1);
+	background: var(--sh-ink); color: var(--sh-paper);
+	border: 0; border-radius: var(--sh-radius);
+	padding: .55rem var(--sh-s-5); font: inherit; font-weight: 500;
+	cursor: pointer; transition: background var(--sh-dur-1);
 }
 :is(.pfForm, .createbox) .editButtons input[type="submit"]:hover, .pfSubmitButton:hover {
-	background: var(--sn-nova); color: var(--sn-nova-ink);
+	background: var(--sh-nova); color: var(--sh-nova-ink);
 }
 :is(.pfForm, .createbox) .editButtons input[type="button"], #wpPreview, #wpDiff {
-	background: transparent; color: var(--sn-ink);
-	border: 1px solid var(--sn-hairline); border-radius: var(--sn-radius);
-	padding: .5rem var(--sn-s-4); font: inherit; cursor: pointer;
+	background: transparent; color: var(--sh-ink);
+	border: 1px solid var(--sh-hairline); border-radius: var(--sh-radius);
+	padding: .5rem var(--sh-s-4); font: inherit; cursor: pointer;
 }
 .pf_CreateBox, .pfFormInput {
-	display: flex; flex-wrap: wrap; gap: var(--sn-s-2); align-items: center;
+	display: flex; flex-wrap: wrap; gap: var(--sh-s-2); align-items: center;
 }
 
 /* ── Borde de campos: vencer el ID de PageForms ──
@@ -159,28 +159,28 @@ input.createboxInput, textarea.createboxInput, select.createboxInput,
    reglas de clase → en oscuro el campo queda con filete gris claro (mismo
    síntoma que el borde de la TOC). Medido con CDP: bg/radio/padding nuestros SÍ
    ganan (PF no los repite en esos selectores), solo el color de borde perdía.
-   Se re-tiñe con `--sn-hairline` desde una especificidad mayor (ID + clase =
+   Se re-tiñe con `--sh-hairline` desde una especificidad mayor (ID + clase =
    1,2,x) y orden posterior. `:focus` y `[readonly]` incluidos. */
-.skin-stellamereida #pfForm :is( input, textarea, select ):not( [type="checkbox"] ):not( [type="radio"] ) {
-	border-color: var(--sn-hairline);
+.skin-santa-hermandad #pfForm :is( input, textarea, select ):not( [type="checkbox"] ):not( [type="radio"] ) {
+	border-color: var(--sh-hairline);
 }
-.skin-stellamereida #pfForm :is( input, textarea, select ):focus {
-	border-color: var(--sn-nova);
+.skin-santa-hermandad #pfForm :is( input, textarea, select ):focus {
+	border-color: var(--sh-nova);
 }
-.skin-stellamereida #pfForm input[readonly] {
-	background: var(--sn-field-bg-disabled); color: var(--sn-ink-soft);
+.skin-santa-hermandad #pfForm input[readonly] {
+	background: var(--sh-field-bg-disabled); color: var(--sh-ink-soft);
 }
 
 /* Autocompletado / fancybox / datepicker */
 .pacContainer, .pf-tokens-input, ul.ui-autocomplete {
-	background: var(--sn-paper); color: var(--sn-ink);
-	border: 1px solid var(--sn-hairline); border-radius: var(--sn-radius);
-	box-shadow: var(--sn-lift); list-style: none; padding: var(--sn-s-1);
+	background: var(--sh-paper); color: var(--sh-ink);
+	border: 1px solid var(--sh-hairline); border-radius: var(--sh-radius);
+	box-shadow: var(--sh-lift); list-style: none; padding: var(--sh-s-1);
 }
 .pacContainer .pacItem:hover, ul.ui-autocomplete .ui-menu-item:hover {
-	background: var(--sn-nova-wash);
+	background: var(--sh-nova-wash);
 }
 /* Mensajes de validación del formulario */
 .pfFormValidationError, .errorMessage {
-	color: var(--sn-danger); font-size: var(--sn-fs-sm);
+	color: var(--sh-danger); font-size: var(--sh-fs-sm);
 }

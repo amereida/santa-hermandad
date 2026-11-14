@@ -1,10 +1,10 @@
-/* specimen.css — andamio del espécimen Stellamereida.
+/* specimen.css — andamio del espécimen Santa Hermandad.
    Sólo lo necesario para presentar los componentes en grilla y para la
    barra de control superior. NO redefine tokens — los usa. */
 
-html, body { margin: 0; padding: 0; background: var(--sn-field); color: var(--sn-ink);
-             font-family: var(--sn-font-text); font-size: var(--sn-fs-base);
-             line-height: var(--sn-leading); }
+html, body { margin: 0; padding: 0; background: var(--sh-field); color: var(--sh-ink);
+             font-family: var(--sh-font-text); font-size: var(--sh-fs-base);
+             line-height: var(--sh-leading); }
 
 body.spec { display: flex; flex-direction: column; min-height: 100vh; }
 
@@ -14,378 +14,378 @@ body.spec { display: flex; flex-direction: column; min-height: 100vh; }
 /* — Barra superior del espécimen — sticky, no es el header del skin. */
 .spec-top {
   position: sticky; top: 0; z-index: 30;
-  display: flex; align-items: center; gap: var(--sn-s-5);
-  padding: var(--sn-s-3) var(--sn-s-5);
-  background: color-mix(in oklab, var(--sn-field) 90%, transparent);
+  display: flex; align-items: center; gap: var(--sh-s-5);
+  padding: var(--sh-s-3) var(--sh-s-5);
+  background: color-mix(in oklab, var(--sh-field) 90%, transparent);
   -webkit-backdrop-filter: saturate(1.4) blur(10px);
   backdrop-filter: saturate(1.4) blur(10px);
-  border-bottom: 1px solid var(--sn-hairline-soft);
+  border-bottom: 1px solid var(--sh-hairline-soft);
 }
-.spec-brand { display: inline-flex; align-items: baseline; gap: var(--sn-s-2);
-              text-decoration: none; color: var(--sn-ink); }
+.spec-brand { display: inline-flex; align-items: baseline; gap: var(--sh-s-2);
+              text-decoration: none; color: var(--sh-ink); }
 .spec-brand-icon { align-self: center; flex: none;
                    /* Sigue el tema: el <rect> es currentColor (tinta) y la
-                      constelación var(--sn-paper) — al inlinear el SVG estos
-                      tokens cambian con data-sn-theme. */ }
-.spec-brand-name { font-family: var(--sn-font-display); font-size: var(--sn-fs-md);
+                      constelación var(--sh-paper) — al inlinear el SVG estos
+                      tokens cambian con data-sh-theme. */ }
+.spec-brand-name { font-family: var(--sh-font-display); font-size: var(--sh-fs-md);
                    font-weight: 500; letter-spacing: -0.01em; }
-.spec-brand-ver { color: var(--sn-ink-faint); font-size: var(--sn-fs-xs);
-                  font-family: var(--sn-font-mono); }
+.spec-brand-ver { color: var(--sh-ink-faint); font-size: var(--sh-fs-xs);
+                  font-family: var(--sh-font-mono); }
 
-.spec-nav { display: flex; gap: var(--sn-s-1); margin-inline-start: var(--sn-s-4); }
-.spec-nav a { padding: var(--sn-s-1) var(--sn-s-3); border-radius: var(--sn-radius);
-              text-decoration: none; color: var(--sn-ink-soft); font-size: var(--sn-fs-sm);
-              transition: background var(--sn-dur-1), color var(--sn-dur-1); }
-.spec-nav a:hover { background: var(--sn-sunk); color: var(--sn-ink); }
-.spec-nav a[aria-current="page"] { color: var(--sn-ink); background: var(--sn-paper);
-                                   box-shadow: var(--sn-lift-paper); }
+.spec-nav { display: flex; gap: var(--sh-s-1); margin-inline-start: var(--sh-s-4); }
+.spec-nav a { padding: var(--sh-s-1) var(--sh-s-3); border-radius: var(--sh-radius);
+              text-decoration: none; color: var(--sh-ink-soft); font-size: var(--sh-fs-sm);
+              transition: background var(--sh-dur-1), color var(--sh-dur-1); }
+.spec-nav a:hover { background: var(--sh-sunk); color: var(--sh-ink); }
+.spec-nav a[aria-current="page"] { color: var(--sh-ink); background: var(--sh-paper);
+                                   box-shadow: var(--sh-lift-paper); }
 
-.spec-controls { margin-inline-start: auto; display: flex; gap: var(--sn-s-3); }
+.spec-controls { margin-inline-start: auto; display: flex; gap: var(--sh-s-3); }
 .spec-seg { border: 0; padding: 0; margin: 0; display: inline-flex;
-            background: var(--sn-sunk); border-radius: var(--sn-radius-pill);
+            background: var(--sh-sunk); border-radius: var(--sh-radius-pill);
             padding: 2px; }
-.spec-seg button { border: 0; background: transparent; padding: var(--sn-s-1) var(--sn-s-3);
-                   font: inherit; color: var(--sn-ink-soft); font-size: var(--sn-fs-xs);
-                   border-radius: var(--sn-radius-pill); cursor: pointer;
-                   transition: background var(--sn-dur-1), color var(--sn-dur-1); }
-.spec-seg button[aria-pressed="true"] { background: var(--sn-paper); color: var(--sn-ink);
-                                        box-shadow: var(--sn-lift-paper); }
+.spec-seg button { border: 0; background: transparent; padding: var(--sh-s-1) var(--sh-s-3);
+                   font: inherit; color: var(--sh-ink-soft); font-size: var(--sh-fs-xs);
+                   border-radius: var(--sh-radius-pill); cursor: pointer;
+                   transition: background var(--sh-dur-1), color var(--sh-dur-1); }
+.spec-seg button[aria-pressed="true"] { background: var(--sh-paper); color: var(--sh-ink);
+                                        box-shadow: var(--sh-lift-paper); }
 
 /* — Layout general — */
 .spec-main { flex: 1; max-width: 76rem; margin-inline: auto;
-             padding: var(--sn-s-6) var(--sn-s-5); width: 100%; box-sizing: border-box; }
-.spec-foot { padding: var(--sn-s-5); text-align: center; color: var(--sn-ink-soft);
-             font-size: var(--sn-fs-xs); border-top: var(--sn-hair); }
-.spec-foot a { color: var(--sn-ink-soft); }
+             padding: var(--sh-s-6) var(--sh-s-5); width: 100%; box-sizing: border-box; }
+.spec-foot { padding: var(--sh-s-5); text-align: center; color: var(--sh-ink-soft);
+             font-size: var(--sh-fs-xs); border-top: var(--sh-hair); }
+.spec-foot a { color: var(--sh-ink-soft); }
 
-.intro, .comp, .tokgrp { margin-bottom: var(--sn-s-7); }
-.intro h1, .comp h1 { font-family: var(--sn-font-display); font-size: var(--sn-fs-display);
-                      font-weight: 400; letter-spacing: -0.02em; margin: 0 0 var(--sn-s-3); }
-.intro .lede, .comp .lede { max-width: 38rem; font-size: var(--sn-fs-md);
-                            color: var(--sn-ink-soft); }
-.intro .lede-sub { max-width: 38rem; color: var(--sn-ink-soft); font-size: var(--sn-fs-sm);
-                   margin-top: var(--sn-s-3); }
-.comp h2 { font-family: var(--sn-font-display); font-size: var(--sn-fs-lg);
-           font-weight: 400; margin: 0 0 var(--sn-s-2); }
-.comp .meta { color: var(--sn-ink-soft); font-size: var(--sn-fs-sm);
-              max-width: 42rem; margin: 0 0 var(--sn-s-4); }
+.intro, .comp, .tokgrp { margin-bottom: var(--sh-s-7); }
+.intro h1, .comp h1 { font-family: var(--sh-font-display); font-size: var(--sh-fs-display);
+                      font-weight: 400; letter-spacing: -0.02em; margin: 0 0 var(--sh-s-3); }
+.intro .lede, .comp .lede { max-width: 38rem; font-size: var(--sh-fs-md);
+                            color: var(--sh-ink-soft); }
+.intro .lede-sub { max-width: 38rem; color: var(--sh-ink-soft); font-size: var(--sh-fs-sm);
+                   margin-top: var(--sh-s-3); }
+.comp h2 { font-family: var(--sh-font-display); font-size: var(--sh-fs-lg);
+           font-weight: 400; margin: 0 0 var(--sh-s-2); }
+.comp .meta { color: var(--sh-ink-soft); font-size: var(--sh-fs-sm);
+              max-width: 42rem; margin: 0 0 var(--sh-s-4); }
 
 /* — Bloques demo: la "hoja" donde se monta cada componente — */
 .demo {
-  background: var(--sn-paper); color: var(--sn-ink);
-  border-radius: var(--sn-radius-paper); box-shadow: var(--sn-lift-paper);
-  padding: var(--sn-s-5); margin-top: var(--sn-s-3);
+  background: var(--sh-paper); color: var(--sh-ink);
+  border-radius: var(--sh-radius-paper); box-shadow: var(--sh-lift-paper);
+  padding: var(--sh-s-5); margin-top: var(--sh-s-3);
 }
 .demo-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-             gap: var(--sn-s-5); }
-.demo-stack > * + * { margin-top: var(--sn-s-3); }
-.demo-inline { display: flex; flex-wrap: wrap; gap: var(--sn-s-2); align-items: center; }
+             gap: var(--sh-s-5); }
+.demo-stack > * + * { margin-top: var(--sh-s-3); }
+.demo-inline { display: flex; flex-wrap: wrap; gap: var(--sh-s-2); align-items: center; }
 /* Demo de .full-width: el padding lateral del contenedor se iguala a
-   --sn-paper-px (lo normal de .demo es --sn-s-5), para que el margin negativo
+   --sh-paper-px (lo normal de .demo es --sh-s-5), para que el margin negativo
    de .full-width sangre EXACTO hasta el borde del demo. */
-.demo--bleed { padding-inline: var(--sn-paper-px); }
+.demo--bleed { padding-inline: var(--sh-paper-px); }
 /* Demo del sangrado a tope: el padding vertical del contenedor se iguala a
-   --sn-paper-py para que el margin-block negativo del primer/último
+   --sh-paper-py para que el margin-block negativo del primer/último
    .full-width llegue EXACTO al borde del demo. */
-.demo--bleed-v { padding-block: var(--sn-paper-py); }
-.spec-bleed--hero { padding-block: var(--sn-s-7); }
+.demo--bleed-v { padding-block: var(--sh-paper-py); }
+.spec-bleed--hero { padding-block: var(--sh-s-7); }
 /* Inventario de clases instrumentales: tablas apiladas, celdas arriba. */
-.spec-inventory table.wikitable { display: table; width: 100%; margin: 0 0 var(--sn-s-6); }
+.spec-inventory table.wikitable { display: table; width: 100%; margin: 0 0 var(--sh-s-6); }
 .spec-inventory table.wikitable:last-child { margin-bottom: 0; }
-.spec-inventory td, .spec-inventory th { vertical-align: top; font-size: var(--sn-fs-sm); }
+.spec-inventory td, .spec-inventory th { vertical-align: top; font-size: var(--sh-fs-sm); }
 .spec-inventory td:first-child { min-width: 11rem; }
-.spec-inventory caption { text-align: start; font-weight: 600; padding-bottom: var(--sn-s-2); }
-.spec-bleed { background: var(--sn-sunk); color: var(--sn-ink-soft);
-  padding: var(--sn-s-3); text-align: center; font-size: var(--sn-fs-sm); }
+.spec-inventory caption { text-align: start; font-weight: 600; padding-bottom: var(--sh-s-2); }
+.spec-bleed { background: var(--sh-sunk); color: var(--sh-ink-soft);
+  padding: var(--sh-s-3); text-align: center; font-size: var(--sh-fs-sm); }
 
 /* — Token grids — */
-.tokgrp-h { font-family: var(--sn-font-display); font-size: var(--sn-fs-lg);
-            font-weight: 400; margin: 0 0 var(--sn-s-4);
-            padding-bottom: var(--sn-s-2); border-bottom: var(--sn-hair); }
-.tokgrp-body { display: grid; gap: var(--sn-s-4); }
+.tokgrp-h { font-family: var(--sh-font-display); font-size: var(--sh-fs-lg);
+            font-weight: 400; margin: 0 0 var(--sh-s-4);
+            padding-bottom: var(--sh-s-2); border-bottom: var(--sh-hair); }
+.tokgrp-body { display: grid; gap: var(--sh-s-4); }
 .grid-color { grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); }
 .grid-size  { grid-template-columns: 1fr; }
 .grid-other { grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); }
 
 /* Swatch */
-.sw { margin: 0; display: flex; gap: var(--sn-s-3); align-items: center;
-      background: var(--sn-paper); padding: var(--sn-s-2);
-      border-radius: var(--sn-radius); box-shadow: var(--sn-lift-paper); }
-.sw-chip { width: 3rem; height: 3rem; flex: none; border-radius: var(--sn-radius);
-           background: var(--sw-c); border: 1px solid var(--sn-hairline); }
+.sw { margin: 0; display: flex; gap: var(--sh-s-3); align-items: center;
+      background: var(--sh-paper); padding: var(--sh-s-2);
+      border-radius: var(--sh-radius); box-shadow: var(--sh-lift-paper); }
+.sw-chip { width: 3rem; height: 3rem; flex: none; border-radius: var(--sh-radius);
+           background: var(--sw-c); border: 1px solid var(--sh-hairline); }
 .sw figcaption { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.sw-var { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs);
-          color: var(--sn-ink); overflow-wrap: anywhere; }
-.sw-val { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs);
-          color: var(--sn-ink-soft); }
-.sw-note { font-size: var(--sn-fs-xs); color: var(--sn-ink-faint); margin-top: 2px; }
+.sw-var { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs);
+          color: var(--sh-ink); overflow-wrap: anywhere; }
+.sw-val { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs);
+          color: var(--sh-ink-soft); }
+.sw-note { font-size: var(--sh-fs-xs); color: var(--sh-ink-faint); margin-top: 2px; }
 
 /* Comparador de tema — el MISMO swatch semántico resuelto en claro y oscuro.
    Cada lado fuerza `color-scheme`; como los roles de color usan light-dark(),
-   cada columna resuelve su rama sola, sobre su propio fondo `--sn-field`. El
+   cada columna resuelve su rama sola, sobre su propio fondo `--sh-field`. El
    lado oscuro replica además los 4 tokens de geometría (grain/lifts) y el GRAD
    de la serif, que NO usan light-dark() (se redefinen por tema en tokens.css),
    para que sombras y textura calcen con el modo oscuro real. */
-.theme-duo { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sn-s-3);
+.theme-duo { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sh-s-3);
              align-items: start; }
-.theme-side { padding: var(--sn-s-3); border-radius: var(--sn-radius);
-              background: var(--sn-field); color: var(--sn-ink);
-              border: 1px solid var(--sn-hairline); }
+.theme-side { padding: var(--sh-s-3); border-radius: var(--sh-radius);
+              background: var(--sh-field); color: var(--sh-ink);
+              border: 1px solid var(--sh-hairline); }
 .theme-side[data-demo-theme="light"] { color-scheme: light; }
 .theme-side[data-demo-theme="dark"] {
 	color-scheme: dark;
-	--sn-field-grain: .05;
-	--sn-lift-paper: 0 1px 1px rgba(0,0,0,.25), 0 3px 10px rgba(0,0,0,.35);
-	--sn-lift:       0 1px 2px rgba(0,0,0,.35), 0 8px 22px rgba(0,0,0,.45), 0 24px 60px rgba(0,0,0,.4);
-	--sn-lift-soft:  0 2px 12px rgba(0,0,0,.4);
-	--sn-serif-grade: 30;
+	--sh-field-grain: .05;
+	--sh-lift-paper: 0 1px 1px rgba(0,0,0,.25), 0 3px 10px rgba(0,0,0,.35);
+	--sh-lift:       0 1px 2px rgba(0,0,0,.35), 0 8px 22px rgba(0,0,0,.45), 0 24px 60px rgba(0,0,0,.4);
+	--sh-lift-soft:  0 2px 12px rgba(0,0,0,.4);
+	--sh-serif-grade: 30;
 }
-.theme-side-tag { display: inline-block; font-family: var(--sn-font-mono);
-                  font-size: var(--sn-fs-xs); text-transform: uppercase;
-                  letter-spacing: .08ex; color: var(--sn-ink-faint);
-                  margin-bottom: var(--sn-s-3); }
+.theme-side-tag { display: inline-block; font-family: var(--sh-font-mono);
+                  font-size: var(--sh-fs-xs); text-transform: uppercase;
+                  letter-spacing: .08ex; color: var(--sh-ink-faint);
+                  margin-bottom: var(--sh-s-3); }
 .theme-side .grid-color { display: grid; grid-template-columns: 1fr;
-                          gap: var(--sn-s-3); }
+                          gap: var(--sh-s-3); }
 @media (max-width: 40rem) { .theme-duo { grid-template-columns: 1fr; } }
 /* Rótulos de capa en Fundamentos + tarjetas de la demo primitiva/semántica. */
-.layer-h { margin: var(--sn-s-8) 0 var(--sn-s-5); padding-top: var(--sn-s-5);
-           border-top: 2px solid var(--sn-ink); }
-.layer-h h2 { font-family: var(--sn-font-display); font-size: var(--sn-fs-xl);
-              margin: 0 0 var(--sn-s-3); }
+.layer-h { margin: var(--sh-s-8) 0 var(--sh-s-5); padding-top: var(--sh-s-5);
+           border-top: 2px solid var(--sh-ink); }
+.layer-h h2 { font-family: var(--sh-font-display); font-size: var(--sh-fs-xl);
+              margin: 0 0 var(--sh-s-3); }
 .layer-h .meta { max-width: 48rem; }
-.layer-card { padding: var(--sn-s-4); border-radius: var(--sn-radius);
-              font-size: var(--sn-fs-sm); line-height: 1.5; margin-top: var(--sn-s-3); }
-.layer-card code { font-size: var(--sn-fs-xs); }
+.layer-card { padding: var(--sh-s-4); border-radius: var(--sh-radius);
+              font-size: var(--sh-fs-sm); line-height: 1.5; margin-top: var(--sh-s-3); }
+.layer-card code { font-size: var(--sh-fs-xs); }
 .layer-card-note { font-style: italic; opacity: .8; }
-.layer-card--sem  { background: var(--sn-paper); color: var(--sn-ink);
-                    border: 1px solid var(--sn-hairline); }
-.layer-card--prim { background: var(--sn-papel-50); color: var(--sn-tinta-750);
-                    border: 1px solid var(--sn-papel-600); }
+.layer-card--sem  { background: var(--sh-paper); color: var(--sh-ink);
+                    border: 1px solid var(--sh-hairline); }
+.layer-card--prim { background: var(--sh-papel-50); color: var(--sh-tinta-750);
+                    border: 1px solid var(--sh-papel-600); }
 
 /* Size */
-.sz { margin: 0; padding: var(--sn-s-3); background: var(--sn-paper);
-      border-radius: var(--sn-radius); box-shadow: var(--sn-lift-paper);
-      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sn-s-4);
+.sz { margin: 0; padding: var(--sh-s-3); background: var(--sh-paper);
+      border-radius: var(--sh-radius); box-shadow: var(--sh-lift-paper);
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sh-s-4);
       align-items: center; }
 .sz-bar { display: block; height: 1.25rem; width: var(--sz-w);
-          background: var(--sn-ink); border-radius: 2px; max-width: 100%; }
+          background: var(--sh-ink); border-radius: 2px; max-width: 100%; }
 .sz figcaption { display: flex; flex-direction: column; gap: 2px; text-align: end; }
-.sz-var { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs);
-          color: var(--sn-ink); }
-.sz-val { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs);
-          color: var(--sn-ink-soft); }
-.sz-note { font-size: var(--sn-fs-xs); color: var(--sn-ink-faint); }
+.sz-var { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs);
+          color: var(--sh-ink); }
+.sz-val { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs);
+          color: var(--sh-ink-soft); }
+.sz-note { font-size: var(--sh-fs-xs); color: var(--sh-ink-faint); }
 
 /* Type scale */
-.ts { margin: 0; padding: var(--sn-s-3); background: var(--sn-paper);
-      border-radius: var(--sn-radius); box-shadow: var(--sn-lift-paper);
-      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sn-s-4);
+.ts { margin: 0; padding: var(--sh-s-3); background: var(--sh-paper);
+      border-radius: var(--sh-radius); box-shadow: var(--sh-lift-paper);
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sh-s-4);
       align-items: baseline; line-height: 1.2; }
-.ts-sample { font-family: var(--sn-font-display); color: var(--sn-ink); }
+.ts-sample { font-family: var(--sh-font-display); color: var(--sh-ink); }
 .ts figcaption { display: flex; flex-direction: column; gap: 2px; text-align: end;
-                 font-size: var(--sn-fs-xs); line-height: 1.4; }
-.ts-var { font-family: var(--sn-font-mono); color: var(--sn-ink); }
-.ts-val { font-family: var(--sn-font-mono); color: var(--sn-ink-soft); }
-.ts-note { color: var(--sn-ink-faint); }
+                 font-size: var(--sh-fs-xs); line-height: 1.4; }
+.ts-var { font-family: var(--sh-font-mono); color: var(--sh-ink); }
+.ts-val { font-family: var(--sh-font-mono); color: var(--sh-ink-soft); }
+.ts-note { color: var(--sh-ink-faint); }
 
 /* Shadow */
-.sh { margin: 0; padding: var(--sn-s-4); background: var(--sn-field);
-      border-radius: var(--sn-radius); display: flex; gap: var(--sn-s-4);
-      align-items: center; border: var(--sn-hair); }
-.sh-box { width: 4rem; height: 4rem; flex: none; background: var(--sn-paper);
-          border-radius: var(--sn-radius); }
+.sh { margin: 0; padding: var(--sh-s-4); background: var(--sh-field);
+      border-radius: var(--sh-radius); display: flex; gap: var(--sh-s-4);
+      align-items: center; border: var(--sh-hair); }
+.sh-box { width: 4rem; height: 4rem; flex: none; background: var(--sh-paper);
+          border-radius: var(--sh-radius); }
 .sh figcaption { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.sh-var { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs); color: var(--sn-ink); }
-.sh-val { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs); color: var(--sn-ink-soft);
+.sh-var { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs); color: var(--sh-ink); }
+.sh-val { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs); color: var(--sh-ink-soft);
           overflow-wrap: anywhere; }
-.sh-note { font-size: var(--sn-fs-xs); color: var(--sn-ink-faint); }
+.sh-note { font-size: var(--sh-fs-xs); color: var(--sh-ink-faint); }
 
 /* KV genérico */
-.kv { display: flex; flex-direction: column; gap: 2px; padding: var(--sn-s-3);
-      background: var(--sn-paper); border-radius: var(--sn-radius);
-      box-shadow: var(--sn-lift-paper); }
-.kv-var { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs); color: var(--sn-ink); }
-.kv-val { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs); color: var(--sn-ink-soft);
+.kv { display: flex; flex-direction: column; gap: 2px; padding: var(--sh-s-3);
+      background: var(--sh-paper); border-radius: var(--sh-radius);
+      box-shadow: var(--sh-lift-paper); }
+.kv-var { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs); color: var(--sh-ink); }
+.kv-val { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs); color: var(--sh-ink-soft);
           overflow-wrap: anywhere; }
-.kv-note { font-size: var(--sn-fs-xs); color: var(--sn-ink-faint); margin-top: 2px; }
+.kv-note { font-size: var(--sh-fs-xs); color: var(--sh-ink-faint); margin-top: 2px; }
 
 /* — Colofón tipográfico — */
-.colophon { display: grid; gap: var(--sn-s-5); }
+.colophon { display: grid; gap: var(--sh-s-5); }
 .colophon-row {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
-  gap: var(--sn-s-5); align-items: center;
-  padding-bottom: var(--sn-s-4); border-bottom: var(--sn-hair);
+  gap: var(--sh-s-5); align-items: center;
+  padding-bottom: var(--sh-s-4); border-bottom: var(--sh-hair);
 }
 .colophon-row:last-child { border-bottom: 0; padding-bottom: 0; }
 .colophon-name {
   font-size: clamp(2.2rem, 1.6rem + 2vw, 3.2rem);
-  line-height: 1.05; letter-spacing: -0.01em; color: var(--sn-ink);
+  line-height: 1.05; letter-spacing: -0.01em; color: var(--sh-ink);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .colophon-meta {
-  font-size: var(--sn-fs-sm); color: var(--sn-ink-soft);
+  font-size: var(--sh-fs-sm); color: var(--sh-ink-soft);
   line-height: 1.6;
 }
-.colophon-meta strong { color: var(--sn-ink); font-weight: 500; }
+.colophon-meta strong { color: var(--sh-ink); font-weight: 500; }
 .colophon-meta code { font-size: 0.95em; }
 
 /* — Componentes propios del espécimen que el skin aún no cubre. — */
-/* Botón base (refleja la capa semántica --sn-btn-*) */
-.sn-btn {
+/* Botón base (refleja la capa semántica --sh-btn-*) */
+.sh-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  height: var(--sn-ctl); padding: 0 var(--sn-s-4);
-  font: inherit; font-size: var(--sn-fs-sm); font-weight: 500;
-  background: var(--sn-btn-bg); color: var(--sn-btn-fg);
-  border: 1px solid var(--sn-btn-border); border-radius: var(--sn-radius);
-  cursor: pointer; transition: background var(--sn-dur-1), border-color var(--sn-dur-1);
+  height: var(--sh-ctl); padding: 0 var(--sh-s-4);
+  font: inherit; font-size: var(--sh-fs-sm); font-weight: 500;
+  background: var(--sh-btn-bg); color: var(--sh-btn-fg);
+  border: 1px solid var(--sh-btn-border); border-radius: var(--sh-radius);
+  cursor: pointer; transition: background var(--sh-dur-1), border-color var(--sh-dur-1);
 }
-.sn-btn:hover, .sn-btn[data-state="hover"] {
-  background: var(--sn-btn-bg-hover); border-color: var(--sn-btn-border-hover);
+.sh-btn:hover, .sh-btn[data-state="hover"] {
+  background: var(--sh-btn-bg-hover); border-color: var(--sh-btn-border-hover);
 }
-.sn-btn:focus-visible { outline: none; border-color: var(--sn-focus-border);
-                        box-shadow: var(--sn-focus-ring); }
-.sn-btn[disabled] { color: var(--sn-ink-faint); cursor: not-allowed;
-                    background: var(--sn-field-bg-disabled); }
-.sn-btn-primary {
-  background: var(--sn-btn-primary-bg); color: var(--sn-btn-primary-fg);
-  border-color: var(--sn-btn-primary-bg);
+.sh-btn:focus-visible { outline: none; border-color: var(--sh-focus-border);
+                        box-shadow: var(--sh-focus-ring); }
+.sh-btn[disabled] { color: var(--sh-ink-faint); cursor: not-allowed;
+                    background: var(--sh-field-bg-disabled); }
+.sh-btn-primary {
+  background: var(--sh-btn-primary-bg); color: var(--sh-btn-primary-fg);
+  border-color: var(--sh-btn-primary-bg);
 }
-.sn-btn-primary:hover, .sn-btn-primary[data-state="hover"] {
-  background: var(--sn-btn-primary-bg-hover); border-color: var(--sn-btn-primary-bg-hover);
+.sh-btn-primary:hover, .sh-btn-primary[data-state="hover"] {
+  background: var(--sh-btn-primary-bg-hover); border-color: var(--sh-btn-primary-bg-hover);
 }
-.sn-btn-danger {
-  background: var(--sn-btn-danger-bg); color: var(--sn-btn-danger-fg);
-  border-color: var(--sn-btn-danger-bg);
+.sh-btn-danger {
+  background: var(--sh-btn-danger-bg); color: var(--sh-btn-danger-fg);
+  border-color: var(--sh-btn-danger-bg);
 }
-.sn-btn-danger:hover, .sn-btn-danger[data-state="hover"] { filter: brightness(.92); }
-.sn-btn-ghost { background: transparent; border-color: transparent; color: var(--sn-ink-soft); }
-.sn-btn-ghost:hover { background: var(--sn-sunk); color: var(--sn-ink); }
+.sh-btn-danger:hover, .sh-btn-danger[data-state="hover"] { filter: brightness(.92); }
+.sh-btn-ghost { background: transparent; border-color: transparent; color: var(--sh-ink-soft); }
+.sh-btn-ghost:hover { background: var(--sh-sunk); color: var(--sh-ink); }
 
-.btn-row { display: flex; align-items: center; gap: var(--sn-s-3); flex-wrap: wrap;
-           padding: var(--sn-s-3) 0; border-bottom: var(--sn-hair); }
+.btn-row { display: flex; align-items: center; gap: var(--sh-s-3); flex-wrap: wrap;
+           padding: var(--sh-s-3) 0; border-bottom: var(--sh-hair); }
 .btn-row:last-child { border-bottom: 0; }
-.btn-row-label { font-size: var(--sn-fs-xs); color: var(--sn-ink-faint);
+.btn-row-label { font-size: var(--sh-fs-xs); color: var(--sh-ink-faint);
                  text-transform: uppercase; letter-spacing: 0.05em;
-                 width: 6rem; flex: none; font-family: var(--sn-font-mono); }
+                 width: 6rem; flex: none; font-family: var(--sh-font-mono); }
 
 /* Formularios */
-.sn-form p { display: flex; flex-direction: column; gap: var(--sn-s-1); margin: 0 0 var(--sn-s-4); }
-.sn-form label { font-size: var(--sn-fs-sm); color: var(--sn-ink-soft); }
-.sn-form :is(input[type="text"], input[type="search"], textarea, select) {
-  font: inherit; font-size: var(--sn-fs-base);
-  background: var(--sn-field-bg); color: var(--sn-field-fg);
-  border: 1px solid var(--sn-field-border); border-radius: var(--sn-radius);
-  padding: var(--sn-s-2) var(--sn-s-3); width: 100%; box-sizing: border-box;
-  transition: border-color var(--sn-dur-1), box-shadow var(--sn-dur-1);
+.sh-form p { display: flex; flex-direction: column; gap: var(--sh-s-1); margin: 0 0 var(--sh-s-4); }
+.sh-form label { font-size: var(--sh-fs-sm); color: var(--sh-ink-soft); }
+.sh-form :is(input[type="text"], input[type="search"], textarea, select) {
+  font: inherit; font-size: var(--sh-fs-base);
+  background: var(--sh-field-bg); color: var(--sh-field-fg);
+  border: 1px solid var(--sh-field-border); border-radius: var(--sh-radius);
+  padding: var(--sh-s-2) var(--sh-s-3); width: 100%; box-sizing: border-box;
+  transition: border-color var(--sh-dur-1), box-shadow var(--sh-dur-1);
 }
-.sn-form :is(input, textarea, select):focus {
-  outline: none; border-color: var(--sn-focus-border); box-shadow: var(--sn-focus-ring);
+.sh-form :is(input, textarea, select):focus {
+  outline: none; border-color: var(--sh-focus-border); box-shadow: var(--sh-focus-ring);
 }
-.sn-form ::placeholder { color: var(--sn-field-placeholder); }
-.sn-form :is(input[type="checkbox"], input[type="radio"]) {
-  accent-color: var(--sn-ink); margin-inline-end: var(--sn-s-2);
+.sh-form ::placeholder { color: var(--sh-field-placeholder); }
+.sh-form :is(input[type="checkbox"], input[type="radio"]) {
+  accent-color: var(--sh-ink); margin-inline-end: var(--sh-s-2);
 }
-.sn-form-actions { display: flex; flex-direction: row !important; gap: var(--sn-s-2); }
+.sh-form-actions { display: flex; flex-direction: row !important; gap: var(--sh-s-2); }
 
 /* Tabs de página */
-.sn-tabs { background: var(--sn-paper); border-radius: var(--sn-radius-paper);
-           box-shadow: var(--sn-lift-paper); padding: 0 var(--sn-s-3); }
-.sn-tabs ul { display: flex; gap: 0; list-style: none; margin: 0; padding: 0; }
-.sn-tabs li a { display: inline-block; padding: var(--sn-s-3) var(--sn-s-4);
-                color: var(--sn-ink-soft); text-decoration: none;
-                font-size: var(--sn-fs-sm); border-bottom: 2px solid transparent;
-                transition: color var(--sn-dur-1), border-color var(--sn-dur-1); }
-.sn-tabs li a:hover { color: var(--sn-ink); }
-.sn-tabs li.selected a { color: var(--sn-ink); border-bottom-color: var(--sn-nova); }
-.sn-tabs li.new a { color: var(--sn-link); }
+.sh-tabs { background: var(--sh-paper); border-radius: var(--sh-radius-paper);
+           box-shadow: var(--sh-lift-paper); padding: 0 var(--sh-s-3); }
+.sh-tabs ul { display: flex; gap: 0; list-style: none; margin: 0; padding: 0; }
+.sh-tabs li a { display: inline-block; padding: var(--sh-s-3) var(--sh-s-4);
+                color: var(--sh-ink-soft); text-decoration: none;
+                font-size: var(--sh-fs-sm); border-bottom: 2px solid transparent;
+                transition: color var(--sh-dur-1), border-color var(--sh-dur-1); }
+.sh-tabs li a:hover { color: var(--sh-ink); }
+.sh-tabs li.selected a { color: var(--sh-ink); border-bottom-color: var(--sh-nova); }
+.sh-tabs li.new a { color: var(--sh-link); }
 
-/* (Los "washes" .sn-wash-* eran clases INVENTADAS por el espécimen: no existen
+/* (Los "washes" .sh-wash-* eran clases INVENTADAS por el espécimen: no existen
    en el skin. Se retiraron. El patrón real de banda con lavado semántico es la
    familia .fondo-* del skin, documentada en "Bandas de fondo".) */
 
-/* Badges: .sn-badge (+ variantes -nova/-ok/-warn/-danger) ahora es componente
-   REAL del skin (resources/stellamereida.css), no specimen-only. El especimen
-   carga stellamereida.css → los ejemplos se pintan con el componente shippeado;
+/* Badges: .sh-badge (+ variantes -nova/-ok/-warn/-danger) ahora es componente
+   REAL del skin (resources/santa-hermandad.css), no specimen-only. El especimen
+   carga santa-hermandad.css → los ejemplos se pintan con el componente shippeado;
    no se redefine aquí para no duplicar/divergir. */
-.sn-pill { display: inline-flex; align-items: center; padding: 2px var(--sn-s-3);
-           font-size: var(--sn-fs-xs); background: var(--sn-sunk);
-           color: var(--sn-ink-soft); border-radius: var(--sn-radius-pill);
-           font-family: var(--sn-font-mono); }
+.sh-pill { display: inline-flex; align-items: center; padding: 2px var(--sh-s-3);
+           font-size: var(--sh-fs-xs); background: var(--sh-sunk);
+           color: var(--sh-ink-soft); border-radius: var(--sh-radius-pill);
+           font-family: var(--sh-font-mono); }
 
 /* TOC */
-.sn-toc { background: var(--sn-paper); border-radius: var(--sn-radius);
-          padding: var(--sn-s-4); box-shadow: var(--sn-lift-paper); }
-.sn-toc-h { font-family: var(--sn-font-display); font-size: var(--sn-fs-md);
-            font-weight: 400; margin: 0 0 var(--sn-s-3); }
-.sn-toc ol { list-style: none; margin: 0; padding: 0; }
-.sn-toc ol ol { padding-inline-start: var(--sn-s-5); margin-top: var(--sn-s-1); }
-.sn-toc li { margin: var(--sn-s-1) 0; }
-.sn-toc a { display: inline-flex; align-items: baseline; gap: var(--sn-s-2);
-            text-decoration: none; color: var(--sn-ink-soft);
-            font-size: var(--sn-fs-sm); padding: 2px 0;
-            border-inline-start: 2px solid transparent; padding-inline-start: var(--sn-s-2); }
-.sn-toc a:hover { color: var(--sn-ink); }
-.sn-toc a.active { color: var(--sn-ink); border-inline-start-color: var(--sn-nova); }
-.sn-toc .num { font-family: var(--sn-font-mono); font-size: var(--sn-fs-xs);
-               color: var(--sn-ink-faint); min-width: 1.5em; }
+.sh-toc { background: var(--sh-paper); border-radius: var(--sh-radius);
+          padding: var(--sh-s-4); box-shadow: var(--sh-lift-paper); }
+.sh-toc-h { font-family: var(--sh-font-display); font-size: var(--sh-fs-md);
+            font-weight: 400; margin: 0 0 var(--sh-s-3); }
+.sh-toc ol { list-style: none; margin: 0; padding: 0; }
+.sh-toc ol ol { padding-inline-start: var(--sh-s-5); margin-top: var(--sh-s-1); }
+.sh-toc li { margin: var(--sh-s-1) 0; }
+.sh-toc a { display: inline-flex; align-items: baseline; gap: var(--sh-s-2);
+            text-decoration: none; color: var(--sh-ink-soft);
+            font-size: var(--sh-fs-sm); padding: 2px 0;
+            border-inline-start: 2px solid transparent; padding-inline-start: var(--sh-s-2); }
+.sh-toc a:hover { color: var(--sh-ink); }
+.sh-toc a.active { color: var(--sh-ink); border-inline-start-color: var(--sh-nova); }
+.sh-toc .num { font-family: var(--sh-font-mono); font-size: var(--sh-fs-xs);
+               color: var(--sh-ink-faint); min-width: 1.5em; }
 
 /* Tablas: SIN andamio propio del espécimen. El estilo real de
    `.wikitable` / `.smwtable` / `.broadtable` y de las fichas
-   `table.plantilla` vive en stellamereida.css (que el espécimen carga) y se
-   aplica dentro de `.sn-body`. Una regla `.wikitable` local aquí solo
+   `table.plantilla` vive en santa-hermandad.css (que el espécimen carga) y se
+   aplica dentro de `.sh-body`. Una regla `.wikitable` local aquí solo
    introduciría inexactitudes (p.ej. filas alternadas, que el skin NO usa:
    su diseño son filetes horizontales uniformes, cabecera transparente). */
 
 /* Footer del simulacro de layout */
-.demo-app .sn-footer { padding: var(--sn-s-6) 0; border-top: var(--sn-hair);
-                       margin-top: var(--sn-s-6); }
-.demo-app .sn-footer-inner { max-width: var(--sn-shell); margin-inline: auto;
-                             padding-inline: var(--sn-s-5); display: flex;
-                             justify-content: space-between; gap: var(--sn-s-5);
+.demo-app .sh-footer { padding: var(--sh-s-6) 0; border-top: var(--sh-hair);
+                       margin-top: var(--sh-s-6); }
+.demo-app .sh-footer-inner { max-width: var(--sh-shell); margin-inline: auto;
+                             padding-inline: var(--sh-s-5); display: flex;
+                             justify-content: space-between; gap: var(--sh-s-5);
                              flex-wrap: wrap; }
-.demo-app .sn-footer-col p { margin: 0; font-size: var(--sn-fs-sm);
-                              color: var(--sn-ink-soft); }
-.demo-app .sn-footer-tools ul { list-style: none; margin: 0; padding: 0;
-                                 display: flex; gap: var(--sn-s-4);
-                                 font-size: var(--sn-fs-sm); }
-.demo-app .sn-footer-tools a { color: var(--sn-ink-soft); text-decoration: none; }
-.demo-app .sn-footer-tools a:hover { color: var(--sn-ink); }
+.demo-app .sh-footer-col p { margin: 0; font-size: var(--sh-fs-sm);
+                              color: var(--sh-ink-soft); }
+.demo-app .sh-footer-tools ul { list-style: none; margin: 0; padding: 0;
+                                 display: flex; gap: var(--sh-s-4);
+                                 font-size: var(--sh-fs-sm); }
+.demo-app .sh-footer-tools a { color: var(--sh-ink-soft); text-decoration: none; }
+.demo-app .sh-footer-tools a:hover { color: var(--sh-ink); }
 
 /* Demo del layout completo: dejarlo respirar contra el chrome del espécimen */
-.demo-app { background: var(--sn-field); margin: calc(-1 * var(--sn-s-6))
-                                           calc(-1 * var(--sn-s-5)); }
-.demo-app .sn-shell { max-width: var(--sn-shell); margin-inline: auto;
-                       padding: var(--sn-s-6) var(--sn-s-5); }
-.demo-app .sn-paper { background: var(--sn-paper); border-radius: var(--sn-radius-paper);
-                       box-shadow: var(--sn-lift-paper);
-                       /* el relleno REAL de la hoja (contrato --sn-paper-px/py), para
+.demo-app { background: var(--sh-field); margin: calc(-1 * var(--sh-s-6))
+                                           calc(-1 * var(--sh-s-5)); }
+.demo-app .sh-shell { max-width: var(--sh-shell); margin-inline: auto;
+                       padding: var(--sh-s-6) var(--sh-s-5); }
+.demo-app .sh-paper { background: var(--sh-paper); border-radius: var(--sh-radius-paper);
+                       box-shadow: var(--sh-lift-paper);
+                       /* el relleno REAL de la hoja (contrato --sh-paper-px/py), para
                           que .full-width y .fondo-* sangren exacto al borde */
-                       padding: var(--sn-paper-py) var(--sn-paper-px); }
+                       padding: var(--sh-paper-py) var(--sh-paper-px); }
 /* Subnavegación de "Estilos aplicados" */
-.spec-subnav { display: flex; flex-wrap: wrap; gap: var(--sn-s-1);
-               padding: var(--sn-s-2) var(--sn-s-5); background: var(--sn-sunk);
-               border-bottom: 1px solid var(--sn-hairline); font-size: var(--sn-fs-sm); }
-.spec-subnav a { padding: var(--sn-s-1) var(--sn-s-3); border-radius: var(--sn-radius);
-                 color: var(--sn-ink-soft); text-decoration: none; }
-.spec-subnav a:hover { color: var(--sn-ink); }
-.spec-subnav a[aria-current="page"] { color: var(--sn-ink); background: var(--sn-paper); }
-/* El CONTENIDO del paper (h1/h2/párrafos/enlaces/cita/aviso .sn-notice) NO se
-   re-estila aquí: lo pinta la CSS REAL del skin (stellamereida.css, que el
-   espécimen carga). El contenido del layout vive dentro de `.sn-body`, así que
+.spec-subnav { display: flex; flex-wrap: wrap; gap: var(--sh-s-1);
+               padding: var(--sh-s-2) var(--sh-s-5); background: var(--sh-sunk);
+               border-bottom: 1px solid var(--sh-hairline); font-size: var(--sh-fs-sm); }
+.spec-subnav a { padding: var(--sh-s-1) var(--sh-s-3); border-radius: var(--sh-radius);
+                 color: var(--sh-ink-soft); text-decoration: none; }
+.spec-subnav a:hover { color: var(--sh-ink); }
+.spec-subnav a[aria-current="page"] { color: var(--sh-ink); background: var(--sh-paper); }
+/* El CONTENIDO del paper (h1/h2/párrafos/enlaces/cita/aviso .sh-notice) NO se
+   re-estila aquí: lo pinta la CSS REAL del skin (santa-hermandad.css, que el
+   espécimen carga). El contenido del layout vive dentro de `.sh-body`, así que
    hereda tipografía, jerarquía de cabeceras, enlaces, blockquote y el aviso
-   `.sn-notice` tal cual el skin — sin CSS custom que diverja. Antes esta zona
-   forzaba cabeceras a la familia display (el skin ya usa --sn-font-text) y
-   falseaba `.sn-notice` como caja simple (el real es la banda superior del
-   paper con su token --sn-notice-bg): ambas cosas se retiraron. */
+   `.sh-notice` tal cual el skin — sin CSS custom que diverja. Antes esta zona
+   forzaba cabeceras a la familia display (el skin ya usa --sh-font-text) y
+   falseaba `.sh-notice` como caja simple (el real es la banda superior del
+   paper con su token --sh-notice-bg): ambas cosas se retiraron. */
 
-pre, code { font-family: var(--sn-font-mono); }
-pre { background: var(--sn-sunk); padding: var(--sn-s-3) var(--sn-s-4);
-      border-radius: var(--sn-radius); overflow-x: auto; font-size: var(--sn-fs-sm); }
-code { background: var(--sn-sunk); padding: 1px 4px; border-radius: 2px;
+pre, code { font-family: var(--sh-font-mono); }
+pre { background: var(--sh-sunk); padding: var(--sh-s-3) var(--sh-s-4);
+      border-radius: var(--sh-radius); overflow-x: auto; font-size: var(--sh-fs-sm); }
+code { background: var(--sh-sunk); padding: 1px 4px; border-radius: 2px;
        font-size: 0.9em; }
 pre code { background: transparent; padding: 0; }
 
-/* `.poem` ya está estilada por stellamereida.css (familia display,
+/* `.poem` ya está estilada por santa-hermandad.css (familia display,
    white-space: pre-wrap, `.poem br { display: none }`). No redefinir aquí. */
 
 /* — Bloque "uso": código wikitexto a la izquierda, render a la derecha
@@ -396,8 +396,8 @@ pre code { background: transparent; padding: 0; }
 .spec-usage.grilla.cols-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--sn-s-4);
-  margin-top: var(--sn-s-3);
+  gap: var(--sh-s-4);
+  margin-top: var(--sh-s-3);
   margin-bottom: 0;
   align-items: stretch;
 }
@@ -406,13 +406,13 @@ pre code { background: transparent; padding: 0; }
 }
 .spec-usage > pre.howto-code {
   margin: 0;
-  padding: var(--sn-s-4);
-  background: var(--sn-sunk);
-  border: 1px solid var(--sn-hairline-soft);
-  border-radius: var(--sn-radius);
-  font-family: var(--sn-font-mono);
-  font-size: var(--sn-fs-xs);
-  color: var(--sn-ink);
+  padding: var(--sh-s-4);
+  background: var(--sh-sunk);
+  border: 1px solid var(--sh-hairline-soft);
+  border-radius: var(--sh-radius);
+  font-family: var(--sh-font-mono);
+  font-size: var(--sh-fs-xs);
+  color: var(--sh-ink);
   line-height: 1.55;
   overflow-x: auto;
   white-space: pre;
@@ -422,67 +422,67 @@ pre code { background: transparent; padding: 0; }
 /* — Notas explicativas debajo del bloque de uso ── prosa secundaria
    sobre fondo sunk, para distinguirla del cuerpo editorial del demo. */
 .spec-notes {
-  margin-top: var(--sn-s-4);
-  padding: var(--sn-s-3) var(--sn-s-4);
-  background: var(--sn-sunk);
-  border-radius: var(--sn-radius);
-  font-size: var(--sn-fs-sm);
-  color: var(--sn-ink-soft);
+  margin-top: var(--sh-s-4);
+  padding: var(--sh-s-3) var(--sh-s-4);
+  background: var(--sh-sunk);
+  border-radius: var(--sh-radius);
+  font-size: var(--sh-fs-sm);
+  color: var(--sh-ink-soft);
 }
-.spec-notes p { margin: 0 0 var(--sn-s-2); line-height: 1.55; }
+.spec-notes p { margin: 0 0 var(--sh-s-2); line-height: 1.55; }
 .spec-notes p:last-child { margin-bottom: 0; }
 .spec-notes p code { font-size: 0.92em; }
 
 /* — Subtítulos dentro de un componente (p. ej. variantes de grilla) — */
 .spec-subh {
-  font-family: var(--sn-font-mono);
-  font-size: var(--sn-fs-xs);
+  font-family: var(--sh-font-mono);
+  font-size: var(--sh-fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 500;
-  color: var(--sn-ink-soft);
-  margin: var(--sn-s-5) 0 var(--sn-s-2);
+  color: var(--sh-ink-soft);
+  margin: var(--sh-s-5) 0 var(--sh-s-2);
 }
 
 /* — Celda neutra para demostrar grillas: contorno sobrio, contenido
    pequeño centrado — no compite con el contenido editorial real. */
 .spec-cell {
-  padding: var(--sn-s-4);
-  background: var(--sn-sunk);
-  border-radius: var(--sn-radius);
+  padding: var(--sh-s-4);
+  background: var(--sh-sunk);
+  border-radius: var(--sh-radius);
   text-align: center;
-  font-family: var(--sn-font-mono);
-  font-size: var(--sn-fs-sm);
-  color: var(--sn-ink-soft);
+  font-family: var(--sh-font-mono);
+  font-size: var(--sh-fs-sm);
+  color: var(--sh-ink-soft);
 }
 
-/* Iconbutton mínimo (el stellamereida.css real lo cubre, pero el demo aislado
+/* Iconbutton mínimo (el santa-hermandad.css real lo cubre, pero el demo aislado
    no siempre está dentro de los selectores anclados al chrome) */
-.sn-iconbtn { display: inline-grid; place-items: center;
-              width: var(--sn-ctl); height: var(--sn-ctl);
-              background: transparent; color: var(--sn-icon);
-              border: 1px solid transparent; border-radius: var(--sn-radius);
-              cursor: pointer; transition: background var(--sn-dur-1),
-              color var(--sn-dur-1), border-color var(--sn-dur-1); }
-.sn-iconbtn:hover { background: var(--sn-sunk); color: var(--sn-icon-active);
-                    border-color: var(--sn-hairline); }
+.sh-iconbtn { display: inline-grid; place-items: center;
+              width: var(--sh-ctl); height: var(--sh-ctl);
+              background: transparent; color: var(--sh-icon);
+              border: 1px solid transparent; border-radius: var(--sh-radius);
+              cursor: pointer; transition: background var(--sh-dur-1),
+              color var(--sh-dur-1), border-color var(--sh-dur-1); }
+.sh-iconbtn:hover { background: var(--sh-sunk); color: var(--sh-icon-active);
+                    border-color: var(--sh-hairline); }
 
 /* === Galería nativa <gallery> (layout base) ============================
    El módulo del core `mediawiki.page.gallery.styles` aporta el LAYOUT de
    `ul.gallery.mw-gallery-traditional`; carga on-demand sólo en páginas con
    <gallery>, así que el espécimen estático lo replica. El COLOR/recuadro de
    cada caja y el tamaño de la leyenda ya los viste el skin
-   (`.sn-body li.gallerybox div.thumb`, `.sn-body .gallerytext`). */
+   (`.sh-body li.gallerybox div.thumb`, `.sh-body .gallerytext`). */
 .mw-parser-output ul.gallery {
-	list-style: none; margin: var(--sn-s-3) 0; padding: 0;
-	display: flex; flex-wrap: wrap; gap: var(--sn-s-3);
+	list-style: none; margin: var(--sh-s-3) 0; padding: 0;
+	display: flex; flex-wrap: wrap; gap: var(--sh-s-3);
 }
 .mw-parser-output li.gallerybox { display: flex; flex-direction: column; }
 .mw-parser-output li.gallerybox div.thumb {
 	display: flex; align-items: center; justify-content: center; margin: 0;
 }
 .mw-parser-output li.gallerybox div.thumb img { display: block; max-width: 100%; height: auto; }
-.mw-parser-output .gallerytext { padding: var(--sn-s-1) .25rem 0; text-align: center; }
+.mw-parser-output .gallerytext { padding: var(--sh-s-1) .25rem 0; text-align: center; }
 
 /* === Tarjeta .portafolio (espejo de Plantilla:Portafolio/style.css) =====
    Miniatura + título + alumnos + palabras clave. Suelta (p.ej. #ask inline)
@@ -490,16 +490,16 @@ pre code { background: transparent; padding: 0; }
    celda (width:auto) y la separación la da el gap. */
 .mw-parser-output .portafolio {
 	display: inline-block; vertical-align: top; width: 16rem;
-	margin: 0 var(--sn-s-3) var(--sn-s-3) 0; padding: var(--sn-s-2);
-	background: var(--sn-paper-edge); border-radius: var(--sn-radius);
+	margin: 0 var(--sh-s-3) var(--sh-s-3) 0; padding: var(--sh-s-2);
+	background: var(--sh-paper-edge); border-radius: var(--sh-radius);
 	position: relative;
 }
 /* Toda la tarjeta enlaza a su página (patrón "stretched link"). */
 .mw-parser-output .portafolio .title a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .mw-parser-output :is(.grilla, .grid) .portafolio { width: auto; margin: 0; }
 .mw-parser-output .portafolio .thumb img { width: 100%; height: auto; }
-.mw-parser-output .portafolio .text { font-size: var(--sn-fs-sm); line-height: 1em; margin: 0; text-align: left !important; }
-.mw-parser-output .portafolio .text .title { display: block; margin: var(--sn-s-4) 0; font-weight: bold !important; }
+.mw-parser-output .portafolio .text { font-size: var(--sh-fs-sm); line-height: 1em; margin: 0; text-align: left !important; }
+.mw-parser-output .portafolio .text .title { display: block; margin: var(--sh-s-4) 0; font-weight: bold !important; }
 
 /* === Ficha Personal (espejo de Plantilla:Ficha Personal/style.css) ======
    Foto circular + bio en dos columnas; típica de los #ask format=template
@@ -507,75 +507,75 @@ pre code { background: transparent; padding: 0; }
 .mw-parser-output .ficha-personal {
 	display: grid; align-items: center; min-height: 10rem;
 	grid-template-columns: 1fr 2fr; gap: 1rem; column-gap: 1rem;
-	font-size: var(--sn-fs-sm); line-height: 120%; max-width: 24rem;
+	font-size: var(--sh-fs-sm); line-height: 120%; max-width: 24rem;
 }
 .mw-parser-output .ficha-personal > .foto > img { border-radius: 50%; }
 .mw-parser-output .ficha-personal > .bio > h3.name {
-	font-size: var(--sn-fs-xs) !important; line-height: 110%;
+	font-size: var(--sh-fs-xs) !important; line-height: 110%;
 	text-transform: uppercase; font-weight: 500; letter-spacing: .08ex; margin: 0;
 }
-.mw-parser-output .ficha-personal > .bio > span.text { font-size: var(--sn-fs-xs); }
+.mw-parser-output .ficha-personal > .bio > span.text { font-size: var(--sh-fs-xs); }
 
 /* === Documento miniatura .dm (espejo de Plantilla:Documento miniatura/styles.css)
    Tarjeta de una fila: título enlazado + pie (autor · año) + guía. Se apila en
    columna larga desde un #ask que lista documentos/proyectos. Cada texto corre a
-   `line-height: var(--sn-baseline)` (una línea base), y el relleno vertical usa
-   `--sn-baseline-half` a cada lado → suma UNA línea base, así la tarjeta cierra en
+   `line-height: var(--sh-baseline)` (una línea base), y el relleno vertical usa
+   `--sh-baseline-half` a cada lado → suma UNA línea base, así la tarjeta cierra en
    un número entero de baselines y una columna no acumula desfase. Es el consumidor
    canónico del token. NOTA DE SINCRONÍA: la plantilla viva aún usa
-   `padding: var(--sn-s-3)` (la aproximación); el espécimen muestra el estado
-   objetivo tras migrar a `--sn-baseline-half` (ver docs/tokens.css regla 4). */
+   `padding: var(--sh-s-3)` (la aproximación); el espécimen muestra el estado
+   objetivo tras migrar a `--sh-baseline-half` (ver docs/tokens.css regla 4). */
 .mw-parser-output .dm {
 	position: relative;
-	padding: var(--sn-baseline-half) var(--sn-s-3);
-	box-shadow: inset 0 .5px 0 var(--sn-ink-faint);
+	padding: var(--sh-baseline-half) var(--sh-s-3);
+	box-shadow: inset 0 .5px 0 var(--sh-ink-faint);
 	background-color: transparent;
 	transition: background-color .6s ease;
 }
-.mw-parser-output .dm:hover { background-color: var(--sn-nova-wash); }
-.mw-parser-output .dm-titulo { line-height: var(--sn-baseline); }
-.mw-parser-output .dm-titulo a { color: var(--sn-ink); text-decoration: none; }
+.mw-parser-output .dm:hover { background-color: var(--sh-nova-wash); }
+.mw-parser-output .dm-titulo { line-height: var(--sh-baseline); }
+.mw-parser-output .dm-titulo a { color: var(--sh-ink); text-decoration: none; }
 /* Stretched link: toda la tarjeta enlaza a su página. */
 .mw-parser-output .dm-titulo a::after { content: ""; position: absolute; inset: 0; }
-.mw-parser-output .dm:hover .dm-titulo a { color: var(--sn-nova); }
+.mw-parser-output .dm:hover .dm-titulo a { color: var(--sh-nova); }
 .mw-parser-output .dm-pie {
 	display: flex; justify-content: space-between; align-items: baseline;
-	gap: var(--sn-s-2); line-height: var(--sn-baseline);
-	font-size: .82em; color: var(--sn-ink-faint);
+	gap: var(--sh-s-2); line-height: var(--sh-baseline);
+	font-size: .82em; color: var(--sh-ink-faint);
 }
-.mw-parser-output .dm-autor { min-width: 0; font-size: var(--sn-fs-xs); }
+.mw-parser-output .dm-autor { min-width: 0; font-size: var(--sh-fs-xs); }
 .mw-parser-output .dm-autor a { color: inherit; text-decoration: none; }
 .mw-parser-output .dm-anio { white-space: nowrap; font-variant-numeric: tabular-nums; align-self: end; }
-.mw-parser-output .dm-guia { line-height: var(--sn-baseline); font-size: var(--sn-fs-xs); color: var(--sn-ink-faint); }
+.mw-parser-output .dm-guia { line-height: var(--sh-baseline); font-size: var(--sh-fs-xs); color: var(--sh-ink-faint); }
 .mw-parser-output .dm-guia-etq { text-transform: uppercase; letter-spacing: .04em; font-size: .85em; opacity: .75; }
 .mw-parser-output .dm-guia a { color: inherit; text-decoration: none; }
 
 /* === Listado de Cursos .curso-listado (espejo de Plantilla:Listado de Cursos/style.css)
    Hermana de .dm para cursos: h4 enlazado + profesores (itálica) + alumnos. Mismo
-   contrato de retícula: textos a `--sn-baseline` y relleno vertical
-   `--sn-baseline-half` para cerrar en baselines enteras. Misma nota de sincronía
-   que .dm (la plantilla viva aún usa `--sn-s-3`). */
+   contrato de retícula: textos a `--sh-baseline` y relleno vertical
+   `--sh-baseline-half` para cerrar en baselines enteras. Misma nota de sincronía
+   que .dm (la plantilla viva aún usa `--sh-s-3`). */
 .mw-parser-output .curso-listado {
 	position: relative; margin: 0;
-	padding: var(--sn-baseline-half) var(--sn-s-3);
-	line-height: var(--sn-baseline);
+	padding: var(--sh-baseline-half) var(--sh-s-3);
+	line-height: var(--sh-baseline);
 	background-color: transparent;
 	transition: background-color .6s ease;
 }
-.mw-parser-output .curso-listado:hover { background-color: var(--sn-nova-wash); }
+.mw-parser-output .curso-listado:hover { background-color: var(--sh-nova-wash); }
 .mw-parser-output .curso-listado h4 {
-	margin: 0; font-family: var(--sn-font-text); font-weight: 500;
-	font-size: var(--sn-fs-base); line-height: var(--sn-baseline);
+	margin: 0; font-family: var(--sh-font-text); font-weight: 500;
+	font-size: var(--sh-fs-base); line-height: var(--sh-baseline);
 }
-.mw-parser-output .curso-listado h4 a { color: var(--sn-ink); text-decoration: none; }
+.mw-parser-output .curso-listado h4 a { color: var(--sh-ink); text-decoration: none; }
 .mw-parser-output .curso-listado h4 a::after { content: ""; position: absolute; inset: 0; }
-.mw-parser-output .curso-listado:hover h4 a { color: var(--sn-nova); }
+.mw-parser-output .curso-listado:hover h4 a { color: var(--sh-nova); }
 .mw-parser-output .curso-listado .profesores {
-	font-family: var(--sn-font-text); font-style: italic;
-	font-size: var(--sn-fs-sm); line-height: var(--sn-baseline); color: var(--sn-ink-faint);
+	font-family: var(--sh-font-text); font-style: italic;
+	font-size: var(--sh-fs-sm); line-height: var(--sh-baseline); color: var(--sh-ink-faint);
 }
 .mw-parser-output .curso-listado .alumnos {
-	font-family: var(--sn-font-text);
-	font-size: var(--sn-fs-xs); line-height: var(--sn-baseline); color: var(--sn-ink-faint);
+	font-family: var(--sh-font-text);
+	font-size: var(--sh-fs-xs); line-height: var(--sh-baseline); color: var(--sh-ink-faint);
 }
 .mw-parser-output .curso-listado :is(.profesores, .alumnos) a { color: inherit; text-decoration: none; }

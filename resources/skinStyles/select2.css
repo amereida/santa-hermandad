@@ -1,5 +1,5 @@
 /* ============================================================
- * skinStyles/select2.css — Stellamereida
+ * skinStyles/select2.css — Santa Hermandad
  * Override para +ext.pageforms.select2.styles (los campos "tokens" de
  * PageForms: <select class="pfTokens"> mejorado por Select2 → pills
  * `.select2-selection__choice`, caja `.select2-selection--multiple`,
@@ -9,101 +9,101 @@
  * ext.pf.select2.css, TODOS con color HORNEADO a claro (`background:white`,
  * pills `#e4e4e4`, bordes `#aaa`, highlighted `#2A4B8D`). Select2 NO conmuta
  * con el tema → en oscuro la caja y los pills quedan claros y SOLO el texto
- * (que hereda `--sn-ink`, ya volteado a claro) se aclara → texto claro sobre
+ * (que hereda `--sh-ink`, ya volteado a claro) se aclara → texto claro sobre
  * pill claro = ilegible (bug de la captura). Se revisten con tokens de campo.
  *
  * OJO: el dropdown lo monta Select2 como hijo directo de <body>, así que el
- * prefijo `.skin-stellamereida` (clase de <body>) sigue siendo ancestro y aplica.
+ * prefijo `.skin-santa-hermandad` (clase de <body>) sigue siendo ancestro y aplica.
  * skinStyles se añade al mismo módulo → gana por orden; el prefijo blinda la
  * especificidad frente a los selectores de 3 clases de ext.pf.select2.css.
  * ============================================================ */
 
 /* ── Caja del control (single y multiple) ── */
-.skin-stellamereida .select2-container--default .select2-selection--single,
-.skin-stellamereida .select2-container--default .select2-selection--multiple {
-	background-color: var(--sn-field-bg);
-	border-color: var(--sn-field-border);
-	color: var(--sn-field-fg);
+.skin-santa-hermandad .select2-container--default .select2-selection--single,
+.skin-santa-hermandad .select2-container--default .select2-selection--multiple {
+	background-color: var(--sh-field-bg);
+	border-color: var(--sh-field-border);
+	color: var(--sh-field-fg);
 }
-.skin-stellamereida .select2-container--default .select2-selection--single .select2-selection__rendered {
-	color: var(--sn-field-fg);
+.skin-santa-hermandad .select2-container--default .select2-selection--single .select2-selection__rendered {
+	color: var(--sh-field-fg);
 }
-.skin-stellamereida .select2-container--default .select2-selection--single .select2-selection__placeholder {
-	color: var(--sn-field-placeholder);
+.skin-santa-hermandad .select2-container--default .select2-selection--single .select2-selection__placeholder {
+	color: var(--sh-field-placeholder);
 }
-.skin-stellamereida .select2-container--default .select2-selection--single .select2-selection__arrow b {
-	border-top-color: var(--sn-icon);
+.skin-santa-hermandad .select2-container--default .select2-selection--single .select2-selection__arrow b {
+	border-top-color: var(--sh-icon);
 }
-.skin-stellamereida .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-	border-bottom-color: var(--sn-icon);
+.skin-santa-hermandad .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+	border-bottom-color: var(--sh-icon);
 }
 /* Foco: en vez del `border: solid black 1px` horneado. */
-.skin-stellamereida .select2-container--default.select2-container--focus .select2-selection--multiple,
-.skin-stellamereida .select2-container--default.select2-container--focus .select2-selection--single {
-	border-color: var(--sn-focus-border);
+.skin-santa-hermandad .select2-container--default.select2-container--focus .select2-selection--multiple,
+.skin-santa-hermandad .select2-container--default.select2-container--focus .select2-selection--single {
+	border-color: var(--sh-focus-border);
 	outline: 0;
 }
 /* Deshabilitado. */
-.skin-stellamereida .select2-container--default.select2-container--disabled .select2-selection--single,
-.skin-stellamereida .select2-container--default.select2-container--disabled .select2-selection--multiple {
-	background-color: var(--sn-field-bg-disabled);
+.skin-santa-hermandad .select2-container--default.select2-container--disabled .select2-selection--single,
+.skin-santa-hermandad .select2-container--default.select2-container--disabled .select2-selection--multiple {
+	background-color: var(--sh-field-bg-disabled);
 }
 
 /* ── Pills (valores elegidos) ── el corazón del bug de la captura. */
-.skin-stellamereida .select2-container--default .select2-selection--multiple .select2-selection__choice {
-	background-color: var(--sn-sunk);
-	border-color: var(--sn-hairline);
-	color: var(--sn-ink);
+.skin-santa-hermandad .select2-container--default .select2-selection--multiple .select2-selection__choice {
+	background-color: var(--sh-sunk);
+	border-color: var(--sh-hairline);
+	color: var(--sh-ink);
 }
 /* Select2 4.1 envuelve el texto del pill en __display; tíñelo por si acaso. */
-.skin-stellamereida .select2-selection__choice .select2-selection__choice__display {
-	color: var(--sn-ink);
+.skin-santa-hermandad .select2-selection__choice .select2-selection__choice__display {
+	color: var(--sh-ink);
 }
 /* La "×" de quitar. */
-.skin-stellamereida .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-	color: var(--sn-ink-faint);
+.skin-santa-hermandad .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+	color: var(--sh-ink-faint);
 }
-.skin-stellamereida .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
-	color: var(--sn-ink);
+.skin-santa-hermandad .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+	color: var(--sh-ink);
 }
 
 /* ── Campo de búsqueda inline (donde se teclea para filtrar). ── */
-.skin-stellamereida .select2-container--default .select2-search--inline .select2-search__field {
-	color: var(--sn-field-fg);
+.skin-santa-hermandad .select2-container--default .select2-search--inline .select2-search__field {
+	color: var(--sh-field-fg);
 }
 
 /* ── Dropdown de resultados ── */
-.skin-stellamereida .select2-dropdown {
-	background-color: var(--sn-field-bg);
-	border-color: var(--sn-field-border);
-	color: var(--sn-ink);
+.skin-santa-hermandad .select2-dropdown {
+	background-color: var(--sh-field-bg);
+	border-color: var(--sh-field-border);
+	color: var(--sh-ink);
 }
-.skin-stellamereida .select2-container--default .select2-search--dropdown .select2-search__field {
-	background-color: var(--sn-field-bg);
-	border-color: var(--sn-field-border);
-	color: var(--sn-field-fg);
+.skin-santa-hermandad .select2-container--default .select2-search--dropdown .select2-search__field {
+	background-color: var(--sh-field-bg);
+	border-color: var(--sh-field-border);
+	color: var(--sh-field-fg);
 }
-.skin-stellamereida .select2-container--default .select2-results__option[aria-disabled="true"] {
-	color: var(--sn-ink-faint);
+.skin-santa-hermandad .select2-container--default .select2-results__option[aria-disabled="true"] {
+	color: var(--sh-ink-faint);
 }
 /* Opción ya seleccionada (gris `#ddd`). */
-.skin-stellamereida .select2-container--default .select2-results__option[aria-selected="true"] {
-	background-color: var(--sn-opt-sel-bg);
-	color: var(--sn-ink);
+.skin-santa-hermandad .select2-container--default .select2-results__option[aria-selected="true"] {
+	background-color: var(--sh-opt-sel-bg);
+	color: var(--sh-ink);
 }
 /* Opción resaltada (hover / teclado): select2 pone azul `#5897fb`, PageForms
    lo pisa con `#2A4B8D` (0,3,0). Reemplazamos por el relleno "on" del skin,
    legible en ambos temas. */
-.skin-stellamereida .select2-container--default .select2-results__option--highlighted[aria-selected],
-.skin-stellamereida .pf-select2-dropdown .select2-results__options .select2-results__option--highlighted {
-	background-color: var(--sn-on-bg);
-	color: var(--sn-on-fg);
+.skin-santa-hermandad .select2-container--default .select2-results__option--highlighted[aria-selected],
+.skin-santa-hermandad .pf-select2-dropdown .select2-results__options .select2-results__option--highlighted {
+	background-color: var(--sh-on-bg);
+	color: var(--sh-on-fg);
 }
 /* La descripción secundaria del resultado (PageForms) al resaltar. */
-.skin-stellamereida .select2-results__option--highlighted .pf-result-description,
-.skin-stellamereida .select2-highlighted .pf-result-description {
-	color: var(--sn-on-fg);
+.skin-santa-hermandad .select2-results__option--highlighted .pf-result-description,
+.skin-santa-hermandad .select2-highlighted .pf-result-description {
+	color: var(--sh-on-fg);
 }
-.skin-stellamereida .pf-result-description {
-	color: var(--sn-ink-soft);
+.skin-santa-hermandad .pf-result-description {
+	color: var(--sh-ink-soft);
 }

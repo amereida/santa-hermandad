@@ -1,4 +1,4 @@
-# Stellamereida — para diseñadoras y diseñadores
+# Santa Hermandad — para diseñadoras y diseñadores
 
 Guía para intervenir el sistema visual del skin sin tocar PHP ni
 configuración de MediaWiki. Si vienes del Taller de Diseño y solo
@@ -18,10 +18,10 @@ Mapa:
 | Quiero cambiar… | En qué archivo está |
 |---|---|
 | **Variables / tokens** (color, espaciado, tipografía, sombras, radios, movimiento; claro/oscuro; las 5 preferencias por `data-attribute`) | [`resources/tokens.css`](../resources/tokens.css) |
-| **Layout y componentes** (cabecera, pie, menús, panel de preferencias, "página de papel"…) | [`resources/stellamereida.css`](../resources/stellamereida.css) |
+| **Layout y componentes** (cabecera, pie, menús, panel de preferencias, "página de papel"…) | [`resources/santa-hermandad.css`](../resources/santa-hermandad.css) |
 | **Impresión** | [`resources/print.css`](../resources/print.css) |
 | **Estilos de extensiones** (22 extensiones absorbidas, sin reestructurar su DOM) | [`resources/skinStyles/`](../resources/skinStyles/) — ver [`EXTENSIONES.md`](EXTENSIONES.md) |
-| **Íconos** (sprite Feather inline; símbolos `#sn-i-*`) | [`includes/templates/SnIcons.mustache`](../includes/templates/SnIcons.mustache) |
+| **Íconos** (sprite Feather inline; símbolos `#sn-i-*`) | [`includes/templates/ShIcons.mustache`](../includes/templates/ShIcons.mustache) |
 | **Isotipo / logotipo** (SVG editable, monocromo, colorizable con `currentColor`; enlaza a portada; el wordmark va dentro) | [`resources/casiopea.svg`](../resources/casiopea.svg) (wordmark) y [`resources/casiopea-icon.svg`](../resources/casiopea-icon.svg) (glifo compacto) |
 | **Estructura/orden del chrome** | [`includes/templates/skin.mustache`](../includes/templates/skin.mustache) (+ [parciales](../includes/templates/)) |
 | **Textos de interfaz** | [`i18n/es.json`](../i18n/es.json), [`i18n/en.json`](../i18n/en.json) |
@@ -56,7 +56,7 @@ como `Avenida Condensed`; estas fuentes no tienen ejes variables `wdth` ni
 ## Íconos
 
 Feather, como sprite SVG inline en
-[`SnIcons.mustache`](../includes/templates/SnIcons.mustache). Se usan
+[`ShIcons.mustache`](../includes/templates/ShIcons.mustache). Se usan
 así:
 
 ```html
@@ -160,10 +160,10 @@ ninguno**. La capa primitiva es puramente aditiva por debajo.
 Mini-sitio estático autocontenido para iterar el sistema visual **sin
 levantar la wiki ni tocar PHP**. Navegable en línea:
 
-**[hspencer.github.io/stellamereida/specimen/](https://hspencer.github.io/stellamereida/specimen/)**
+**[hspencer.github.io/santa-hermandad/specimen/](https://hspencer.github.io/santa-hermandad/specimen/)**
 
 Localmente en [`docs/specimen/`](specimen/) (también empaquetado como
-`stellamereida-specimen-v<version>.zip` listo para enviar al taller de
+`santa-hermandad-specimen-v<version>.zip` listo para enviar al taller de
 diseño). Tres páginas:
 
 - `index.html` — tokens, escalas, sombras (auto-generadas desde

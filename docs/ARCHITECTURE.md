@@ -1,4 +1,4 @@
-# Stellamereida — Arquitectura y principios
+# Santa Hermandad — Arquitectura y principios
 
 Doctrina que rige el desarrollo del skin. Doc canónico (vive en el repo del
 skin, publicable). El plan accionable está en [`DEVELOPMENT.md`](DEVELOPMENT.md).
@@ -13,7 +13,7 @@ heredar de Chameleon. Solo el contrato mínimo de MediaWiki (`SkinMustache` +
 referencia, no se copian.
 
 El **contrato de comportamiento** vive en
-[`../specs/stellamereida.allium`](../specs/stellamereida.allium) (Allium, validado con
+[`../specs/santa-hermandad.allium`](../specs/santa-hermandad.allium) (Allium, validado con
 `allium check`): este doc fija doctrina y principios; el spec, la
 especificación verificable de *qué hace* el skin (preferencias, chrome,
 identidad, modo de página, fidelidad estructural). Ante desacuerdo, el
@@ -33,7 +33,7 @@ casi sin PHP y favorece código testeable. Es la dirección oficial.
   (`Hooks::onResourceLoaderRegisterModules`) para derivar su `remoteSkinPath`
   de la carpeta real — única forma robusta al nombre del directorio, ya que
   el `remoteSkinPath` de `skin.json` es un literal estático y rompería las
-  URLs de las fuentes si la carpeta no se llama `Stellamereida`.
+  URLs de las fuentes si la carpeta no se llama `Santa Hermandad`.
 - Clase base `SkinMustache` (en MW 1.43 es **clase global** `SkinMustache`,
   no `MediaWiki\Skin\SkinMustache`). PHP al mínimo (config, wiring, hooks).
 - Hooks en clase separada (`…Hooks.php`), no mezclados con layout.
@@ -47,7 +47,7 @@ casi sin PHP y favorece código testeable. Es la dirección oficial.
   `<img>`, que el core no tematiza. Aquí se invierte para conservar el tema:
   el skin **lee un SVG monocromo del disco y lo incrusta inline** (así
   `currentColor` resuelve la variante clara/oscura sin dos archivos). La ruta
-  es config propia del skin —`$wgStellamereidaIsotypePath` / `$wgStellamereidaIconPath`
+  es config propia del skin —`$wgSanta HermandadIsotypePath` / `$wgSanta HermandadIconPath`
   (rutas de sistema de archivos, no URLs)— y si no se define cae al bundle
   `resources/casiopea*.svg`, de modo que el repo corre out-of-the-box. Se
   prefiere config propia a `$wgLogos` a propósito: `$wgLogos` entrega una URL
@@ -123,7 +123,7 @@ MediaWiki (BBDD, cross-device); anónimo/temporal → sesión del navegador.
 **Chrome administrable desde la wiki:** pie y aviso —dos slots; la barra
 lateral se retiró en v0.8.0 por duplicar `MediaWiki:Sidebar` sin llegar a
 renderizarse— se editan como páginas del namespace
-`StellAmereida`; la escritura (CRUD) se restringe
+`Santa Hermandad`; la escritura (CRUD) se restringe
 al grupo `editores-de-interfaz` (o sysop) vía `$wgNamespaceProtection`. El
 pie es **compuesto**: las obligaciones core de MediaWiki (última
 modificación, licencia/atribución, places, icons, hooks de extensión) se

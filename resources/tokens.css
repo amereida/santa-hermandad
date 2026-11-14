@@ -8,90 +8,90 @@
 	   ═══════════════════════════════════════════════════════════════════ */
 
 	/* — Primitiva · papel — naranja luminoso muy diluido (hoja, pliegues y sombra) */
-	--sn-papel-50:  #fff9f3;
-	--sn-papel-75:  #fff1e5;   /* fondo de página + pie (--sn-field claro) */
-	--sn-papel-100: #ffeddd;
-	--sn-papel-200: #ffe7d3;
-	--sn-papel-300: #ffe1c9;
-	--sn-papel-400: #f8dbc5;
-	--sn-papel-500: #f0d4bd;
-	--sn-papel-600: #dfc5b0;
-	--sn-papel-700: #a78f80;
-	--sn-papel-800: #927b70;
+	--sh-papel-50:  #fff9f3;
+	--sh-papel-75:  #fff1e5;   /* fondo de página + pie (--sh-field claro) */
+	--sh-papel-100: #ffeddd;
+	--sh-papel-200: #ffe7d3;
+	--sh-papel-300: #ffe1c9;
+	--sh-papel-400: #f8dbc5;
+	--sh-papel-500: #f0d4bd;
+	--sh-papel-600: #dfc5b0;
+	--sh-papel-700: #a78f80;
+	--sh-papel-800: #927b70;
 
 	/* — Primitiva · tinta — verdes petróleo profundos para las superficies nocturnas */
-	--sn-tinta-300: #6c8582;
-	--sn-tinta-400: #5c7471;
-	--sn-tinta-500: #354b48;
-	--sn-tinta-600: #2c4140;
-	--sn-tinta-650: #293d3b;
-	--sn-tinta-700: #243735;
-	--sn-tinta-750: #203230;   /* peldaño intermedio de petróleo */
-	--sn-tinta-800: #1b2b2a;
-	--sn-tinta-850: #102321;   /* casi-negro para tinta sobre acento (oscuro) */
-	--sn-tinta-900: #172624;
-	--sn-tinta-950: #12211f;
+	--sh-tinta-300: #6c8582;
+	--sh-tinta-400: #5c7471;
+	--sh-tinta-500: #354b48;
+	--sh-tinta-600: #2c4140;
+	--sh-tinta-650: #293d3b;
+	--sh-tinta-700: #243735;
+	--sh-tinta-750: #203230;   /* peldaño intermedio de petróleo */
+	--sh-tinta-800: #1b2b2a;
+	--sh-tinta-850: #102321;   /* casi-negro para tinta sobre acento (oscuro) */
+	--sh-tinta-900: #172624;
+	--sh-tinta-950: #12211f;
 
 	/* — Primitiva · morado — tinta diurna, apenas violeta */
-	--sn-morado-500: #76617a;
-	--sn-morado-600: #6b5870;
-	--sn-morado-900: #322738;
+	--sh-morado-500: #76617a;
+	--sh-morado-600: #6b5870;
+	--sh-morado-900: #322738;
 
 	/* — Primitiva · rosa — tinta nocturna y sus intensidades */
-	--sn-rosa-50:  #f5e9ee;
-	--sn-rosa-200: #c7b5bf;
-	--sn-rosa-500: #ad97a3;
+	--sh-rosa-50:  #f5e9ee;
+	--sh-rosa-200: #c7b5bf;
+	--sh-rosa-500: #ad97a3;
 
 	/* — Primitiva · rojo — sangre del carmín (single source para nova y link claros) */
-	--sn-rojo-500: #ae2d13;    /* la nova y el link nacen del mismo carmín */
-	--sn-rojo-600: #b21e3e;    /* danger claro (vino más profundo, menos cálido) */
-	--sn-rojo-700: #962c08;    /* link-hover claro */
-	--sn-rojo-900: #612403;    /* link-visited claro */
+	--sh-rojo-500: #ae2d13;    /* la nova y el link nacen del mismo carmín */
+	--sh-rojo-600: #b21e3e;    /* danger claro (vino más profundo, menos cálido) */
+	--sh-rojo-700: #962c08;    /* link-hover claro */
+	--sh-rojo-900: #612403;    /* link-visited claro */
 
 	/* — Primitiva · coral — el rosa cálido del modo noche */
-	--sn-coral-300: #c8a89a;   /* (legacy) */
-	--sn-coral-400: #ff6b7e;   /* nova + danger oscuros (un coral, dos roles) */
+	--sh-coral-300: #c8a89a;   /* (legacy) */
+	--sh-coral-400: #ff6b7e;   /* nova + danger oscuros (un coral, dos roles) */
 
 	/* — Primitiva · rosa — el rosado pálido de las páginas inexistentes (redlink) */
-	--sn-rosa-300: #e6acb7;    /* link-new oscuro (rosa pálido sobre papel noche) */
-	--sn-rosa-400: #a94f66;    /* link-new claro (rosa vino apagado; 5.07:1 sobre papel-50 → WCAG AA. Antes #c98592 daba 2.80:1, fallaba) */
+	--sh-rosa-300: #e6acb7;    /* link-new oscuro (rosa pálido sobre papel noche) */
+	--sh-rosa-400: #a94f66;    /* link-new claro (rosa vino apagado; 5.07:1 sobre papel-50 → WCAG AA. Antes #c98592 daba 2.80:1, fallaba) */
 
 	/* — Primitiva · azul — único frío del skin, link de noche */
-	--sn-azul-200: #b3cef2;
-	--sn-azul-300: #8fb4e8;
+	--sh-azul-200: #b3cef2;
+	--sh-azul-300: #8fb4e8;
 
 	/* — Primitiva · malva — visitado en la noche */
-	--sn-malva-400: #a99cae;
+	--sh-malva-400: #a99cae;
 
 	/* — Primitiva · verde — la "ok" del taller */
-	--sn-verde-400: #6cc18a;
-	--sn-verde-500: #2f6f43;
+	--sh-verde-400: #6cc18a;
+	--sh-verde-500: #2f6f43;
 
 	/* — Primitiva · masking — la cinta amarilla del taller y sus parientes */
-	--sn-masking-300: #f7db7e;
-	--sn-masking-500: #d9a14b;
-	--sn-masking-700: #8a5a12;
-	--sn-masking-900: #5a4416;
+	--sh-masking-300: #f7db7e;
+	--sh-masking-500: #d9a14b;
+	--sh-masking-700: #8a5a12;
+	--sh-masking-900: #5a4416;
 
 	/* — Primitiva · blanco — papel químicamente puro (solo donde la nova exige) */
-	--sn-blanco: #ffffff;
+	--sh-blanco: #ffffff;
 
 
 	/* ═══════════════════════════════════════════════════════════════════
 	   CAPA 2 — SEMÁNTICA (SYSTEM)
 	   Roles del skin. Cada rol → primitiva, con flip de tema vía
 	   light-dark(claro, oscuro). El default es claro (color-scheme: light);
-	   los selectores [data-sn-theme] al final del archivo conmutan
+	   los selectores [data-sh-theme] al final del archivo conmutan
 	   color-scheme y light-dark() resuelve a la rama correspondiente.
 	   ═══════════════════════════════════════════════════════════════════ */
 
 	color-scheme: light;
 
 	/* — Semántica · campo y papel — lavado naranja en claro, petróleo en oscuro */
-	--sn-field:        light-dark(var(--sn-papel-75), var(--sn-tinta-950));
-	--sn-field-grain:  0.035;          /* opacidad del grano de papel; override por tema al final */
-	--sn-paper:        light-dark(var(--sn-papel-50),  var(--sn-tinta-800));
-	--sn-paper-edge:   light-dark(var(--sn-papel-100), var(--sn-tinta-700));
+	--sh-field:        light-dark(var(--sh-papel-75), var(--sh-tinta-950));
+	--sh-field-grain:  0.035;          /* opacidad del grano de papel; override por tema al final */
+	--sh-paper:        light-dark(var(--sh-papel-50),  var(--sh-tinta-800));
+	--sh-paper-edge:   light-dark(var(--sh-papel-100), var(--sh-tinta-700));
 	/* Superficie ELEVADA: la única del skin que abandona la temperatura
 	   cálida del papel y va a los extremos —blanco puro en claro, negro
 	   cálido en oscuro— para que una tarjeta al elevarse CONTRASTE con la
@@ -103,144 +103,144 @@
 
 	   DOS ASIMETRÍAS CONOCIDAS, deliberadas (2026-07-20):
 	   · En claro el salto contra el papel es de 3–8 puntos por canal, o sea
-	     que el color casi no se ve y el gesto lo lleva --sn-lift. Es
+	     que el color casi no se ve y el gesto lo lleva --sh-lift. Es
 	     intencional — el papel cálido ya es casi blanco.
-	   · En oscuro el valor COINCIDE con --sn-field (el fondo de página tras
+	   · En oscuro el valor COINCIDE con --sh-field (el fondo de página tras
 	     la hoja), así que la tarjeta se lee recortada sobre el fondo, no
 	     flotando sobre el papel: efecto lightbox, no elevación Material.
 	     Si algún día se quiere lo segundo, el cambio es una palabra:
-	     --sn-tinta-950 → --sn-tinta-700 (un peldaño MÁS CLARO que el papel,
+	     --sh-tinta-950 → --sh-tinta-700 (un peldaño MÁS CLARO que el papel,
 	     que es como la elevación se lee en oscuro). */
-	--sn-paper-raised: light-dark(var(--sn-blanco), var(--sn-tinta-950));
-	--sn-sunk:         light-dark(var(--sn-papel-200), var(--sn-tinta-900));
+	--sh-paper-raised: light-dark(var(--sh-blanco), var(--sh-tinta-950));
+	--sh-sunk:         light-dark(var(--sh-papel-200), var(--sh-tinta-900));
 	/* Superficie del área de edición (el <textarea> de wikitexto y de
 	   CSS/JS/JSON). Es un LAVADO, no una superficie de la escala papel:
 	   un 3% de tinta disuelto en el papel de la página. Apenas se despega
 	   del fondo —lo justo para que el área de escritura se lea como una
 	   zona distinta— y voltea sola con el tema, porque sus dos ingredientes
-	   ya voltean. Se separó de --sn-sunk (2026-07-20) porque el pozo del
+	   ya voltean. Se separó de --sh-sunk (2026-07-20) porque el pozo del
 	   bloque de código resultó demasiado marcado para un área grande: en
 	   una caja de <pre> de cinco líneas es un acento, en un textarea de
 	   pantalla completa es una mancha. Un solo número para calibrarlo. */
-	--sn-edit-surface: color-mix(in oklab, var(--sn-ink) 3%, var(--sn-paper));
+	--sh-edit-surface: color-mix(in oklab, var(--sh-ink) 3%, var(--sh-paper));
 
 	/* — Semántica · tinta — texto, secundarios, filetes */
-	--sn-ink:          light-dark(var(--sn-morado-900), var(--sn-rosa-50));
-	--sn-ink-soft:     light-dark(var(--sn-morado-600), var(--sn-rosa-200));
-	--sn-ink-faint:    light-dark(var(--sn-morado-500), var(--sn-rosa-500));
-	--sn-hairline:     light-dark(var(--sn-papel-600), var(--sn-tinta-500));
-	--sn-hairline-soft:light-dark(var(--sn-papel-500), var(--sn-tinta-650));
+	--sh-ink:          light-dark(var(--sh-morado-900), var(--sh-rosa-50));
+	--sh-ink-soft:     light-dark(var(--sh-morado-600), var(--sh-rosa-200));
+	--sh-ink-faint:    light-dark(var(--sh-morado-500), var(--sh-rosa-500));
+	--sh-hairline:     light-dark(var(--sh-papel-600), var(--sh-tinta-500));
+	--sh-hairline-soft:light-dark(var(--sh-papel-500), var(--sh-tinta-650));
 
 	/* — Semántica · la nova — único acento agudo, usado con avaricia */
-	--sn-nova:         light-dark(var(--sn-rojo-500),  var(--sn-coral-400));
-	--sn-nova-ink:     light-dark(var(--sn-blanco),    var(--sn-tinta-850));
+	--sh-nova:         light-dark(var(--sh-rojo-500),  var(--sh-coral-400));
+	--sh-nova-ink:     light-dark(var(--sh-blanco),    var(--sh-tinta-850));
 	/* nova-wash: lavados muy específicos (selección, fondo activo, foco-ring).
 	   No promovidos a primitivas con nombre porque no se reutilizan en otro rol. */
-	--sn-nova-wash:    light-dark(#ffeadc,             #293a36);
+	--sh-nova-wash:    light-dark(#ffeadc,             #293a36);
 
 	/* — Semántica · enlaces — rojos en AMBOS temas (carmín en claro, coral rojo
 	   en oscuro). El visitado es levemente más oscuro que el enlace base: en
 	   claro el vino rojo-900; en oscuro un coral apagado (mezcla con negro). */
-	--sn-link:         light-dark(var(--sn-rojo-500),  var(--sn-coral-400));
-	--sn-link-hover:   light-dark(var(--sn-rojo-700),  color-mix(in oklab, var(--sn-coral-400) 80%, white));
-	--sn-link-visited: light-dark(var(--sn-rojo-900),  color-mix(in oklab, var(--sn-coral-400) 75%, black));
+	--sh-link:         light-dark(var(--sh-rojo-500),  var(--sh-coral-400));
+	--sh-link-hover:   light-dark(var(--sh-rojo-700),  color-mix(in oklab, var(--sh-coral-400) 80%, white));
+	--sh-link-visited: light-dark(var(--sh-rojo-900),  color-mix(in oklab, var(--sh-coral-400) 75%, black));
 	/* Enlace a página inexistente (redlink): ROSADO PÁLIDO en ambos temas. En
 	   claro un rosa apagado legible sobre crema; en oscuro un rosa más pálido
 	   sobre el papel noche. No se oscurece al visitarse (ver a.new:visited). */
-	--sn-link-new:     light-dark(var(--sn-rosa-400), var(--sn-rosa-300));
+	--sh-link-new:     light-dark(var(--sh-rosa-400), var(--sh-rosa-300));
 
 	/* Íconos de UI: nunca negro pleno ni acento; tinta al ~55% en reposo,
-	   tinta plena al hover/activo. Nunca carmín. (Color-mix sobre --sn-ink
-	   ya voltea con el tema porque --sn-ink lo hace.) */
-	--sn-icon:         color-mix(in oklab, var(--sn-ink) 55%, transparent);
-	--sn-icon-active:  var(--sn-ink);
+	   tinta plena al hover/activo. Nunca carmín. (Color-mix sobre --sh-ink
+	   ya voltea con el tema porque --sh-ink lo hace.) */
+	--sh-icon:         color-mix(in oklab, var(--sh-ink) 55%, transparent);
+	--sh-icon-active:  var(--sh-ink);
 
 	/* — Semántica · señales — ok / warn / danger / notice */
-	--sn-ok:           light-dark(var(--sn-verde-500),   var(--sn-verde-400));
-	--sn-warn:         light-dark(var(--sn-masking-700), var(--sn-masking-500));
-	--sn-warn-ink:     light-dark(var(--sn-papel-50),    var(--sn-tinta-850));
-	--sn-danger:       light-dark(var(--sn-rojo-600),    var(--sn-coral-400));
+	--sh-ok:           light-dark(var(--sh-verde-500),   var(--sh-verde-400));
+	--sh-warn:         light-dark(var(--sh-masking-700), var(--sh-masking-500));
+	--sh-warn-ink:     light-dark(var(--sh-papel-50),    var(--sh-tinta-850));
+	--sh-danger:       light-dark(var(--sh-rojo-600),    var(--sh-coral-400));
 
-	/* Aviso editorial (banner .sn-notice gestionado desde StellAmereida:Aviso):
-	   fondo ámbar pálido propio (no se confunde con --sn-warn-wash). En claro
+	/* Aviso editorial (banner .sh-notice gestionado desde Santa Hermandad:Aviso):
+	   fondo ámbar pálido propio (no se confunde con --sh-warn-wash). En claro
 	   fondo masking-300 y tinta tinta-600; en oscuro se invierte (fondo
 	   masking-900, tinta masking-300) — la misma primitiva ámbar reaparece. */
-	--sn-notice-bg:    light-dark(var(--sn-masking-300), var(--sn-masking-900));
-	--sn-notice-ink:   light-dark(var(--sn-tinta-600),   var(--sn-masking-300));
+	--sh-notice-bg:    light-dark(var(--sh-masking-300), var(--sh-masking-900));
+	--sh-notice-ink:   light-dark(var(--sh-tinta-600),   var(--sh-masking-300));
 
 	/* Washes de señales: fondos suaves para badges, banners, drop-targets,
 	   bloques de información y aviso. Derivados con color-mix sobre tokens
 	   semánticos para que el flip oscuro venga gratis. (Reemplazan a colores
 	   hardcoded como #d5fdf4, #fef6e7, #fee7e6, #fcfada/#fffded del
 	   Common.css original.) */
-	--sn-ok-wash:     color-mix(in oklab, var(--sn-ok)     14%, var(--sn-paper));
-	--sn-warn-wash:   color-mix(in oklab, var(--sn-warn)   14%, var(--sn-paper));
-	--sn-danger-wash: color-mix(in oklab, var(--sn-danger) 12%, var(--sn-paper));
-	--sn-info-wash:   color-mix(in oklab, var(--sn-warn)    8%, var(--sn-paper));
+	--sh-ok-wash:     color-mix(in oklab, var(--sh-ok)     14%, var(--sh-paper));
+	--sh-warn-wash:   color-mix(in oklab, var(--sh-warn)   14%, var(--sh-paper));
+	--sh-danger-wash: color-mix(in oklab, var(--sh-danger) 12%, var(--sh-paper));
+	--sh-info-wash:   color-mix(in oklab, var(--sh-warn)    8%, var(--sh-paper));
 
 
 	/* ═══════════════════════════════════════════════════════════════════
 	   CAPA 3a — COMPONENTE: controles del skin
 	   Botones, campos, casillas, foco. Único origen de verdad para
-	   stellamereida.css y skinStyles/oojs-ui.css. Consumen SOLO variables
+	   santa-hermandad.css y skinStyles/oojs-ui.css. Consumen SOLO variables
 	   semánticas (capa 2), nunca primitivas: heredan el flip automático.
 	   ═══════════════════════════════════════════════════════════════════ */
 	/* — Componente · botones — neutro (enmarcado, acción secundaria) */
-	--sn-btn-bg:            var(--sn-sunk);
-	--sn-btn-bg-hover:      var(--sn-paper);
-	--sn-btn-fg:            var(--sn-ink);
-	--sn-btn-border:        var(--sn-hairline);
-	--sn-btn-border-hover:  var(--sn-ink-faint);
+	--sh-btn-bg:            var(--sh-sunk);
+	--sh-btn-bg-hover:      var(--sh-paper);
+	--sh-btn-fg:            var(--sh-ink);
+	--sh-btn-border:        var(--sh-hairline);
+	--sh-btn-border-hover:  var(--sh-ink-faint);
 	/* Acción primaria (Guardar): tinta plena, decidida — sin azul */
-	--sn-btn-primary-bg:        var(--sn-ink);
-	--sn-btn-primary-bg-hover:  color-mix(in oklab, var(--sn-ink) 86%, var(--sn-paper));
-	--sn-btn-primary-fg:        var(--sn-paper);
+	--sh-btn-primary-bg:        var(--sh-ink);
+	--sh-btn-primary-bg-hover:  color-mix(in oklab, var(--sh-ink) 86%, var(--sh-paper));
+	--sh-btn-primary-fg:        var(--sh-paper);
 	/* Acción destructiva primaria */
-	--sn-btn-danger-bg:     var(--sn-danger);
-	--sn-btn-danger-fg:     var(--sn-nova-ink);
+	--sh-btn-danger-bg:     var(--sh-danger);
+	--sh-btn-danger-fg:     var(--sh-nova-ink);
 	/* — Componente · campos — texto, select, textarea */
-	--sn-field-bg:          var(--sn-paper);
-	--sn-field-bg-disabled: var(--sn-sunk);
-	--sn-field-fg:          var(--sn-ink);
-	--sn-field-border:      var(--sn-hairline);
-	--sn-field-placeholder: var(--sn-ink-faint);
+	--sh-field-bg:          var(--sh-paper);
+	--sh-field-bg-disabled: var(--sh-sunk);
+	--sh-field-fg:          var(--sh-ink);
+	--sh-field-border:      var(--sh-hairline);
+	--sh-field-placeholder: var(--sh-ink-faint);
 	/* — Componente · marcado · opciones · foco — casilla/radio/interruptor activos */
-	--sn-on-bg:             var(--sn-ink);
-	--sn-on-fg:             var(--sn-paper);
+	--sh-on-bg:             var(--sh-ink);
+	--sh-on-fg:             var(--sh-paper);
 	/* Opciones de menú/desplegable */
-	--sn-opt-hover-bg:      var(--sn-sunk);
-	--sn-opt-sel-bg:        var(--sn-nova-wash);
-	--sn-opt-fg:            var(--sn-ink);
+	--sh-opt-hover-bg:      var(--sh-sunk);
+	--sh-opt-sel-bg:        var(--sh-nova-wash);
+	--sh-opt-fg:            var(--sh-ink);
 	/* Foco: único uso de la nova en controles (aro + borde) */
-	--sn-focus-border:      var(--sn-nova);
-	--sn-focus-ring:        0 0 0 2px var(--sn-nova-wash);
+	--sh-focus-border:      var(--sh-nova);
+	--sh-focus-ring:        0 0 0 2px var(--sh-nova-wash);
 	/* Velo de diálogos modales */
-	--sn-scrim:             color-mix(in oklab, var(--sn-ink) 45%, transparent);
+	--sh-scrim:             color-mix(in oklab, var(--sh-ink) 45%, transparent);
 
 
 	/* Primitivas tipográficas: las dos familias reales (no se redefinen al alternar). */
-	--sn-font-sans: 'Avenida', system-ui, sans-serif;
-	--sn-font-serif: 'Avenida', system-ui, sans-serif;
-	--sn-font-mono: ui-monospace, monospace;
+	--sh-font-sans: 'Avenida', system-ui, sans-serif;
+	--sh-font-serif: 'Avenida', system-ui, sans-serif;
+	--sh-font-mono: ui-monospace, monospace;
 	/* Semánticas: alias que el resto del skin consume.
-	   --sn-font-text  → familia del cuerpo + UI + cabeceras (default: sans).
-	   --sn-font-quote → familia de citas y <poem>            (default: serif).
-	   Al activar data-sn-family="serif" desde el menú del usuario, ambos
+	   --sh-font-text  → familia del cuerpo + UI + cabeceras (default: sans).
+	   --sh-font-quote → familia de citas y <poem>            (default: serif).
+	   Al activar data-sh-family="serif" desde el menú del usuario, ambos
 	   se invierten en el bloque al final de este archivo:
 	     · cuerpo + UI    → serif
 	     · citas/<poem>   → sans
 	   Mantener este patrón al introducir nuevos componentes editoriales:
-	   consumir --sn-font-text o --sn-font-quote, NUNCA las primitivas. */
-	--sn-font-text:  var(--sn-font-sans);
-	--sn-font-display: var(--sn-font-text);
-	--sn-font-quote: var(--sn-font-serif);
+	   consumir --sh-font-text o --sh-font-quote, NUNCA las primitivas. */
+	--sh-font-text:  var(--sh-font-sans);
+	--sh-font-display: var(--sh-font-text);
+	--sh-font-quote: var(--sh-font-serif);
 
 
-	--sn-serif-grade: 70;
-	font-variation-settings: "GRAD" var(--sn-serif-grade);
+	--sh-serif-grade: 70;
+	font-variation-settings: "GRAD" var(--sh-serif-grade);
 
 
-	--sn-text-width: 80%;
+	--sh-text-width: 80%;
 
 	/* Verso (<poem>): tratamiento editorial propio, distinto del cuerpo y de
 	   la cita. Más condensado que el cuerpo (la métrica del verso pide una
@@ -248,128 +248,128 @@
 	   El tamaño es % del cuerpo → hereda la preferencia FontSize del lector;
 	   el peso es literal (el skin no tokeniza pesos, salvo este caso de voz
 	   editorial). */
-	--sn-poem-width:  77%;
-	--sn-poem-size:   85%;
-	--sn-poem-weight: 500;
+	--sh-poem-width:  77%;
+	--sh-poem-size:   85%;
+	--sh-poem-weight: 500;
 
-	/* Escala fluida sobria (sin titulares exagerados). --sn-font-scale lo
-	   modula la preferencia tamaño-de-fuente. --sn-leading es FIJO (no es
+	/* Escala fluida sobria (sin titulares exagerados). --sh-font-scale lo
+	   modula la preferencia tamaño-de-fuente. --sh-leading es FIJO (no es
 	   preferencia de usuario): cambiarlo desparametriza el ajuste al
 	   baseline grid. */
-	--sn-font-scale: 1;
-	--sn-leading: 1.72;
-	--sn-leading-table: 1.305;
+	--sh-font-scale: 1;
+	--sh-leading: 1.72;
+	--sh-leading-table: 1.305;
 
-	--sn-fs-root:  calc(1rem * var(--sn-font-scale));
-	--sn-fs-xs:    clamp(.72rem, .70rem + .10vw, .78rem);
-	--sn-fs-sm:    clamp(.82rem, .79rem + .14vw, .90rem);
-	--sn-fs-base:  calc(clamp(.96rem, .94rem + .12vw, 1rem) * var(--sn-font-scale));
-	--sn-fs-md:    calc(clamp(1.15rem, 1.1rem + .24vw, 1.28rem) * var(--sn-font-scale));
-	--sn-fs-lg:    calc(clamp(1.2rem, 1.12rem + .40vw, 1.42rem) * var(--sn-font-scale));
-	--sn-fs-xl:    calc(clamp(1.35rem, 1.22rem + .55vw, 1.62rem) * var(--sn-font-scale));
-	--sn-fs-display: calc(clamp(1.5rem, 1.32rem + .85vw, 2rem) * var(--sn-font-scale));
+	--sh-fs-root:  calc(1rem * var(--sh-font-scale));
+	--sh-fs-xs:    clamp(.72rem, .70rem + .10vw, .78rem);
+	--sh-fs-sm:    clamp(.82rem, .79rem + .14vw, .90rem);
+	--sh-fs-base:  calc(clamp(.96rem, .94rem + .12vw, 1rem) * var(--sh-font-scale));
+	--sh-fs-md:    calc(clamp(1.15rem, 1.1rem + .24vw, 1.28rem) * var(--sh-font-scale));
+	--sh-fs-lg:    calc(clamp(1.2rem, 1.12rem + .40vw, 1.42rem) * var(--sh-font-scale));
+	--sh-fs-xl:    calc(clamp(1.35rem, 1.22rem + .55vw, 1.62rem) * var(--sh-font-scale));
+	--sh-fs-display: calc(clamp(1.5rem, 1.32rem + .85vw, 2rem) * var(--sh-font-scale));
 	/* Título de página (h1#firstHeading): un escalón por encima del display
 	   — la voz editorial del documento debe leerse mayor que cualquier h1
 	   del cuerpo. */
-	--sn-fs-page-title: calc(clamp(1.85rem, 1.55rem + 1.3vw, 2.5rem) * var(--sn-font-scale));
+	--sh-fs-page-title: calc(clamp(1.85rem, 1.55rem + 1.3vw, 2.5rem) * var(--sh-font-scale));
 	/* Tamaño de TABLA — única fuente del "achicado" de tablas de contenido
 	   (wikitable/smwtable/broadtable Y table.template/.plantilla): 85% de base, ABSOLUTO
 	   (no compone con anidamiento, a diferencia de un `font-size: 80%` relativo).
 	   Tunear aquí cambia todas las tablas a la vez. */
-	--sn-fs-table: calc(var(--sn-fs-base) * .8);
+	--sh-fs-table: calc(var(--sh-fs-base) * .8);
 
 	/* — Baseline grid — la unidad del ritmo vertical es la interlínea del
-	   cuerpo: `--sn-baseline` = fs-base × leading. Escala SOLO con la
+	   cuerpo: `--sh-baseline` = fs-base × leading. Escala SOLO con la
 	   preferencia FontSize del usuario (leading y ancho de hoja son fijos),
 	   para que el cálculo del ajuste al baseline grid no se desparametrice.
 	   Reglas:
-	     1. body usa `--sn-leading` (unitless) como line-height, para que
+	     1. body usa `--sh-leading` (unitless) como line-height, para que
 	        las cajas inline (sub, sup, code) hereden proporción.
 	     2. Headings y bloques (p, ul/ol, blockquote, poem) usan
 	        line-height ABSOLUTO en rem (= 1 o 2 baselines), garantizando
 	        que la altura por línea cae siempre en la retícula.
 	     3. Márgenes verticales de bloque (margin-top / margin-bottom) son
-	        múltiplos enteros de --sn-baseline. El colapso vertical de MW
+	        múltiplos enteros de --sh-baseline. El colapso vertical de MW
 	        sigue funcionando porque NO usamos padding-top de compensación.
 	     4. El padding vertical que compensa MEDIA interlínea (p. ej. una
 	        tarjeta que debe cerrar en un número entero de baselines) usa
-	        `--sn-baseline-half`, NUNCA un valor de la escala de espaciado
-	        (--sn-s-*): esa escala es fija en rem y no sigue a
-	        --sn-font-scale, así que aproximarla deriva de la retícula al
+	        `--sh-baseline-half`, NUNCA un valor de la escala de espaciado
+	        (--sh-s-*): esa escala es fija en rem y no sigue a
+	        --sh-font-scale, así que aproximarla deriva de la retícula al
 	        cambiar la preferencia FontSize. El submúltiplo se calcula aquí
 	        (calc() está permitido en la skin) y las TemplateStyles de la
 	        wiki lo consumen como var() desnudo — el sanitizador de MW no
 	        admite dividir dentro de calc() ni un fallback en el var(). */
-	--sn-baseline:      calc(var(--sn-fs-base) * var(--sn-leading));
-	--sn-baseline-half: calc(var(--sn-baseline) / 2);  /* media interlínea. Existe para que las TemplateStyles de la wiki cierren cajas (tarjetas) en un número entero de baselines sin dividir dentro de calc() — el sanitizador de MW no lo admite, así que la división ocurre aquí y la plantilla lo consume como var() desnudo. Padding vertical de compensación: usar este token, nunca --sn-s-* (fijo en rem, no sigue a --sn-font-scale). */
-	--sn-baseline-2:    calc(var(--sn-baseline) * 2);
-	--sn-baseline-3:    calc(var(--sn-baseline) * 3);
+	--sh-baseline:      calc(var(--sh-fs-base) * var(--sh-leading));
+	--sh-baseline-half: calc(var(--sh-baseline) / 2);  /* media interlínea. Existe para que las TemplateStyles de la wiki cierren cajas (tarjetas) en un número entero de baselines sin dividir dentro de calc() — el sanitizador de MW no lo admite, así que la división ocurre aquí y la plantilla lo consume como var() desnudo. Padding vertical de compensación: usar este token, nunca --sh-s-* (fijo en rem, no sigue a --sh-font-scale). */
+	--sh-baseline-2:    calc(var(--sh-baseline) * 2);
+	--sh-baseline-3:    calc(var(--sh-baseline) * 3);
 
 	/* — Ritmo espacial (escala 1.5) — */
-	--sn-s-1: .25rem;  --sn-s-2: .5rem;   --sn-s-3: .75rem;
-	--sn-s-4: 1rem;    --sn-s-5: 1.5rem;  --sn-s-6: 2.25rem;
-	--sn-s-7: 3.5rem;  --sn-s-8: 5.25rem;
+	--sh-s-1: .25rem;  --sh-s-2: .5rem;   --sh-s-3: .75rem;
+	--sh-s-4: 1rem;    --sh-s-5: 1.5rem;  --sh-s-6: 2.25rem;
+	--sh-s-7: 3.5rem;  --sh-s-8: 5.25rem;
 
 	/* Ancho máximo de la HOJA (no del texto: el contenido va al 100%).
 	   Fijo, no es preferencia de usuario. */
-	--sn-measure: 64rem;
-	--sn-rail: 15.5rem;           /* (sin uso; reservado)                   */
-	--sn-shell: 81rem;            /* ancho máximo del conjunto (header/pie) */
+	--sh-measure: 64rem;
+	--sh-rail: 15.5rem;           /* (sin uso; reservado)                   */
+	--sh-shell: 81rem;            /* ancho máximo del conjunto (header/pie) */
 	/* Alto de la cabecera sticky: isotipo (2rem) + padding vertical de
-	   .sn-header-bar (2 × --sn-s-3 = 1.5rem). Alimenta el scroll-padding-top de
+	   .sh-header-bar (2 × --sh-s-3 = 1.5rem). Alimenta el scroll-padding-top de
 	   la página, para que las anclas (TOC, #target) no queden bajo la barra. */
-	--sn-header-h: 3.5rem;
+	--sh-header-h: 3.5rem;
 
 	/* Ícono de enlace externo (Feather "external-link"), como máscara para
 	   teñirlo con currentColor. Definido por diseño en el skin. */
-	--sn-ext-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
+	--sh-ext-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpolyline points='15 3 21 3 21 9'/%3E%3Cline x1='10' y1='14' x2='21' y2='3'/%3E%3C/svg%3E");
 
 	/* Altura común de los controles de la barra superior (todos igual). */
-	--sn-ctl: 2.4rem;
+	--sh-ctl: 2.4rem;
 
 	/* — Forma y materia — */
-	--sn-radius-s: 2px;
-	--sn-radius:   4px;
-	--sn-radius-l: 8px;
-	--sn-radius-paper: 3px;        /* la hoja: esquinas apenas redondeadas  */
-	--sn-radius-pill: 999px;        /* badges, chips, contadores             */
-	--sn-hair: 1px solid var(--sn-hairline);
+	--sh-radius-s: 2px;
+	--sh-radius:   4px;
+	--sh-radius-l: 8px;
+	--sh-radius-paper: 3px;        /* la hoja: esquinas apenas redondeadas  */
+	--sh-radius-pill: 999px;        /* badges, chips, contadores             */
+	--sh-hair: 1px solid var(--sh-hairline);
 
 	/* Sombra de la hoja: muy sutil, apenas un asentamiento sobre el campo.
 	   Estos tres tokens varían geometría además de color entre temas, así
 	   que NO usan light-dark(): se redefinen en los selectores de tema al
 	   final del archivo. */
-	--sn-lift-paper:
+	--sh-lift-paper:
 		0 1px 1px rgba(40, 33, 20, .03),
 		0 3px 8px rgba(40, 33, 20, .04);
-	/* --sn-lift es el gesto de ELEVACIÓN (menús, popovers, tarjetas que se
+	/* --sh-lift es el gesto de ELEVACIÓN (menús, popovers, tarjetas que se
 	   despegan): desenfoque corto (6px) y desplazamiento vertical largo, para
 	   que se lea "levantado hacia arriba" y no como una mancha difusa. El
 	   spread negativo recoge la sombra hacia el centro y afila el borde. */
-	--sn-lift:
+	--sh-lift:
 		0 1px 1px rgba(40, 33, 20, .06),
 		0 8px 6px -3px rgba(40, 33, 20, .16);
-	--sn-lift-soft: 0 2px 8px rgba(40, 33, 20, .05);
+	--sh-lift-soft: 0 2px 8px rgba(40, 33, 20, .05);
 
-	/* — Movimiento (--sn-motion lo apaga la preferencia/SO) — */
-	--sn-motion: 1;
-	--sn-dur-1: calc(120ms * var(--sn-motion));
-	--sn-dur-2: calc(220ms * var(--sn-motion));
-	--sn-dur-3: calc(420ms * var(--sn-motion));
-	--sn-ease: cubic-bezier(.22, 1, .36, 1);
+	/* — Movimiento (--sh-motion lo apaga la preferencia/SO) — */
+	--sh-motion: 1;
+	--sh-dur-1: calc(120ms * var(--sh-motion));
+	--sh-dur-2: calc(220ms * var(--sh-motion));
+	--sh-dur-3: calc(420ms * var(--sh-motion));
+	--sh-ease: cubic-bezier(.22, 1, .36, 1);
 
 	/* Banda de apilamiento del CHROME del skin. Deliberadamente alta (900+)
 	   para ganarle a cualquier `z-index` modesto que inyecte contenido dinámico
 	   —típicamente un canvas p5 en la home (z:0..~100)—. No es solo aritmética:
 	   el chrome vive por encima del contenido, que además está AISLADO en un
-	   contexto propio (`.sn-canvas { isolation: isolate }`), así que ni un
+	   contexto propio (`.sh-canvas { isolation: isolate }`), así que ni un
 	   `z-index: 999999` inyectado por JS puede escalar por encima del header.
 	   Los paneles del modal móvil usan 1000 crudo y quedan sobre esta banda. */
 	/* — Apilamiento — banda z-index del chrome del skin */
-	--sn-z-rail: 900;
-	--sn-z-header: 910;
-	--sn-z-panel: 920;
-	--sn-z-skip: 930;
+	--sh-z-rail: 900;
+	--sh-z-header: 910;
+	--sh-z-panel: 920;
+	--sh-z-skip: 930;
 
 
 	/* ═══════════════════════════════════════════════════════════════════
@@ -385,7 +385,7 @@
 	   #172624 (contraste <1.1:1, ilegible), fondos #eaf3ff dentro de
 	   controles oscuros, etc.
 	   Aquí declaramos las variables Codex como ALIAS a tokens semánticos
-	   (--sn-*). Como --sn-* ya voltea entre claro/oscuro vía light-dark(),
+	   (--sh-*). Como --sh-* ya voltea entre claro/oscuro vía light-dark(),
 	   los alias Codex voltean con él automáticamente — sin redeclarar.
 	   Estas reglas no tocan nada que YA defina explícitamente cada
 	   --codex-* (si el día de mañana añadimos Codex completo, gana lo más
@@ -393,114 +393,114 @@
 	   ═══════════════════════════════════════════════════════════════════ */
 
 	/* Texto */
-	--color-base:           var(--sn-ink);
-	--color-base--hover:    var(--sn-ink);
-	--color-base--subtle:   var(--sn-ink-soft);
-	--color-subtle:         var(--sn-ink-soft);
-	--color-emphasized:     var(--sn-ink);
-	--color-placeholder:    var(--sn-ink-faint);
-	--color-disabled:       var(--sn-ink-faint);
+	--color-base:           var(--sh-ink);
+	--color-base--hover:    var(--sh-ink);
+	--color-base--subtle:   var(--sh-ink-soft);
+	--color-subtle:         var(--sh-ink-soft);
+	--color-emphasized:     var(--sh-ink);
+	--color-placeholder:    var(--sh-ink-faint);
+	--color-disabled:       var(--sh-ink-faint);
 	/* `inverted` = el color que contrasta contra los fondos saturados
 	   del propio tema (botón primario, scrim, etc.). En claro es el
-	   papel; en oscuro también — porque `--sn-paper` voltea. */
-	--color-inverted:       var(--sn-paper);
-	--color-inverted-fixed: var(--sn-paper);
+	   papel; en oscuro también — porque `--sh-paper` voltea. */
+	--color-inverted:       var(--sh-paper);
+	--color-inverted-fixed: var(--sh-paper);
 
-	/* Acento progresivo (en Stellamereida: carmín en claro, azul en
-	   oscuro — el flip vive en --sn-link). Hover/active derivados con
+	/* Acento progresivo (en Santa Hermandad: carmín en claro, azul en
+	   oscuro — el flip vive en --sh-link). Hover/active derivados con
 	   color-mix hacia la tinta del tema, así "presionado" siempre
 	   significa "intensificado" en ambos esquemas. */
-	--color-progressive:           var(--sn-link);
-	--color-progressive--hover:    color-mix(in oklab, var(--sn-link) 80%, var(--sn-ink));
-	--color-progressive--active:   color-mix(in oklab, var(--sn-link) 65%, var(--sn-ink));
-	--color-progressive--focus:    var(--sn-link);
+	--color-progressive:           var(--sh-link);
+	--color-progressive--hover:    color-mix(in oklab, var(--sh-link) 80%, var(--sh-ink));
+	--color-progressive--active:   color-mix(in oklab, var(--sh-link) 65%, var(--sh-ink));
+	--color-progressive--focus:    var(--sh-link);
 
-	/* Destructivo: misma lógica, ahora atado a --sn-danger. */
-	--color-destructive:           var(--sn-danger);
-	--color-destructive--hover:    color-mix(in oklab, var(--sn-danger) 80%, var(--sn-ink));
-	--color-destructive--active:   color-mix(in oklab, var(--sn-danger) 65%, var(--sn-ink));
-	--color-destructive--focus:    var(--sn-danger);
+	/* Destructivo: misma lógica, ahora atado a --sh-danger. */
+	--color-destructive:           var(--sh-danger);
+	--color-destructive--hover:    color-mix(in oklab, var(--sh-danger) 80%, var(--sh-ink));
+	--color-destructive--active:   color-mix(in oklab, var(--sh-danger) 65%, var(--sh-ink));
+	--color-destructive--focus:    var(--sh-danger);
 
-	--color-error:    var(--sn-danger);
-	--color-success:  var(--sn-ok);
+	--color-error:    var(--sh-danger);
+	--color-success:  var(--sh-ok);
 
 	/* Fondos.
 	   La pareja `neutral` / `neutral-subtle` la usan diálogos y formularios
 	   de core para distinguir un contenedor "atenuado" del fondo base. En
-	   Stellamereida ambos caen a `--sn-sunk` (la única gradación que la hoja
+	   Santa Hermandad ambos caen a `--sh-sunk` (la única gradación que la hoja
 	   sostiene sin perder ritmo); si el día de mañana queremos un tercer
-	   tono, conviene introducir `--sn-sunk-soft` y diferenciarlos aquí. */
-	--background-color-base:                 var(--sn-paper);
-	--background-color-base-fixed:           var(--sn-paper);
-	--background-color-base-print:           var(--sn-paper);
-	--background-color-interactive:          var(--sn-sunk);
-	--background-color-interactive-subtle:   var(--sn-sunk);
-	--background-color-neutral:              var(--sn-sunk);
-	--background-color-neutral-subtle:       var(--sn-sunk);
-	--background-color-disabled:             var(--sn-sunk);
-	--background-color-disabled-subtle:      var(--sn-sunk);
-	--background-color-inverted:             var(--sn-ink);
-	--background-color-page-container:       var(--sn-field);
-	--background-color-secondary:            var(--sn-sunk);
+	   tono, conviene introducir `--sh-sunk-soft` y diferenciarlos aquí. */
+	--background-color-base:                 var(--sh-paper);
+	--background-color-base-fixed:           var(--sh-paper);
+	--background-color-base-print:           var(--sh-paper);
+	--background-color-interactive:          var(--sh-sunk);
+	--background-color-interactive-subtle:   var(--sh-sunk);
+	--background-color-neutral:              var(--sh-sunk);
+	--background-color-neutral-subtle:       var(--sh-sunk);
+	--background-color-disabled:             var(--sh-sunk);
+	--background-color-disabled-subtle:      var(--sh-sunk);
+	--background-color-inverted:             var(--sh-ink);
+	--background-color-page-container:       var(--sh-field);
+	--background-color-secondary:            var(--sh-sunk);
 	--background-color-transparent:          transparent;
 
-	--background-color-progressive:           var(--sn-link);
-	--background-color-progressive--hover:    color-mix(in oklab, var(--sn-link) 80%, var(--sn-ink));
-	--background-color-progressive--active:   color-mix(in oklab, var(--sn-link) 65%, var(--sn-ink));
-	--background-color-progressive--focus:    var(--sn-link);
-	--background-color-progressive-subtle:    var(--sn-nova-wash);
+	--background-color-progressive:           var(--sh-link);
+	--background-color-progressive--hover:    color-mix(in oklab, var(--sh-link) 80%, var(--sh-ink));
+	--background-color-progressive--active:   color-mix(in oklab, var(--sh-link) 65%, var(--sh-ink));
+	--background-color-progressive--focus:    var(--sh-link);
+	--background-color-progressive-subtle:    var(--sh-nova-wash);
 
-	--background-color-error:              var(--sn-danger);
-	--background-color-error--hover:       color-mix(in oklab, var(--sn-danger) 80%, var(--sn-ink));
-	--background-color-error--active:      color-mix(in oklab, var(--sn-danger) 65%, var(--sn-ink));
-	--background-color-error-subtle:       var(--sn-danger-wash);
-	--background-color-destructive:           var(--sn-danger);
-	--background-color-destructive--hover:    color-mix(in oklab, var(--sn-danger) 80%, var(--sn-ink));
-	--background-color-destructive--active:   color-mix(in oklab, var(--sn-danger) 65%, var(--sn-ink));
-	--background-color-destructive--focus:    var(--sn-danger);
-	--background-color-destructive-subtle: var(--sn-danger-wash);
-	--background-color-warning-subtle:     var(--sn-warn-wash);
-	--background-color-success-subtle:     var(--sn-ok-wash);
-	--background-color-notice-subtle:      var(--sn-sunk);
-	--background-color-backdrop-light:     var(--sn-scrim);
-	--background-color-backdrop-dark:      color-mix(in oklab, var(--sn-ink) 70%, transparent);
+	--background-color-error:              var(--sh-danger);
+	--background-color-error--hover:       color-mix(in oklab, var(--sh-danger) 80%, var(--sh-ink));
+	--background-color-error--active:      color-mix(in oklab, var(--sh-danger) 65%, var(--sh-ink));
+	--background-color-error-subtle:       var(--sh-danger-wash);
+	--background-color-destructive:           var(--sh-danger);
+	--background-color-destructive--hover:    color-mix(in oklab, var(--sh-danger) 80%, var(--sh-ink));
+	--background-color-destructive--active:   color-mix(in oklab, var(--sh-danger) 65%, var(--sh-ink));
+	--background-color-destructive--focus:    var(--sh-danger);
+	--background-color-destructive-subtle: var(--sh-danger-wash);
+	--background-color-warning-subtle:     var(--sh-warn-wash);
+	--background-color-success-subtle:     var(--sh-ok-wash);
+	--background-color-notice-subtle:      var(--sh-sunk);
+	--background-color-backdrop-light:     var(--sh-scrim);
+	--background-color-backdrop-dark:      color-mix(in oklab, var(--sh-ink) 70%, transparent);
 	/* Diff: añadido = wash verde tenue, removido = wash carmín tenue. */
-	--background-color-content-added:      var(--sn-ok-wash);
-	--background-color-content-removed:    var(--sn-danger-wash);
+	--background-color-content-added:      var(--sh-ok-wash);
+	--background-color-content-removed:    var(--sh-danger-wash);
 	/* Tab framed (variante con borde — usada por Vector y algunas
 	   extensiones que reusan ese estilo). */
-	--background-color-tab-list-item-framed--hover:  var(--sn-sunk);
-	--background-color-tab-list-item-framed--active: var(--sn-paper);
+	--background-color-tab-list-item-framed--hover:  var(--sh-sunk);
+	--background-color-tab-list-item-framed--active: var(--sh-paper);
 
 	/* "Quiet" buttons: lavados de tinta translúcidos — voltean con el
-	   tema porque --sn-ink lo hace. */
-	--background-color-button-quiet--hover:  color-mix(in oklab, var(--sn-ink) 5%, transparent);
-	--background-color-button-quiet--active: color-mix(in oklab, var(--sn-ink) 12%, transparent);
+	   tema porque --sh-ink lo hace. */
+	--background-color-button-quiet--hover:  color-mix(in oklab, var(--sh-ink) 5%, transparent);
+	--background-color-button-quiet--active: color-mix(in oklab, var(--sh-ink) 12%, transparent);
 
 	/* Bordes */
-	--border-color-base:                var(--sn-ink-faint);
-	--border-color-subtle:              var(--sn-hairline);
-	--border-color-interactive:         var(--sn-ink-faint);
-	--border-color-disabled:            var(--sn-hairline);
-	--border-color-inverted:            var(--sn-paper);
-	--border-color-notice:              var(--sn-ink-faint);
-	--border-color-warning:             var(--sn-warn);
-	--border-color-error:               var(--sn-danger);
-	--border-color-success:             var(--sn-ok);
-	--border-color-destructive--hover:  color-mix(in oklab, var(--sn-danger) 80%, var(--sn-ink));
+	--border-color-base:                var(--sh-ink-faint);
+	--border-color-subtle:              var(--sh-hairline);
+	--border-color-interactive:         var(--sh-ink-faint);
+	--border-color-disabled:            var(--sh-hairline);
+	--border-color-inverted:            var(--sh-paper);
+	--border-color-notice:              var(--sh-ink-faint);
+	--border-color-warning:             var(--sh-warn);
+	--border-color-error:               var(--sh-danger);
+	--border-color-success:             var(--sh-ok);
+	--border-color-destructive--hover:  color-mix(in oklab, var(--sh-danger) 80%, var(--sh-ink));
 
-	--border-color-input--hover:         var(--sn-ink-faint);
-	--border-color-input-binary:         var(--sn-ink-faint);
-	--border-color-input-binary--active: var(--sn-link);
-	--border-color-input-binary--checked: var(--sn-link);
-	--border-color-progressive--hover:   color-mix(in oklab, var(--sn-link) 80%, var(--sn-ink));
-	--border-color-progressive--focus:   var(--sn-link);
+	--border-color-input--hover:         var(--sh-ink-faint);
+	--border-color-input-binary:         var(--sh-ink-faint);
+	--border-color-input-binary--active: var(--sh-link);
+	--border-color-input-binary--checked: var(--sh-link);
+	--border-color-progressive--hover:   color-mix(in oklab, var(--sh-link) 80%, var(--sh-ink));
+	--border-color-progressive--focus:   var(--sh-link);
 
 	/* Sombras de foco */
-	--box-shadow-color-progressive--focus:  var(--sn-link);
-	--box-shadow-color-progressive--active: color-mix(in oklab, var(--sn-link) 65%, var(--sn-ink));
-	--box-shadow-color-destructive--focus:  var(--sn-danger);
-	--box-shadow-color-inverted:            var(--sn-paper);
+	--box-shadow-color-progressive--focus:  var(--sh-link);
+	--box-shadow-color-progressive--active: color-mix(in oklab, var(--sh-link) 65%, var(--sh-ink));
+	--box-shadow-color-destructive--focus:  var(--sh-danger);
+	--box-shadow-color-inverted:            var(--sh-paper);
 }
 
 
@@ -508,42 +508,42 @@
    Conmutación de tema. Solo dos responsabilidades:
      1. Setear `color-scheme` para que light-dark() resuelva al lado correcto.
      2. Sobrescribir los CINCO tokens NO-color que varían por tema
-        (`--sn-field-grain`, los tres `--sn-lift*` y `--sn-serif-grade`):
+        (`--sh-field-grain`, los tres `--sh-lift*` y `--sh-serif-grade`):
         mezclan geometría/número y color, así que no encajan en light-dark()
         (light-dark() solo interpola colores). El grado sube en oscuro para
         compensar el aclaramiento óptico del texto claro sobre fondo negro.
 
-   La duplicación de los overrides entre [data-sn-theme="dark"] y
-   @media (prefers-color-scheme: dark) [data-sn-theme="auto"] es inevitable
+   La duplicación de los overrides entre [data-sh-theme="dark"] y
+   @media (prefers-color-scheme: dark) [data-sh-theme="auto"] es inevitable
    con CSS estándar: ambos selectores activan oscuro pero en condiciones
    diferentes (el primero ignora al SO, el segundo lo sigue). La duplicación
    pasó de 14 declaraciones a 4 y queda CONTENIDA aquí.
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* Forzado claro (sobreescribe cualquier preferencia del SO). */
-:root[data-sn-theme="light"] { color-scheme: light; }
+:root[data-sh-theme="light"] { color-scheme: light; }
 
 /* Forzado oscuro (el SO no participa). */
-:root[data-sn-theme="dark"] {
+:root[data-sh-theme="dark"] {
 	color-scheme: dark;
-	--sn-field-grain: .05;
-	--sn-lift-paper: 0 1px 1px rgba(0,0,0,.25), 0 3px 10px rgba(0,0,0,.35);
-	--sn-lift:       0 1px 1px rgba(0,0,0,.45), 0 8px 6px -3px rgba(0,0,0,.6);
-	--sn-lift-soft:  0 2px 12px rgba(0,0,0,.4);
-	--sn-serif-grade: 30;
+	--sh-field-grain: .05;
+	--sh-lift-paper: 0 1px 1px rgba(0,0,0,.25), 0 3px 10px rgba(0,0,0,.35);
+	--sh-lift:       0 1px 1px rgba(0,0,0,.45), 0 8px 6px -3px rgba(0,0,0,.6);
+	--sh-lift-soft:  0 2px 12px rgba(0,0,0,.4);
+	--sh-serif-grade: 30;
 }
 
 /* Auto: sigue al SO. `color-scheme: light dark` deja a light-dark() honrar
    el `prefers-color-scheme`. Los 4 no-color se aplican solo cuando el SO
    está en oscuro. */
-:root[data-sn-theme="auto"] { color-scheme: light dark; }
+:root[data-sh-theme="auto"] { color-scheme: light dark; }
 @media (prefers-color-scheme: dark) {
-	:root[data-sn-theme="auto"] {
-		--sn-field-grain: .05;
-		--sn-lift-paper: 0 1px 1px rgba(0,0,0,.25), 0 3px 10px rgba(0,0,0,.35);
-		--sn-lift:       0 1px 1px rgba(0,0,0,.45), 0 8px 6px -3px rgba(0,0,0,.6);
-		--sn-lift-soft:  0 2px 12px rgba(0,0,0,.4);
-		--sn-serif-grade: 30;
+	:root[data-sh-theme="auto"] {
+		--sh-field-grain: .05;
+		--sh-lift-paper: 0 1px 1px rgba(0,0,0,.25), 0 3px 10px rgba(0,0,0,.35);
+		--sh-lift:       0 1px 1px rgba(0,0,0,.45), 0 8px 6px -3px rgba(0,0,0,.6);
+		--sh-lift-soft:  0 2px 12px rgba(0,0,0,.4);
+		--sh-serif-grade: 30;
 	}
 }
 
@@ -552,12 +552,12 @@
    Única preferencia tipográfica modulable por el usuario. Ancho de hoja
    e interlineado son fijos: cambiarlos desparametriza el ajuste al
    baseline grid. */
-:root[data-sn-font="small"]  { --sn-font-scale: .92; }
-:root[data-sn-font="medium"] { --sn-font-scale: 1; }
-:root[data-sn-font="large"]  { --sn-font-scale: 1.14; }
+:root[data-sh-font="small"]  { --sh-font-scale: .92; }
+:root[data-sh-font="medium"] { --sh-font-scale: 1; }
+:root[data-sh-font="large"]  { --sh-font-scale: 1.14; }
 
 /* ── Movimiento: sólo la señal del SO (ya no es preferencia del usuario;
    reduced-motion sigue siendo 1ª clase). ── */
 @media (prefers-reduced-motion: reduce) {
-	:root { --sn-motion: 0; }
+	:root { --sh-motion: 0; }
 }

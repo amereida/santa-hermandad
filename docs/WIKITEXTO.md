@@ -1,4 +1,4 @@
-# Stellamereida — guía editorial del wikitexto
+# Santa Hermandad — guía editorial del wikitexto
 
 Recursos que el skin pone a disposición de quien **escribe páginas** en la
 wiki: palabras mágicas (behaviour switches) y clases CSS opt-in que
@@ -18,7 +18,7 @@ no funciona). No producen salida; solo conmutan comportamiento.
 
 ### `__PANTALLACOMPLETA__` (provista por este skin)
 
-Sinónimo: `__FULLSCREEN__`. Definida en `Stellamereida.i18n.magic.php`.
+Sinónimo: `__FULLSCREEN__`. Definida en `Santa Hermandad.i18n.magic.php`.
 
 **Qué hace:** declara la página en *modo lienzo*. El skin suprime la
 cabecera, el pie, el panel de preferencias y todos los portlets; solo
@@ -63,7 +63,7 @@ contextual (categorías, fichas de propiedad, plantillas reutilizadas).
 
 **Qué hacen:** controlan dónde y si aparece la tabla de contenidos.
 
-**Cómo las trata Stellamereida:** la TOC se renderiza **en el sitio donde
+**Cómo las trata Santa Hermandad:** la TOC se renderiza **en el sitio donde
 la pone MediaWiki** (posición de `__TOC__` o auto). El skin la
 restiliza en su lenguaje visual (paper-sobre-paper, colapsable con
 caret) pero respeta la posición del wikitexto. No hay un "slot fijo"
@@ -79,7 +79,7 @@ interpreta. Mencionadas aquí solo por completitud.
 
 - `__HIDDENCAT__`: marca una categoría como oculta. Las categorías
   ocultas no aparecen en `.catlinks` (la franja de categorías al pie del
-  artículo); Stellamereida respeta este comportamiento.
+  artículo); Santa Hermandad respeta este comportamiento.
 - `__NEWSECTIONLINK__` / `__NONEWSECTIONLINK__`: añaden o suprimen el
   enlace "+" para agregar sección. Sin estilo dedicado en el skin.
 - `__NOEDITSECTION__`: oculta los enlaces `[editar]` por sección. El
@@ -88,7 +88,7 @@ interpreta. Mencionadas aquí solo por completitud.
 
 ## 2. Clases CSS especiales (opt-in desde wikitexto)
 
-Clases que el skin define en `resources/stellamereida.css` y que **se
+Clases que el skin define en `resources/santa-hermandad.css` y que **se
 activan escribiéndolas en el wikitexto** o desde una plantilla. Son
 las "extras" del skin disponibles para maquetar contenido editorial.
 
@@ -298,7 +298,7 @@ combinada con `wikitable`.
 
 Override de la regla genérica de `MediaWiki:Common.css` (que aplicaba
 `clip-path:circle()` al `<figure>` y devoraba la leyenda y los píxeles
-superiores de la imagen). Stellamereida mueve el `clip-path` al `<img>`
+superiores de la imagen). Santa Hermandad mueve el `clip-path` al `<img>`
 directamente y oculta el `figcaption` (en `.vcard` el nombre ya
 aparece como `.person-name`).
 
@@ -313,7 +313,7 @@ recorte).
 
 ### `noprint` — ocultar en impresión
 
-Clase estándar de MediaWiki. Stellamereida la respeta en `print.css`:
+Clase estándar de MediaWiki. Santa Hermandad la respeta en `print.css`:
 cualquier elemento con `class=noprint` desaparece al imprimir o
 exportar a PDF (la previsualización Vivliostyle del skin, que honra
 `print.css`; la vieja extensión Mpdf fue descartada). Útil para banners,
@@ -323,7 +323,7 @@ botones, módulos interactivos que no tienen sentido en papel.
 
 Tono de aviso editorial: filete carmín a la izquierda, fondo lavado
 (`--sn-nova-wash`), texto en cuerpo `sm`. Se usa principalmente para
-el fragmento administrable `StellAmereida:Aviso` (que se inyecta en lo
+el fragmento administrable `Santa Hermandad:Aviso` (que se inyecta en lo
 alto del paper), pero está disponible para cualquier wikitexto:
 
 ```wiki
@@ -431,7 +431,7 @@ hereda al párrafo; la **alineación** además se propaga al `<p>` interno.
 
 Alcance: `:is(.sn-body, .sn-notice-body, .sn-footer-managed)` — el cuerpo del
 artículo (hoja normal y `__PANTALLACOMPLETA__`) **y** los dos fragmentos del
-chrome administrable (`StellAmereida:Aviso`, `StellAmereida:Pie`).
+chrome administrable (`Santa Hermandad:Aviso`, `Santa Hermandad:Pie`).
 
 > **Cambio de hogar (v0.8.0).** Hasta la v0.7.2 estas clases vivían en el
 > `MediaWiki:Common.css` de cada wiki y el skin no las conocía. Se movieron al
@@ -441,7 +441,7 @@ chrome administrable (`StellAmereida:Aviso`, `StellAmereida:Pie`).
 >   los archivos limpios del skin, **no** el `Common.css` de la wiki: una página
 >   con `class="jumbo center nova"` se veía bien en pantalla y perdía las tres
 >   clases en el PDF.
-> - **El chrome administrable.** `StellAmereida:Pie` y `StellAmereida:Aviso` se
+> - **El chrome administrable.** `Santa Hermandad:Pie` y `Santa Hermandad:Aviso` se
 >   parsean sin el envoltorio `.mw-parser-output`, así que el alcance viejo no
 >   llegaba y esas páginas se escribían con `style=` inline.
 >
@@ -450,7 +450,7 @@ chrome administrable (`StellAmereida:Aviso`, `StellAmereida:Pie`).
 > emite después de `site.styles`, así que las reglas del skin ganan el empate de
 > especificidad y las viejas quedan sombreadas—, pero dejarlas duplicadas
 > invita a que vuelvan a divergir. Si tu wiki las había personalizado, el sitio
-> para retocarlas ahora es `resources/stellamereida.css`, no `Common.css`
+> para retocarlas ahora es `resources/santa-hermandad.css`, no `Common.css`
 > (desde ahí ya no se pueden sobrescribir sin `!important`).
 
 **Ancho tipográfico y familia.** Las clases de familia cambian la familia pero

@@ -1,5 +1,5 @@
 /* ============================================================
- * skinStyles/diff.css — Stellamereida
+ * skinStyles/diff.css — Santa Hermandad
  * Override para +mediawiki.diff.styles (render de diffs: comparar
  * revisiones, historial, deshacer, previsualización de edición y
  * conflictos de edición).
@@ -7,7 +7,7 @@
  * El core (resources/src/mediawiki.diff.styles/diff.less) COMPILA desde
  * mediawiki.skin.variables.less → hornea a hex CLARO en tiempo de build,
  * así que NO consume las custom properties `--background-color-*` que
- * Stellamereida remapea en tokens.css. Resultado en oscuro:
+ * Santa Hermandad remapea en tokens.css. Resultado en oscuro:
  *
  *   .diff-context   { background:#f8f9fa; color:#202122; border:#c8ccd1 }  → caja BLANCA
  *   .diff-addedline { border-color:@background-color-content-added }       → borde claro
@@ -19,74 +19,74 @@
  * (contexto = hundido; añadido = ok-wash; quitado = danger-wash).
  *
  * skinStyles se AÑADE al propio módulo mediawiki.diff.styles → gana por orden
- * de fuente. Igual se prefija `.skin-stellamereida` (clase de <body>) para blindar
+ * de fuente. Igual se prefija `.skin-santa-hermandad` (clase de <body>) para blindar
  * la especificidad (ver [[skinstyles-cascade-gotcha]] y [[dark-mode-special-pages-audit]]).
  * ============================================================ */
 
 /* Líneas de contexto (sin cambios): la "caja blanca" de la captura. */
-.skin-stellamereida .diff-context {
-	background: var(--sn-sunk);
-	color: var(--sn-ink);
-	border-color: var(--sn-hairline-soft);
+.skin-santa-hermandad .diff-context {
+	background: var(--sh-sunk);
+	color: var(--sh-ink);
+	border-color: var(--sh-hairline-soft);
 }
 
 /* Bordes (1px 1px 1px 4px) que marcan añadido / quitado a la izquierda. */
-.skin-stellamereida .diff-addedline {
-	border-color: var(--sn-ok);
+.skin-santa-hermandad .diff-addedline {
+	border-color: var(--sh-ok);
 }
-.skin-stellamereida .diff-deletedline {
-	border-color: var(--sn-danger);
+.skin-santa-hermandad .diff-deletedline {
+	border-color: var(--sh-danger);
 }
 
 /* Relleno de las líneas añadidas/quitadas: lavado suave del color, no el
-   blanco del core. El texto hereda `--sn-ink` (visible en ambos temas). */
-.skin-stellamereida .diff-addedline,
-.skin-stellamereida .diff-deletedline {
-	color: var(--sn-ink);
+   blanco del core. El texto hereda `--sh-ink` (visible en ambos temas). */
+.skin-santa-hermandad .diff-addedline,
+.skin-santa-hermandad .diff-deletedline {
+	color: var(--sh-ink);
 }
 
 /* Resalte intra-línea (palabras cambiadas): un lavado más marcado que la
    línea para que salten. */
-.skin-stellamereida .diff-addedline .diffchange {
-	background: var(--sn-ok-wash);
+.skin-santa-hermandad .diff-addedline .diffchange {
+	background: var(--sh-ok-wash);
 }
-.skin-stellamereida .diff-deletedline .diffchange {
-	background: var(--sn-danger-wash);
+.skin-santa-hermandad .diff-deletedline .diffchange {
+	background: var(--sh-danger-wash);
 }
 
 /* Diff en línea (inline): ins/del y su leyenda. */
-.skin-stellamereida .mw-diff-inline-added ins,
-.skin-stellamereida .mw-diff-inline-changed ins,
-.skin-stellamereida .mw-diff-inline-moved ins,
-.skin-stellamereida .mw-diff-inline-legend .mw-diff-inline-legend-ins {
-	background: var(--sn-ok-wash);
-	color: var(--sn-ink);
+.skin-santa-hermandad .mw-diff-inline-added ins,
+.skin-santa-hermandad .mw-diff-inline-changed ins,
+.skin-santa-hermandad .mw-diff-inline-moved ins,
+.skin-santa-hermandad .mw-diff-inline-legend .mw-diff-inline-legend-ins {
+	background: var(--sh-ok-wash);
+	color: var(--sh-ink);
 }
-.skin-stellamereida .mw-diff-inline-deleted del,
-.skin-stellamereida .mw-diff-inline-changed del,
-.skin-stellamereida .mw-diff-inline-moved del,
-.skin-stellamereida .mw-diff-inline-legend .mw-diff-inline-legend-del {
-	background: var(--sn-danger-wash);
-	color: var(--sn-ink);
+.skin-santa-hermandad .mw-diff-inline-deleted del,
+.skin-santa-hermandad .mw-diff-inline-changed del,
+.skin-santa-hermandad .mw-diff-inline-moved del,
+.skin-santa-hermandad .mw-diff-inline-legend .mw-diff-inline-legend-del {
+	background: var(--sh-danger-wash);
+	color: var(--sh-ink);
 }
 
 /* Marcadores de línea vacía (añadida/quitada/nueva): el `::after` con el
-   texto "(línea en blanco)" hornea el mismo fondo claro + `--sn-ink-soft`. */
-.skin-stellamereida .mw-diff-inline-added.mw-diff-empty-line::after,
-.skin-stellamereida .mw-inline-diff-newline::after {
-	background: var(--sn-ok-wash);
-	color: var(--sn-ink-soft);
+   texto "(línea en blanco)" hornea el mismo fondo claro + `--sh-ink-soft`. */
+.skin-santa-hermandad .mw-diff-inline-added.mw-diff-empty-line::after,
+.skin-santa-hermandad .mw-inline-diff-newline::after {
+	background: var(--sh-ok-wash);
+	color: var(--sh-ink-soft);
 }
-.skin-stellamereida .mw-diff-inline-deleted.mw-diff-empty-line::after {
-	background: var(--sn-danger-wash);
-	color: var(--sn-ink-soft);
+.skin-santa-hermandad .mw-diff-inline-deleted.mw-diff-empty-line::after {
+	background: var(--sh-danger-wash);
+	color: var(--sh-ink-soft);
 }
 
 /* Marca de párrafo movido (↪ / ↩) y error de slot: colores base horneados. */
-.skin-stellamereida .mw-diff-movedpara-left::after,
-.skin-stellamereida .mw-diff-movedpara-right::after {
-	color: var(--sn-ink);
+.skin-santa-hermandad .mw-diff-movedpara-left::after,
+.skin-santa-hermandad .mw-diff-movedpara-right::after {
+	color: var(--sh-ink);
 }
-.skin-stellamereida .mw-diff-slot-error {
-	color: var(--sn-danger);
+.skin-santa-hermandad .mw-diff-slot-error {
+	color: var(--sh-danger);
 }

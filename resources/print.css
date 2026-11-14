@@ -1,4 +1,4 @@
-/* Stellamereida — impresión. La hoja se vuelve papel real: sin cromo, sin
+/* Santa Hermandad — impresión. La hoja se vuelve papel real: sin cromo, sin
    sombra, tinta sobre blanco, enlaces legibles. Sin menú superior y sin pie:
    solo el contenido. El margen lo da @page (como el respiro de lectura en
    pantalla, no de borde a borde). */
@@ -13,32 +13,32 @@
 @page {
 	margin: 2cm 3cm 2cm;   /* top | right/left | bottom */
 }
-/* Fuera todo el cromo: menú superior (.sn-header), barra y MENÚ fullscreen
-   (.sn-fs-bar / .sn-fs-md / .sn-fs-footer — la maqueta de __PANTALLACOMPLETA__),
-   TOC, sprite de íconos, el PIE COMPLETO (.sn-footer) y las CATEGORÍAS
+/* Fuera todo el cromo: menú superior (.sh-header), barra y MENÚ fullscreen
+   (.sh-fs-bar / .sh-fs-md / .sh-fs-footer — la maqueta de __PANTALLACOMPLETA__),
+   TOC, sprite de íconos, el PIE COMPLETO (.sh-footer) y las CATEGORÍAS
    (.catlinks: no van en la versión impresa). `.printfooter` es el pie que
    inyecta MediaWiki core («Obtenido de "URL"»): redundante —la URL de la página
    va en el pie de la previsualización paginada— así que también fuera. */
-.sn-header, .sn-skip, .sn-fs-bar, .sn-fs-md, .sn-fs-footer, .sn-toc,
-.sn-footer, .sn-iconsprite, .catlinks, .printfooter, .noprint {
+.sh-header, .sh-skip, .sh-fs-bar, .sh-fs-md, .sh-fs-footer, .sh-toc,
+.sh-footer, .sh-iconsprite, .catlinks, .printfooter, .noprint {
 	display: none !important;
 }
 body { background: #fff !important; color: #000; }
 body::before { display: none !important; }
-.sn-app, .sn-shell { display: block; max-width: none; margin: 0; padding: 0; }
+.sh-app, .sh-shell { display: block; max-width: none; margin: 0; padding: 0; }
 /* La hoja ocupa el área imprimible; el margen del documento lo fija @page.
-   `.sn-canvas`/`.sn-canvas-body` son la maqueta de __PANTALLACOMPLETA__: reciben
-   el MISMO trato que `.sn-paper`/`.sn-body` para que esas páginas impriman igual
+   `.sh-canvas`/`.sh-canvas-body` son la maqueta de __PANTALLACOMPLETA__: reciben
+   el MISMO trato que `.sh-paper`/`.sh-body` para que esas páginas impriman igual
    que cualquier otra (la regla del usuario: el diseño impreso es transversal). */
-.sn-paper-wrap, .sn-canvas { max-width: none; }
-.sn-paper, .sn-canvas, .sn-canvas-body {
+.sh-paper-wrap, .sh-canvas { max-width: none; }
+.sh-paper, .sh-canvas, .sh-canvas-body {
 	display: block;
 	box-shadow: none !important; border: 0 !important;
 	border-radius: 0 !important; padding: 0 !important;
 	margin: 0 !important;
 	background: #fff !important;
 }
-/* Tipografía impresa más chica, PROPORCIONAL. `--sn-font-scale` es la escala
+/* Tipografía impresa más chica, PROPORCIONAL. `--sh-font-scale` es la escala
    única de la que derivan TODOS los tokens fs-* y el propio baseline, así que
    bajarla achica el cuerpo y los títulos por igual sin romper la grilla. DEBE
    fijarse en :root (donde se declaran los tokens fs-*): si se pone en un
@@ -47,44 +47,44 @@ body::before { display: none !important; }
    usuario en papel. Va dentro de print.css → solo afecta la impresión. Mismo
    valor que la previsualización paginada (print-preview.css). */
 :root {
-	--sn-font-scale: 0.85 !important;
+	--sh-font-scale: 0.85 !important;
 }
-.sn-body > :is(p, ul, ol, dl, blockquote, h2, h3, h4, h5, h6, pre) {
+.sh-body > :is(p, ul, ol, dl, blockquote, h2, h3, h4, h5, h6, pre) {
 	max-width: none !important;
 }
 /* Tablas sin color de fondo en papel (se conservan los filetes/bordes). Cubre
    `.wikitable`, plantillas con TemplateStyles y celdas con relleno propio. */
-.sn-body :is(table, thead, tbody, tfoot, tr, th, td, caption) {
+.sh-body :is(table, thead, tbody, tfoot, tr, th, td, caption) {
 	background: transparent !important;
 	background-color: transparent !important;
 }
 /* En pantalla el cuerpo va condensado/medido; impreso, ancho completo dentro
    del margen de @page. */
-.sn-body { font-stretch: 100% !important; }
-.sn-body > .mw-parser-output > p,
-.sn-body > .mw-parser-output > section > p { width: auto !important; }
+.sh-body { font-stretch: 100% !important; }
+.sh-body > .mw-parser-output > p,
+.sh-body > .mw-parser-output > section > p { width: auto !important; }
 /* BASELINE EN IMPRESIÓN. MediaWiki core inyecta su propia hoja `commonPrint`
    (media=print, en toda página) con `p { line-height:1.2 }`, que en impresión
    le gana a la herencia de `body` (1.65) y aplasta el interlineado SOLO de los
    párrafos —las listas y títulos siguen en la grilla, así que el párrafo se ve
    apretado y las listas «sueltas». Reanclamos el interlineado del párrafo al
    baseline para que el ritmo vertical impreso sea idéntico al de pantalla. (El
-   margen ya lo gana el skin: `.sn-body p { margin:0 0 baseline }` aplica en todo
+   margen ya lo gana el skin: `.sh-body p { margin:0 0 baseline }` aplica en todo
    medio.) */
-.sn-body p { line-height: var(--sn-leading) !important; }
+.sh-body p { line-height: var(--sh-leading) !important; }
 /* Enlaces del contenido: tinta negra subrayada (legible en papel B/N). Core
    `commonPrint` fuerza `a { color:inherit !important; text-decoration:inherit
    !important }`, así que para recuperar el subrayado hay que igualar su
-   `!important` y out-especificar con `.sn-body a`. */
-.sn-body a { color: #000 !important; text-decoration: underline !important; }
+   `!important` y out-especificar con `.sh-body a`. */
+.sh-body a { color: #000 !important; text-decoration: underline !important; }
 a { color: #000; }
 /* La URL impresa reusa el ::after que en pantalla es el ÍCONO de enlace
-   externo (`.sn-body a.external::after`: inline-block de .68em × .68em con
+   externo (`.sh-body a.external::after`: inline-block de .68em × .68em con
    mask). Si no se deshace esa caja, la URL queda encajonada en .68em de ancho:
    con break-all se parte en un carácter por línea, la cajita crece hacia abajo
    y el navegador inserta hojas casi vacías (solo asoma el «(» bajo la mask).
    Se ve en las bibliografías con enlaces externos (p. ej. Asignaturas). */
-.sn-body a[href^="http"]::after {
+.sh-body a[href^="http"]::after {
 	content: " (" attr(href) ")"; font-size: .85em; color: #555;
 	word-break: break-all;
 	display: inline !important;
@@ -98,11 +98,11 @@ img, figure, table, pre { page-break-inside: avoid; }
 /* El título de la página (#firstHeading) lleva en pantalla un margin-top
    NEGATIVO de medio baseline: un ajuste óptico que recorta el aire superior
    contra el inset (padding) del papel. En impresión el papel va con padding:0
-   (regla .sn-paper de arriba), así que ese negativo ya no recorta nada —solo
+   (regla .sh-paper de arriba), así que ese negativo ya no recorta nada —solo
    sube el título medio baseline dentro del margen de @page y descalibra el
    inicio de la columna. Lo neutralizamos: el título arranca limpio en el borde
    superior del área imprimible. */
-:is(.sn-paper, .sn-canvas) :is(h1#firstHeading, .firstHeading, .mw-first-heading) {
+:is(.sh-paper, .sh-canvas) :is(h1#firstHeading, .firstHeading, .mw-first-heading) {
 	margin-top: 0 !important;
 }
 /* TABLA DE CONTENIDOS — impresión DIRECTA (Ctrl+P, sin la previsualización
@@ -112,14 +112,14 @@ img, figure, table, pre { page-break-inside: avoid; }
    Los números de página por entrada solo los da la previsualización paged.js
    (la «Versión para imprimir»): el motor de impresión del navegador no resuelve
    `target-counter()`. */
-.sn-body .toc:has(.toctogglecheckbox:checked),
+.sh-body .toc:has(.toctogglecheckbox:checked),
 .mw-parser-output .toc:has(.toctogglecheckbox:checked) {
 	display: none !important;
 }
-.sn-body .toc, .mw-parser-output .toc {
+.sh-body .toc, .mw-parser-output .toc {
 	background: none !important; border: 0 !important; padding: 0 !important;
 }
-.sn-body .toc .toctogglecheckbox, .sn-body .toc .toctogglelabel,
+.sh-body .toc .toctogglecheckbox, .sh-body .toc .toctogglelabel,
 .mw-parser-output .toc .toctogglecheckbox, .mw-parser-output .toc .toctogglelabel {
 	display: none !important;
 }

@@ -1,27 +1,27 @@
-/* Casiopea-Con§tel (extensión casiopea-constel) — absorción en Stellamereida.
+/* Casiopea-Con§tel (extensión casiopea-constel) — absorción en Santa Hermandad.
  *
  * Las páginas del mapa (Especial:Constelación) y de la lectura propia
  * (Especial:MiConstel) marcan <body class="constel-wide">: necesitan ancho
  * para el grafo y las tablas. Aquí la hoja se ensancha al ancho del conjunto
- * (--sn-shell, el mismo del header y el pie) en vez de la medida de lectura
- * (--sn-measure). Los componentes de la extensión ya usan los tokens del skin.
+ * (--sh-shell, el mismo del header y el pie) en vez de la medida de lectura
+ * (--sh-measure). Los componentes de la extensión ya usan los tokens del skin.
  */
-.constel-wide .sn-paper-wrap {
-	max-width: var( --sn-shell );
+.constel-wide .sh-paper-wrap {
+	max-width: var( --sh-shell );
 }
 
 /* Especial:Constelación va además a pantalla completa (la extensión fija la
  * misma propiedad que __PANTALLACOMPLETA__) y marca <body class="constel-full">:
  * el mapa posee el viewport, como la biblioteca con§tel. El canvas pierde su
  * padding; título e introducción quedan sólo para lectores de pantalla; el
- * isotipo se acerca a la esquina (--sn-fs-inset = --sn-s-3 arriba Y a la
+ * isotipo se acerca a la esquina (--sh-fs-inset = --sh-s-3 arriba Y a la
  * derecha, el mismo aire que el padding de la barra) y la primera fila de la
  * barra le deja libre esa esquina, a su misma altura. */
-.constel-full .sn-canvas {
-	--sn-fs-inset: var( --sn-s-3 );
+.constel-full .sh-canvas {
+	--sh-fs-inset: var( --sh-s-3 );
 	padding: 0;
 }
-.constel-full .sn-canvas :is( h1#firstHeading, .mw-specialpage-summary ) {
+.constel-full .sh-canvas :is( h1#firstHeading, .mw-specialpage-summary ) {
 	position: absolute;
 	width: 1px; height: 1px;
 	margin: -1px; padding: 0;
@@ -30,11 +30,11 @@
 	white-space: nowrap;
 }
 /* Sólo la primera fila (vista, aristas, navegación) comparte altura con el
- * isotipo; los filtros siguen hasta el borde. La barra ya trae --sn-s-3 de
- * padding (= --sn-fs-inset), así que la fila mide lo que el isotipo (3rem,
- * .sn-fs-trigger) y lo centra en la misma línea, y reserva el isotipo más un
+ * isotipo; los filtros siguen hasta el borde. La barra ya trae --sh-s-3 de
+ * padding (= --sh-fs-inset), así que la fila mide lo que el isotipo (3rem,
+ * .sh-fs-trigger) y lo centra en la misma línea, y reserva el isotipo más un
  * inset de separación: borde · s-3 · iso · s-3 · botones. */
 .constel-full .constel-map__row:first-child {
 	min-height: 3rem;
-	padding-inline-end: calc( 3rem + var( --sn-fs-inset ) );
+	padding-inline-end: calc( 3rem + var( --sh-fs-inset ) );
 }

@@ -1,13 +1,13 @@
 /* ============================================================
- * skinStyles/echo.css — Stellamereida
+ * skinStyles/echo.css — Santa Hermandad
  * 
  * Snapshot inicial del CSS de la extensión Echo
  * versión ?, licencia upstream: MIT.
  * Capturado el 2026-05-19 desde Echo/extension.json para
- * absorber los estilos dentro del sistema visual de Stellamereida.
+ * absorber los estilos dentro del sistema visual de Santa Hermandad.
  * 
  * Estos bloques se reescribirán gradualmente usando los tokens del
- * skin (var(--sn-...)). Mientras tanto, sirven como referencia
+ * skin (var(--sh-...)). Mientras tanto, sirven como referencia
  * exacta de lo que la extensión inyecta hoy.
  * 
  * Cargado vía ResourceModuleSkinStyles en skin.json con prefijo `+`,
@@ -35,7 +35,7 @@
 		// Later we put the counter back onscreen with a zero text-indent
 		top: 0;
 		text-indent: -9999px;
-		border-radius: var(--sn-radius);
+		border-radius: var(--sh-radius);
 		cursor: pointer;
 		text-decoration: none;
 		line-height: normal;
@@ -45,15 +45,15 @@
 		&:hover,
 		&:active,
 		&:focus {
-			outline: var(--sn-focus-ring);
+			outline: var(--sh-focus-ring);
 		}
 
 		&:focus {
-			box-shadow: 0 0 0 1px var(--sn-paper), 0 0 0 3px var(--sn-link);
+			box-shadow: 0 0 0 1px var(--sh-paper), 0 0 0 3px var(--sh-link);
 			opacity: 1;
 
 			&::after {
-				border-color: var(--sn-focus-border);
+				border-color: var(--sh-focus-border);
 			}
 		}
 
@@ -69,11 +69,11 @@
 			font-size: 0.9em;
 			font-weight: bold;
 			padding: 0 0.3em;
-			border: 1px solid var(--sn-paper);
-			border-radius: var(--sn-radius);
+			border: 1px solid var(--sh-paper);
+			border-radius: var(--sh-radius);
 			background-color: @badge-counter-background-seen;
 			content: attr( data-counter-text );
-			color: var(--sn-paper);
+			color: var(--sh-paper);
 		}
 
 		&-dimmed {
@@ -100,11 +100,11 @@
 	&.oo-ui-flaggedElement-unseen,
 	&.mw-echo-unseen-notifications {
 		#pt-notifications-alert &::after {
-			background-color: var(--sn-danger);
+			background-color: var(--sh-danger);
 		}
 
 		#pt-notifications-notice &::after {
-			background-color: var(--sn-link);
+			background-color: var(--sh-link);
 		}
 	}
 }
@@ -138,7 +138,7 @@
 	}
 
 	.mw-echo-notification {
-		background-color: var(--sn-paper);
+		background-color: var(--sh-paper);
 		color: @grey-light;
 		clear: both;
 		display: block;
@@ -163,7 +163,7 @@
 		display: block;
 
 		.mw-echo-title {
-			color: var(--sn-ink);
+			color: var(--sh-ink);
 		}
 
 		.mw-echo-payload {
@@ -188,7 +188,7 @@
 
 		.mw-echo-notification-footer {
 			color: @grey-light;
-			font-size: var(--sn-fs-xs);
+			font-size: var(--sh-fs-xs);
 			margin-top: 0.2em;
 
 			.mw-echo-notification-footer-element {
@@ -228,9 +228,9 @@
 @import '../echo.variables.less';
 
 .mw-echo-alert {
-	background-color: var(--sn-warn);
-	color: var(--sn-ink);
-	border-radius: var(--sn-radius);
+	background-color: var(--sh-warn);
+	color: var(--sh-ink);
+	border-radius: var(--sh-radius);
 	padding: 0.25em 0.8em 0.2em 0.8em;
 	font-weight: normal;
 }
@@ -351,7 +351,7 @@
 		margin-top: -0.5em;
 		top: 0;
 		z-index: 2;
-		background-color: var(--sn-paper);
+		background-color: var(--sh-paper);
 		box-shadow: 0 2px 0 0 rgba( 0, 0, 0, 0.1 );
 	}
 
@@ -432,19 +432,19 @@
 		transition: background-color 100ms, color 100ms;
 
 		&-highlighted {
-			background-color: var(--sn-sunk);
-			color: var(--sn-ink);
+			background-color: var(--sh-sunk);
+			color: var(--sh-ink);
 		}
 
 		&-selected {
-			background-color: var(--sn-nova-wash);
-			color: var(--sn-link);
+			background-color: var(--sh-nova-wash);
+			color: var(--sh-link);
 		}
 
 		&-selected&-highlighted,
 		&-pressed&-highlighted {
 			background-color: rgba( 41, 98, 204, 0.1 );
-			color: var(--sn-link);
+			color: var(--sh-link);
 		}
 	}
 
@@ -485,16 +485,16 @@
 	}
 
 	&-label-count {
-		background-color: var(--sn-sunk);
-		color: var(--sn-ink-soft);
+		background-color: var(--sh-sunk);
+		color: var(--sh-ink-soft);
 		padding: 0.2em 0.5em;
 		margin-left: 0.5em;
-		border-radius: var(--sn-radius);
+		border-radius: var(--sh-radius);
 		white-space: nowrap;
 
 		.oo-ui-optionWidget-selected & {
 			background-color: transparent;
-			color: var(--sn-link);
+			color: var(--sh-link);
 		}
 	}
 }

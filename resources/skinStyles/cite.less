@@ -1,13 +1,13 @@
 /* ============================================================
- * skinStyles/cite.css — Stellamereida
+ * skinStyles/cite.css — Santa Hermandad
  * 
  * Snapshot inicial del CSS de la extensión Cite
  * versión ?, licencia upstream: GPL-2.0-or-later.
  * Capturado el 2026-05-19 desde Cite/extension.json para
- * absorber los estilos dentro del sistema visual de Stellamereida.
+ * absorber los estilos dentro del sistema visual de Santa Hermandad.
  * 
  * Estos bloques se reescribirán gradualmente usando los tokens del
- * skin (var(--sn-...)). Mientras tanto, sirven como referencia
+ * skin (var(--sh-...)). Mientras tanto, sirven como referencia
  * exacta de lo que la extensión inyecta hoy.
  * 
  * Cargado vía ResourceModuleSkinStyles en skin.json con prefijo `+`,
@@ -42,9 +42,9 @@
 
 ol.references {
 	/* La numeración (::marker) hereda el tamaño del <li>; lo fijamos al mismo
-	   grado que .reference-text (--sn-fs-xs) para que el número no quede más
+	   grado que .reference-text (--sh-fs-xs) para que el número no quede más
 	   grande que el texto de la nota. */
-	font-size: var(--sn-fs-xs);
+	font-size: var(--sh-fs-xs);
 
 	/**
 	 * Resetting *any* counter on an <ol> element messes up the built-in numbering in Firefox.
@@ -94,7 +94,7 @@ sup.reference {
 /* Highlight clicked reference in blue to help navigation */
 ol.references li:target,
 sup.reference:target {
-	background-color: var(--sn-nova-wash);
+	background-color: var(--sh-nova-wash);
 }
 
 /* Make cite errors "strong" */
@@ -126,14 +126,14 @@ sup.reference:target {
 }
 
 /* Cuerpo de cada nota al pie. El texto del skin va condensado
-   (font-stretch + --sn-text-width); en las referencias volvemos al ancho
+   (font-stretch + --sh-text-width); en las referencias volvemos al ancho
    pleno (100%) y a un grado tipográfico menor, con un pelo de tracking para
    compensar la densidad del cuerpo pequeño. */
 .reference-text {
 	font-stretch: 100%;
-	font-size: var(--sn-fs-xs);
+	font-size: var(--sh-fs-xs);
 	letter-spacing: 0.03ex;
-	color: var(--sn-ink);
+	color: var(--sh-ink);
 }
 
 /* archivo origen: modules/ext.cite.print.less */

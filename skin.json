@@ -1,78 +1,78 @@
 {
 	"manifest_version": 2,
-	"name": "Stellamereida",
-	"namemsg": "skinname-stellamereida",
+	"name": "SantaHermandad",
+	"namemsg": "skinname-santa-hermandad",
 	"version": "0.9.3",
 	"author": [
 		"[https://herbertspencer.net Herbert Spencer González]",
 		".:TIG:. Taller de Investigaciones Gráficas, e[ad] Escuela de Arquitectura y Diseño, Pontificia Universidad Católica de Valparaíso",
 		"Corporación Cultural Amereida"
 	],
-	"url": "https://github.com/amereida/stellamereida",
-	"descriptionmsg": "stellamereida-desc",
+	"url": "https://github.com/amereida/santa-hermandad",
+	"descriptionmsg": "santa-hermandad-desc",
 	"license-name": "Artistic-2.0",
 	"type": "skin",
 	"requires": {
 		"MediaWiki": ">= 1.43.0"
 	},
 	"config": {
-		"StellamereidaIsotypePath": {
+		"SantaHermandadIsotypePath": {
 			"value": null,
 			"description": "Ruta ABSOLUTA en el sistema de archivos del servidor a un SVG monocromo colorizable (usa currentColor) para el isotipo/wordmark del header. El skin lo lee e inyecta inline, por lo que se tematiza claro/oscuro. Si es null o el archivo no es legible, usa el bundle resources/casiopea.svg. Ver README (seccion \"Logo / isotipo\")."
 		},
-		"StellamereidaIconPath": {
+		"SantaHermandadIconPath": {
 			"value": null,
-			"description": "Ruta ABSOLUTA en el sistema de archivos del servidor al glifo compacto (cuadrado, sin wordmark) para viewports estrechos y la barra de pantalla completa. Mismas reglas que StellamereidaIsotypePath; fallback al bundle resources/casiopea-icon.svg."
+			"description": "Ruta ABSOLUTA en el sistema de archivos del servidor al glifo compacto (cuadrado, sin wordmark) para viewports estrechos y la barra de pantalla completa. Mismas reglas que SantaHermandadIsotypePath; fallback al bundle resources/casiopea-icon.svg."
 		}
 	},
 	"AutoloadNamespaces": {
-		"MediaWiki\\Skins\\Stellamereida\\": "includes/"
+		"MediaWiki\\Skins\\SantaHermandad\\": "includes/"
 	},
 	"ValidSkinNames": {
-		"stellamereida": {
-			"class": "MediaWiki\\Skins\\Stellamereida\\SkinStellamereida",
+		"santa-hermandad": {
+			"class": "MediaWiki\\Skins\\SantaHermandad\\SkinSantaHermandad",
 			"args": [
 				{
-					"name": "stellamereida",
+					"name": "santa-hermandad",
 					"responsive": true,
 					"templateDirectory": "includes/templates",
 					"styles": [],
 					"scripts": [
-						"skins.stellamereida.scripts"
+						"skins.santa-hermandad.scripts"
 					],
 					"messages": [
 						"sitetitle",
 						"searchbutton",
 						"tagline",
 						"toc",
-						"stellamereida-skip-to-content",
-						"stellamereida-skip-to-nav",
-						"stellamereida-sidebar",
-						"stellamereida-home",
-						"stellamereida-escape",
-						"stellamereida-menu",
-						"stellamereida-mainpage",
-						"stellamereida-search",
-						"stellamereida-thispage",
-						"stellamereida-user",
-						"stellamereida-temp-account",
-						"stellamereida-managed-nav",
-						"stellamereida-pagetools",
-						"stellamereida-nav",
-						"stellamereida-page",
-						"stellamereida-close",
-						"stellamereida-auto",
-						"stellamereida-pref-theme",
-						"stellamereida-theme-light",
-						"stellamereida-theme-dark",
-						"stellamereida-pref-font",
-						"stellamereida-sz-s",
-						"stellamereida-sz-m",
-						"stellamereida-sz-l",
-						"stellamereida-pref-family",
-						"stellamereida-family-sans",
-						"stellamereida-family-serif",
-						"stellamereida-tools"
+						"santa-hermandad-skip-to-content",
+						"santa-hermandad-skip-to-nav",
+						"santa-hermandad-sidebar",
+						"santa-hermandad-home",
+						"santa-hermandad-escape",
+						"santa-hermandad-menu",
+						"santa-hermandad-mainpage",
+						"santa-hermandad-search",
+						"santa-hermandad-thispage",
+						"santa-hermandad-user",
+						"santa-hermandad-temp-account",
+						"santa-hermandad-managed-nav",
+						"santa-hermandad-pagetools",
+						"santa-hermandad-nav",
+						"santa-hermandad-page",
+						"santa-hermandad-close",
+						"santa-hermandad-auto",
+						"santa-hermandad-pref-theme",
+						"santa-hermandad-theme-light",
+						"santa-hermandad-theme-dark",
+						"santa-hermandad-pref-font",
+						"santa-hermandad-sz-s",
+						"santa-hermandad-sz-m",
+						"santa-hermandad-sz-l",
+						"santa-hermandad-pref-family",
+						"santa-hermandad-family-sans",
+						"santa-hermandad-family-serif",
+						"santa-hermandad-tools"
 					],
 					"menus": [
 						"user-menu",
@@ -89,26 +89,26 @@
 		}
 	},
 	"MessagesDirs": {
-		"Stellamereida": [
+		"SantaHermandad": [
 			"i18n"
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"StellamereidaMagic": "Stellamereida.i18n.magic.php"
+		"SantaHermandadMagic": "SantaHermandad.i18n.magic.php"
 	},
 	"Hooks": {
-		"GetDoubleUnderscoreIDs": "MediaWiki\\Skins\\Stellamereida\\Hooks::onGetDoubleUnderscoreIDs",
-		"OutputPageParserOutput": "MediaWiki\\Skins\\Stellamereida\\Hooks::onOutputPageParserOutput",
-		"GetPreferences": "MediaWiki\\Skins\\Stellamereida\\Hooks::onGetPreferences",
-		"UserGetDefaultOptions": "MediaWiki\\Skins\\Stellamereida\\Hooks::onUserGetDefaultOptions",
-		"BeforePageDisplay": "MediaWiki\\Skins\\Stellamereida\\Hooks::onBeforePageDisplay",
-		"ResourceLoaderRegisterModules": "MediaWiki\\Skins\\Stellamereida\\Hooks::onResourceLoaderRegisterModules"
+		"GetDoubleUnderscoreIDs": "MediaWiki\\Skins\\SantaHermandad\\Hooks::onGetDoubleUnderscoreIDs",
+		"OutputPageParserOutput": "MediaWiki\\Skins\\SantaHermandad\\Hooks::onOutputPageParserOutput",
+		"GetPreferences": "MediaWiki\\Skins\\SantaHermandad\\Hooks::onGetPreferences",
+		"UserGetDefaultOptions": "MediaWiki\\Skins\\SantaHermandad\\Hooks::onUserGetDefaultOptions",
+		"BeforePageDisplay": "MediaWiki\\Skins\\SantaHermandad\\Hooks::onBeforePageDisplay",
+		"ResourceLoaderRegisterModules": "MediaWiki\\Skins\\SantaHermandad\\Hooks::onResourceLoaderRegisterModules"
 	},
-	"_comment_ResourceModules": "skins.stellamereida.styles y .scripts se registran en PHP (Hooks::onResourceLoaderRegisterModules) con remoteSkinPath calculado de la carpeta REAL del skin (robusto al nombre del directorio al clonar). Ademas, `styles` esta vacio a proposito: la CSS critica del skin NO la carga MediaWiki en su <link> combinado (que va SIN version y se cachea rancio tras cada deploy), sino Hooks::onBeforePageDisplay con un <link> propio cuyo `version` es el hash de contenido de RL → caché larga inmutable + bust automático en cada cambio de CSS, sin acceso al servidor.",
+	"_comment_ResourceModules": "skins.santa-hermandad.styles y .scripts se registran en PHP (Hooks::onResourceLoaderRegisterModules) con remoteSkinPath calculado de la carpeta REAL del skin (robusto al nombre del directorio al clonar). Ademas, `styles` esta vacio a proposito: la CSS critica del skin NO la carga MediaWiki en su <link> combinado (que va SIN version y se cachea rancio tras cada deploy), sino Hooks::onBeforePageDisplay con un <link> propio cuyo `version` es el hash de contenido de RL → caché larga inmutable + bust automático en cada cambio de CSS, sin acceso al servidor.",
 	"ResourceModuleSkinStyles": {
-		"stellamereida": {
+		"santa-hermandad": {
 			"localBasePath": "resources",
-			"remoteSkinPath": "stellamereida/resources",
+			"remoteSkinPath": "santa-hermandad/resources",
 			"+ext.3DAlloy": "skinStyles/3dalloy.css",
 			"+ext.MsUpload": "skinStyles/msupload.less",
 			"+ext.ReplaceTextStyles": "skinStyles/replacetext.less",

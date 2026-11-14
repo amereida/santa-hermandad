@@ -1,13 +1,13 @@
 /* ============================================================
- * skinStyles/3dalloy.css — Stellamereida
+ * skinStyles/3dalloy.css — Santa Hermandad
  * 
  * Snapshot inicial del CSS de la extensión 3DAlloy
  * versión 1.10, licencia upstream: MIT.
  * Capturado el 2026-05-19 desde 3DAlloy/extension.json para
- * absorber los estilos dentro del sistema visual de Stellamereida.
+ * absorber los estilos dentro del sistema visual de Santa Hermandad.
  * 
  * Estos bloques se reescribirán gradualmente usando los tokens del
- * skin (var(--sn-...)). Mientras tanto, sirven como referencia
+ * skin (var(--sh-...)). Mientras tanto, sirven como referencia
  * exacta de lo que la extensión inyecta hoy.
  * 
  * Cargado vía ResourceModuleSkinStyles en skin.json con prefijo `+`,

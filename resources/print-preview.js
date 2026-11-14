@@ -1,4 +1,4 @@
-/* Stellamereida — previsualización de impresión paginada (Vivliostyle).
+/* Santa Hermandad — previsualización de impresión paginada (Vivliostyle).
  *
  * Por qué existe: lo que el usuario pidió para el papel —cabecera/pie por
  * página con logo + numeración «n / total», URL y fecha; números de página en
@@ -16,7 +16,7 @@
  *    iframe oculto y lanza `print()` → salida 1:1, sin trucos de aislamiento.
  *
  * El documento fuente es autocontenido: enlaza las MISMAS hojas del skin
- * (fonts/tokens/stellamereida) que ya usa la página viva + un <style> propio con
+ * (fonts/tokens/santa-hermandad) que ya usa la página viva + un <style> propio con
  * el @page, las columnas, los elementos corrientes y el TOC. La tipografía,
  * por tanto, es idéntica a pantalla.
  *
@@ -51,7 +51,7 @@
 
 	/* El cuadrado de la constelación (isótopo compacto), ya en el DOM. */
 	function logoSvg() {
-		var src = doc.querySelector( '.sn-isotype-compact svg, .sn-fs-glyph svg' );
+		var src = doc.querySelector( '.sh-isotype-compact svg, .sh-fs-glyph svg' );
 		return src ? src.cloneNode( true ) : null;
 	}
 
@@ -140,23 +140,23 @@
 	   la salida impresa). Útil para «alejar» y ver completa una hoja grande. */
 	var ZOOM_MIN = 0.25, ZOOM_MAX = 1.5, ZOOM_STEP = 0.25;
 
-	/* Base de archivos del skin (p. ej. «…/skins/Stellamereida/resources»), tomada
+	/* Base de archivos del skin (p. ej. «…/skins/santa-hermandad/resources»), tomada
 	   del <link rel=icon> del isótopo que el skin inyecta con ruta de archivo. */
 	function skinBase() {
 		var ico = doc.querySelector( 'link[rel~="icon"][href*="/resources/"]' );
 		if ( ico && ico.href ) { return ico.href.replace( /\/[^/]*$/, '' ); }
-		return ( ( mw && mw.config && mw.config.get( 'wgServer' ) ) || '' ) + '/skins/Stellamereida/resources';
+		return ( ( mw && mw.config && mw.config.get( 'wgServer' ) ) || '' ) + '/skins/santa-hermandad/resources';
 	}
 
 	/* Enlazamos las hojas LIMPIAS del skin como ARCHIVOS directos: fonts.css
-	   (@font-face), tokens.css (variables --sn-*) y stellamereida.css (tipografía
-	   del contenido: .sn-body p, cabeceras, listas, tablas…). A propósito NO
-	   usamos el módulo combinado `skins.stellamereida.styles`: ese incluye print.css
+	   (@font-face), tokens.css (variables --sh-*) y santa-hermandad.css (tipografía
+	   del contenido: .sh-body p, cabeceras, listas, tablas…). A propósito NO
+	   usamos el módulo combinado `skins.santa-hermandad.styles`: ese incluye print.css
 	   (media print) cuyo `@page` se SUMA al nuestro en Vivliostyle (doble margen).
 	   Con archivos directos hay un único @page (el de printCss). */
 	function skinCssLinks() {
 		var base = skinBase();
-		return [ 'fonts.css', 'tokens.css', 'stellamereida.css' ].map( function ( f ) {
+		return [ 'fonts.css', 'tokens.css', 'santa-hermandad.css' ].map( function ( f ) {
 			return '<link rel="stylesheet" href="' + base + '/' + f + '">';
 		} ).join( '' );
 	}
@@ -167,9 +167,9 @@
 	   página, y tablas sin fondo. Tamaño, columnas, margen y separación salen del formato elegido en la barra. */
 	function printCss( sizeCss, cols, margin, gap ) {
 		var col = ( cols && cols > 1 ) ? [
-			'.sn-body { column-count: ' + cols + '; column-gap: ' + ( gap || '1cm' ) + '; column-fill: auto; }',
-			'.sn-body > :is(#toc, .toc, .mw-table-of-contents) { column-span: all; }',
-			'.sn-body :is(figure, table, blockquote, pre, .thumb) { break-inside: avoid; }'
+			'.sh-body { column-count: ' + cols + '; column-gap: ' + ( gap || '1cm' ) + '; column-fill: auto; }',
+			'.sh-body > :is(#toc, .toc, .mw-table-of-contents) { column-span: all; }',
+			'.sh-body :is(figure, table, blockquote, pre, .thumb) { break-inside: avoid; }'
 		].join( '\n' ) : '';
 		return [
 			'@page {',
@@ -180,54 +180,54 @@
 			'	margin: ' + ( margin || '2cm' ) + ';',
 			'	@top-left { content: element(snRunLogo); }',
 			'	@top-right { content: counter(page) " / " counter(pages);',
-			'		font-family: var(--sn-font-text); font-size: 8pt; color: #000; }',
+			'		font-family: var(--sh-font-text); font-size: 8pt; color: #000; }',
 			'	@bottom-left { content: element(snRunUrl); }',
 			'	@bottom-right { content: element(snRunDate); }',
 			'}',
 			/* Tipografía impresa más chica, proporcional (escala única de la que
 			   derivan los tokens fs-* y el baseline). En el doc fuente :root es el
 			   sitio correcto para fijarla. */
-			':root { --sn-font-scale: 0.85; }',
+			':root { --sh-font-scale: 0.85; }',
 			/* TINTA SOBRE BLANCO. El doc enlaza el CSS de PANTALLA del skin, que
-			   trae fondos (el campo beige --sn-field, el grano, los marcos de
+			   trae fondos (el campo beige --sh-field, el grano, los marcos de
 			   figuras/thumbs/avisos/código). En papel todo eso sobra: papel blanco
 			   y sin cajas de color. Reset amplio de fondos y sombras en el
 			   contenido (el `color` del texto NO se toca; las imágenes <img> no son
 			   fondo, así que se ven igual, solo sin su marco). */
 			'html, body { background: #fff !important; margin: 0; }',
 			'body::before { display: none !important; }',   /* el grano de pantalla */
-			'.sn-pp-flow, .sn-pp-flow * {',
+			'.sh-pp-flow, .sh-pp-flow * {',
 			'	background: transparent !important; box-shadow: none !important; }',
-			'.sn-pp-flow :is(figure, .thumb, .thumbinner, .thumbimage, .gallerybox) {',
+			'.sh-pp-flow :is(figure, .thumb, .thumbinner, .thumbimage, .gallerybox) {',
 			'	overflow: visible !important; border: 0 !important; }',
-			'.sn-pp-flow img { max-width: 100%; height: auto; }',
+			'.sh-pp-flow img { max-width: 100%; height: auto; }',
 			/* El contenedor del contenido llena el área de página; el margen del
 			   contenido lo da íntegro el @page (proporcional al papel), sin padding extra. */
-			'.sn-pp-flow { margin: 0; padding: 0; max-width: none; width: auto; }',
-			'.sn-body, .sn-body .mw-parser-output { max-width: none; width: auto; }',
-			'.sn-body { font-stretch: 100%; }',
-			/* Título de la página: como el flujo no lleva `.sn-paper`, replicamos
+			'.sh-pp-flow { margin: 0; padding: 0; max-width: none; width: auto; }',
+			'.sh-body, .sh-body .mw-parser-output { max-width: none; width: auto; }',
+			'.sh-body { font-stretch: 100%; }',
+			/* Título de la página: como el flujo no lleva `.sh-paper`, replicamos
 			   aquí la regla del #firstHeading (sin el margin-top negativo, que era
 			   un ajuste de pantalla). */
-			'.sn-pp-flow :is(h1#firstHeading, .firstHeading, .mw-first-heading) {',
-			'	font-family: var(--sn-font-text); font-weight: 300;',
-			'	font-size: var(--sn-fs-page-title); line-height: var(--sn-baseline-2);',
-			'	letter-spacing: -.018em; color: var(--sn-nova);',
-			'	margin: 0 0 var(--sn-baseline); max-width: 34ch; text-wrap: balance; }',
-			'.sn-body p { line-height: var(--sn-leading); }',
-			'.sn-body a { color: #000; text-decoration: underline; }',
-			'.sn-pp-flow :is(h1, h2, .mw-heading1, .mw-heading2) { border-bottom: 0; }',
+			'.sh-pp-flow :is(h1#firstHeading, .firstHeading, .mw-first-heading) {',
+			'	font-family: var(--sh-font-text); font-weight: 300;',
+			'	font-size: var(--sh-fs-page-title); line-height: var(--sh-baseline-2);',
+			'	letter-spacing: -.018em; color: var(--sh-nova);',
+			'	margin: 0 0 var(--sh-baseline); max-width: 34ch; text-wrap: balance; }',
+			'.sh-body p { line-height: var(--sh-leading); }',
+			'.sh-body a { color: #000; text-decoration: underline; }',
+			'.sh-pp-flow :is(h1, h2, .mw-heading1, .mw-heading2) { border-bottom: 0; }',
 			/* Tooltips de SMW (p. ej. advertencia de valor inválido en una
 			   bibliografía): el doc fuente no carga el CSS de SMW que oculta su
 			   contenido, así que el texto del tooltip se imprimía en línea. */
-			'.sn-pp-flow .smwttcontent { display: none !important; }',
+			'.sh-pp-flow .smwttcontent { display: none !important; }',
 			col,
 			/* Elementos corrientes (repetidos por página vía su margin-box). */
-			'.sn-run { font-family: var(--sn-font-text); font-size: 8pt; color: #000; line-height: 1.2; }',
-			'#sn-run-logo { position: running(snRunLogo); }',
-			'#sn-run-logo svg { width: 6mm; height: 6mm; display: block; }',
-			'#sn-run-url { position: running(snRunUrl); word-break: break-all; }',
-			'#sn-run-date { position: running(snRunDate); white-space: nowrap; }',
+			'.sh-run { font-family: var(--sh-font-text); font-size: 8pt; color: #000; line-height: 1.2; }',
+			'#sh-run-logo { position: running(snRunLogo); }',
+			'#sh-run-logo svg { width: 6mm; height: 6mm; display: block; }',
+			'#sh-run-url { position: running(snRunUrl); word-break: break-all; }',
+			'#sh-run-date { position: running(snRunDate); white-space: nowrap; }',
 			/* TOC: sin caja ni fondo; líder de puntos + nº de página por entrada
 			   (Vivliostyle sí soporta leader() y target-counter()). */
 			'#toc, .toc, .mw-table-of-contents { background: none; border: 0; padding: 0; }',
@@ -235,37 +235,37 @@
 			'.toc li a::after, #toc li a::after, .mw-table-of-contents li a::after {',
 			'	content: leader(". ") target-counter(attr(href url), page); color: #000; }',
 			/* Tablas sin color de fondo (se conservan filetes). */
-			'.sn-body :is(table, thead, tbody, tfoot, tr, th, td, caption) {',
+			'.sh-body :is(table, thead, tbody, tfoot, tr, th, td, caption) {',
 			'	background: transparent !important; background-color: transparent !important; }'
 		].join( '\n' );
 	}
 
 	function buildRun( id, node ) {
 		var d = doc.createElement( 'div' );
-		d.className = 'sn-run';
+		d.className = 'sh-run';
 		d.id = id;
 		if ( typeof node === 'string' ) { d.textContent = node; }
 		else if ( node ) { d.appendChild( node ); }
 		return d;
 	}
 
-	/* Contenido a paginar (elemento .sn-pp-flow): elementos corrientes + título
-	   + .sn-body (TOC + cuerpo). Replica la jerarquía real para heredar la
-	   cascada del skin (el #firstHeading va fuera de .sn-body). */
+	/* Contenido a paginar (elemento .sh-pp-flow): elementos corrientes + título
+	   + .sh-body (TOC + cuerpo). Replica la jerarquía real para heredar la
+	   cascada del skin (el #firstHeading va fuera de .sh-body). */
 	function buildContentEl() {
 		var outer = doc.createElement( 'div' );
-		outer.className = 'sn-pp-flow';
+		outer.className = 'sh-pp-flow';
 
 		var logo = logoSvg();
-		if ( logo ) { outer.appendChild( buildRun( 'sn-run-logo', logo ) ); }
-		outer.appendChild( buildRun( 'sn-run-url', articleUrl() ) );
-		outer.appendChild( buildRun( 'sn-run-date', printDate() ) );
+		if ( logo ) { outer.appendChild( buildRun( 'sh-run-logo', logo ) ); }
+		outer.appendChild( buildRun( 'sh-run-url', articleUrl() ) );
+		outer.appendChild( buildRun( 'sh-run-date', printDate() ) );
 
 		var heading = doc.querySelector( '#firstHeading, .firstHeading, .mw-first-heading' );
 		if ( heading ) { outer.appendChild( heading.cloneNode( true ) ); }
 
 		var inner = doc.createElement( 'div' );
-		inner.className = 'sn-body mw-body-content';
+		inner.className = 'sh-body mw-body-content';
 		outer.appendChild( inner );
 
 		var toc = state.toc ? tocClone() : null;
@@ -312,9 +312,9 @@
 	   impresión (printHTML) saca TODAS las hojas. */
 	function updateNav() {
 		var o = state.overlay; if ( !o ) { return; }
-		var ind = o.querySelector( '.sn-pp-pageind' );
-		var prev = o.querySelector( '.sn-pp-prev' );
-		var next = o.querySelector( '.sn-pp-next' );
+		var ind = o.querySelector( '.sh-pp-pageind' );
+		var prev = o.querySelector( '.sh-pp-prev' );
+		var next = o.querySelector( '.sh-pp-next' );
 		if ( ind ) {
 			ind.textContent = ( state.ready ? ( state.page + 1 ) : '—' ) + ' / ' +
 				( state.total || ( state.ready ? '…' : '—' ) );
@@ -340,12 +340,12 @@
 	   de Vivliostyle es interno y compone, no lo anula. */
 	function applyZoom() {
 		var o = state.overlay; if ( !o ) { return; }
-		var vp = o.querySelector( '.sn-pp-viewport' );
+		var vp = o.querySelector( '.sh-pp-viewport' );
 		if ( vp ) { vp.style.zoom = state.zoom; }
-		var ind = o.querySelector( '.sn-pp-zoomind' );
+		var ind = o.querySelector( '.sh-pp-zoomind' );
 		if ( ind ) { ind.textContent = Math.round( state.zoom * 100 ) + '%'; }
-		var zin = o.querySelector( '.sn-pp-zoomin' );
-		var zout = o.querySelector( '.sn-pp-zoomout' );
+		var zin = o.querySelector( '.sh-pp-zoomin' );
+		var zout = o.querySelector( '.sh-pp-zoomout' );
 		if ( zin ) { zin.disabled = state.zoom >= ZOOM_MAX; }
 		if ( zout ) { zout.disabled = state.zoom <= ZOOM_MIN; }
 	}
@@ -384,7 +384,7 @@
 		}
 		revokeSrc();
 		if ( state.overlay ) { state.overlay.remove(); state.overlay = null; }
-		root.classList.remove( 'sn-pp-active' );
+		root.classList.remove( 'sh-pp-active' );
 		doc.removeEventListener( 'keydown', onKey );
 		if ( state.lastFocus ) { try { state.lastFocus.focus(); } catch ( e ) {} }
 		state.lastFocus = null;
@@ -415,14 +415,14 @@
 	   quedaba mostrando el valor nuevo → vista y barra desincronizadas. */
 	function setControlsEnabled( on ) {
 		var o = state.overlay; if ( !o ) { return; }
-		o.querySelectorAll( '.sn-pp-print, .sn-pp-size, .sn-pp-orient' ).forEach( function ( el ) {
+		o.querySelectorAll( '.sh-pp-print, .sh-pp-size, .sh-pp-orient' ).forEach( function ( el ) {
 			el.disabled = !on;
 		} );
-		var toc = o.querySelector( '.sn-pp-toc' );
+		var toc = o.querySelector( '.sh-pp-toc' );
 		if ( toc ) { toc.disabled = !on || !state.hasToc; }
 	}
 	function showCount() {
-		var st = state.overlay && state.overlay.querySelector( '.sn-pp-status' );
+		var st = state.overlay && state.overlay.querySelector( '.sh-pp-status' );
 		if ( !st ) { return; }
 		st.textContent = state.total
 			? ( state.total + ( state.total === 1 ? ' página' : ' páginas' ) )
@@ -435,20 +435,20 @@
 		state.ready = true;
 		state.busy = false;
 		setControlsEnabled( true );
-		state.overlay.classList.remove( 'sn-pp-loading' );
+		state.overlay.classList.remove( 'sh-pp-loading' );
 		applyZoom();
 		updateNav();
 	}
 	function renderFailed() {
 		var o = state.overlay; if ( !o ) { return; }
-		o.querySelector( '.sn-pp-status' ).textContent =
+		o.querySelector( '.sh-pp-status' ).textContent =
 			'No se pudo preparar la vista. Usa Imprimir del navegador.';
 		// visor en estado dudoso → el próximo render parte con uno nuevo
 		stopViewer( state.viewer );
 		state.viewer = null;
 		state.busy = false;
 		setControlsEnabled( true );
-		o.classList.remove( 'sn-pp-loading' );
+		o.classList.remove( 'sh-pp-loading' );
 	}
 
 	/* UN CoreViewer por overlay (ver stopViewer). Los listeners se registran una
@@ -496,7 +496,7 @@
 	function render() {
 		var overlay = state.overlay;
 		if ( !overlay ) { return; }
-		var pages = overlay.querySelector( '.sn-pp-pages' );
+		var pages = overlay.querySelector( '.sh-pp-pages' );
 		var ent = sizeEntryById( state.size );
 
 		state.busy = true;
@@ -505,8 +505,8 @@
 		state.last = false;
 		state.ready = false;
 		setControlsEnabled( false );
-		overlay.classList.add( 'sn-pp-loading' );   // muestra el spinner
-		overlay.querySelector( '.sn-pp-status' ).textContent = 'Preparando la vista de impresión…';
+		overlay.classList.add( 'sh-pp-loading' );   // muestra el spinner
+		overlay.querySelector( '.sh-pp-status' ).textContent = 'Preparando la vista de impresión…';
 		updateNav();
 
 		revokeSrc();
@@ -528,8 +528,8 @@
 			try { viewer.adaptViewer_.cancelRenderingTask(); } catch ( e ) {}
 			state.awaitLoad = true;
 		} else {
-			pages.innerHTML = '<div class="sn-pp-viewport"></div>';
-			var viewport = pages.querySelector( '.sn-pp-viewport' );
+			pages.innerHTML = '<div class="sh-pp-viewport"></div>';
+			var viewport = pages.querySelector( '.sh-pp-viewport' );
 			viewport.style.zoom = state.zoom;
 			viewer = state.viewer = createViewer( viewport );
 			state.awaitLoad = false;   // visor nuevo: no hay maqueta vieja que filtrar
@@ -559,58 +559,58 @@
 			return false;   // sin motor → el llamador cae al print nativo
 		}
 		state.lastFocus = doc.activeElement;
-		root.classList.add( 'sn-pp-active' );
+		root.classList.add( 'sh-pp-active' );
 
 		var overlay = doc.createElement( 'div' );
-		overlay.className = 'sn-printpreview';
+		overlay.className = 'sh-printpreview';
 		overlay.setAttribute( 'role', 'dialog' );
 		overlay.setAttribute( 'aria-label', 'Vista de impresión' );
 		overlay.innerHTML =
-			'<div class="sn-pp-bar">' +
-				'<span class="sn-pp-statuswrap">' +
-					'<span class="sn-pp-spinner" aria-hidden="true"></span>' +
-					'<span class="sn-pp-status">Preparando la vista de impresión…</span>' +
+			'<div class="sh-pp-bar">' +
+				'<span class="sh-pp-statuswrap">' +
+					'<span class="sh-pp-spinner" aria-hidden="true"></span>' +
+					'<span class="sh-pp-status">Preparando la vista de impresión…</span>' +
 				'</span>' +
-				'<span class="sn-pp-actions">' +
+				'<span class="sh-pp-actions">' +
 					/* índice */
-					'<label class="sn-pp-toclabel">' +
-						'<input type="checkbox" class="sn-pp-toc"> Índice' +
+					'<label class="sh-pp-toclabel">' +
+						'<input type="checkbox" class="sh-pp-toc"> Índice' +
 					'</label>' +
 					/* formato: tamaño + orientación */
-					'<label class="sn-pp-sizelabel">Tamaño ' +
-						'<select class="sn-pp-size">' + sizeOptionsHtml() + '</select>' +
+					'<label class="sh-pp-sizelabel">Tamaño ' +
+						'<select class="sh-pp-size">' + sizeOptionsHtml() + '</select>' +
 					'</label>' +
-					'<label class="sn-pp-orientlabel">Orientación ' +
-						'<select class="sn-pp-orient">' +
+					'<label class="sh-pp-orientlabel">Orientación ' +
+						'<select class="sh-pp-orient">' +
 							'<option value="portrait">Vertical</option>' +
 							'<option value="landscape">Horizontal</option>' +
 						'</select>' +
 					'</label>' +
 					/* páginas: navegación + zoom */
-					'<span class="sn-pp-nav">' +
-						'<button type="button" class="sn-pp-prev" disabled aria-label="Página anterior">‹</button>' +
-						'<span class="sn-pp-pageind">— / —</span>' +
-						'<button type="button" class="sn-pp-next" disabled aria-label="Página siguiente">›</button>' +
+					'<span class="sh-pp-nav">' +
+						'<button type="button" class="sh-pp-prev" disabled aria-label="Página anterior">‹</button>' +
+						'<span class="sh-pp-pageind">— / —</span>' +
+						'<button type="button" class="sh-pp-next" disabled aria-label="Página siguiente">›</button>' +
 					'</span>' +
-					'<span class="sn-pp-zoom">' +
-						'<button type="button" class="sn-pp-zoomout" aria-label="Alejar">−</button>' +
-						'<span class="sn-pp-zoomind">100%</span>' +
-						'<button type="button" class="sn-pp-zoomin" aria-label="Acercar">+</button>' +
+					'<span class="sh-pp-zoom">' +
+						'<button type="button" class="sh-pp-zoomout" aria-label="Alejar">−</button>' +
+						'<span class="sh-pp-zoomind">100%</span>' +
+						'<button type="button" class="sh-pp-zoomin" aria-label="Acercar">+</button>' +
 					'</span>' +
 					/* botones */
-					'<button type="button" class="sn-pp-print" disabled>Imprimir</button>' +
-					'<button type="button" class="sn-pp-close">Cerrar</button>' +
+					'<button type="button" class="sh-pp-print" disabled>Imprimir</button>' +
+					'<button type="button" class="sh-pp-close">Cerrar</button>' +
 				'</span>' +
 			'</div>' +
-			'<div class="sn-pp-pages"></div>';
+			'<div class="sh-pp-pages"></div>';
 		doc.body.appendChild( overlay );
 		state.overlay = overlay;
 
-		var printBtn = overlay.querySelector( '.sn-pp-print' );
-		var closeBtn = overlay.querySelector( '.sn-pp-close' );
-		var sizeSel = overlay.querySelector( '.sn-pp-size' );
-		var orientSel = overlay.querySelector( '.sn-pp-orient' );
-		var tocChk = overlay.querySelector( '.sn-pp-toc' );
+		var printBtn = overlay.querySelector( '.sh-pp-print' );
+		var closeBtn = overlay.querySelector( '.sh-pp-close' );
+		var sizeSel = overlay.querySelector( '.sh-pp-size' );
+		var orientSel = overlay.querySelector( '.sh-pp-orient' );
+		var tocChk = overlay.querySelector( '.sh-pp-toc' );
 
 		// Estado inicial del switch «Índice»: marcado si la página trae TOC
 		// visible; deshabilitado si no hay TOC del todo.
@@ -640,10 +640,10 @@
 			state.toc = tocChk.checked;
 			render();
 		} );
-		overlay.querySelector( '.sn-pp-prev' ).addEventListener( 'click', function () { navTo( state.page - 1 ); } );
-		overlay.querySelector( '.sn-pp-next' ).addEventListener( 'click', function () { navTo( state.page + 1 ); } );
-		overlay.querySelector( '.sn-pp-zoomout' ).addEventListener( 'click', function () { zoomBy( -ZOOM_STEP ); } );
-		overlay.querySelector( '.sn-pp-zoomin' ).addEventListener( 'click', function () { zoomBy( ZOOM_STEP ); } );
+		overlay.querySelector( '.sh-pp-prev' ).addEventListener( 'click', function () { navTo( state.page - 1 ); } );
+		overlay.querySelector( '.sh-pp-next' ).addEventListener( 'click', function () { navTo( state.page + 1 ); } );
+		overlay.querySelector( '.sh-pp-zoomout' ).addEventListener( 'click', function () { zoomBy( -ZOOM_STEP ); } );
+		overlay.querySelector( '.sh-pp-zoomin' ).addEventListener( 'click', function () { zoomBy( ZOOM_STEP ); } );
 		doc.addEventListener( 'keydown', onKey );
 		closeBtn.focus();
 

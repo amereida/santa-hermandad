@@ -20,275 +20,275 @@
  *   superficie de marco  → --mm-frame    (papel-300 / tinta-650)
  *   superficie alterna   → --mm-section  (papel-400 / tinta-600)
  *   filete / borde       → --mm-edge     (papel-700 / tinta-400)
- *   texto                → --sn-ink
- *   líneas / aristas     → --sn-ink-soft
- *   nota (post-it)       → --sn-warn-wash + --sn-warn (la cinta del taller)
- *   acento (único)       → --sn-nova (solo "hoy" del gantt)
+ *   texto                → --sh-ink
+ *   líneas / aristas     → --sh-ink-soft
+ *   nota (post-it)       → --sh-warn-wash + --sh-warn (la cinta del taller)
+ *   acento (único)       → --sh-nova (solo "hoy" del gantt)
  * ════════════════════════════════════════════════════════════ */
 
-.skin-stellamereida .ext-mermaid {
+.skin-santa-hermandad .ext-mermaid {
 	/* Escala de papel del skin envuelta en light-dark() para que el diagrama
 	   siga el tema. Claro = papel pedido; oscuro = tinta espejada. */
-	--mm-node:    light-dark(var(--sn-papel-200), var(--sn-tinta-700));
-	--mm-frame:   light-dark(var(--sn-papel-300), var(--sn-tinta-650));
-	--mm-section: light-dark(var(--sn-papel-400), var(--sn-tinta-600));
-	--mm-edge:    light-dark(var(--sn-papel-700), var(--sn-tinta-400));
+	--mm-node:    light-dark(var(--sh-papel-200), var(--sh-tinta-700));
+	--mm-frame:   light-dark(var(--sh-papel-300), var(--sh-tinta-650));
+	--mm-section: light-dark(var(--sh-papel-400), var(--sh-tinta-600));
+	--mm-edge:    light-dark(var(--sh-papel-700), var(--sh-tinta-400));
 }
 
-.skin-stellamereida .ext-mermaid svg {
+.skin-santa-hermandad .ext-mermaid svg {
 	max-width: 100%;
 	height: auto;
 }
 
 
-.skin-stellamereida .ext-mermaid svg,
-.skin-stellamereida .ext-mermaid text,
-.skin-stellamereida .ext-mermaid foreignObject div,
-.skin-stellamereida .ext-mermaid foreignObject span,
-.skin-stellamereida .ext-mermaid .nodeLabel,
-.skin-stellamereida .ext-mermaid .edgeLabel,
-.skin-stellamereida .ext-mermaid .label {
-	font-family: var(--sn-font-sans) !important;
+.skin-santa-hermandad .ext-mermaid svg,
+.skin-santa-hermandad .ext-mermaid text,
+.skin-santa-hermandad .ext-mermaid foreignObject div,
+.skin-santa-hermandad .ext-mermaid foreignObject span,
+.skin-santa-hermandad .ext-mermaid .nodeLabel,
+.skin-santa-hermandad .ext-mermaid .edgeLabel,
+.skin-santa-hermandad .ext-mermaid .label {
+	font-family: var(--sh-font-sans) !important;
 	font-stretch: 85% !important;
 }
 
 /* ─── Flowchart / grafos ─── */
-.skin-stellamereida .ext-mermaid .node rect,
-.skin-stellamereida .ext-mermaid .node circle,
-.skin-stellamereida .ext-mermaid .node ellipse,
-.skin-stellamereida .ext-mermaid .node polygon,
-.skin-stellamereida .ext-mermaid .node path {
+.skin-santa-hermandad .ext-mermaid .node rect,
+.skin-santa-hermandad .ext-mermaid .node circle,
+.skin-santa-hermandad .ext-mermaid .node ellipse,
+.skin-santa-hermandad .ext-mermaid .node polygon,
+.skin-santa-hermandad .ext-mermaid .node path {
 	fill: var(--mm-node) !important;
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid .nodeLabel,
-.skin-stellamereida .ext-mermaid .node .label,
-.skin-stellamereida .ext-mermaid .node text {
-	color: var(--sn-ink) !important;
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .nodeLabel,
+.skin-santa-hermandad .ext-mermaid .node .label,
+.skin-santa-hermandad .ext-mermaid .node text {
+	color: var(--sh-ink) !important;
+	fill: var(--sh-ink) !important;
 }
 
 /* Aristas y sus puntas de flecha */
-.skin-stellamereida .ext-mermaid .edgePath .path,
-.skin-stellamereida .ext-mermaid .edgePath path,
-.skin-stellamereida .ext-mermaid .flowchart-link,
-.skin-stellamereida .ext-mermaid .relation,
-.skin-stellamereida .ext-mermaid .transition {
-	stroke: var(--sn-ink-soft) !important;
+.skin-santa-hermandad .ext-mermaid .edgePath .path,
+.skin-santa-hermandad .ext-mermaid .edgePath path,
+.skin-santa-hermandad .ext-mermaid .flowchart-link,
+.skin-santa-hermandad .ext-mermaid .relation,
+.skin-santa-hermandad .ext-mermaid .transition {
+	stroke: var(--sh-ink-soft) !important;
 }
-.skin-stellamereida .ext-mermaid .arrowheadPath,
-.skin-stellamereida .ext-mermaid marker path,
-.skin-stellamereida .ext-mermaid .marker,
-.skin-stellamereida .ext-mermaid #arrowhead path {
-	fill: var(--sn-ink-soft) !important;
-	stroke: var(--sn-ink-soft) !important;
+.skin-santa-hermandad .ext-mermaid .arrowheadPath,
+.skin-santa-hermandad .ext-mermaid marker path,
+.skin-santa-hermandad .ext-mermaid .marker,
+.skin-santa-hermandad .ext-mermaid #arrowhead path {
+	fill: var(--sh-ink-soft) !important;
+	stroke: var(--sh-ink-soft) !important;
 }
 
-/* Etiquetas sobre las aristas — fondo del COLOR DE LA PÁGINA (--sn-paper, que
+/* Etiquetas sobre las aristas — fondo del COLOR DE LA PÁGINA (--sh-paper, que
    voltea claro/oscuro) para TAPAR la arista por detrás del texto; el texto en
    tinta suave. Mermaid hornea un fondo claro (rect / .labelBkg en SVG y
    background en el foreignObject/div) y un color oscuro fijo; los sustituimos
    por tokens del skin. Cubrimos span/p/div/text/tspan porque el texto a veces
    va en un <span> sin <p>. */
-.skin-stellamereida .ext-mermaid .edgeLabel,
-.skin-stellamereida .ext-mermaid .edgeLabel foreignObject,
-.skin-stellamereida .ext-mermaid .edgeLabel div,
-.skin-stellamereida .ext-mermaid .edgeLabel span,
-.skin-stellamereida .ext-mermaid .edgeLabel p {
-	background: var(--sn-paper) !important;
-	background-color: var(--sn-paper) !important;
+.skin-santa-hermandad .ext-mermaid .edgeLabel,
+.skin-santa-hermandad .ext-mermaid .edgeLabel foreignObject,
+.skin-santa-hermandad .ext-mermaid .edgeLabel div,
+.skin-santa-hermandad .ext-mermaid .edgeLabel span,
+.skin-santa-hermandad .ext-mermaid .edgeLabel p {
+	background: var(--sh-paper) !important;
+	background-color: var(--sh-paper) !important;
 }
-.skin-stellamereida .ext-mermaid .edgeLabel rect,
-.skin-stellamereida .ext-mermaid .edgeLabel .labelBkg {
-	fill: var(--sn-paper) !important;
+.skin-santa-hermandad .ext-mermaid .edgeLabel rect,
+.skin-santa-hermandad .ext-mermaid .edgeLabel .labelBkg {
+	fill: var(--sh-paper) !important;
 }
-.skin-stellamereida .ext-mermaid .edgeLabel .label,
-.skin-stellamereida .ext-mermaid .edgeLabel span,
-.skin-stellamereida .ext-mermaid .edgeLabel p,
-.skin-stellamereida .ext-mermaid .edgeLabel div,
-.skin-stellamereida .ext-mermaid .edgeLabel text,
-.skin-stellamereida .ext-mermaid .edgeLabel tspan {
-	color: var(--sn-ink-soft) !important;
-	fill: var(--sn-ink-soft) !important;
+.skin-santa-hermandad .ext-mermaid .edgeLabel .label,
+.skin-santa-hermandad .ext-mermaid .edgeLabel span,
+.skin-santa-hermandad .ext-mermaid .edgeLabel p,
+.skin-santa-hermandad .ext-mermaid .edgeLabel div,
+.skin-santa-hermandad .ext-mermaid .edgeLabel text,
+.skin-santa-hermandad .ext-mermaid .edgeLabel tspan {
+	color: var(--sh-ink-soft) !important;
+	fill: var(--sh-ink-soft) !important;
 }
 
 /* Subgraph / cluster */
-.skin-stellamereida .ext-mermaid .cluster rect {
+.skin-santa-hermandad .ext-mermaid .cluster rect {
 	fill: var(--mm-frame) !important;
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid .cluster .nodeLabel,
-.skin-stellamereida .ext-mermaid .cluster text {
-	color: var(--sn-ink) !important;
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .cluster .nodeLabel,
+.skin-santa-hermandad .ext-mermaid .cluster text {
+	color: var(--sh-ink) !important;
+	fill: var(--sh-ink) !important;
 }
 
 /* ─── Diagrama de secuencia ─── */
-.skin-stellamereida .ext-mermaid .actor {
+.skin-santa-hermandad .ext-mermaid .actor {
 	fill: var(--mm-node) !important;
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid text.actor,
-.skin-stellamereida .ext-mermaid text.actor > tspan {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid text.actor,
+.skin-santa-hermandad .ext-mermaid text.actor > tspan {
+	fill: var(--sh-ink) !important;
 	stroke: none !important;
 }
-.skin-stellamereida .ext-mermaid .actor-line {
+.skin-santa-hermandad .ext-mermaid .actor-line {
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid .messageLine0,
-.skin-stellamereida .ext-mermaid .messageLine1 {
-	stroke: var(--sn-ink-soft) !important;
+.skin-santa-hermandad .ext-mermaid .messageLine0,
+.skin-santa-hermandad .ext-mermaid .messageLine1 {
+	stroke: var(--sh-ink-soft) !important;
 }
-.skin-stellamereida .ext-mermaid .messageText,
-.skin-stellamereida .ext-mermaid .sequenceNumber {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .messageText,
+.skin-santa-hermandad .ext-mermaid .sequenceNumber {
+	fill: var(--sh-ink) !important;
 }
 /* Notas = post-it: la cinta amarilla del taller */
-.skin-stellamereida .ext-mermaid .note {
-	fill: var(--sn-warn-wash) !important;
-	stroke: var(--sn-warn) !important;
+.skin-santa-hermandad .ext-mermaid .note {
+	fill: var(--sh-warn-wash) !important;
+	stroke: var(--sh-warn) !important;
 }
-.skin-stellamereida .ext-mermaid .noteText,
-.skin-stellamereida .ext-mermaid .noteText > tspan {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .noteText,
+.skin-santa-hermandad .ext-mermaid .noteText > tspan {
+	fill: var(--sh-ink) !important;
 }
 /* Bloques de control (loop / alt / opt) */
-.skin-stellamereida .ext-mermaid .loopLine {
+.skin-santa-hermandad .ext-mermaid .loopLine {
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid .labelBox {
+.skin-santa-hermandad .ext-mermaid .labelBox {
 	fill: var(--mm-node) !important;
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid .loopText,
-.skin-stellamereida .ext-mermaid .loopText > tspan,
-.skin-stellamereida .ext-mermaid .labelText,
-.skin-stellamereida .ext-mermaid .labelText > tspan {
-	fill: var(--sn-ink-soft) !important;
+.skin-santa-hermandad .ext-mermaid .loopText,
+.skin-santa-hermandad .ext-mermaid .loopText > tspan,
+.skin-santa-hermandad .ext-mermaid .labelText,
+.skin-santa-hermandad .ext-mermaid .labelText > tspan {
+	fill: var(--sh-ink-soft) !important;
 }
-.skin-stellamereida .ext-mermaid .activation0,
-.skin-stellamereida .ext-mermaid .activation1,
-.skin-stellamereida .ext-mermaid .activation2 {
+.skin-santa-hermandad .ext-mermaid .activation0,
+.skin-santa-hermandad .ext-mermaid .activation1,
+.skin-santa-hermandad .ext-mermaid .activation2 {
 	fill: var(--mm-frame) !important;
 	stroke: var(--mm-edge) !important;
 }
 
 /* ─── Diagrama de clases ─── */
-.skin-stellamereida .ext-mermaid .classGroup rect {
+.skin-santa-hermandad .ext-mermaid .classGroup rect {
 	fill: var(--mm-node) !important;
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid .classGroup text,
-.skin-stellamereida .ext-mermaid .classGroup .title {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .classGroup text,
+.skin-santa-hermandad .ext-mermaid .classGroup .title {
+	fill: var(--sh-ink) !important;
 }
-.skin-stellamereida .ext-mermaid .classGroup line {
+.skin-santa-hermandad .ext-mermaid .classGroup line {
 	stroke: var(--mm-edge) !important;
 }
 
 /* ─── Diagrama de estados ─── */
-.skin-stellamereida .ext-mermaid .statediagram-state .basic,
-.skin-stellamereida .ext-mermaid .statediagram-state rect,
-.skin-stellamereida .ext-mermaid .statediagram-cluster rect {
+.skin-santa-hermandad .ext-mermaid .statediagram-state .basic,
+.skin-santa-hermandad .ext-mermaid .statediagram-state rect,
+.skin-santa-hermandad .ext-mermaid .statediagram-cluster rect {
 	fill: var(--mm-node) !important;
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid .statediagram-state text,
-.skin-stellamereida .ext-mermaid .stateLabel {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .statediagram-state text,
+.skin-santa-hermandad .ext-mermaid .stateLabel {
+	fill: var(--sh-ink) !important;
 }
 /* Pseudo-estados inicial (relleno) y final (anillo) */
-.skin-stellamereida .ext-mermaid circle.state-start,
-.skin-stellamereida .ext-mermaid .statediagram-state .start-state {
-	fill: var(--sn-ink) !important;
-	stroke: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid circle.state-start,
+.skin-santa-hermandad .ext-mermaid .statediagram-state .start-state {
+	fill: var(--sh-ink) !important;
+	stroke: var(--sh-ink) !important;
 }
-.skin-stellamereida .ext-mermaid .state-end circle,
-.skin-stellamereida .ext-mermaid .statediagram-state .end-state-outer {
-	fill: var(--sn-paper) !important;
-	stroke: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .state-end circle,
+.skin-santa-hermandad .ext-mermaid .statediagram-state .end-state-outer {
+	fill: var(--sh-paper) !important;
+	stroke: var(--sh-ink) !important;
 }
-.skin-stellamereida .ext-mermaid .statediagram-state .end-state-inner {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .statediagram-state .end-state-inner {
+	fill: var(--sh-ink) !important;
 }
 
 /* ─── Gantt ─── */
-.skin-stellamereida .ext-mermaid .section0,
-.skin-stellamereida .ext-mermaid .section2 {
+.skin-santa-hermandad .ext-mermaid .section0,
+.skin-santa-hermandad .ext-mermaid .section2 {
 	fill: var(--mm-node) !important;
 	opacity: 1 !important;
 }
-.skin-stellamereida .ext-mermaid .section1,
-.skin-stellamereida .ext-mermaid .section3 {
+.skin-santa-hermandad .ext-mermaid .section1,
+.skin-santa-hermandad .ext-mermaid .section3 {
 	fill: var(--mm-section) !important;
 	opacity: 1 !important;
 }
-.skin-stellamereida .ext-mermaid .sectionTitle {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .sectionTitle {
+	fill: var(--sh-ink) !important;
 }
-.skin-stellamereida .ext-mermaid rect.task,
-.skin-stellamereida .ext-mermaid .task {
-	fill: var(--sn-ink-faint) !important;
+.skin-santa-hermandad .ext-mermaid rect.task,
+.skin-santa-hermandad .ext-mermaid .task {
+	fill: var(--sh-ink-faint) !important;
 	stroke: var(--mm-edge) !important;
 }
-.skin-stellamereida .ext-mermaid .taskText {
-	fill: var(--sn-paper) !important;
+.skin-santa-hermandad .ext-mermaid .taskText {
+	fill: var(--sh-paper) !important;
 }
-.skin-stellamereida .ext-mermaid .taskTextOutsideLeft,
-.skin-stellamereida .ext-mermaid .taskTextOutsideRight,
-.skin-stellamereida .ext-mermaid .taskTextOutside0,
-.skin-stellamereida .ext-mermaid .taskTextOutside1,
-.skin-stellamereida .ext-mermaid .taskTextOutside2,
-.skin-stellamereida .ext-mermaid .taskTextOutside3 {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .taskTextOutsideLeft,
+.skin-santa-hermandad .ext-mermaid .taskTextOutsideRight,
+.skin-santa-hermandad .ext-mermaid .taskTextOutside0,
+.skin-santa-hermandad .ext-mermaid .taskTextOutside1,
+.skin-santa-hermandad .ext-mermaid .taskTextOutside2,
+.skin-santa-hermandad .ext-mermaid .taskTextOutside3 {
+	fill: var(--sh-ink) !important;
 }
-.skin-stellamereida .ext-mermaid .grid .tick line {
-	stroke: var(--sn-hairline-soft) !important;
+.skin-santa-hermandad .ext-mermaid .grid .tick line {
+	stroke: var(--sh-hairline-soft) !important;
 	opacity: 0.4 !important;
 }
-.skin-stellamereida .ext-mermaid .grid .tick text {
-	fill: var(--sn-ink-soft) !important;
+.skin-santa-hermandad .ext-mermaid .grid .tick text {
+	fill: var(--sh-ink-soft) !important;
 }
-.skin-stellamereida .ext-mermaid .grid path {
+.skin-santa-hermandad .ext-mermaid .grid path {
 	stroke: transparent !important;
 }
-.skin-stellamereida .ext-mermaid .today {
-	stroke: var(--sn-nova) !important;
+.skin-santa-hermandad .ext-mermaid .today {
+	stroke: var(--sh-nova) !important;
 }
 
 /* ─── Pie ─── */
 /* Texto y separación entre sectores */
-.skin-stellamereida .ext-mermaid .pieTitleText,
-.skin-stellamereida .ext-mermaid .slice,
-.skin-stellamereida .ext-mermaid .legend text {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .pieTitleText,
+.skin-santa-hermandad .ext-mermaid .slice,
+.skin-santa-hermandad .ext-mermaid .legend text {
+	fill: var(--sh-ink) !important;
 }
-.skin-stellamereida .ext-mermaid .pieCircle {
-	stroke: var(--sn-paper) !important;
+.skin-santa-hermandad .ext-mermaid .pieCircle {
+	stroke: var(--sh-paper) !important;
 	stroke-width: 2px !important;
 }
 /* Rampa cromática derivada de las primitivas del skin (hasta 8 sectores;
    más allá del 8º Mermaid repite su propia paleta — aceptable). El orden
    de los sectores y de las muestras de la leyenda coincide en el DOM. */
-.skin-stellamereida .ext-mermaid path.pieCircle:nth-of-type(1),
-.skin-stellamereida .ext-mermaid .legend:nth-of-type(1) rect { fill: var(--sn-tinta-600)   !important; }
-.skin-stellamereida .ext-mermaid path.pieCircle:nth-of-type(2),
-.skin-stellamereida .ext-mermaid .legend:nth-of-type(2) rect { fill: var(--sn-masking-500) !important; }
-.skin-stellamereida .ext-mermaid path.pieCircle:nth-of-type(3),
-.skin-stellamereida .ext-mermaid .legend:nth-of-type(3) rect { fill: var(--sn-verde-500)   !important; }
-.skin-stellamereida .ext-mermaid path.pieCircle:nth-of-type(4),
-.skin-stellamereida .ext-mermaid .legend:nth-of-type(4) rect { fill: var(--sn-rojo-600)    !important; }
-.skin-stellamereida .ext-mermaid path.pieCircle:nth-of-type(5),
-.skin-stellamereida .ext-mermaid .legend:nth-of-type(5) rect { fill: var(--sn-azul-300)    !important; }
-.skin-stellamereida .ext-mermaid path.pieCircle:nth-of-type(6),
-.skin-stellamereida .ext-mermaid .legend:nth-of-type(6) rect { fill: var(--sn-malva-400)   !important; }
-.skin-stellamereida .ext-mermaid path.pieCircle:nth-of-type(7),
-.skin-stellamereida .ext-mermaid .legend:nth-of-type(7) rect { fill: var(--sn-tinta-400)   !important; }
-.skin-stellamereida .ext-mermaid path.pieCircle:nth-of-type(8),
-.skin-stellamereida .ext-mermaid .legend:nth-of-type(8) rect { fill: var(--sn-masking-700) !important; }
+.skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(1),
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(1) rect { fill: var(--sh-tinta-600)   !important; }
+.skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(2),
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(2) rect { fill: var(--sh-masking-500) !important; }
+.skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(3),
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(3) rect { fill: var(--sh-verde-500)   !important; }
+.skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(4),
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(4) rect { fill: var(--sh-rojo-600)    !important; }
+.skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(5),
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(5) rect { fill: var(--sh-azul-300)    !important; }
+.skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(6),
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(6) rect { fill: var(--sh-malva-400)   !important; }
+.skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(7),
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(7) rect { fill: var(--sh-tinta-400)   !important; }
+.skin-santa-hermandad .ext-mermaid path.pieCircle:nth-of-type(8),
+.skin-santa-hermandad .ext-mermaid .legend:nth-of-type(8) rect { fill: var(--sh-masking-700) !important; }
 
 /* ─── Títulos genéricos (gantt/pie/otros) ─── */
-.skin-stellamereida .ext-mermaid .titleText {
-	fill: var(--sn-ink) !important;
+.skin-santa-hermandad .ext-mermaid .titleText {
+	fill: var(--sh-ink) !important;
 }

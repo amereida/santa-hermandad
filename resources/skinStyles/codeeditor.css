@@ -1,5 +1,5 @@
 /* ============================================================
- * skinStyles/codeeditor.css — Stellamereida
+ * skinStyles/codeeditor.css — Santa Hermandad
  *
  * Tokeniza el editor de código (extensión CodeEditor, basado en
  * Ace) que MediaWiki usa al editar páginas de contenido CSS/JS/JSON
@@ -11,13 +11,13 @@
  * con la paleta «textmate» HARDCODEADA (fondo #FFFFFF, keywords en
  * `blue`, strings verdes RGB, etc.). Ese <style> ignora los tokens
  * del skin. Además CodeEditor solo cambia a tema oscuro cuando ve la
- * clase `skin-theme-clientpref-night`; Stellamereida conmuta el tema
- * por `[data-sn-theme]` + `color-scheme`/`light-dark()`, así que para
+ * clase `skin-theme-clientpref-night`; Santa Hermandad conmuta el tema
+ * por `[data-sh-theme]` + `color-scheme`/`light-dark()`, así que para
  * CodeEditor SIEMPRE es «textmate» (claro), incluso en modo noche.
  *
- * CÓMO LO RESUELVE. Reescribimos `.ace-tm` con tokens `var(--sn-…)`.
+ * CÓMO LO RESUELVE. Reescribimos `.ace-tm` con tokens `var(--sh-…)`.
  * Como esos tokens usan `light-dark()` y `color-scheme` es heredado
- * (lo fija :root según [data-sn-theme]), el editor SIGUE el tema del
+ * (lo fija :root según [data-sh-theme]), el editor SIGUE el tema del
  * skin sin depender de la detección rota de CodeEditor: una sola
  * paleta que voltea sola en claro/oscuro.
  *
@@ -28,8 +28,8 @@
  * ESPECIFICIDAD. El <style> «ace-tm» de Ace se inyecta en runtime y
  * casi siempre queda DESPUÉS de nuestro <link> en el <head>, así que
  * a igualdad de especificidad ganaría él por orden de fuente. Por eso
- * TODO selector va prefijado con `.skin-stellamereida` (clase del <body>):
- * `.skin-stellamereida .ace-tm .ace_x` (0,3,0) gana a `.ace-tm .ace_x`
+ * TODO selector va prefijado con `.skin-santa-hermandad` (clase del <body>):
+ * `.skin-santa-hermandad .ace-tm .ace_x` (0,3,0) gana a `.ace-tm .ace_x`
  * (0,2,0) pase lo que pase con el orden. (Ver memoria
  * skinstyles-cascade-gotcha.)
  *
@@ -41,151 +41,151 @@
  * ============================================================ */
 
 /* ─── Superficie del editor ─── */
-/* Mismo lavado que el <textarea> de wikitexto (--sn-edit-surface): el área de
+/* Mismo lavado que el <textarea> de wikitexto (--sh-edit-surface): el área de
    escritura se despega apenas del papel de la página, y Ace no cambia de
    superficie al tomar el relevo del textarea. */
-.skin-stellamereida .ace-tm {
-	background-color: var(--sn-edit-surface);
-	color: var(--sn-ink);
+.skin-santa-hermandad .ace-tm {
+	background-color: var(--sh-edit-surface);
+	color: var(--sh-ink);
 }
 /* Fuente: monoespaciada del skin, al tamaño del cuerpo menor. El prefijo
    `.wikiEditor-ui` sube la especificidad para ganarle a la regla propia de
    CodeEditor (`.wikiEditor-ui .ace_editor { font: 13px monospace }`). */
-.skin-stellamereida .wikiEditor-ui .ace_editor,
-.skin-stellamereida .ace-tm {
-	font-family: var(--sn-font-mono);
-	font-size: var(--sn-fs-sm);
+.skin-santa-hermandad .wikiEditor-ui .ace_editor,
+.skin-santa-hermandad .ace-tm {
+	font-family: var(--sh-font-mono);
+	font-size: var(--sh-fs-sm);
 }
 
 /* ─── Canalón (números de línea) ─── */
-.skin-stellamereida .ace-tm .ace_gutter {
-	background: var(--sn-sunk);
-	color: var(--sn-ink-faint);
+.skin-santa-hermandad .ace-tm .ace_gutter {
+	background: var(--sh-sunk);
+	color: var(--sh-ink-faint);
 }
-.skin-stellamereida .ace-tm .ace_gutter-active-line {
-	background-color: var(--sn-nova-wash);
-	color: var(--sn-ink);
+.skin-santa-hermandad .ace-tm .ace_gutter-active-line {
+	background-color: var(--sh-nova-wash);
+	color: var(--sh-ink);
 }
 /* Marca de error/anotación del worker (T271956 fija un gris fijo). */
-.skin-stellamereida .ace_gutter-cell {
-	color: var(--sn-ink-faint);
+.skin-santa-hermandad .ace_gutter-cell {
+	color: var(--sh-ink-faint);
 }
 
 /* ─── Cursor, selección, línea activa ─── */
-.skin-stellamereida .ace-tm .ace_cursor {
-	color: var(--sn-ink);
+.skin-santa-hermandad .ace-tm .ace_cursor {
+	color: var(--sh-ink);
 }
-.skin-stellamereida .ace-tm .ace_marker-layer .ace_selection {
-	background: var(--sn-nova-wash);
+.skin-santa-hermandad .ace-tm .ace_marker-layer .ace_selection {
+	background: var(--sh-nova-wash);
 }
-.skin-stellamereida .ace-tm .ace_marker-layer .ace_active-line {
-	background: color-mix(in oklab, var(--sn-ink) 4%, transparent);
+.skin-santa-hermandad .ace-tm .ace_marker-layer .ace_active-line {
+	background: color-mix(in oklab, var(--sh-ink) 4%, transparent);
 }
-.skin-stellamereida .ace-tm .ace_marker-layer .ace_selected-word {
-	border: 1px solid var(--sn-hairline);
+.skin-santa-hermandad .ace-tm .ace_marker-layer .ace_selected-word {
+	border: 1px solid var(--sh-hairline);
 }
-.skin-stellamereida .ace-tm .ace_invisible {
-	color: var(--sn-ink-faint);
+.skin-santa-hermandad .ace-tm .ace_invisible {
+	color: var(--sh-ink-faint);
 }
-.skin-stellamereida .ace-tm .ace_indent-guide {
+.skin-santa-hermandad .ace-tm .ace_indent-guide {
 	/* Guía de sangría como filete vertical tenue, no la imagen por defecto. */
 	background: none;
-	box-shadow: inset -1px 0 0 0 var(--sn-hairline-soft);
+	box-shadow: inset -1px 0 0 0 var(--sh-hairline-soft);
 }
-.skin-stellamereida .ace-tm .ace_print-margin {
+.skin-santa-hermandad .ace-tm .ace_print-margin {
 	width: 1px;
-	background: var(--sn-hairline-soft);
+	background: var(--sh-hairline-soft);
 }
-.skin-stellamereida .ace-tm .ace_fold {
-	background-color: var(--sn-nova);
-	border-color: var(--sn-nova);
+.skin-santa-hermandad .ace-tm .ace_fold {
+	background-color: var(--sh-nova);
+	border-color: var(--sh-nova);
 }
 
 /* ─── Sintaxis — paleta editorial restringida (cinco roles que voltean) ─── */
 /* Keywords y almacenamiento → la nova (acento). */
-.skin-stellamereida .ace-tm .ace_keyword,
-.skin-stellamereida .ace-tm .ace_storage,
-.skin-stellamereida .ace-tm .ace_meta.ace_tag,
-.skin-stellamereida .ace-tm .ace_heading,
-.skin-stellamereida .ace-tm .ace_entity.ace_name.ace_function {
-	color: var(--sn-nova);
+.skin-santa-hermandad .ace-tm .ace_keyword,
+.skin-santa-hermandad .ace-tm .ace_storage,
+.skin-santa-hermandad .ace-tm .ace_meta.ace_tag,
+.skin-santa-hermandad .ace-tm .ace_heading,
+.skin-santa-hermandad .ace-tm .ace_entity.ace_name.ace_function {
+	color: var(--sh-nova);
 }
 /* Cadenas y regex → verde del taller. */
-.skin-stellamereida .ace-tm .ace_string,
-.skin-stellamereida .ace-tm .ace_string.ace_regex {
-	color: var(--sn-ok);
+.skin-santa-hermandad .ace-tm .ace_string,
+.skin-santa-hermandad .ace-tm .ace_string.ace_regex {
+	color: var(--sh-ok);
 }
 /* Números, constantes y valores → ámbar (buen contraste en ambos temas). */
-.skin-stellamereida .ace-tm .ace_constant,
-.skin-stellamereida .ace-tm .ace_constant.ace_numeric,
-.skin-stellamereida .ace-tm .ace_constant.ace_language,
-.skin-stellamereida .ace-tm .ace_support.ace_constant {
-	color: var(--sn-warn);
+.skin-santa-hermandad .ace-tm .ace_constant,
+.skin-santa-hermandad .ace-tm .ace_constant.ace_numeric,
+.skin-santa-hermandad .ace-tm .ace_constant.ace_language,
+.skin-santa-hermandad .ace-tm .ace_support.ace_constant {
+	color: var(--sh-warn);
 }
 /* Comentarios → tinta tenue, en cursiva (de-énfasis). */
-.skin-stellamereida .ace-tm .ace_comment {
-	color: var(--sn-ink-faint);
+.skin-santa-hermandad .ace-tm .ace_comment {
+	color: var(--sh-ink-faint);
 	font-style: italic;
 }
 /* Operadores y puntuación → tinta secundaria. */
-.skin-stellamereida .ace-tm .ace_keyword.ace_operator,
-.skin-stellamereida .ace-tm .ace_punctuation {
-	color: var(--sn-ink-soft);
+.skin-santa-hermandad .ace-tm .ace_keyword.ace_operator,
+.skin-santa-hermandad .ace-tm .ace_punctuation {
+	color: var(--sh-ink-soft);
 }
 /* Propiedades/tipos/funciones de soporte (p. ej. nombres de propiedad CSS)
    y variables → tinta del cuerpo: legibles, sin sumar otro color. */
-.skin-stellamereida .ace-tm .ace_support.ace_type,
-.skin-stellamereida .ace-tm .ace_support.ace_class,
-.skin-stellamereida .ace-tm .ace_support.ace_function,
-.skin-stellamereida .ace-tm .ace_variable,
-.skin-stellamereida .ace-tm .ace_xml-pe,
-.skin-stellamereida .ace-tm .ace_list {
-	color: var(--sn-ink);
+.skin-santa-hermandad .ace-tm .ace_support.ace_type,
+.skin-santa-hermandad .ace-tm .ace_support.ace_class,
+.skin-santa-hermandad .ace-tm .ace_support.ace_function,
+.skin-santa-hermandad .ace-tm .ace_variable,
+.skin-santa-hermandad .ace-tm .ace_xml-pe,
+.skin-santa-hermandad .ace-tm .ace_list {
+	color: var(--sh-ink);
 }
 /* Inválido → wash de peligro, fiel al lenguaje de señales del skin. */
-.skin-stellamereida .ace-tm .ace_invalid {
-	background-color: var(--sn-danger-wash);
-	color: var(--sn-danger);
+.skin-santa-hermandad .ace-tm .ace_invalid {
+	background-color: var(--sh-danger-wash);
+	color: var(--sh-danger);
 }
 
 /* ─── Barra de estado (línea/columna, mensajes del worker) ─── */
-.skin-stellamereida .codeEditor-status {
-	background-color: var(--sn-field);
-	border-top: 1px solid var(--sn-hairline);
-	color: var(--sn-ink-soft);
+.skin-santa-hermandad .codeEditor-status {
+	background-color: var(--sh-field);
+	border-top: 1px solid var(--sh-hairline);
+	color: var(--sh-ink-soft);
 }
-.skin-stellamereida .codeEditor-status-message,
-.skin-stellamereida .codeEditor-status-line {
-	border-color: var(--sn-hairline-soft);
+.skin-santa-hermandad .codeEditor-status-message,
+.skin-santa-hermandad .codeEditor-status-line {
+	border-color: var(--sh-hairline-soft);
 }
 
 /* ─── Diálogo de búsqueda/reemplazo de Ace ─── */
-.skin-stellamereida .ace_search {
-	background: var(--sn-field);
-	border-color: var(--sn-hairline);
-	color: var(--sn-ink);
+.skin-santa-hermandad .ace_search {
+	background: var(--sh-field);
+	border-color: var(--sh-hairline);
+	color: var(--sh-ink);
 }
-.skin-stellamereida .ace_search_field {
-	background: var(--sn-paper);
-	border-color: var(--sn-hairline);
-	color: var(--sn-ink);
+.skin-santa-hermandad .ace_search_field {
+	background: var(--sh-paper);
+	border-color: var(--sh-hairline);
+	color: var(--sh-ink);
 }
-.skin-stellamereida .ace_searchbtn,
-.skin-stellamereida .ace_button {
-	background: var(--sn-sunk);
-	border-color: var(--sn-hairline);
-	color: var(--sn-ink-soft);
+.skin-santa-hermandad .ace_searchbtn,
+.skin-santa-hermandad .ace_button {
+	background: var(--sh-sunk);
+	border-color: var(--sh-hairline);
+	color: var(--sh-ink-soft);
 }
-.skin-stellamereida .ace_searchbtn:hover,
-.skin-stellamereida .ace_button:hover {
-	color: var(--sn-nova);
+.skin-santa-hermandad .ace_searchbtn:hover,
+.skin-santa-hermandad .ace_button:hover {
+	color: var(--sh-nova);
 }
 
 /* ─── Fallback FOUC: el <textarea> mientras Ace carga ─── */
-.skin-stellamereida .codeeditor-loading #wpTextbox1 {
-	font-family: var(--sn-font-mono);
-	color: var(--sn-ink);
+.skin-santa-hermandad .codeeditor-loading #wpTextbox1 {
+	font-family: var(--sh-font-mono);
+	color: var(--sh-ink);
 	/* Misma superficie que el editor ya cargado, para que Ace no entre desde
 	   un flash de papel claro. */
-	background: var(--sn-edit-surface);
+	background: var(--sh-edit-surface);
 }

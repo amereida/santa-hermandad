@@ -1,14 +1,14 @@
-# Stellamereida — Plan de desarrollo
+# Santa Hermandad — Plan de desarrollo
 
 Plan accionable. Principios en [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Cómo se desarrolla (entorno local Casiopea)
 
-- Repo **independiente** en `~/Sites/casiopea/skins/stellamereida/` (este).
-  Symlink `…/casiopea/w/skins/Stellamereida → ../../skins/stellamereida` lo conecta
+- Repo **independiente** en `~/Sites/casiopea/skins/santa-hermandad/` (este).
+  Symlink `…/casiopea/w/skins/Santa Hermandad → ../../skins/santa-hermandad` lo conecta
   a la wiki local sin copiar nada.
 - Editar aquí → recargar navegador. `$wgDefaultSkin` **no** se cambia: se
-  compara A/B con `?useskin=stellamereida` vs `?useskin=vector-2022` en cualquier
+  compara A/B con `?useskin=santa-hermandad` vs `?useskin=vector-2022` en cualquier
   URL (también seleccionable en `Especial:Preferencias`).
 - En dev: `$wgResourceLoaderDebug=true` para ver CSS/JS sin minificar.
 - Páginas reales de prueba (Fase 5, set mínimo): "Bitácora de Huinay",
@@ -17,7 +17,7 @@ Plan accionable. Principios en [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## Estado
 
-- [x] **M0 — Skeleton**: `skin.json`, `SkinStellamereida` (extends `SkinMustache`),
+- [x] **M0 — Skeleton**: `skin.json`, `SkinSanta Hermandad` (extends `SkinMustache`),
   `skin.mustache` semántico, tokens/layout/print/JS, i18n en/es, repo git +
   remote (sin push). Renderiza sin errores PHP, seleccionable.
 - [x] **M1 — skinStyles SMW/SRF/PageForms**: `resources/skinStyles/{smw,srf,
@@ -45,7 +45,7 @@ Plan accionable. Principios en [`ARCHITECTURE.md`](ARCHITECTURE.md).
 - [ ] M8 — Verificación final y publicación
 
 `__PANTALLACOMPLETA__` operativo (behaviour switch, patrón NoTitle):
-fija page-property → `SkinStellamereida` suprime chrome salvo escape.
+fija page-property → `SkinSanta Hermandad` suprime chrome salvo escape.
 
 ## Roadmap
 
@@ -92,7 +92,7 @@ Decidir herramienta (pendiente del PLAN del proyecto).
 - [ ] Móvil/responsive sin overflow horizontal.
 - [ ] Contraste WCAG AA mínimo.
 - [ ] Sin errores en consola en páginas comunes.
-- [ ] Instalable en Casiopea limpia con `wfLoadSkin('Stellamereida')` sin pasos
+- [ ] Instalable en Casiopea limpia con `wfLoadSkin('Santa Hermandad')` sin pasos
       manuales extra.
 
 ## Decisiones
@@ -101,7 +101,7 @@ Decidir herramienta (pendiente del PLAN del proyecto).
   (`license-name`), `COPYING` (texto íntegro + aviso en castellano) y el README.
   Excepción: `resources/skinStyles/{mermaid,pagenotice}.css` conservan su
   GPL-2.0-or-later de origen (compatible con Artistic, indicada en su cabecera).
-- Remoto: **GitHub `amereida/stellamereida`** (`origin`).
+- Remoto: **GitHub `amereida/santa-hermandad`** (`origin`).
 - Testing/CI: herramienta por definir (M7).
 - **Tipografía** (2026-11-13): Avenida autoalojada en `resources/fonts/Avenida/`,
   24 WOFF2 estáticas: normal y condensada, seis pesos (275, 400, 500, 600,
@@ -145,7 +145,7 @@ Decidir herramienta (pendiente del PLAN del proyecto).
   gestionado) bajó al **pie**, como mapa del sitio en columnas. Sin riel,
   sin hamburguesa, sin dropdowns de nivel superior en el header (las
   pestañas no se truncan: hacen scroll horizontal en pantallas chicas).
-  Presentación, no comportamiento; `specs/stellamereida.allium` ya declara
+  Presentación, no comportamiento; `specs/santa-hermandad.allium` ya declara
   riel/dropdown/posición fuera de alcance (regiones intactas).
   ARCHITECTURE §4 ("sidebar persistente") = doctrina histórica supeditada.
 - **La hoja (`.sn-paper`)** (2026-05-18): radio mínimo
@@ -154,7 +154,7 @@ Decidir herramienta (pendiente del PLAN del proyecto).
 - **Tema: default claro, el SO no oscurece solo** (2026-05-18, decisión del
   usuario): sin preferencia guardada → claro, aunque el SO esté en oscuro;
   oscuro solo con elección explícita o `auto` (seguir al SO). **Reflejado
-  en `specs/stellamereida.allium`** (2026-05-18): `enum ThemeChoice {light|
+  en `specs/santa-hermandad.allium`** (2026-05-18): `enum ThemeChoice {light|
   dark|auto}`, `Preferences.theme: ThemeChoice?`, `ViewingSession.
   active_theme` condicional (`auto → os_scheme ?? light`; `light|dark`
   forzado; sin elección → `light`) y `@guarantee Precedence`. Ya no es

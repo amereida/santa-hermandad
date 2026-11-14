@@ -1,6 +1,6 @@
 <?php
 /**
- * Stellamereida — hooks. PHP al mínimo (doctrina §2): solo el cableado que
+ * SantaHermandad — hooks. PHP al mínimo (doctrina §2): solo el cableado que
  * el comportamiento del spec exige y que no puede vivir en CSS/JS.
  *
  *  · __PANTALLACOMPLETA__  → behaviour switch (spec PageRender.mode).
@@ -14,7 +14,7 @@
  * @license Artistic-2.0
  */
 
-namespace MediaWiki\Skins\Stellamereida;
+namespace MediaWiki\Skins\SantaHermandad;
 
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
@@ -33,26 +33,26 @@ class Hooks {
 	 *  (sans|serif — alternancia editorial). Índice, secciones colapsables
 	 *  y reducción de movimiento se retiraron como preferencia. */
 	private const PREFS = [
-		'stellamereida-theme'  => '',
-		'stellamereida-font'   => '',
-		'stellamereida-family' => '',
+		'santa-hermandad-theme'  => '',
+		'santa-hermandad-font'   => '',
+		'santa-hermandad-family' => '',
 	];
 
 	/**
 	 * Registra los módulos ResourceLoader del skin con la ruta remota
 	 * calculada del DIRECTORIO REAL donde está instalado el skin, no de un
-	 * nombre fijo. Así "basta clonar" en cualquier carpeta (Stellamereida,
-	 * stellamereida, lo que sea) y las URLs de las fuentes (y demás assets del
+	 * nombre fijo. Así "basta clonar" en cualquier carpeta (SantaHermandad,
+	 * santa-hermandad, lo que sea) y las URLs de las fuentes (y demás assets del
 	 * módulo) resuelven solas: $wgStylePath + '/' + <carpeta-real>/resources.
 	 *
 	 * Por qué aquí y no en skin.json: `remoteSkinPath` en skin.json es un
-	 * literal estático ("Stellamereida/resources"); si la carpeta no se llama
+	 * literal estático ("SantaHermandad/resources"); si la carpeta no se llama
 	 * así, los woff2 dan 404 (MediaWiki no deriva la ruta sola — confirmado
 	 * en ResourceLoader\FileModule::extractBasePaths). Calcularla en PHP es
 	 * la única forma robusta al nombre de carpeta.
 	 *
 	 * OJO: NO usar __DIR__ — resuelve symlinks, así que en una instalación
-	 * con la carpeta enlazada (p.ej. skins/Stellamereida → repo stellamereida)
+	 * con la carpeta enlazada (p.ej. skins/SantaHermandad → repo santa-hermandad)
 	 * devolvería el nombre real del repo y las URLs 404. La ruta REGISTRADA
 	 * por wfLoadSkin (ExtensionRegistry) preserva el nombre tal como el wiki
 	 * sirve la carpeta — sirve tanto para el symlink de dev como para el
@@ -61,14 +61,14 @@ class Hooks {
 	 * @param ResourceLoader $rl
 	 */
 	public static function onResourceLoaderRegisterModules( ResourceLoader $rl ): void {
-		$jsonPath = ExtensionRegistry::getInstance()->getAllThings()['Stellamereida']['path'] ?? null;
+		$jsonPath = ExtensionRegistry::getInstance()->getAllThings()['SantaHermandad']['path'] ?? null;
 		// Fallback: si no se halla por nombre, __DIR__ (correcto en clon directo).
 		$skinDir = $jsonPath !== null ? dirname( $jsonPath ) : dirname( __DIR__ );
 		$paths = [
 			'localBasePath'  => $skinDir . '/resources',
 			'remoteSkinPath' => basename( $skinDir ) . '/resources',
 		];
-		$rl->register( 'skins.stellamereida.styles', $paths + [
+		$rl->register( 'skins.santa-hermandad.styles', $paths + [
 			'class'    => SkinModule::class,
 			'features' => [
 				'normalize'      => true,
@@ -84,11 +84,11 @@ class Hooks {
 			'styles' => [
 				'fonts.css'       => [],
 				'tokens.css'      => [],
-				'stellamereida.css' => [],
+				'santa-hermandad.css' => [],
 				'print.css'       => [ 'media' => 'print' ],
 			],
 		] );
-		$rl->register( 'skins.stellamereida.scripts', $paths + [
+		$rl->register( 'skins.santa-hermandad.scripts', $paths + [
 			'scripts'      => [ 'skin.js' ],
 			'dependencies' => [ 'mediawiki.api' ],
 		] );
@@ -97,7 +97,7 @@ class Hooks {
 		// pulsar «Versión para imprimir». Trae el polyfill vendorizado + la
 		// integración + el cromo en pantalla del overlay. paged.js necesita
 		// `mediawiki.util` (mw.util.getUrl para la URL absoluta de la página).
-		$rl->register( 'skins.stellamereida.print', $paths + [
+		$rl->register( 'skins.santa-hermandad.print', $paths + [
 			'scripts'      => [ 'lib/vivliostyle.global.js', 'print-preview.js' ],
 			'styles'       => [ 'print-preview.css' ],
 			'dependencies' => [ 'mediawiki.util' ],
@@ -111,33 +111,33 @@ class Hooks {
 	 * @param string[] &$ids
 	 */
 	public static function onGetDoubleUnderscoreIDs( array &$ids ): void {
-		$ids[] = 'stellamereida_fullscreen';
-		$ids[] = 'stellamereida_wide';
+		$ids[] = 'santahermandad_fullscreen';
+		$ids[] = 'santahermandad_wide';
 	}
 
 
 	/**
 	 * Puente parser→skin: si la página declaró el modo, lo dejamos en la
-	 * OutputPage para que SkinStellamereida lo lea sin volver a consultar props.
+	 * OutputPage para que SkinSantaHermandad lo lea sin volver a consultar props.
 	 *
 	 * @param OutputPage $out
 	 * @param ParserOutput $pOut
 	 */
 	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $pOut ): void {
 		$prop = method_exists( $pOut, 'getPageProperty' )
-			? $pOut->getPageProperty( 'stellamereida_fullscreen' )
-			: $pOut->getProperty( 'stellamereida_fullscreen' );
+			? $pOut->getPageProperty( 'santahermandad_fullscreen' )
+			: $pOut->getProperty( 'santahermandad_fullscreen' );
 		if ( $prop !== null && $prop !== false ) {
-			$out->setProperty( 'stellamereida-fullscreen', true );
+			$out->setProperty( 'santa-hermandad-fullscreen', true );
 		}
 		// __PAGINAANCHA__: layout estándar con la hoja ensanchada. Basta una
-		// clase en <body>; el CSS (`.sn-wide`) resuelve el ancho. En
+		// clase en <body>; el CSS (`.sh-wide`) resuelve el ancho. En
 		// fullscreen no aplica (el canvas ya no está acotado a la medida).
 		$wide = method_exists( $pOut, 'getPageProperty' )
-			? $pOut->getPageProperty( 'stellamereida_wide' )
-			: $pOut->getProperty( 'stellamereida_wide' );
+			? $pOut->getPageProperty( 'santahermandad_wide' )
+			: $pOut->getProperty( 'santahermandad_wide' );
 		if ( $wide !== null && $wide !== false ) {
-			$out->addBodyClasses( 'sn-wide' );
+			$out->addBodyClasses( 'sh-wide' );
 		}
 		// __NOTITLE__ (extensión NoTitle) es INDEPENDIENTE de pantalla
 		// completa: se lee aquí para que la plantilla pueda omitir el título
@@ -147,7 +147,7 @@ class Hooks {
 			? $pOut->getPageProperty( 'notitle' )
 			: $pOut->getProperty( 'notitle' );
 		if ( $notitle !== null && $notitle !== false ) {
-			$out->setProperty( 'stellamereida-notitle', true );
+			$out->setProperty( 'santa-hermandad-notitle', true );
 		}
 	}
 
@@ -184,7 +184,7 @@ class Hooks {
 	 * eludir el FOUC ("flash of unstyled content" — parpadeo claro→oscuro
 	 * cuando el usuario tiene preferencia oscura pero el navegador pinta
 	 * con el default antes de que llegue el CSS/JS). El truco: emitir un
-	 * <script> inline en <head> que lee la pref y fija data-sn-theme en
+	 * <script> inline en <head> que lee la pref y fija data-sh-theme en
 	 * <html> ANTES de que el navegador haga el primer paint del body.
 	 *
 	 * También expone a skin.js dónde persistir (cuenta vs. navegador):
@@ -197,7 +197,7 @@ class Hooks {
 	 * @param Skin $skin
 	 */
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): void {
-		if ( $skin->getSkinName() !== 'stellamereida' ) {
+		if ( $skin->getSkinName() !== 'santa-hermandad' ) {
 			return;
 		}
 
@@ -212,9 +212,9 @@ class Hooks {
 		// deliberada: el skin es autocontenido y desplegable sin editar
 		// config del servidor).
 		$stylePath = $skin->getConfig()->get( 'StylePath' );
-		$favicon = $stylePath . '/stellamereida/resources/favicon.svg';
+		$favicon = $stylePath . '/santa-hermandad/resources/favicon.svg';
 		$out->addHeadItem(
-			'stellamereida-favicon',
+			'santa-hermandad-favicon',
 			'<link rel="icon" type="image/svg+xml" href="' . htmlspecialchars( $favicon ) . '">'
 		);
 
@@ -225,7 +225,7 @@ class Hooks {
 		// expira el TTL, sin que el hard-refresh ayude porque la caché es
 		// compartida). Solución sin acceso al servidor: cargamos la CSS del skin
 		// nosotros, con un `version` derivado del mtime de los .css → cada deploy
-		// cambia la URL → MISS → CSS fresca. `skins.stellamereida.styles` se quitó de
+		// cambia la URL → MISS → CSS fresca. `skins.santa-hermandad.styles` se quitó de
 		// skin.json `styles` para que MediaWiki no la incluya además (sin doble
 		// carga). El módulo se sigue registrando en onResourceLoaderRegisterModules.
 		$lang = $skin->getLanguage()->getCode();
@@ -242,16 +242,16 @@ class Hooks {
 				$rl,
 				new \MediaWiki\Request\FauxRequest( [
 					'lang'    => $lang,
-					'modules' => 'skins.stellamereida.styles',
+					'modules' => 'skins.santa-hermandad.styles',
 					'only'    => 'styles',
-					'skin'    => 'stellamereida',
+					'skin'    => 'santa-hermandad',
 				] )
 			);
 			// makeVersionQuery produce EXACTAMENTE el string que RL valida en
 			// respond() (getVersionHash de un solo módulo no coincide con la
 			// versión combinada). Coincidir → RL concede caché larga inmutable.
-			if ( $rl->getModule( 'skins.stellamereida.styles' ) ) {
-				$version = $rl->makeVersionQuery( $rlCtx, [ 'skins.stellamereida.styles' ] );
+			if ( $rl->getModule( 'skins.santa-hermandad.styles' ) ) {
+				$version = $rl->makeVersionQuery( $rlCtx, [ 'skins.santa-hermandad.styles' ] );
 			}
 		} catch ( \Throwable $e ) {
 			$version = null;
@@ -260,7 +260,7 @@ class Hooks {
 			$resDir = self::skinResourcesDir();
 			$mtime = 0;
 			if ( $resDir !== null ) {
-				foreach ( [ 'fonts.css', 'tokens.css', 'stellamereida.css', 'print.css' ] as $f ) {
+				foreach ( [ 'fonts.css', 'tokens.css', 'santa-hermandad.css', 'print.css' ] as $f ) {
 					$p = $resDir . '/' . $f;
 					if ( is_file( $p ) ) {
 						$mtime = max( $mtime, (int)filemtime( $p ) );
@@ -273,14 +273,14 @@ class Hooks {
 			$skin->getConfig()->get( 'LoadScript' ),
 			[
 				'lang'    => $lang,
-				'modules' => 'skins.stellamereida.styles',
+				'modules' => 'skins.santa-hermandad.styles',
 				'only'    => 'styles',
-				'skin'    => 'stellamereida',
+				'skin'    => 'santa-hermandad',
 				'version' => $version,
 			]
 		);
 		$out->addHeadItem(
-			'zzz-stellamereida-styles',
+			'zzz-santa-hermandad-styles',
 			'<link rel="stylesheet" href="' . htmlspecialchars( $href ) . '">'
 		);
 
@@ -293,20 +293,20 @@ class Hooks {
 		if ( $isNamed ) {
 			$lookup = \MediaWiki\MediaWikiServices::getInstance()->getUserOptionsLookup();
 			foreach ( array_keys( self::PREFS ) as $key ) {
-				$short = substr( $key, strlen( 'stellamereida-' ) );
+				$short = substr( $key, strlen( 'santa-hermandad-' ) );
 				$server[$short] = (string)$lookup->getOption( $user, $key );
 			}
 		}
 
-		// Versión del aviso gestionado (StellAmereida:Aviso): id de su última
+		// Versión del aviso gestionado (SantaHermandad:Aviso): id de su última
 		// revisión. El banner descartado se recuerda por versión; al editar
 		// el aviso, reaparece. El pre-pintado lo usa para ocultar sin FOUC.
 		$noticeId = self::noticeVersion();
 
-		$out->addJsConfigVars( 'wgStellamereida', [
+		$out->addJsConfigVars( 'wgSantaHermandad', [
 			'identity'   => $identity,
 			'persist'    => $isNamed ? 'account' : 'browser',
-			'apiPrefix'  => 'stellamereida-',
+			'apiPrefix'  => 'santa-hermandad-',
 			'server'     => $server,
 			'noticeId'   => $noticeId,
 		] );
@@ -328,15 +328,15 @@ class Hooks {
 			'var C=' . $cfgJson . ';' .
 			'var d=document.documentElement,K=["theme","font","family"];' .
 			'function g(k){if(C.identity==="registered"){return (C.server&&C.server[k])||"";}' .
-			'try{return localStorage.getItem("sn-pref-"+k)||"";}catch(e){return "";}}' .
+			'try{return localStorage.getItem("sh-pref-"+k)||"";}catch(e){return "";}}' .
 			'K.forEach(function(k){var v=g(k);if(!v)return;' .
-			'if(k==="theme"){if(v==="light"||v==="dark"||v==="auto")d.setAttribute("data-sn-theme",v);}' .
-			'else{d.setAttribute("data-sn-"+k,v);}});' .
+			'if(k==="theme"){if(v==="light"||v==="dark"||v==="auto")d.setAttribute("data-sh-theme",v);}' .
+			'else{d.setAttribute("data-sh-"+k,v);}});' .
 			// Aviso ya leído (misma versión) → ocultar antes del primer paint.
-			'if(C.noticeId){try{if(localStorage.getItem("sn-notice-dismissed")===C.noticeId)' .
-			'd.setAttribute("data-sn-notice-hide","");}catch(e){}}' .
+			'if(C.noticeId){try{if(localStorage.getItem("sh-notice-dismissed")===C.noticeId)' .
+			'd.setAttribute("data-sh-notice-hide","");}catch(e){}}' .
 			'}catch(e){}})();</script>';
-		$out->addHeadItem( 'stellamereida-prepaint', $script );
+		$out->addHeadItem( 'santa-hermandad-prepaint', $script );
 
 		// Tema de Mermaid, owned por el skin. La extensión Mermaid renderiza el
 		// SVG client-side y DIMENSIONA cada caja midiendo el texto con la fuente
@@ -359,7 +359,7 @@ class Hooks {
 			'var _m;Object.defineProperty(window,"mermaid",{configurable:true,' .
 			'get:function(){return _m;},set:function(v){_m=W(v);}});' .
 			'}catch(e){}})();</script>';
-		$out->addHeadItem( 'stellamereida-mermaid-theme', $mscript );
+		$out->addHeadItem( 'santa-hermandad-mermaid-theme', $mscript );
 	}
 
 	/**
@@ -371,16 +371,16 @@ class Hooks {
 	 * @return string|null
 	 */
 	private static function skinResourcesDir(): ?string {
-		$jsonPath = ExtensionRegistry::getInstance()->getAllThings()['Stellamereida']['path'] ?? null;
+		$jsonPath = ExtensionRegistry::getInstance()->getAllThings()['SantaHermandad']['path'] ?? null;
 		$skinDir = $jsonPath !== null ? dirname( $jsonPath ) : dirname( __DIR__ );
 		$res = $skinDir . '/resources';
 		return is_dir( $res ) ? $res : null;
 	}
 
 	/**
-	 * Id de la última revisión de StellAmereida:Aviso (o '' si no existe).
+	 * Id de la última revisión de SantaHermandad:Aviso (o '' si no existe).
 	 * Barato: getLatestRevID no parsea. Réplica mínima de la resolución de
-	 * namespace de SkinStellamereida::resolveFragment (namespace dedicado si
+	 * namespace de SkinSantaHermandad::resolveFragment (namespace dedicado si
 	 * está declarado; si no, página homónima en el espacio principal).
 	 *
 	 * @return string
@@ -388,10 +388,10 @@ class Hooks {
 	private static function noticeVersion(): string {
 		try {
 			$nsId = MediaWikiServices::getInstance()->getContentLanguage()
-				->getNsIndex( 'StellAmereida' );
+				->getNsIndex( 'SantaHermandad' );
 			$title = ( $nsId !== false && $nsId !== null )
 				? Title::makeTitleSafe( $nsId, 'Aviso' )
-				: Title::newFromText( 'StellAmereida:Aviso' );
+				: Title::newFromText( 'SantaHermandad:Aviso' );
 			if ( $title && $title->exists() ) {
 				return (string)$title->getLatestRevID();
 			}

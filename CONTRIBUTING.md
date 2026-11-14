@@ -1,13 +1,13 @@
-# Contribuir a Stellamereida
+# Contribuir a Santa Hermandad
 
-Stellamereida es el skin de [Casiopea](https://wiki.ead.pucv.cl) (Semantic
+Santa Hermandad es el skin de [Casiopea](https://wiki.ead.pucv.cl) (Semantic
 MediaWiki de la e[ad] PUCV). Se escribe **desde cero** sobre `SkinMustache` de
 MediaWiki 1.43, sin Bootstrap ni herencia de otros skins. Esta guía resume cómo
 trabajar en el repo sin romper sus invariantes.
 
 ## Antes de tocar nada: lee la doctrina
 
-1. **[`specs/stellamereida.allium`](specs/stellamereida.allium)** — la
+1. **[`specs/santa-hermandad.allium`](specs/santa-hermandad.allium)** — la
    especificación de **comportamiento** es la fuente de verdad. Describe *qué*
    hace el skin y *por qué*, no *cómo*. Si cambias comportamiento, el spec se
    actualiza en el mismo PR.
@@ -41,8 +41,8 @@ trabajar en el repo sin romper sus invariantes.
 El CLI de Allium valida el spec:
 
 ```bash
-allium check   specs/stellamereida.allium   # estructura
-allium analyse specs/stellamereida.allium   # huecos a nivel de proceso
+allium check   specs/santa-hermandad.allium   # estructura
+allium analyse specs/santa-hermandad.allium   # huecos a nivel de proceso
 ```
 
 Ambos deben pasar sin `findings` antes de hacer push de un cambio de
@@ -56,13 +56,13 @@ skin.json              Manifiesto. Declara ValidSkinNames, Hooks, MessagesDirs,
                        ResourceModuleSkinStyles. (Los ResourceModules del skin
                        se registran en PHP — ver más abajo.)
 includes/
-  SkinStellamereida.php   Única clase de render: emite las data keys propias.
+  SkinSanta Hermandad.php   Única clase de render: emite las data keys propias.
   Hooks.php            Wiring: prefs como opciones de cuenta, pre-pintado sin
                        FOUC, favicon, registro robusto de módulos.
   templates/*.mustache Plantillas (skin + sprite de íconos Feather).
 resources/
   tokens.css           Design tokens (la ÚNICA fuente de color/espacio/tipo).
-  stellamereida.css      Estilos del skin.
+  santa-hermandad.css      Estilos del skin.
   fonts.css + fonts/   Avenida autoalojada (woff2 versionadas en git).
   print.css            Impresión.
   skin.js              Mejora progresiva (sin jQuery propio).
@@ -90,14 +90,14 @@ skin; no hardcodees colores de la extensión.
 
 El skin se prueba contra la réplica local de Casiopea
 (`~/Sites/casiopea/w`, servida en `http://casiopea.local/`), conectada por
-symlink `w/skins/Stellamereida → skins/stellamereida`. Comparación A/B en cualquier
-página: `?useskin=stellamereida` vs `?useskin=vector-2022`.
+symlink `w/skins/Santa Hermandad → skins/santa-hermandad`. Comparación A/B en cualquier
+página: `?useskin=santa-hermandad` vs `?useskin=vector-2022`.
 
 Tras editar CSS/JS/plantillas, recarga; ResourceLoader versiona por hash. Para
 ver el CSS servido como en producción (minificado):
 
 ```bash
-curl -s "http://casiopea.local/load.php?modules=skins.stellamereida.styles&only=styles&skin=stellamereida"
+curl -s "http://casiopea.local/load.php?modules=skins.santa-hermandad.styles&only=styles&skin=santa-hermandad"
 ```
 
 ## Versionado, changelog y commits

@@ -1,6 +1,6 @@
 <?php
 /**
- * Stellamereida — skin moderno para Casiopea (e[ad] PUCV).
+ * SantaHermandad — skin moderno para Casiopea (e[ad] PUCV).
  *
  * Escrito desde cero: solo extiende SkinMustache (contrato mínimo de MW).
  * Esta clase aporta SOLO el modelo de datos que el spec exige y que el
@@ -11,7 +11,7 @@
  * @license Artistic-2.0
  */
 
-namespace MediaWiki\Skins\Stellamereida;
+namespace MediaWiki\Skins\SantaHermandad;
 
 use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
@@ -20,7 +20,7 @@ use MediaWiki\Revision\RevisionRecord;
 use SkinMustache;
 use Title;
 
-class SkinStellamereida extends SkinMustache {
+class SkinSantaHermandad extends SkinMustache {
 
 	/**
 	 * Páginas wiki que gobiernan el chrome (spec InterfaceFragment).
@@ -28,7 +28,7 @@ class SkinStellamereida extends SkinMustache {
 	 * DOS slots, no tres. Hubo un tercero, `sidebar` => 'Barra lateral', que se
 	 * retiró en v0.8.0: se resolvía en cada request (una consulta de existencia
 	 * + un parse) y el template NUNCA lo consumía — la navegación del sitio la
-	 * arma el skin desde los portlets de MediaWiki:Sidebar (ver sn-sitenav más
+	 * arma el skin desde los portlets de MediaWiki:Sidebar (ver sh-sitenav más
 	 * abajo), que es la fuente que los editores ya usan. Un fragmento de chrome
 	 * paralelo para lo mismo era trabajo por request sin nada al otro lado. Si
 	 * alguna vez se quiere navegación editable como wikitexto libre, hay que
@@ -52,8 +52,8 @@ class SkinStellamereida extends SkinMustache {
 	 * embebe inline (para que `currentColor` aplique; un <img> no se podría
 	 * tematizar). El wordmark ES el texto: no hay span aparte.
 	 *
-	 * DES-HARDCODEADO (config StellamereidaIsotypePath): si la instalación define
-	 * `$wgStellamereidaIsotypePath` con una ruta de disco legible, se lee de ahí;
+	 * DES-HARDCODEADO (config SantaHermandadIsotypePath): si la instalación define
+	 * `$wgSantaHermandadIsotypePath` con una ruta de disco legible, se lee de ahí;
 	 * si no, cae al bundle `resources/casiopea.svg` (default → el repo corre
 	 * out-of-the-box). Así el skin no está casado con Casiopea: cualquier wiki
 	 * pone su SVG monocromo en el servidor y setea una línea en LocalSettings.
@@ -77,14 +77,14 @@ class SkinStellamereida extends SkinMustache {
 	/**
 	 * Isotipo compacto (viewport estrecho): glifo cuadrado de la
 	 * constelación, sin wordmark. Adapta a tema vía `currentColor` para
-	 * el fondo y `var(--sn-paper)` para las líneas/estrellas — el SVG
-	 * trae sus propias clases (.sn-i-bg/.sn-i-line/.sn-i-star) y se
+	 * el fondo y `var(--sh-paper)` para las líneas/estrellas — el SVG
+	 * trae sus propias clases (.sh-i-bg/.sh-i-line/.sh-i-star) y se
 	 * inyecta inline para que herede las variables CSS del padre. CSS
 	 * decide cuál de los dos (wordmark vs. icono) se muestra según el
 	 * viewport (spec ChromeAccessibility — la realización compacta la
 	 * presentación, ambas alcanzables).
 	 *
-	 * Des-hardcodeado igual que el wordmark: config `StellamereidaIconPath` →
+	 * Des-hardcodeado igual que el wordmark: config `SantaHermandadIconPath` →
 	 * bundle `resources/casiopea-icon.svg` de fallback.
 	 *
 	 * @param string|null $override Ruta de disco de config, o null para el bundle.
@@ -103,7 +103,7 @@ class SkinStellamereida extends SkinMustache {
 	/**
 	 * Toolbox del pie (p-tb) → ícono Feather por item. La clave es el id
 	 * estándar del enlace que emite el core; el valor, el símbolo del sprite
-	 * (SnIcons.mustache). Los items sin entrada quedan sin ícono (p.ej.
+	 * (ShIcons.mustache). Los items sin entrada quedan sin ícono (p.ej.
 	 * t-smwbrowselink): la lista degrada a texto, no rompe.
 	 */
 	private const TOOL_ICONS = [
@@ -154,8 +154,8 @@ class SkinStellamereida extends SkinMustache {
 				if ( $icon === null ) {
 					return $m[0];
 				}
-				$svg = '<svg class="sn-i sn-foot-ico" aria-hidden="true" focusable="false"'
-					. ' width="15" height="15" viewBox="0 0 24 24"><use href="#sn-i-'
+				$svg = '<svg class="sh-i sh-foot-ico" aria-hidden="true" focusable="false"'
+					. ' width="15" height="15" viewBox="0 0 24 24"><use href="#sh-i-'
 					. $icon . '"/></svg>';
 				return $m[0] . $svg;
 			},
@@ -183,17 +183,17 @@ class SkinStellamereida extends SkinMustache {
 	 * "data keys" estándar — html-headelement, data-portlets, data-footer…)
 	 * con las keys propias del skin, ramificadas por entidad del spec:
 	 *
-	 *   is-sn-fullscreen        bool         — PageRender.mode = fullscreen?
-	 *   sn-identity             string       — UserIdentity: anonymous | temporary | registered
-	 *   sn-isotype              {…}          — SiteIsotype: SVG embebido + override de $wgLogos
-	 *   sn-sitenav, sn-has-sitenav, sn-toolbox
+	 *   is-sh-fullscreen        bool         — PageRender.mode = fullscreen?
+	 *   sh-identity             string       — UserIdentity: anonymous | temporary | registered
+	 *   sh-isotype              {…}          — SiteIsotype: SVG embebido + override de $wgLogos
+	 *   sh-sitenav, sh-has-sitenav, sh-toolbox
 	 *                                       — Partición del MediaWiki:Sidebar
 	 *                                         (toolbox al pie, resto al header)
-	 *   sn-edit, sn-editcode    {href,label} — Lápiz de la barra (deriva PageForms)
-	 *   sn-pageviews, sn-has-pageviews
+	 *   sh-edit, sh-editcode    {href,label} — Lápiz de la barra (deriva PageForms)
+	 *   sh-pageviews, sh-has-pageviews
 	 *                                       — Vistas del menú "Página", sin el editar (lo lleva el lápiz)
-	 *   sn-prefs                {…}          — PreferencesPanel: estado inicial server-side
-	 *   sn-chrome               {notice,footer}
+	 *   sh-prefs                {…}          — PreferencesPanel: estado inicial server-side
+	 *   sh-chrome               {notice,footer}
 	 *                                       — ManagedChrome: fragmentos Aviso y Pie
 	 *
 	 * El template consume estas keys con secciones Mustache. La filosofía:
@@ -210,36 +210,36 @@ class SkinStellamereida extends SkinMustache {
 		// — PageRender.mode: standard | fullscreen (__PANTALLACOMPLETA__).
 		// En fullscreen no se emite afordancia "salir": la única salida son
 		// los enlaces de Portada/Navegación dentro del modal único.
-		$fullscreen = (bool)$out->getProperty( 'stellamereida-fullscreen' );
-		$data['is-sn-fullscreen'] = $fullscreen;
+		$fullscreen = (bool)$out->getProperty( 'santa-hermandad-fullscreen' );
+		$data['is-sh-fullscreen'] = $fullscreen;
 
 		// — NoTitle: __PANTALLACOMPLETA__ ya NO implica ocultar el título; el
 		// título se omite SOLO si la página declaró __NOTITLE__. La plantilla
 		// de fullscreen usa esta bandera (en modo normal lo oculta el CSS de
 		// la extensión NoTitle dentro de .mw-body). —
-		$data['sn-notitle'] = (bool)$out->getProperty( 'stellamereida-notitle' );
+		$data['sh-notitle'] = (bool)$out->getProperty( 'santa-hermandad-notitle' );
 
 		// — UserTools: identidad tri-estado (spec UserIdentity) —
 		$isNamed = method_exists( $user, 'isNamed' ) ? $user->isNamed() : $user->isRegistered();
 		$isTemp = method_exists( $user, 'isTemp' ) && $user->isTemp();
 		$identity = $isNamed ? 'registered' : ( $isTemp ? 'temporary' : 'anonymous' );
-		$data['sn-identity'] = $identity;
+		$data['sh-identity'] = $identity;
 
 		// — SiteIsotype: DES-HARDCODEADO (skin reutilizable) —
 		// El skin embebe el SVG inline (para tematizar claro/oscuro con
 		// currentColor; un <img> de $wgLogos no se podría recolorear). El asset
 		// deja de estar casado con Casiopea: se lee de la config de disco
-		// `$wgStellamereidaIsotypePath` / `$wgStellamereidaIconPath` si la instalación
+		// `$wgSantaHermandadIsotypePath` / `$wgSantaHermandadIconPath` si la instalación
 		// las define, y si no, del bundle `resources/casiopea*.svg` (default →
 		// el repo corre out-of-the-box). Se PREFIERE config propia a $wgLogos a
 		// propósito: $wgLogos entrega una URL (<img>) no tematizable, y además
 		// en producción llevaba el logo del skin viejo (bo). Ver README y spec
 		// SiteIsotype.
 		$config = $this->getConfig();
-		$data['sn-isotype'] = [
+		$data['sh-isotype'] = [
 			'href' => $data['link-mainpage'] ?? Title::newMainPage()->getLocalURL(),
-			'svg' => self::isotypeSvg( $config->get( 'StellamereidaIsotypePath' ) ),
-			'svg-icon' => self::iconSvg( $config->get( 'StellamereidaIconPath' ) ),
+			'svg' => self::isotypeSvg( $config->get( 'SantaHermandadIsotypePath' ) ),
+			'svg-icon' => self::iconSvg( $config->get( 'SantaHermandadIconPath' ) ),
 		];
 
 		// — Navegación del sitio vs. caja de herramientas —
@@ -268,12 +268,12 @@ class SkinStellamereida extends SkinMustache {
 				$siteNav[] = $p;
 			}
 		}
-		$data['sn-sitenav'] = $siteNav;
-		$data['sn-has-sitenav'] = $siteNav !== [];
+		$data['sh-sitenav'] = $siteNav;
+		$data['sh-has-sitenav'] = $siteNav !== [];
 		if ( is_array( $toolbox ) && isset( $toolbox['html-items'] ) ) {
 			$toolbox['html-items'] = self::iconizeToollist( (string)$toolbox['html-items'] );
 		}
-		$data['sn-toolbox'] = $toolbox;
+		$data['sh-toolbox'] = $toolbox;
 
 		// — UN botón "Editar" (lápiz) en la barra, antes del menú Página —
 		// Si la página tiene formulario asociado (PageForms, incl. herencia
@@ -286,8 +286,8 @@ class SkinStellamereida extends SkinMustache {
 		// resuelve uno).
 		$title = $this->getTitle();
 		$editIds = [ 'ca-edit', 'ca-ve-edit', 'ca-formedit', 'ca-form_edit' ];
-		$data['sn-edit'] = null;
-		$data['sn-editcode'] = null;
+		$data['sh-edit'] = null;
+		$data['sh-editcode'] = null;
 		if ( $title && $title->canExist() ) {
 			$classicEdit = $title->getLocalURL( [ 'action' => 'edit' ] );
 			$formHref = null;
@@ -308,17 +308,17 @@ class SkinStellamereida extends SkinMustache {
 			}
 			if ( $formHref !== null ) {
 				// Con formulario: lápiz → formulario; "Editar código" → clásico.
-				$data['sn-edit'] = [
+				$data['sh-edit'] = [
 					'href'  => $formHref,
-					'label' => $this->msg( 'stellamereida-form-edit' )->text(),
+					'label' => $this->msg( 'santa-hermandad-form-edit' )->text(),
 				];
-				$data['sn-editcode'] = [
+				$data['sh-editcode'] = [
 					'href'  => $classicEdit,
-					'label' => $this->msg( 'stellamereida-edit-code' )->text(),
+					'label' => $this->msg( 'santa-hermandad-edit-code' )->text(),
 				];
 			} else {
 				// Sin formulario: lápiz → edición clásica.
-				$data['sn-edit'] = [
+				$data['sh-edit'] = [
 					'href'  => $classicEdit,
 					'label' => $this->msg( 'edit' )->text(),
 				];
@@ -327,14 +327,14 @@ class SkinStellamereida extends SkinMustache {
 		// Vistas restantes para el desplegable "Página": se excluye el
 		// editar de core (lo cubre el lápiz de la barra). El "Editar
 		// código" (cuando hay formulario) se añade en la plantilla.
-		$data['sn-pageviews'] = [];
+		$data['sh-pageviews'] = [];
 		$views = $data['data-portlets']['data-views'] ?? [];
 		foreach ( $views['array-items'] ?? [] as $vi ) {
 			if ( !in_array( $vi['id'] ?? '', $editIds, true ) ) {
-				$data['sn-pageviews'][] = $vi;
+				$data['sh-pageviews'][] = $vi;
 			}
 		}
-		$data['sn-has-pageviews'] = $data['sn-pageviews'] !== [];
+		$data['sh-has-pageviews'] = $data['sh-pageviews'] !== [];
 
 		// — Pie: línea "Esta página se editó por última vez el … a las … por
 		// <Usuario>". Reúne la fecha/hora (formateadas como el core, en el
@@ -343,7 +343,7 @@ class SkinStellamereida extends SkinMustache {
 		// está suprimido, se omite el "por" y se cae al lastmod estándar.
 		// Solo para páginas existentes con revisión datada (las especiales no
 		// tienen, y entonces el pie simplemente no muestra la línea).
-		$data['sn-lastedit'] = null;
+		$data['sh-lastedit'] = null;
 		if ( $title && $title->canExist() ) {
 			$revLookup = MediaWikiServices::getInstance()->getRevisionLookup();
 			$revId = $out->getRevisionId();
@@ -361,15 +361,15 @@ class SkinStellamereida extends SkinMustache {
 					$userPage = Title::makeTitleSafe( NS_USER, $name );
 					$userHtml = $userPage
 						? Html::element( 'a',
-							[ 'href' => $userPage->getLocalURL(), 'class' => 'sn-foot-user' ],
+							[ 'href' => $userPage->getLocalURL(), 'class' => 'sh-foot-user' ],
 							$name )
-						: Html::element( 'span', [ 'class' => 'sn-foot-user' ], $name );
-					$html = $this->msg( 'stellamereida-footer-lastedit', $d, $t )
+						: Html::element( 'span', [ 'class' => 'sh-foot-user' ], $name );
+					$html = $this->msg( 'santa-hermandad-footer-lastedit', $d, $t )
 						->rawParams( $userHtml )->escaped();
 				} else {
 					$html = $this->msg( 'lastmodifiedat', $d, $t )->escaped();
 				}
-				$data['sn-lastedit'] = [ 'html' => $html ];
+				$data['sh-lastedit'] = [ 'html' => $html ];
 			}
 		}
 
@@ -379,11 +379,11 @@ class SkinStellamereida extends SkinMustache {
 		// $wgRights* está configurado; respeta $wgRightsText/$wgRightsUrl). Se
 		// extrae para mostrarlo al pie, a continuación de los enlaces de sitio,
 		// SIN la fecha de última modificación (que el skin ya emite aparte como
-		// sn-lastedit). Si no hay licencia configurada → null → no se pinta.
-		$data['sn-license'] = null;
+		// sh-lastedit). Si no hay licencia configurada → null → no se pinta.
+		$data['sh-license'] = null;
 		foreach ( $data['data-footer']['data-info']['array-items'] ?? [] as $item ) {
 			if ( ( $item['id'] ?? '' ) === 'footer-info-copyright' && !empty( $item['html'] ) ) {
-				$data['sn-license'] = [ 'html' => $item['html'] ];
+				$data['sh-license'] = [ 'html' => $item['html'] ];
 				break;
 			}
 		}
@@ -393,17 +393,17 @@ class SkinStellamereida extends SkinMustache {
 		// Estado inicial de los controles del menú de usuario (Tema · Tamaño
 		// de letra). El pre-pintado (Hooks::onBeforePageDisplay) ya fijó los
 		// atributos del documento; skin.js sincroniza el botón activo al
-		// cargar. `os-scheme` alimenta data-sn-os del segmento Tema (pista
+		// cargar. `os-scheme` alimenta data-sh-os del segmento Tema (pista
 		// de a qué resuelve "auto"); `is-temporary` marca la cuenta temporal.
-		$data['sn-prefs'] = [
+		$data['sh-prefs'] = [
 			'is-temporary' => $isTemp,
 			'os-scheme'    => '',
 		];
 
 		// — ManagedChrome: fragmentos editados como páginas del namespace —
-		$data['sn-chrome'] = [];
+		$data['sh-chrome'] = [];
 		foreach ( self::CHROME as $slot => $pageName ) {
-			$data['sn-chrome'][$slot] = $this->resolveFragment( $pageName );
+			$data['sh-chrome'][$slot] = $this->resolveFragment( $pageName );
 		}
 
 		return $data;
@@ -413,8 +413,8 @@ class SkinStellamereida extends SkinMustache {
 	 * Resuelve un InterfaceFragment: existe + contenido != null + no en
 	 * blanco (spec). is_blank ≈ tras recortar espacios y comentarios HTML
 	 * no queda nada (cierre razonable de la pregunta abierta del spec).
-	 * Prefiere el namespace dedicado "StellAmereida"; si no está declarado,
-	 * cae a la página homónima del espacio principal ("StellAmereida:Pie")
+	 * Prefiere el namespace dedicado "SantaHermandad"; si no está declarado,
+	 * cae a la página homónima del espacio principal ("Santa Hermandad:Pie")
 	 * para que el contenido ya creado se refleje igual. Vacío/ausente →
 	 * no publicado (spec ManagedChrome.HiddenWhenUnpublished). Defensivo:
 	 * cualquier fallo degrada a no-publicado, nunca rompe el render.
@@ -427,7 +427,7 @@ class SkinStellamereida extends SkinMustache {
 		try {
 			$services = MediaWikiServices::getInstance();
 			$nsInfo = $services->getContentLanguage();
-			$nsId = $nsInfo->getNsIndex( 'StellAmereida' );
+			$nsId = $nsInfo->getNsIndex( 'Santa Hermandad' );
 			if ( $nsId !== false && $nsId !== null ) {
 				// Caso ideal (spec): namespace dedicado, escritura
 				// restringida vía $wgNamespaceProtection.
@@ -436,12 +436,12 @@ class SkinStellamereida extends SkinMustache {
 				// Fallback pragmático: el namespace no está declarado en
 				// LocalSettings, así que la página creada vive en el
 				// espacio principal con dos puntos en el título
-				// ("StellAmereida:Pie"). Se refleja igual para que el editor
+				// ("Santa Hermandad:Pie"). Se refleja igual para que el editor
 				// la vea sin tocar config. NOTA: sin el namespace declarado
 				// NO hay restricción de escritura del spec
 				// (RestrictChromeNamespaceWrites) — declararlo en
 				// LocalSettings es lo recomendado para paridad/seguridad.
-				$title = Title::newFromText( 'StellAmereida:' . $pageName );
+				$title = Title::newFromText( 'Santa Hermandad:' . $pageName );
 			}
 			if ( !$title || !$title->exists() ) {
 				return $blank;
@@ -485,7 +485,7 @@ class SkinStellamereida extends SkinMustache {
 	 * CSS (display:none) — eran ruido en el DOM. Aquí los suprimimos en origen:
 	 * emitimos solo el contenedor `.mw-editsection` con los `<a>` de cada enlace.
 	 * El espaciado entre enlaces (cuando hay más de uno, p. ej. editar + editar
-	 * código) lo da el `gap` flex de `.mw-editsection` en stellamereida.css, así
+	 * código) lo da el `gap` flex de `.mw-editsection` en santa-hermandad.css, así
 	 * que no hace falta divider. El resto del contrato (clase contenedora, los
 	 * enlaces) se mantiene intacto.
 	 *

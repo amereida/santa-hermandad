@@ -1,13 +1,13 @@
 /* ============================================================
- * skinStyles/maps.css — Stellamereida
+ * skinStyles/maps.css — Santa Hermandad
  * 
  * Snapshot inicial del CSS de la extensión Maps
  * versión 12.1.2, licencia upstream: GPL-2.0-or-later.
  * Capturado el 2026-05-19 desde Maps/extension.json para
- * absorber los estilos dentro del sistema visual de Stellamereida.
+ * absorber los estilos dentro del sistema visual de Santa Hermandad.
  * 
  * Estos bloques se reescribirán gradualmente usando los tokens del
- * skin (var(--sn-...)). Mientras tanto, sirven como referencia
+ * skin (var(--sh-...)). Mientras tanto, sirven como referencia
  * exacta de lo que la extensión inyecta hoy.
  * 
  * Cargado vía ResourceModuleSkinStyles en skin.json con prefijo `+`,
@@ -269,7 +269,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* visual tweaks */
 
 .leaflet-container {
-	background: var(--sn-hairline);
+	background: var(--sh-hairline);
 	outline: 0;
 	}
 .leaflet-container a {
@@ -279,7 +279,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	outline: 2px solid orange;
 	}
 .leaflet-zoom-box {
-	border: 2px dotted var(--sn-link);
+	border: 2px dotted var(--sh-link);
 	background: rgba(255,255,255,0.5);
 	}
 
@@ -294,12 +294,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 .leaflet-bar {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-	border-radius: var(--sn-radius);
+	border-radius: var(--sh-radius);
 	}
 .leaflet-bar a,
 .leaflet-bar a:hover {
-	background-color: var(--sn-paper);
-	border-bottom: 1px solid var(--sn-hairline);
+	background-color: var(--sh-paper);
+	border-bottom: 1px solid var(--sh-hairline);
 	width: 1.625rem;
 	height: 1.625em;
 	line-height: 1.625em;
@@ -315,21 +315,21 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	display: block;
 	}
 .leaflet-bar a:hover {
-	background-color: var(--sn-sunk);
+	background-color: var(--sh-sunk);
 	}
 .leaflet-bar a:first-child {
-	border-top-left-radius: var(--sn-radius);
-	border-top-right-radius: var(--sn-radius);
+	border-top-left-radius: var(--sh-radius);
+	border-top-right-radius: var(--sh-radius);
 	}
 .leaflet-bar a:last-child {
-	border-bottom-left-radius: var(--sn-radius);
-	border-bottom-right-radius: var(--sn-radius);
+	border-bottom-left-radius: var(--sh-radius);
+	border-bottom-right-radius: var(--sh-radius);
 	border-bottom: none;
 	}
 .leaflet-bar a.leaflet-disabled {
 	cursor: default;
-	background-color: var(--sn-sunk);
-	color: var(--sn-hairline);
+	background-color: var(--sh-sunk);
+	color: var(--sh-hairline);
 	}
 
 .leaflet-touch .leaflet-bar a {
@@ -363,12 +363,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 .leaflet-control-layers {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-	background: var(--sn-paper);
+	background: var(--sh-paper);
 	border-radius: 0.3125rem;
 	}
 .leaflet-control-layers-toggle {
 	background-image: url(images/layers.png);
-	width: var(--sn-s-6);
+	width: var(--sh-s-6);
 	height: 2.25em;
 	}
 .leaflet-retina .leaflet-control-layers-toggle {
@@ -389,8 +389,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	}
 .leaflet-control-layers-expanded {
 	padding: 6px 10px 6px 6px; /* TODO tok: shorthand */
-	color: var(--sn-ink);
-	background: var(--sn-paper);
+	color: var(--sh-ink);
+	background: var(--sh-paper);
 	}
 .leaflet-control-layers-scrollbar {
 	overflow-y: scroll;
@@ -407,7 +407,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	}
 .leaflet-control-layers-separator {
 	height: 0;
-	border-top: 1px solid var(--sn-hairline);
+	border-top: 1px solid var(--sh-hairline);
 	margin: 5px -10px 5px -6px; /* TODO tok: shorthand */
 	}
 
@@ -420,14 +420,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* attribution and scale controls */
 
 .leaflet-container .leaflet-control-attribution {
-	background: var(--sn-paper);
+	background: var(--sh-paper);
 	background: rgba(255, 255, 255, 0.7);
 	margin: 0;
 	}
 .leaflet-control-attribution,
 .leaflet-control-scale-line {
 	padding: 0 0.3125rem;
-	color: var(--sn-ink);
+	color: var(--sh-ink);
 	}
 .leaflet-control-attribution a {
 	text-decoration: none;
@@ -437,7 +437,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	}
 .leaflet-container .leaflet-control-attribution,
 .leaflet-container .leaflet-control-scale {
-	font-size: var(--sn-fs-xs);
+	font-size: var(--sh-fs-xs);
 	}
 .leaflet-left .leaflet-control-scale {
 	margin-left: 0.3125rem;
@@ -446,26 +446,26 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	margin-bottom: 0.3125em;
 	}
 .leaflet-control-scale-line {
-	border: 2px solid var(--sn-ink-soft);
+	border: 2px solid var(--sh-ink-soft);
 	border-top: none;
 	line-height: 1.1;
 	padding: 2px 5px 1px; /* TODO tok: shorthand */
-	font-size: var(--sn-fs-xs);
+	font-size: var(--sh-fs-xs);
 	white-space: nowrap;
 	overflow: hidden;
 	-moz-box-sizing: border-box;
 	     box-sizing: border-box;
 
-	background: var(--sn-paper);
+	background: var(--sh-paper);
 	background: rgba(255, 255, 255, 0.5);
 	}
 .leaflet-control-scale-line:not(:first-child) {
-	border-top: 2px solid var(--sn-ink-soft);
+	border-top: 2px solid var(--sh-ink-soft);
 	border-bottom: none;
 	margin-top: -2px;
 	}
 .leaflet-control-scale-line:not(:first-child):not(:last-child) {
-	border-bottom: 2px solid var(--sn-ink-soft);
+	border-bottom: 2px solid var(--sh-ink-soft);
 	}
 
 .leaflet-touch .leaflet-control-attribution,

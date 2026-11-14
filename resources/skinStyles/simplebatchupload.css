@@ -1,13 +1,13 @@
 /* ============================================================
- * skinStyles/simplebatchupload.css — Stellamereida
+ * skinStyles/simplebatchupload.css — Santa Hermandad
  * 
  * Snapshot inicial del CSS de la extensión SimpleBatchUpload
  * versión 3.0.0, licencia upstream: GPL-2.0-or-later.
  * Capturado el 2026-05-19 desde SimpleBatchUpload/extension.json para
- * absorber los estilos dentro del sistema visual de Stellamereida.
+ * absorber los estilos dentro del sistema visual de Santa Hermandad.
  * 
  * Estos bloques se reescribirán gradualmente usando los tokens del
- * skin (var(--sn-...)). Mientras tanto, sirven como referencia
+ * skin (var(--sh-...)). Mientras tanto, sirven como referencia
  * exacta de lo que la extensión inyecta hoy.
  * 
  * Cargado vía ResourceModuleSkinStyles en skin.json con prefijo `+`,
@@ -59,14 +59,14 @@
 /* archivo origen: res/ext.SimpleBatchUpload.css */
 span.fileinput-button {
     -moz-user-select: none;
-    background-color: var(--sn-sunk);
+    background-color: var(--sh-sunk);
     background-image: none;
-    border: 1px solid var(--sn-hairline);
-    border-radius: var(--sn-radius);
-    color: var(--sn-ink);
+    border: 1px solid var(--sh-hairline);
+    border-radius: var(--sh-radius);
+    color: var(--sh-ink);
     cursor: pointer;
     display: inline-block;
-    font-size: var(--sn-fs-sm);
+    font-size: var(--sh-fs-sm);
     font-weight: normal;
     line-height: 1.42857;
     margin-bottom: 0;
@@ -91,7 +91,7 @@ ul.fileupload-results li.ful-success{
 }
 
 ul.fileupload-results li.ful-success a {
-    color: var(--sn-link);
+    color: var(--sh-link);
 }
 
 ul.fileupload-results li.ful-error{

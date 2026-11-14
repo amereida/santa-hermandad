@@ -1,9 +1,9 @@
-# Stellamereida — esquemas de layout
+# Santa Hermandad — esquemas de layout
 
 Mapa visual de los layouts que produce el skin. Cada esquema corresponde
 a un estado de presentación distinto (chrome completo, compact, canvas,
 drawer abierto). Los nombres entre corchetes son selectores CSS reales
-del skin (mirables en [`resources/stellamereida.css`](../resources/stellamereida.css)
+del skin (mirables en [`resources/santa-hermandad.css`](../resources/santa-hermandad.css)
 y en la plantilla [`includes/templates/skin.mustache`](../includes/templates/skin.mustache)).
 
 Breakpoints clave (mismos valores en CSS y en JS):
@@ -41,7 +41,7 @@ Breakpoints clave (mismos valores en CSS y en JS):
 │ ││                  ││ .sn-indicators (absolute, esquina sup. der.)   │ │  │ │
 │ ││                  ││                                                │ │  │ │
 │ ││                  ││ {{html-site-notice}}  ← core                   │ │  │ │
-│ ││                  ││ <aside class="sn-notice">{StellAmereida:Aviso}   │ │  │ │
+│ ││                  ││ <aside class="sn-notice">{Santa Hermandad:Aviso}   │ │  │ │
 │ ││                  ││                                                │ │  │ │
 │ ││                  ││ ┃ firstHeading (color --sn-nova, carmín)       │ │  │ │
 │ ││                  ││ ┃ ── (subtitle / kicker contentSub si aplica) ─│ │  │ │
@@ -66,7 +66,7 @@ Breakpoints clave (mismos valores en CSS y en JS):
 │ │└─────────────────────────────────────────────────────────────────────────┘ │
 │ │                                                                            │
 │ │┌─ .sn-footer (ancho = .sn-shell, 3 cols 1fr 1fr 1fr) ─────────────────┐    │
-│ ││ StellAmereida:Pie   │ data-info        │  🛠 Herram. y más               │   │
+│ ││ Santa Hermandad:Pie   │ data-info        │  🛠 Herram. y más               │   │
 │ ││ (gestionado)      │ data-places      │  (toolbox p-tb)                 │   │
 │ │└──────────────────────────────────────────────────────────────────────┘    │
 │ └────────────────────────────────────────────────────────────────────────────┘
@@ -116,7 +116,7 @@ Notas:
 │ │└──────────────────────────────────────────┘     │
 │ │                                                 │
 │ │┌─ .sn-footer (3 cols colapsan a 1) ──────┐      │
-│ ││ StellAmereida:Pie                          │      │
+│ ││ Santa Hermandad:Pie                          │      │
 │ ││ legal                                    │      │
 │ ││ Herram. y más                            │      │
 │ │└──────────────────────────────────────────┘     │

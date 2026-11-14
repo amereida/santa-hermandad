@@ -1,4 +1,4 @@
-/* Stellamereida — mejora progresiva. Vanilla ES, sin jQuery propio. Sin JS
+/* Santa Hermandad — mejora progresiva. Vanilla ES, sin jQuery propio. Sin JS
  * la página es legible y el pre-pintado (Hooks) ya aplicó el tema; aquí
  * se añaden panel de preferencias, persistencia híbrida, cajón y popovers.
  */
@@ -7,15 +7,15 @@
 
 	var doc = document;
 	var root = doc.documentElement;
-	var cfg = ( window.mw && mw.config && mw.config.get( 'wgStellamereida' ) ) || {
-		identity: 'anonymous', persist: 'browser', apiPrefix: 'stellamereida-', server: {}
+	var cfg = ( window.mw && mw.config && mw.config.get( 'wgSanta Hermandad' ) ) || {
+		identity: 'anonymous', persist: 'browser', apiPrefix: 'santa-hermandad-', server: {}
 	};
 	var KEYS = [ 'theme', 'font', 'family' ];
 
 	/* ── Persistencia: cuenta (cross-device) vs navegador ── */
 	function readPref( k ) {
 		if ( cfg.persist === 'account' ) { return cfg.server[ k ] || ''; }
-		try { return localStorage.getItem( 'sn-pref-' + k ) || ''; } catch ( e ) { return ''; }
+		try { return localStorage.getItem( 'sh-pref-' + k ) || ''; } catch ( e ) { return ''; }
 	}
 	function writePref( k, v ) {
 		if ( cfg.persist === 'account' ) {
@@ -25,8 +25,8 @@
 			}
 		} else {
 			try {
-				if ( v ) { localStorage.setItem( 'sn-pref-' + k, v ); }
-				else { localStorage.removeItem( 'sn-pref-' + k ); }
+				if ( v ) { localStorage.setItem( 'sh-pref-' + k, v ); }
+				else { localStorage.removeItem( 'sh-pref-' + k ); }
 			} catch ( e ) {}
 		}
 	}
@@ -37,21 +37,21 @@
 			// Default = claro (sin atributo). "auto" sigue al SO; "dark"
 			// fuerza oscuro; "light" fuerza claro; vacío → claro.
 			if ( v === 'light' || v === 'dark' || v === 'auto' ) {
-				root.setAttribute( 'data-sn-theme', v );
-			} else { root.removeAttribute( 'data-sn-theme' ); }
+				root.setAttribute( 'data-sh-theme', v );
+			} else { root.removeAttribute( 'data-sh-theme' ); }
 			return;
 		}
-		// font (única otra preferencia): data-sn-font = small|medium|large.
-		if ( v ) { root.setAttribute( 'data-sn-' + k, v ); }
-		else { root.removeAttribute( 'data-sn-' + k ); }
+		// font (única otra preferencia): data-sh-font = small|medium|large.
+		if ( v ) { root.setAttribute( 'data-sh-' + k, v ); }
+		else { root.removeAttribute( 'data-sh-' + k ); }
 	}
 
 	/* ── Segmentos (Tema · Tamaño de letra): estado activo de los botones.
 	 *    Default sin elección guardada: tema claro, fuente media. Los
 	 *    controles viven en el menú de usuario (ya no en un panel aparte). */
 	function syncSegments() {
-		doc.querySelectorAll( '.sn-seg[data-sn-pref]' ).forEach( function ( seg ) {
-			var k = seg.getAttribute( 'data-sn-pref' );
+		doc.querySelectorAll( '.sh-seg[data-sh-pref]' ).forEach( function ( seg ) {
+			var k = seg.getAttribute( 'data-sh-pref' );
 			var cur = readPref( k );
 			var fallback = k === 'theme' ? 'light' : k === 'font' ? 'medium'
 				: k === 'family' ? 'sans'
@@ -65,13 +65,13 @@
 	}
 
 	function bindPrefs() {
-		var segs = doc.querySelectorAll( '.sn-seg[data-sn-pref]' );
+		var segs = doc.querySelectorAll( '.sh-seg[data-sh-pref]' );
 		if ( !segs.length ) { return; }
 		segs.forEach( function ( seg ) {
 			seg.addEventListener( 'click', function ( e ) {
 				var b = e.target.closest( 'button[data-v]' );
 				if ( !b ) { return; }
-				var k = seg.getAttribute( 'data-sn-pref' );
+				var k = seg.getAttribute( 'data-sh-pref' );
 				var v = b.getAttribute( 'data-v' );
 				// "auto" se persiste explícitamente (seguir al SO).
 				writePref( k, v ); apply( k, v ); syncSegments();
@@ -84,22 +84,22 @@
 
 	/* ── Modo compact (tablet vertical y menos): paneles emergentes como
 	 *    modales. Detecta el viewport igual que la media query CSS (48rem,
-	 *    ≈ 768 px). Si cambia este umbral, sincronizar con stellamereida.css.
+	 *    ≈ 768 px). Si cambia este umbral, sincronizar con santa-hermandad.css.
 	 *    El estado se refresca on-resize para responder a rotación. */
 	var COMPACT_MQ = ( window.matchMedia && window.matchMedia( '(max-width: 48rem)' ) ) || null;
 	function isCompact() { return !!( COMPACT_MQ && COMPACT_MQ.matches ); }
 
-	/* ── Conteo global de modales abiertos: marca <html> con data-sn-modal
+	/* ── Conteo global de modales abiertos: marca <html> con data-sh-modal
 	 *    para que el CSS pinte el scrim y bloquee el scroll subyacente.
 	 *    El cierre por click en el scrim lo expone como botón sobre <body>. */
 	var openModals = 0;
 	function modalOpened() {
 		openModals++;
-		if ( openModals === 1 ) { root.setAttribute( 'data-sn-modal', '' ); }
+		if ( openModals === 1 ) { root.setAttribute( 'data-sh-modal', '' ); }
 	}
 	function modalClosed() {
 		openModals = Math.max( 0, openModals - 1 );
-		if ( openModals === 0 ) { root.removeAttribute( 'data-sn-modal' ); }
+		if ( openModals === 0 ) { root.removeAttribute( 'data-sh-modal' ); }
 	}
 
 	function focusablesIn( el ) {
@@ -116,25 +116,25 @@
 
 	/* ── Popovers (Navegación · Página · Usuario). En desktop: dropdown
 	 *    posicionado con la regla CSS aria-expanded. En compact: el
-	 *    contenedor .sn-md recibe data-sn-open para que el CSS lo presente
+	 *    contenedor .sh-md recibe data-sh-open para que el CSS lo presente
 	 *    como modal-bottom-sheet, y aquí montamos focus trap + ESC + scrim. */
 	function bindMenus() {
-		var triggers = doc.querySelectorAll( '[data-sn-menu]' );
+		var triggers = doc.querySelectorAll( '[data-sh-menu]' );
 		var activeMenu = null;
 		var lastFocus = null;
 
 		function panelOf( t ) {
-			var md = t.closest( '.sn-md' );
+			var md = t.closest( '.sh-md' );
 			if ( !md ) { return null; }
-			return md.querySelector( '.sn-menu-list, .sn-megamenu' );
+			return md.querySelector( '.sh-menu-list, .sh-megamenu' );
 		}
 		function closeAll( opts ) {
 			opts = opts || {};
 			triggers.forEach( function ( o ) {
 				o.setAttribute( 'aria-expanded', 'false' );
-				var md = o.closest( '.sn-md' );
-				if ( md && md.hasAttribute( 'data-sn-open' ) ) {
-					md.removeAttribute( 'data-sn-open' );
+				var md = o.closest( '.sh-md' );
+				if ( md && md.hasAttribute( 'data-sh-open' ) ) {
+					md.removeAttribute( 'data-sh-open' );
 					modalClosed();
 				}
 			} );
@@ -148,11 +148,11 @@
 		function onKey( e ) {
 			if ( e.key === 'Escape' ) { e.preventDefault(); closeAll(); return; }
 			if ( e.key === 'Tab' && activeMenu ) {
-				var md = activeMenu.closest( '.sn-md' );
+				var md = activeMenu.closest( '.sh-md' );
 				if ( !md ) { return; }
 				// Atrapa Tab tanto en compact como en el modal fullscreen
-				// dedicado (`.sn-md-fs`), donde no hay "fuera".
-				if ( isCompact() || md.classList.contains( 'sn-md-fs' ) ) {
+				// dedicado (`.sh-md-fs`), donde no hay "fuera".
+				if ( isCompact() || md.classList.contains( 'sh-md-fs' ) ) {
 					trapTab( md, e );
 				}
 			}
@@ -165,17 +165,17 @@
 				closeAll( { restoreFocus: false } );
 				if ( alreadyOpen ) { return; }
 				t.setAttribute( 'aria-expanded', 'true' );
-				var md = t.closest( '.sn-md' );
+				var md = t.closest( '.sh-md' );
 				var panel = panelOf( t );
 				if ( !md || !panel ) { return; }
 				activeMenu = panel;
-				// `.sn-md-fs` (modal único de __PANTALLACOMPLETA__) siempre
+				// `.sh-md-fs` (modal único de __PANTALLACOMPLETA__) siempre
 				// se presenta como modal a pantalla completa, sin importar
 				// viewport: en fullscreen no hay cabecera donde anclar un
 				// popover desktop.
-				var forceModal = md.classList.contains( 'sn-md-fs' );
+				var forceModal = md.classList.contains( 'sh-md-fs' );
 				if ( isCompact() || forceModal ) {
-					md.setAttribute( 'data-sn-open', '' );
+					md.setAttribute( 'data-sh-open', '' );
 					modalOpened();
 					lastFocus = t;
 					// El primer focusable suele ser el botón X (cabecera);
@@ -191,33 +191,33 @@
 		// Botón X dentro de cualquier menú modal → cerrar.
 		doc.addEventListener( 'click', function ( e ) {
 			if ( !e.target.closest ) { return; }
-			if ( e.target.closest( '[data-sn-menu-close]' ) ) {
+			if ( e.target.closest( '[data-sh-menu-close]' ) ) {
 				e.preventDefault(); e.stopPropagation();
 				closeAll();
 			}
 		} );
 		// Click fuera del panel → cerrar. Aplica al popover desktop y al
-		// top-sheet de pantalla completa (`.sn-md-fs`, anclado arriba y solo
+		// top-sheet de pantalla completa (`.sh-md-fs`, anclado arriba y solo
 		// tan alto como su contenido → hay "fuera" debajo). El bottom-sheet
 		// modal de compact (no-fs) cierra por X/ESC, no por aquí.
 		doc.addEventListener( 'click', function ( e ) {
 			if ( !activeMenu ) { return; }
-			var md = activeMenu.closest( '.sn-md' );
-			var isFs = !!( md && md.classList.contains( 'sn-md-fs' ) );
+			var md = activeMenu.closest( '.sh-md' );
+			var isFs = !!( md && md.classList.contains( 'sh-md-fs' ) );
 			if ( !isFs && isCompact() ) { return; }
 			if ( activeMenu.contains( e.target ) ) { return; }
-			if ( e.target.closest && e.target.closest( '[data-sn-menu]' ) ) { return; }
+			if ( e.target.closest && e.target.closest( '[data-sh-menu]' ) ) { return; }
 			closeAll();
 		} );
 	}
 
 	/* ── Búsqueda como modal en compact viewport. El form es el MISMO,
-	 *    sólo cambia su presentación (CSS responde a data-sn-search-open
+	 *    sólo cambia su presentación (CSS responde a data-sh-search-open
 	 *    en <html>). En desktop el trigger no es visible y este binding
 	 *    queda inerte. */
 	function bindSearch() {
-		var trigger = doc.querySelector( '[data-sn-search-open]' );
-		var closeBtn = doc.querySelector( '[data-sn-search-close]' );
+		var trigger = doc.querySelector( '[data-sh-search-open]' );
+		var closeBtn = doc.querySelector( '[data-sh-search-close]' );
 		var form = doc.getElementById( 'searchform' );
 		if ( !trigger || !form ) { return; }
 		var input = form.querySelector( 'input[type="search"], #searchInput, .mw-searchInput' );
@@ -226,15 +226,15 @@
 		function open() {
 			if ( !isCompact() ) { return; }
 			lastFocus = doc.activeElement;
-			root.setAttribute( 'data-sn-search-open', '' );
+			root.setAttribute( 'data-sh-search-open', '' );
 			trigger.setAttribute( 'aria-expanded', 'true' );
 			modalOpened();
 			window.setTimeout( function () { if ( input ) { input.focus(); } }, 30 );
 			doc.addEventListener( 'keydown', onKey );
 		}
 		function close() {
-			if ( !root.hasAttribute( 'data-sn-search-open' ) ) { return; }
-			root.removeAttribute( 'data-sn-search-open' );
+			if ( !root.hasAttribute( 'data-sh-search-open' ) ) { return; }
+			root.removeAttribute( 'data-sh-search-open' );
 			trigger.setAttribute( 'aria-expanded', 'false' );
 			modalClosed();
 			doc.removeEventListener( 'keydown', onKey );
@@ -262,14 +262,14 @@
 	 *    sólo manejamos el clic en cerrar. Es por-navegador a propósito (un
 	 *    aviso descartado no debería perseguir al usuario entre dispositivos). */
 	function bindNotice() {
-		var notice = doc.querySelector( '.sn-notice[data-sn-notice]' );
+		var notice = doc.querySelector( '.sh-notice[data-sh-notice]' );
 		if ( !notice ) { return; }
-		var closeBtn = notice.querySelector( '[data-sn-notice-close]' );
+		var closeBtn = notice.querySelector( '[data-sh-notice-close]' );
 		if ( !closeBtn ) { return; }
 		closeBtn.addEventListener( 'click', function () {
-			var id = notice.getAttribute( 'data-sn-notice' );
-			try { if ( id ) { localStorage.setItem( 'sn-notice-dismissed', id ); } } catch ( e ) {}
-			root.setAttribute( 'data-sn-notice-hide', '' );
+			var id = notice.getAttribute( 'data-sh-notice' );
+			try { if ( id ) { localStorage.setItem( 'sh-notice-dismissed', id ); } } catch ( e ) {}
+			root.setAttribute( 'data-sh-notice-hide', '' );
 		} );
 	}
 
@@ -302,15 +302,15 @@
 		// el PDF de una página se obtiene por la previsualización Vivliostyle (que
 		// honra print.css) → el usuario hace "Guardar como PDF" del navegador.
 		// Hooks que abren el preview de la página actual:
-		//   · `.sn-print-pdf` o `[data-sn-print]`  ← recomendado para markup nuevo
+		//   · `.sh-print-pdf` o `[data-sh-print]`  ← recomendado para markup nuevo
 		//   · `a[href*="action=mpdf"]`             ← compatibilidad con enlaces viejos
 		doc.addEventListener( 'click', function ( e ) {
 			var a = e.target.closest && e.target.closest(
-				'#t-print a, .sn-print-pdf, [data-sn-print], a[href*="action=mpdf"]' );
+				'#t-print a, .sh-print-pdf, [data-sh-print], a[href*="action=mpdf"]' );
 			if ( !a ) { return; }
 			e.preventDefault();
 			e.stopImmediatePropagation();
-			mw.loader.using( 'skins.stellamereida.print' ).then( function () {
+			mw.loader.using( 'skins.santa-hermandad.print' ).then( function () {
 				var ok = window.SN_PrintPreview && window.SN_PrintPreview.open();
 				if ( ok === false ) { window.print(); }
 			}, function () { window.print(); } );
@@ -327,7 +327,7 @@
 	 * si existe, si no el propio `.mw-collapsible` (customtoggle: portada, ficha).
 	 * En el CIERRE la librería pone display:none → lo reanimamos en el mismo tick
 	 * (sin flash) y reocultamos al terminar. Tablas/listas se excluyen (togglean
-	 * filas/ítems). Duración/ease replican --sn-dur-2/--sn-ease; reduced-motion: el
+	 * filas/ítems). Duración/ease replican --sh-dur-2/--sh-ease; reduced-motion: el
 	 * reset global !important acorta la transición a ~0 y transitionend igual cae. */
 	function bindCollapse() {
 		if ( !window.mw || !mw.loader ) { return; }

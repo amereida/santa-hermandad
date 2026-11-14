@@ -1,8 +1,8 @@
 /* ============================================================
- * skinStyles/inlinecomments.css — Stellamereida
+ * skinStyles/inlinecomments.css — Santa Hermandad
  *
  * Homologación de la extensión InlineComments (GPL-2.0-or-later) al lenguaje
- * visual de Stellamereida. Cubre los TRES módulos de estilo de la extensión, todos
+ * visual de Santa Hermandad. Cubre los TRES módulos de estilo de la extensión, todos
  * enrutados a este archivo desde skin.json con prefijo `+` (se añaden DESPUÉS del
  * CSS original → ganan por orden a igual especificidad):
  *   +ext.inlineComments.sidenotes.styles   (sidenotes.css)
@@ -12,7 +12,7 @@
  * Concepto: las anotaciones son marginalia sobre la hoja. Cada nota es una
  * tarjeta de papel recogida en el canalón derecho que, al activarse, se LEVANTA
  * y gana el filo carmín del editor. El resaltado de texto NO es el amarillo
- * marcador genérico: es la marca editorial en --sn-nova (la corrección a lápiz
+ * marcador genérico: es la marca editorial en --sh-nova (la corrección a lápiz
  * rojo sobre el manuscrito), enchufada por los custom props que expone la
  * extensión, de modo que voltea con el tema. Todo color/medida sale de tokens.
  * ============================================================ */
@@ -22,7 +22,7 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 /* ─────────────────────── Estructura: notas como POPOVER ───────────────────────
    InlineComments envuelve TODO el contenido en #mw-inlinecomments-precontainer,
    le resta ancho por JS y aloja los asides `position:absolute; right:1px` en un
-   canalón derecho (offsetParent = .sn-paper). En Stellamereida NO queremos canalón
+   canalón derecho (offsetParent = .sh-paper). En Santa Hermandad NO queremos canalón
    permanente: las notas van OCULTAS y emergen como popover pegado al borde
    derecho de la PANTALLA SÓLO la nota elegida. La única afordancia en reposo es
    la marca carmín del texto. La revelación se MONTA en el estado nativo de la
@@ -48,18 +48,18 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 
 /* ── La marca editorial: resaltado del ancla en carmín, no en amarillo ──
    La extensión consume estos custom props (con fallback al amarillo); los
-   redefinimos en tonos de --sn-nova translúcidos (base transparent → legibles
-   sobre cualquier fondo y correctos en oscuro, donde --sn-nova es el coral). */
+   redefinimos en tonos de --sh-nova translúcidos (base transparent → legibles
+   sobre cualquier fondo y correctos en oscuro, donde --sh-nova es el coral). */
 #mw-content-text {
-	--sidenoteAnchorColor:         color-mix(in oklab, var(--sn-nova) 15%, transparent);
-	--sidenoteAnchorColorHover:    color-mix(in oklab, var(--sn-nova) 28%, transparent);
-	--sidenoteAnchorColorSelected: color-mix(in oklab, var(--sn-nova) 42%, transparent);
+	--sidenoteAnchorColor:         color-mix(in oklab, var(--sh-nova) 15%, transparent);
+	--sidenoteAnchorColorHover:    color-mix(in oklab, var(--sh-nova) 28%, transparent);
+	--sidenoteAnchorColorSelected: color-mix(in oklab, var(--sh-nova) 42%, transparent);
 }
 #mw-content-text .mw-annotation-highlight {
 	background-color: var( --sidenoteAnchorColor );
-	border-radius: var(--sn-radius-s);
+	border-radius: var(--sh-radius-s);
 	cursor: pointer;                            /* clicable: abre la nota */
-	transition: background-color var(--sn-dur-1) var(--sn-ease);
+	transition: background-color var(--sh-dur-1) var(--sh-ease);
 }
 #mw-content-text .mw-annotation-highlight:hover,
 #mw-content-text .mw-annotation-highlight:hover .mw-annotation-highlight {
@@ -71,28 +71,28 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 }
 
 /* ─────────────────────── La tarjeta de la nota (aside) ───────────────────────
-   En reposo: nota recogida, fondo hundido (--sn-sunk) sobre el papel, filete
+   En reposo: nota recogida, fondo hundido (--sh-sunk) sobre el papel, filete
    tenue, plana. Al seleccionarse: se levanta a papel limpio con sombra suave y
    el filo carmín del editor (inset, sin descuadrar el ancho) y desliza hacia el
    texto. Ancho holgado para escribir; el canalón (max-content) lo sigue solo. */
 #mw-content-text #mw-inlinecomment-annotations .mw-inlinecomment-aside {
 	width: 19rem;
-	left: var(--sn-s-2);
+	left: var(--sh-s-2);
 	box-sizing: border-box;
-	padding: var(--sn-s-3);
-	margin-bottom: var(--sn-s-2);
-	background-color: var(--sn-sunk);
-	color: var(--sn-ink-soft);
-	border: 1px solid var(--sn-hairline-soft);
-	border-radius: var(--sn-radius);
-	font-family: var(--sn-font-text);
-	font-size: var(--sn-fs-sm);
+	padding: var(--sh-s-3);
+	margin-bottom: var(--sh-s-2);
+	background-color: var(--sh-sunk);
+	color: var(--sh-ink-soft);
+	border: 1px solid var(--sh-hairline-soft);
+	border-radius: var(--sh-radius);
+	font-family: var(--sh-font-text);
+	font-size: var(--sh-fs-sm);
 	transition:
-		top var(--sn-dur-2) var(--sn-ease),
-		left var(--sn-dur-2) var(--sn-ease),
-		background-color var(--sn-dur-1) var(--sn-ease),
-		border-color var(--sn-dur-1) var(--sn-ease),
-		box-shadow var(--sn-dur-1) var(--sn-ease);
+		top var(--sh-dur-2) var(--sh-ease),
+		left var(--sh-dur-2) var(--sh-ease),
+		background-color var(--sh-dur-1) var(--sh-ease),
+		border-color var(--sh-dur-1) var(--sh-ease),
+		box-shadow var(--sh-dur-1) var(--sh-ease);
 }
 #mw-content-text #mw-inlinecomment-annotations .mw-inlinecomment-aside p { text-align: left; }
 
@@ -116,20 +116,20 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 	width: min(94vw, 24rem); max-width: 94vw;
 	max-height: 84vh; overflow-y: auto;
 	z-index: 60;
-	padding: var(--sn-s-4);
-	background-color: var(--sn-paper);
-	color: var(--sn-ink);
-	border: 1px solid var(--sn-hairline);
+	padding: var(--sh-s-4);
+	background-color: var(--sh-paper);
+	color: var(--sh-ink);
+	border: 1px solid var(--sh-hairline);
 	border-right: 0;
-	border-radius: var(--sn-radius) 0 0 var(--sn-radius);
-	box-shadow: inset 2px 0 0 0 var(--sn-nova), var(--sn-lift);
-	animation: sn-comment-in var(--sn-dur-2) var(--sn-ease);
+	border-radius: var(--sh-radius) 0 0 var(--sh-radius);
+	box-shadow: inset 2px 0 0 0 var(--sh-nova), var(--sh-lift);
+	animation: sh-comment-in var(--sh-dur-2) var(--sh-ease);
 }
 /* El editor de alta, sin ancla aún, cae a una altura fija cómoda. */
 #mw-content-text #mw-inlinecomment-annotations .mw-inlinecomment-aside:has(.mw-inlinecomment-inittools) {
 	top: 12vh !important; z-index: 61;
 }
-@keyframes sn-comment-in {
+@keyframes sh-comment-in {
 	from { opacity: 0; transform: translateX(0.5rem); }
 	to   { opacity: 1; transform: translateX(0); }
 }
@@ -143,21 +143,21 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 .mw-inlinecomment-comment {
 	width: 100%;
 	display: flex; flex-direction: row; align-items: flex-start;
-	justify-content: space-between; gap: var(--sn-s-2);
+	justify-content: space-between; gap: var(--sh-s-2);
 }
 .mw-inlinecomment-text { line-height: 1.35; }
 
-.mw-inlinecomment-author { padding-left: var(--sn-s-4); margin-bottom: var(--sn-s-2); }
+.mw-inlinecomment-author { padding-left: var(--sh-s-4); margin-bottom: var(--sh-s-2); }
 .mw-inlinecomment-author:before { content: '— '; }   /* atribución editorial */
 .mw-inlinecomment-author {
-	font-size: var(--sn-fs-xs);
-	color: var(--sn-ink-faint);
+	font-size: var(--sh-fs-xs);
+	color: var(--sh-ink-faint);
 }
 
 .mw-inlinecomments-editedlabel {
-	color: var(--sn-ink-faint);
-	font-size: var(--sn-fs-xs); font-style: italic;
-	margin: 0 var(--sn-s-5) var(--sn-s-2) 0;
+	color: var(--sh-ink-faint);
+	font-size: var(--sh-fs-xs); font-style: italic;
+	margin: 0 var(--sh-s-5) var(--sh-s-2) 0;
 }
 
 /* Lápiz de edición. La extensión emite <button>🖉</button> (emoji U+1F589 que
@@ -172,12 +172,12 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 	width: 1.05rem; height: 1.05rem;
 	margin-top: .1rem;
 	font-size: 0;                               /* oculta el emoji de respaldo */
-	background-color: var(--sn-icon);
+	background-color: var(--sh-icon);
 	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z'/%3E%3C/svg%3E") no-repeat center / contain;
 	        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z'/%3E%3C/svg%3E") no-repeat center / contain;
-	transition: background-color var(--sn-dur-1) var(--sn-ease);
+	transition: background-color var(--sh-dur-1) var(--sh-ease);
 }
-.mw-inlinecomment-editlink:hover { background-color: var(--sn-nova); }
+.mw-inlinecomment-editlink:hover { background-color: var(--sh-nova); }
 
 /* Herramientas (responder/cerrar/guardar): se separan del cuerpo con un filete
    editorial, no con aire suelto. */
@@ -185,40 +185,40 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 .mw-inlinecomment-inittools,
 .mw-inlinecomment-selected .mw-inlinecomment-tools {
 	display: block;
-	margin-top: var(--sn-s-3);
-	padding-top: var(--sn-s-2);
-	border-top: 1px solid var(--sn-hairline-soft);
+	margin-top: var(--sh-s-3);
+	padding-top: var(--sh-s-2);
+	border-top: 1px solid var(--sh-hairline-soft);
 }
 
 /* Editor (alta/edición). Damos altura cómoda a la caja de escritura — el campo
    pequeño era el "espacio ridículamente chico". El grueso del look del textarea
    y los botones lo da el skinStyle de oojs-ui; aquí: encuadre, familia y un
    tamaño de botón más sobrio (los OOUI por defecto se ven toscos en la tarjeta). */
-.mw-inlinecomments-editor { margin-top: var(--sn-s-2); }
+.mw-inlinecomments-editor { margin-top: var(--sh-s-2); }
 #mw-inlinecomment-annotations textarea,
 .mw-inlinecomments-editor textarea {
 	max-width: 100%;
 	min-height: 6.5rem;
-	font-family: var(--sn-font-text);
+	font-family: var(--sh-font-text);
 }
 .mw-inlinecomment-buttons {
-	display: flex; flex-wrap: wrap; gap: var(--sn-s-2);
-	margin-top: var(--sn-s-2);
+	display: flex; flex-wrap: wrap; gap: var(--sh-s-2);
+	margin-top: var(--sh-s-2);
 }
 .mw-inlinecomment-buttons .oo-ui-buttonInputWidget { margin: 0; }
 .mw-inlinecomment-buttons .oo-ui-buttonElement-button {
-	font-family: var(--sn-font-text);
-	font-size: var(--sn-fs-sm);
+	font-family: var(--sh-font-text);
+	font-size: var(--sh-fs-sm);
 	min-height: 0;
-	padding-top: var(--sn-s-1); padding-bottom: var(--sn-s-1);
+	padding-top: var(--sh-s-1); padding-bottom: var(--sh-s-1);
 }
 
 /* Comentario en edición: lavado carmín + filo, en vez del azul/aliceblue. */
 .mw-inlinecomment-selected .mw-inlinecomment-comment.currentedit {
-	background: var(--sn-nova-wash);
-	border-left: 2px solid var(--sn-nova);
-	border-radius: 0 var(--sn-radius-s) var(--sn-radius-s) 0;
-	padding: var(--sn-s-1) var(--sn-s-2);
+	background: var(--sh-nova-wash);
+	border-left: 2px solid var(--sh-nova);
+	border-radius: 0 var(--sh-radius-s) var(--sh-radius-s) 0;
+	padding: var(--sh-s-1) var(--sh-s-2);
 }
 .mw-inlinecomment-selected .currentedit .mw-inlinecomment-editlink { display: none !important; }
 
@@ -235,28 +235,28 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 }
 
 /* ─────────────────────── Mención de usuarios (@) ───────────────────────
-   Mismo lenguaje que los demás desplegables del skin (.sn-menu-list, el
+   Mismo lenguaje que los demás desplegables del skin (.sh-menu-list, el
    autocompletar del buscador): hoja papel, filete, levante suave, hover hundido
    + carmín. Reemplaza el azul #2a4b8d y el negro cableados de la extensión. */
 .userAutocompleteDropdown {
 	width: 100%;
 	display: flex; flex-direction: column;
-	background: var(--sn-paper);
-	border: 1px solid var(--sn-hairline);
-	border-radius: var(--sn-radius);
-	box-shadow: var(--sn-lift-soft);
+	background: var(--sh-paper);
+	border: 1px solid var(--sh-hairline);
+	border-radius: var(--sh-radius);
+	box-shadow: var(--sh-lift-soft);
 	overflow: hidden;
-	font-family: var(--sn-font-text); font-size: var(--sn-fs-sm);
+	font-family: var(--sh-font-text); font-size: var(--sh-fs-sm);
 }
 .userAutocompleteDropdownItem {
 	display: block;
-	padding: var(--sn-s-1) var(--sn-s-2);
-	color: var(--sn-ink);
+	padding: var(--sh-s-1) var(--sh-s-2);
+	color: var(--sh-ink);
 	text-decoration: none;
 }
 .userAutocompleteDropdownItem:hover {
-	background-color: var(--sn-sunk);
-	color: var(--sn-nova);
+	background-color: var(--sh-sunk);
+	color: var(--sh-nova);
 	text-decoration: none;
 }
 
@@ -267,27 +267,27 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 #mw-inlinecomments-addicon {
 	cursor: pointer;
 	display: grid; place-items: center;
-	padding: var(--sn-s-1);
-	background-color: var(--sn-paper);
-	border: 1px solid var(--sn-hairline);
-	border-radius: var(--sn-radius);
-	box-shadow: var(--sn-lift-soft);
-	transition: background-color var(--sn-dur-1) var(--sn-ease), border-color var(--sn-dur-1) var(--sn-ease);
+	padding: var(--sh-s-1);
+	background-color: var(--sh-paper);
+	border: 1px solid var(--sh-hairline);
+	border-radius: var(--sh-radius);
+	box-shadow: var(--sh-lift-soft);
+	transition: background-color var(--sh-dur-1) var(--sh-ease), border-color var(--sh-dur-1) var(--sh-ease);
 }
 #mw-inlinecomments-addicon:hover {
-	background-color: var(--sn-nova-wash);
-	border-color: var(--sn-nova);
+	background-color: var(--sh-nova-wash);
+	border-color: var(--sh-nova);
 }
 #mw-inlinecomments-addicon span { margin: 0; opacity: .7; }
 #mw-inlinecomments-addicon:hover span { opacity: 1; }
 /* El ícono OOUI (speechBubbleAdd) es un SVG oscuro: sobre el papel oscuro se
    pierde. Se invierte en oscuro, mismo patrón que la wikiEditor-ui-toolbar
    (tema explícito + `auto` bajo prefers-color-scheme; en claro no se toca). */
-:root[data-sn-theme="dark"] #mw-inlinecomments-addicon .oo-ui-iconElement-icon:not( .oo-ui-image-invert ) {
+:root[data-sh-theme="dark"] #mw-inlinecomments-addicon .oo-ui-iconElement-icon:not( .oo-ui-image-invert ) {
 	filter: invert( 1 ) brightness( 1.1 );
 }
 @media ( prefers-color-scheme: dark ) {
-	:root[data-sn-theme="auto"] #mw-inlinecomments-addicon .oo-ui-iconElement-icon:not( .oo-ui-image-invert ) {
+	:root[data-sh-theme="auto"] #mw-inlinecomments-addicon .oo-ui-iconElement-icon:not( .oo-ui-image-invert ) {
 		filter: invert( 1 ) brightness( 1.1 );
 	}
 }
@@ -300,37 +300,37 @@ html { scroll-behavior: smooth; }   /* salto suave al navegar a una anotación *
 .mw-inlinecomments-comment-removed,
 .mw-inlinecomments-comment-changed,
 .mw-inlinecomments-comment-unchanged {
-	padding: var(--sn-s-2);
-	margin-bottom: var(--sn-baseline);
+	padding: var(--sh-s-2);
+	margin-bottom: var(--sh-baseline);
 	width: max-content; max-width: 100%;
-	border: 1px solid var(--sn-hairline-soft);
-	border-radius: var(--sn-radius);
-	font-family: var(--sn-font-text); font-size: var(--sn-fs-sm);
+	border: 1px solid var(--sh-hairline-soft);
+	border-radius: var(--sh-radius);
+	font-family: var(--sh-font-text); font-size: var(--sh-fs-sm);
 }
-.mw-inlinecomments-comment-added     { background-color: var(--sn-ok-wash);     float: right; }
-.mw-inlinecomments-comment-removed   { background-color: var(--sn-danger-wash); float: left; }
-.mw-inlinecomments-comment-changed   { background-color: var(--sn-warn-wash);   float: right; }
-.mw-inlinecomments-comment-unchanged { background-color: var(--sn-sunk);        float: left; }
+.mw-inlinecomments-comment-added     { background-color: var(--sh-ok-wash);     float: right; }
+.mw-inlinecomments-comment-removed   { background-color: var(--sh-danger-wash); float: left; }
+.mw-inlinecomments-comment-changed   { background-color: var(--sh-warn-wash);   float: right; }
+.mw-inlinecomments-comment-unchanged { background-color: var(--sh-sunk);        float: left; }
 .mw-inlinecomments-comment-changed-old {
 	text-decoration: line-through;
-	background-color: var(--sn-danger-wash);
+	background-color: var(--sh-danger-wash);
 }
 
 .mw-inlinecomments-diff { display: flex; flex-direction: column; }
 .mw-inlinecomments-diff-target-text {
-	background-color: var(--sn-nova-wash);
-	padding: var(--sn-s-2);
-	border: 1px solid var(--sn-hairline-soft);
-	border-radius: var(--sn-radius);
-	font-family: var(--sn-font-text);
+	background-color: var(--sh-nova-wash);
+	padding: var(--sh-s-2);
+	border: 1px solid var(--sh-hairline-soft);
+	border-radius: var(--sh-radius);
+	font-family: var(--sh-font-text);
 }
 .mw-inlinecomments-diff-username {
-	font-size: var(--sn-fs-xs); font-weight: 600;
-	color: var(--sn-ink-faint);
+	font-size: var(--sh-fs-xs); font-weight: 600;
+	color: var(--sh-ink-faint);
 }
 .mw-inlinecomments-comment-diff { display: flex; flex-direction: row; align-items: center; }
 .mw-inlinecomments-diff-sign {
-	font-size: var(--sn-fs-md);
-	color: var(--sn-ink-faint);
-	margin: 0 var(--sn-s-2) var(--sn-baseline) 0;
+	font-size: var(--sh-fs-md);
+	color: var(--sh-ink-faint);
+	margin: 0 var(--sh-s-2) var(--sh-baseline) 0;
 }

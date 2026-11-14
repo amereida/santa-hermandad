@@ -1,4 +1,4 @@
-# StellAmereida
+# Santa Hermandad
 
 Skin MediaWiki para la wiki [Amereida](http://amereida.cl), construido sobre `SkinMustache` + `skin.json`. Fork de [Stella Nova](https://github.com/hspencer/stella-nova).
 
@@ -7,21 +7,21 @@ Mobile-first, CSS moderno (Grid/Flexbox, light/dark), WCAG 2.1 AA, compatible co
 ## Instalación
 
 ```php
-wfLoadSkin( 'Stellamereida' );
-$wgDefaultSkin = 'stellamereida';
+wfLoadSkin( 'Santa Hermandad' );
+$wgDefaultSkin = 'santa-hermandad';
 ```
 
-Probar sin cambiar el default: `?useskin=stellamereida`.
+Probar sin cambiar el default: `?useskin=santa-hermandad`.
 
-La carpeta puede llamarse `Stellamereida`, `stellamereida` o ser un symlink — las URLs de assets se calculan de la carpeta real.
+La carpeta puede llamarse `Santa Hermandad`, `santa-hermandad` o ser un symlink — las URLs de assets se calculan de la carpeta real.
 
 ## Logo
 
 El skin incrusta el SVG **inline** (no como `<img>`), así se tematiza claro/oscuro con `currentColor`.
 
 ```php
-$wgStellamereidaIsotypePath = '/ruta/absoluta/mi-logo.svg';       // wordmark
-$wgStellamereidaIconPath    = '/ruta/absoluta/mi-icono.svg';      // glifo compacto
+$wgSanta HermandadIsotypePath = '/ruta/absoluta/mi-logo.svg';       // wordmark
+$wgSanta HermandadIconPath    = '/ruta/absoluta/mi-icono.svg';      // glifo compacto
 ```
 
 Sin config usa los bundles en `resources/` (`amereida-cruces.svg`, `casiopea-icon.svg`). El SVG debe ser monocromo (`fill="currentColor"`), fondo transparente, texto como `<path>`. Ver `docs/DISENO.md` para las reglas completas.
@@ -32,8 +32,8 @@ Dos slots se editan como páginas wiki, no en código:
 
 | Slot | Página | Efecto |
 |------|--------|--------|
-| Aviso (cabecera) | `StellAmereida:Aviso` | Banner en todas las páginas |
-| Pie institucional | `StellAmereida:Pie` | Footer del sitio |
+| Aviso (cabecera) | `Santa Hermandad:Aviso` | Banner en todas las páginas |
+| Pie institucional | `Santa Hermandad:Pie` | Footer del sitio |
 
 Si la página está vacía o no existe, el slot no se muestra. Para retirar un aviso, **vacía la página** (no la borres).
 
@@ -42,12 +42,12 @@ Si la página está vacía o no existe, el slot no se muestra. Para retirar un a
 ```php
 define( 'NS_STELLAMEREIDA', 3000 );
 define( 'NS_STELLAMEREIDA_TALK', 3001 );
-$wgExtraNamespaces[NS_STELLAMEREIDA]      = 'StellAmereida';
-$wgExtraNamespaces[NS_STELLAMEREIDA_TALK] = 'StellAmereida_discusión';
+$wgExtraNamespaces[NS_STELLAMEREIDA]      = 'Santa Hermandad';
+$wgExtraNamespaces[NS_STELLAMEREIDA_TALK] = 'Santa Hermandad_discusión';
 $wgNamespaceProtection[NS_STELLAMEREIDA]  = [ 'editinterface' ];
 ```
 
-Sin el namespace, el skin cae a páginas del espacio principal con título literal `StellAmereida:Aviso` (funciona, pero sin protección de escritura).
+Sin el namespace, el skin cae a páginas del espacio principal con título literal `Santa Hermandad:Aviso` (funciona, pero sin protección de escritura).
 
 ## Documentación
 
@@ -57,7 +57,7 @@ Sin el namespace, el skin cae a páginas del espacio principal con título liter
 - [`docs/DISENO.md`](docs/DISENO.md) — guía para diseño visual
 - [`docs/EXTENSIONES.md`](docs/EXTENSIONES.md) — compatibilidad con extensiones
 - [`docs/WIKITEXTO.md`](docs/WIKITEXTO.md) — clases CSS y palabras mágicas para editores
-- [`specs/stellamereida.allium`](specs/stellamereida.allium) — spec de comportamiento
+- [`specs/santa-hermandad.allium`](specs/santa-hermandad.allium) — spec de comportamiento
 
 ## Licencia
 

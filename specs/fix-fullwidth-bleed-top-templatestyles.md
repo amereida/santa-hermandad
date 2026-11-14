@@ -42,7 +42,7 @@ sistema `.full-width`, y este arreglo beneficia a toda plantilla con hero.
 
 ## Cambio
 
-Archivo: `resources/stellamereida.css`, bloque comentado "Bleed vertical de
+Archivo: `resources/santa-hermandad.css`, bloque comentado "Bleed vertical de
 borde" (la regla cuyo cuerpo es `margin-block-start: calc(-1 * var(--sn-paper-py))`
 con los `border-*-radius` y `overflow: hidden`).
 

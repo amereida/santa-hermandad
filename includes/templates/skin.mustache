@@ -1,5 +1,5 @@
 {{!
-	Stellamereida — plantilla raíz. Cumple SkinRenderFidelity: emite TODAS
+	Santa Hermandad — plantilla raíz. Cumple SkinRenderFidelity: emite TODAS
 	las data keys estándar de SkinMustache 1.43 aunque no las estilice, no
 	recorta ni reestructura el HTML de extensiones, y respeta los puntos de
 	inyección (html-after-content, indicadores, catlinks, html-subtitle).
@@ -9,15 +9,15 @@
 	parciales); las interpolaciones con ruta-punto sí son válidas. No poner
 	sintaxis de plantilla dentro de comentarios: el primer cierre la trunca.
 
-	Datos propios (SkinStellamereida::getTemplateData):
-	  is-sn-fullscreen · sn-isotype{href,svg,svg-icon} · sn-identity ·
-	  sn-prefs{…} · sn-chrome{notice,footer}{is-published,html}
+	Datos propios (SkinSantaHermandad::getTemplateData):
+	  is-sh-fullscreen · sh-isotype{href,svg,svg-icon} · sh-identity ·
+	  sh-prefs{…} · sh-chrome{notice,footer}{is-published,html}
 }}
 {{{html-headelement}}}
-<a class="sn-skip" href="#content">{{msg-stellamereida-skip-to-content}}</a>
-{{^is-sn-fullscreen}}<a class="sn-skip" href="#sn-nav">{{msg-stellamereida-skip-to-nav}}</a>{{/is-sn-fullscreen}}
+<a class="sh-skip" href="#content">{{msg-santa-hermandad-skip-to-content}}</a>
+{{^is-sh-fullscreen}}<a class="sh-skip" href="#sh-nav">{{msg-santa-hermandad-skip-to-nav}}</a>{{/is-sh-fullscreen}}
 
-{{#is-sn-fullscreen}}
+{{#is-sh-fullscreen}}
 {{!	ExperimentalCanvas: la página posee el viewport. La única
 	afordancia persistente es el isotipo Casiopea en la esquina
 	superior derecha; al activarse abre un modal único que reúne
@@ -25,22 +25,22 @@
 	Cuenta y Preferencias. Sin "salir de pantalla completa" — el
 	modal mismo es la salida (los enlaces de Portada/Navegación
 	salen del canvas). }}
-<main id="content" class="sn-canvas" tabindex="-1">
-		<div class="sn-md sn-md-fs sn-fs-md">
-			<button type="button" class="sn-fs-trigger" aria-expanded="false"
-				aria-haspopup="dialog" data-sn-menu
-				title="{{msg-stellamereida-menu}}" aria-label="{{msg-stellamereida-menu}}">
-				{{#sn-isotype}}<span class="sn-fs-glyph">{{{svg-icon}}}</span>{{/sn-isotype}}
+<main id="content" class="sh-canvas" tabindex="-1">
+		<div class="sh-md sh-md-fs sh-fs-md">
+			<button type="button" class="sh-fs-trigger" aria-expanded="false"
+				aria-haspopup="dialog" data-sh-menu
+				title="{{msg-santa-hermandad-menu}}" aria-label="{{msg-santa-hermandad-menu}}">
+				{{#sh-isotype}}<span class="sh-fs-glyph">{{{svg-icon}}}</span>{{/sh-isotype}}
 			</button>
-			<div class="sn-menu-list sn-fs-menu" aria-label="{{msg-stellamereida-menu}}">
-				<header class="sn-modal-head">
-					<h2 class="sn-modal-title">{{msg-stellamereida-menu}}</h2>
-					<button type="button" class="sn-modal-x" data-sn-menu-close
-						aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
-						<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
+			<div class="sh-menu-list sh-fs-menu" aria-label="{{msg-santa-hermandad-menu}}">
+				<header class="sh-modal-head">
+					<h2 class="sh-modal-title">{{msg-santa-hermandad-menu}}</h2>
+					<button type="button" class="sh-modal-x" data-sh-menu-close
+						aria-label="{{msg-santa-hermandad-close}}" title="{{msg-santa-hermandad-close}}">
+						<svg class="sh-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sh-i-x"/></svg>
 					</button>
 				</header>
-				<div class="sn-modal-body">
+				<div class="sh-modal-body">
 					{{!	Orden: Buscador (full-row, max-width interno 30em)
 						→ Navegación (con Portada incorporada arriba)
 						→ Esta página → Usuario. En pantallas grandes
@@ -48,15 +48,15 @@
 						atraviesa las 3 como cabecera del modal. }}
 
 					{{#data-search-box}}
-					<section class="sn-fs-sec sn-fs-sec--search" aria-labelledby="sn-fs-h-search">
-						<h3 id="sn-fs-h-search" class="sn-fs-h">{{msg-stellamereida-search}}</h3>
-						<form class="sn-fs-search" role="search" action="{{form-action}}"
+					<section class="sh-fs-sec sh-fs-sec--search" aria-labelledby="sh-fs-h-search">
+						<h3 id="sh-fs-h-search" class="sh-fs-h">{{msg-santa-hermandad-search}}</h3>
+						<form class="sh-fs-search" role="search" action="{{form-action}}"
 							id="searchform" aria-label="{{msg-searchbutton}}">
 							{{{html-input}}}
 							<input type="hidden" name="title" value="{{page-title}}">
-							<button type="submit" class="sn-iconbtn"
+							<button type="submit" class="sh-iconbtn"
 								title="{{msg-searchbutton}}" aria-label="{{msg-searchbutton}}">
-								<svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-search"/></svg>
+								<svg class="sh-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sh-i-search"/></svg>
 							</button>
 						</form>
 					</section>
@@ -66,28 +66,28 @@
 						de los subgrupos del MediaWiki:Sidebar (cada
 						portlet aporta su label como h4 y sus items como
 						enlaces inline-comma). }}
-					<section class="sn-fs-sec" aria-labelledby="sn-fs-h-nav">
-						<h3 id="sn-fs-h-nav" class="sn-fs-h">{{msg-stellamereida-nav}}</h3>
-						<ul class="sn-fs-pills">
-							<li class="mw-list-item"><a href="{{sn-isotype.href}}">{{msg-stellamereida-mainpage}}</a></li>
+					<section class="sh-fs-sec" aria-labelledby="sh-fs-h-nav">
+						<h3 id="sh-fs-h-nav" class="sh-fs-h">{{msg-santa-hermandad-nav}}</h3>
+						<ul class="sh-fs-pills">
+							<li class="mw-list-item"><a href="{{sh-isotype.href}}">{{msg-santa-hermandad-mainpage}}</a></li>
 						</ul>
-						{{#sn-has-sitenav}}
-						{{#sn-sitenav}}
-						<div class="sn-fs-group">
-							{{#label}}<h4 class="sn-fs-subh">{{.}}</h4>{{/label}}
-							<ul class="sn-fs-pills" id="{{id}}">{{{html-items}}}</ul>
+						{{#sh-has-sitenav}}
+						{{#sh-sitenav}}
+						<div class="sh-fs-group">
+							{{#label}}<h4 class="sh-fs-subh">{{.}}</h4>{{/label}}
+							<ul class="sh-fs-pills" id="{{id}}">{{{html-items}}}</ul>
 						</div>
-						{{/sn-sitenav}}
-						{{/sn-has-sitenav}}
+						{{/sh-sitenav}}
+						{{/sh-has-sitenav}}
 					</section>
 
-					<section class="sn-fs-sec" aria-labelledby="sn-fs-h-page">
-						<h3 id="sn-fs-h-page" class="sn-fs-h">{{msg-stellamereida-thispage}}</h3>
-						<ul class="sn-fs-pills">
-							{{#sn-edit}}<li class="mw-list-item"><a href="{{href}}">{{label}}</a></li>{{/sn-edit}}
-							{{#sn-editcode}}<li class="mw-list-item"><a href="{{href}}">{{label}}</a></li>{{/sn-editcode}}
+					<section class="sh-fs-sec" aria-labelledby="sh-fs-h-page">
+						<h3 id="sh-fs-h-page" class="sh-fs-h">{{msg-santa-hermandad-thispage}}</h3>
+						<ul class="sh-fs-pills">
+							{{#sh-edit}}<li class="mw-list-item"><a href="{{href}}">{{label}}</a></li>{{/sh-edit}}
+							{{#sh-editcode}}<li class="mw-list-item"><a href="{{href}}">{{label}}</a></li>{{/sh-editcode}}
 							{{#data-portlets}}{{#data-namespaces}}{{{html-items}}}{{/data-namespaces}}{{/data-portlets}}
-							{{#sn-has-pageviews}}{{#sn-pageviews}}<li id="{{id}}" class="{{class}}">{{{html}}}</li>{{/sn-pageviews}}{{/sn-has-pageviews}}
+							{{#sh-has-pageviews}}{{#sh-pageviews}}<li id="{{id}}" class="{{class}}">{{{html}}}</li>{{/sh-pageviews}}{{/sh-has-pageviews}}
 							{{#data-portlets}}{{#data-actions}}{{{html-items}}}{{/data-actions}}{{/data-portlets}}
 							{{#data-portlets}}{{#data-variants}}{{{html-items}}}{{/data-variants}}{{/data-portlets}}
 						</ul>
@@ -95,27 +95,27 @@
 
 					{{#data-portlets}}
 					{{#data-user-menu}}
-					<section class="sn-fs-sec" aria-labelledby="sn-fs-h-user">
-						<h3 id="sn-fs-h-user" class="sn-fs-h">{{msg-stellamereida-user}}</h3>
-						<ul class="sn-fs-pills" id="{{id}}">{{{html-items}}}</ul>
+					<section class="sh-fs-sec" aria-labelledby="sh-fs-h-user">
+						<h3 id="sh-fs-h-user" class="sh-fs-h">{{msg-santa-hermandad-user}}</h3>
+						<ul class="sh-fs-pills" id="{{id}}">{{{html-items}}}</ul>
 						{{!	Preferencias de lectura (Tema · Tamaño · Familia), las
 							mismas que en el menú de usuario de las páginas normales.
-							skin.js engancha [data-sn-pref] a nivel documento. }}
-						<div class="sn-menu-prefs">
-							<fieldset class="sn-pref">
-								<legend>{{msg-stellamereida-pref-theme}}</legend>
-								<div class="sn-seg sn-seg-icon" role="group" data-sn-pref="theme" data-sn-os="{{sn-prefs.os-scheme}}">
-									<button type="button" data-v="light" title="{{msg-stellamereida-theme-light}}" aria-label="{{msg-stellamereida-theme-light}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-sun"/></svg></button>
-									<button type="button" data-v="auto" title="{{msg-stellamereida-auto}}" aria-label="{{msg-stellamereida-auto}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg></button>
-									<button type="button" data-v="dark" title="{{msg-stellamereida-theme-dark}}" aria-label="{{msg-stellamereida-theme-dark}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-moon"/></svg></button>
+							skin.js engancha [data-sh-pref] a nivel documento. }}
+						<div class="sh-menu-prefs">
+							<fieldset class="sh-pref">
+								<legend>{{msg-santa-hermandad-pref-theme}}</legend>
+								<div class="sh-seg sh-seg-icon" role="group" data-sh-pref="theme" data-sh-os="{{sh-prefs.os-scheme}}">
+									<button type="button" data-v="light" title="{{msg-santa-hermandad-theme-light}}" aria-label="{{msg-santa-hermandad-theme-light}}"><svg class="sh-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sh-i-sun"/></svg></button>
+									<button type="button" data-v="auto" title="{{msg-santa-hermandad-auto}}" aria-label="{{msg-santa-hermandad-auto}}"><svg class="sh-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sh-i-clock"/></svg></button>
+									<button type="button" data-v="dark" title="{{msg-santa-hermandad-theme-dark}}" aria-label="{{msg-santa-hermandad-theme-dark}}"><svg class="sh-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sh-i-moon"/></svg></button>
 								</div>
 							</fieldset>
-							<fieldset class="sn-pref">
-								<legend>{{msg-stellamereida-pref-font}}</legend>
-								<div class="sn-seg sn-seg-sz" role="group" data-sn-pref="font">
-									<button type="button" data-v="small" title="{{msg-stellamereida-sz-s}}" aria-label="{{msg-stellamereida-sz-s}}"><span aria-hidden="true">S</span></button>
-									<button type="button" data-v="medium" title="{{msg-stellamereida-sz-m}}" aria-label="{{msg-stellamereida-sz-m}}"><span aria-hidden="true">M</span></button>
-									<button type="button" data-v="large" title="{{msg-stellamereida-sz-l}}" aria-label="{{msg-stellamereida-sz-l}}"><span aria-hidden="true">L</span></button>
+							<fieldset class="sh-pref">
+								<legend>{{msg-santa-hermandad-pref-font}}</legend>
+								<div class="sh-seg sh-seg-sz" role="group" data-sh-pref="font">
+									<button type="button" data-v="small" title="{{msg-santa-hermandad-sz-s}}" aria-label="{{msg-santa-hermandad-sz-s}}"><span aria-hidden="true">S</span></button>
+									<button type="button" data-v="medium" title="{{msg-santa-hermandad-sz-m}}" aria-label="{{msg-santa-hermandad-sz-m}}"><span aria-hidden="true">M</span></button>
+									<button type="button" data-v="large" title="{{msg-santa-hermandad-sz-l}}" aria-label="{{msg-santa-hermandad-sz-l}}"><span aria-hidden="true">L</span></button>
 								</div>
 							</fieldset>
 						</div>
@@ -126,54 +126,54 @@
 			</div>
 		</div>
 
-	{{!	El wrapper del cuerpo lleva además `.sn-body` y `.mw-body-content`
+	{{!	El wrapper del cuerpo lleva además `.sh-body` y `.mw-body-content`
 		para heredar TODOS los estilos editoriales del skin (tablas,
 		listas, .plantilla, poem, blockquote, TOC, etc.) sin duplicar
-		selectores con `.sn-canvas-body`.
+		selectores con `.sh-canvas-body`.
 		El título se muestra salvo que la página declare __NOTITLE__
 		(pantalla completa ya NO lo implica). Cuando se omite, el contenido
 		—p. ej. un hero `.full-width`— vuelve a ser el primer hijo y conserva
 		su bleed a tope. }}
-	<div class="sn-canvas-body sn-body mw-body-content">
-		{{^sn-notitle}}{{{html-title-heading}}}{{/sn-notitle}}
+	<div class="sh-canvas-body sh-body mw-body-content">
+		{{^sh-notitle}}{{{html-title-heading}}}{{/sh-notitle}}
 		{{{html-body-content}}}
 	</div>
 
 	{{!	Pie de pantalla completa — sobre el MISMO papel, alineado a la
 		IZQUIERDA con el margen básico del canvas (sin ancho de lectura, igual
 		que el contenido libre). Una sola columna. Sin "última edición"
-		ni columna derecha (StellAmereida:Pie). Herramientas en un desplegable
+		ni columna derecha (Santa Hermandad:Pie). Herramientas en un desplegable
 		discreto (<details>), luego enlaces de sitio y licencia. }}
-	<footer class="sn-fs-footer" role="contentinfo">
-		<div class="sn-fs-footer-inner">
+	<footer class="sh-fs-footer" role="contentinfo">
+		<div class="sh-fs-footer-inner">
 			{{!	"Herramientas" — IDÉNTICO al pie normal: el <details> es solo el
 				toggle; la lista revelada va fuera, como hermana, y al abrir asoma
 				en una fila propia ARRIBA, empujando la línea hacia abajo. }}
-			<div class="sn-foot-line">
-				{{#sn-toolbox}}{{^is-empty}}
-				<details class="sn-foot-tools-dd">
-					<summary class="sn-foot-tools-summary" aria-controls="{{id}}">
-						<svg class="sn-i sn-foot-tools-plus" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sn-i-plus"/></svg>
-						<svg class="sn-i sn-foot-tools-up" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sn-i-arrow-up"/></svg>
-						{{msg-stellamereida-tools}}
+			<div class="sh-foot-line">
+				{{#sh-toolbox}}{{^is-empty}}
+				<details class="sh-foot-tools-dd">
+					<summary class="sh-foot-tools-summary" aria-controls="{{id}}">
+						<svg class="sh-i sh-foot-tools-plus" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sh-i-plus"/></svg>
+						<svg class="sh-i sh-foot-tools-up" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sh-i-arrow-up"/></svg>
+						{{msg-santa-hermandad-tools}}
 					</summary>
 				</details>
-				<ul class="sn-foot-toollist" id="{{id}}">{{{html-items}}}</ul>
-				{{/is-empty}}{{/sn-toolbox}}
+				<ul class="sh-foot-toollist" id="{{id}}">{{{html-items}}}</ul>
+				{{/is-empty}}{{/sh-toolbox}}
 
-				{{#data-footer}}{{#data-places}}<ul class="sn-foot-places" id="{{id}}">{{#array-items}}<li id="{{id}}">{{{html}}}</li>{{/array-items}}</ul>{{/data-places}}{{/data-footer}}
+				{{#data-footer}}{{#data-places}}<ul class="sh-foot-places" id="{{id}}">{{#array-items}}<li id="{{id}}">{{{html}}}</li>{{/array-items}}</ul>{{/data-places}}{{/data-footer}}
 			</div>
 
-			{{#sn-license}}<p class="sn-foot-license">{{{html}}}</p>{{/sn-license}}
+			{{#sh-license}}<p class="sh-foot-license">{{{html}}}</p>{{/sh-license}}
 		</div>
 	</footer>
 </main>
-{{/is-sn-fullscreen}}
+{{/is-sh-fullscreen}}
 
-{{^is-sn-fullscreen}}
-<div class="sn-app">
-	<header class="sn-header" role="banner">
-		<div class="sn-header-bar">
+{{^is-sh-fullscreen}}
+<div class="sh-app">
+	<header class="sh-header" role="banner">
+		<div class="sh-header-bar">
 			{{!	Marca + navegación, juntas a la izquierda: el isotipo
 				(logotipo "Casiopea" + constelación, SVG colorizable →
 				portada; el wordmark va dentro, sin texto aparte) pegado al
@@ -181,67 +181,67 @@
 				DOS variantes inline: el wordmark (desktop) y el glifo
 				cuadrado compacto (mobile); CSS decide cuál se muestra
 				según el viewport — mismo enlace, misma etiqueta. }}
-			<div class="sn-brandnav">
-				<a class="sn-isotype" href="{{sn-isotype.href}}"
-					aria-label="{{msg-stellamereida-home}}" title="{{msg-stellamereida-home}}">
-					{{#sn-isotype}}<span class="sn-isotype-full">{{{svg}}}</span><span class="sn-isotype-compact">{{{svg-icon}}}</span>{{/sn-isotype}}
+			<div class="sh-brandnav">
+				<a class="sh-isotype" href="{{sh-isotype.href}}"
+					aria-label="{{msg-santa-hermandad-home}}" title="{{msg-santa-hermandad-home}}">
+					{{#sh-isotype}}<span class="sh-isotype-full">{{{svg}}}</span><span class="sh-isotype-compact">{{{svg-icon}}}</span>{{/sh-isotype}}
 				</a>
 
 				{{!	Navegación del SITIO (Escuela/Wiki/Navegación…). La caja
 					de herramientas ("Herramientas y más") vive en el pie. }}
-				{{#sn-has-sitenav}}
-				<nav class="sn-md sn-sitenav" id="sn-nav" tabindex="-1" aria-label="{{msg-stellamereida-nav}}">
-					<button type="button" class="sn-md-trigger sn-md-icononly" aria-expanded="false"
-						aria-haspopup="true" data-sn-menu
-						title="{{msg-stellamereida-nav}}" aria-label="{{msg-stellamereida-nav}}">
-						<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-menu"/></svg>
-						<svg class="sn-i sn-md-caret" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><use href="#sn-i-chevron-down"/></svg>
+				{{#sh-has-sitenav}}
+				<nav class="sh-md sh-sitenav" id="sh-nav" tabindex="-1" aria-label="{{msg-santa-hermandad-nav}}">
+					<button type="button" class="sh-md-trigger sh-md-icononly" aria-expanded="false"
+						aria-haspopup="true" data-sh-menu
+						title="{{msg-santa-hermandad-nav}}" aria-label="{{msg-santa-hermandad-nav}}">
+						<svg class="sh-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sh-i-menu"/></svg>
+						<svg class="sh-i sh-md-caret" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><use href="#sh-i-chevron-down"/></svg>
 					</button>
-					<div class="sn-menu-list sn-megamenu" aria-label="{{msg-stellamereida-sidebar}}">
-						<header class="sn-modal-head">
-							<h2 class="sn-modal-title">{{msg-stellamereida-nav}}</h2>
-							<button type="button" class="sn-modal-x" data-sn-menu-close
-								aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
-								<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
+					<div class="sh-menu-list sh-megamenu" aria-label="{{msg-santa-hermandad-sidebar}}">
+						<header class="sh-modal-head">
+							<h2 class="sh-modal-title">{{msg-santa-hermandad-nav}}</h2>
+							<button type="button" class="sh-modal-x" data-sh-menu-close
+								aria-label="{{msg-santa-hermandad-close}}" title="{{msg-santa-hermandad-close}}">
+								<svg class="sh-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sh-i-x"/></svg>
 							</button>
 						</header>
-						<div class="sn-modal-body">
-							{{#sn-sitenav}}
-							<section class="sn-mm-sec">
-								{{#label}}<h2 class="sn-mm-h">{{.}}</h2>{{/label}}
+						<div class="sh-modal-body">
+							{{#sh-sitenav}}
+							<section class="sh-mm-sec">
+								{{#label}}<h2 class="sh-mm-h">{{.}}</h2>{{/label}}
 								<ul id="{{id}}">{{{html-items}}}</ul>
 							</section>
-							{{/sn-sitenav}}
+							{{/sh-sitenav}}
 						</div>
 					</div>
 				</nav>
-				{{/sn-has-sitenav}}
+				{{/sh-has-sitenav}}
 			</div>
 
 			{{!	Buscador. Desktop: input visible inline. Compact viewport:
 				el input se oculta y aparece un trigger (lupa) que abre el
 				mismo form como modal (spec TransientPanel) — el input y
 				el submit son los MISMOS, no duplicados. JS marca
-				data-sn-search-open en <html> para presentar como modal. }}
+				data-sh-search-open en <html> para presentar como modal. }}
 			{{#data-search-box}}
-			<div class="sn-searchbox">
-				<button type="button" class="sn-search-trigger sn-iconbtn"
-					data-sn-search-open aria-expanded="false"
+			<div class="sh-searchbox">
+				<button type="button" class="sh-search-trigger sh-iconbtn"
+					data-sh-search-open aria-expanded="false"
 					aria-haspopup="dialog" aria-controls="searchform"
 					title="{{msg-searchbutton}}" aria-label="{{msg-searchbutton}}">
-					<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-search"/></svg>
+					<svg class="sh-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sh-i-search"/></svg>
 				</button>
-				<form class="sn-search" role="search" action="{{form-action}}" id="searchform"
+				<form class="sh-search" role="search" action="{{form-action}}" id="searchform"
 					aria-label="{{msg-searchbutton}}">
-					<button type="button" class="sn-search-close" data-sn-search-close
-						aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
-						<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
+					<button type="button" class="sh-search-close" data-sh-search-close
+						aria-label="{{msg-santa-hermandad-close}}" title="{{msg-santa-hermandad-close}}">
+						<svg class="sh-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sh-i-x"/></svg>
 					</button>
 					{{{html-input}}}
 					<input type="hidden" name="title" value="{{page-title}}">
-					<button type="submit" class="sn-search-go"
+					<button type="submit" class="sh-search-go"
 						title="{{msg-searchbutton}}" aria-label="{{msg-searchbutton}}">
-						<svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-search"/></svg>
+						<svg class="sh-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sh-i-search"/></svg>
 					</button>
 				</form>
 			</div>
@@ -253,47 +253,47 @@
 				menú colapsable con el resto (espacios/Discusión, vistas
 				restantes, acciones, variantes). El disparador del menú es
 				solo ícono + chevron (la palabra "Página" pasa a tooltip). }}
-			<div class="sn-pagecluster">
+			<div class="sh-pagecluster">
 				{{!	UN botón Editar (lápiz), antes del menú. href ya resuelto
 					en PHP: formulario si la página tiene uno, clásico si no. }}
-				{{#sn-edit}}
-				<a class="sn-iconbtn" href="{{href}}" data-sn-quick
+				{{#sh-edit}}
+				<a class="sh-iconbtn" href="{{href}}" data-sh-quick
 					title="{{label}}" aria-label="{{label}}">
-					<svg class="sn-i" aria-hidden="true" width="19" height="19" viewBox="0 0 24 24"><use href="#sn-i-edit"/></svg>
+					<svg class="sh-i" aria-hidden="true" width="19" height="19" viewBox="0 0 24 24"><use href="#sh-i-edit"/></svg>
 				</a>
-				{{/sn-edit}}
+				{{/sh-edit}}
 
-				<nav class="sn-md sn-pagemenu" aria-label="{{msg-stellamereida-pagetools}}">
-					<button type="button" class="sn-md-trigger sn-md-icononly"
-						aria-expanded="false" aria-haspopup="true" data-sn-menu
-						title="{{msg-stellamereida-page}}" aria-label="{{msg-stellamereida-pagetools}}">
-						<svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-file"/></svg>
-						<svg class="sn-i sn-md-caret" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><use href="#sn-i-chevron-down"/></svg>
+				<nav class="sh-md sh-pagemenu" aria-label="{{msg-santa-hermandad-pagetools}}">
+					<button type="button" class="sh-md-trigger sh-md-icononly"
+						aria-expanded="false" aria-haspopup="true" data-sh-menu
+						title="{{msg-santa-hermandad-page}}" aria-label="{{msg-santa-hermandad-pagetools}}">
+						<svg class="sh-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sh-i-file"/></svg>
+						<svg class="sh-i sh-md-caret" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24"><use href="#sh-i-chevron-down"/></svg>
 					</button>
-					<div class="sn-menu-list">
-						<header class="sn-modal-head">
-							<h2 class="sn-modal-title">{{msg-stellamereida-pagetools}}</h2>
-							<button type="button" class="sn-modal-x" data-sn-menu-close
-								aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
-								<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
+					<div class="sh-menu-list">
+						<header class="sh-modal-head">
+							<h2 class="sh-modal-title">{{msg-santa-hermandad-pagetools}}</h2>
+							<button type="button" class="sh-modal-x" data-sh-menu-close
+								aria-label="{{msg-santa-hermandad-close}}" title="{{msg-santa-hermandad-close}}">
+								<svg class="sh-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sh-i-x"/></svg>
 							</button>
 						</header>
-						<div class="sn-modal-body">
+						<div class="sh-modal-body">
 							{{!	"Editar código" (editor clásico) solo cuando la
 								página tiene formulario asociado. }}
-							{{#sn-editcode}}
-							<ul class="sn-mm-grp"><li class="mw-list-item"><a href="{{href}}">
-								<svg class="sn-i" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24"><use href="#sn-i-file"/></svg>
+							{{#sh-editcode}}
+							<ul class="sh-mm-grp"><li class="mw-list-item"><a href="{{href}}">
+								<svg class="sh-i" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24"><use href="#sh-i-file"/></svg>
 								{{label}}
 							</a></li></ul>
-							{{/sn-editcode}}
+							{{/sh-editcode}}
 							{{#data-portlets}}
-							{{#data-namespaces}}<ul class="sn-mm-grp" id="{{id}}">{{{html-items}}}</ul>{{/data-namespaces}}
+							{{#data-namespaces}}<ul class="sh-mm-grp" id="{{id}}">{{{html-items}}}</ul>{{/data-namespaces}}
 							{{/data-portlets}}
-							{{#sn-has-pageviews}}<ul class="sn-mm-grp">{{#sn-pageviews}}<li id="{{id}}" class="{{class}}">{{{html}}}</li>{{/sn-pageviews}}</ul>{{/sn-has-pageviews}}
+							{{#sh-has-pageviews}}<ul class="sh-mm-grp">{{#sh-pageviews}}<li id="{{id}}" class="{{class}}">{{{html}}}</li>{{/sh-pageviews}}</ul>{{/sh-has-pageviews}}
 							{{#data-portlets}}
-							{{#data-actions}}<ul class="sn-mm-grp" id="{{id}}">{{{html-items}}}</ul>{{/data-actions}}
-							{{#data-variants}}<ul class="sn-mm-grp" id="{{id}}">{{{html-items}}}</ul>{{/data-variants}}
+							{{#data-actions}}<ul class="sh-mm-grp" id="{{id}}">{{{html-items}}}</ul>{{/data-actions}}
+							{{#data-variants}}<ul class="sh-mm-grp" id="{{id}}">{{{html-items}}}</ul>{{/data-variants}}
 							{{/data-portlets}}
 						</div>
 					</div>
@@ -301,53 +301,53 @@
 			</div>
 
 			{{!	Herramientas del usuario (tri-estado; core decide el set) }}
-			<div class="sn-usertools">
-				{{#sn-prefs}}{{#is-temporary}}
-				<span class="sn-tempbadge" title="{{msg-stellamereida-temp-account}}">
-					<svg class="sn-i" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg>
+			<div class="sh-usertools">
+				{{#sh-prefs}}{{#is-temporary}}
+				<span class="sh-tempbadge" title="{{msg-santa-hermandad-temp-account}}">
+					<svg class="sh-i" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24"><use href="#sh-i-clock"/></svg>
 				</span>
-				{{/is-temporary}}{{/sn-prefs}}
+				{{/is-temporary}}{{/sh-prefs}}
 
 				{{#data-portlets}}
 				{{#data-notifications}}
-				<nav class="sn-notif" aria-label="{{label}}">{{{html-items}}}</nav>
+				<nav class="sh-notif" aria-label="{{label}}">{{{html-items}}}</nav>
 				{{/data-notifications}}
 				{{#data-user-menu}}
-				<div class="sn-md sn-usermenu">
-					<button type="button" class="sn-usermenu-trigger" aria-expanded="false"
-						aria-haspopup="true" data-sn-menu
+				<div class="sh-md sh-usermenu">
+					<button type="button" class="sh-usermenu-trigger" aria-expanded="false"
+						aria-haspopup="true" data-sh-menu
 						aria-label="{{label}}" title="{{label}}">
-						<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-user"/></svg>
+						<svg class="sh-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sh-i-user"/></svg>
 					</button>
-					<div class="sn-menu-list">
-						<header class="sn-modal-head">
-							<h2 class="sn-modal-title">{{label}}</h2>
-							<button type="button" class="sn-modal-x" data-sn-menu-close
-								aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
-								<svg class="sn-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
+					<div class="sh-menu-list">
+						<header class="sh-modal-head">
+							<h2 class="sh-modal-title">{{label}}</h2>
+							<button type="button" class="sh-modal-x" data-sh-menu-close
+								aria-label="{{msg-santa-hermandad-close}}" title="{{msg-santa-hermandad-close}}">
+								<svg class="sh-i" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><use href="#sh-i-x"/></svg>
 							</button>
 						</header>
-						<div class="sn-modal-body">
-							<ul class="sn-menu-items" id="{{id}}">{{{html-items}}}</ul>
+						<div class="sh-modal-body">
+							<ul class="sh-menu-items" id="{{id}}">{{{html-items}}}</ul>
 							{{!	Preferencias de lectura — antes panel aparte; ahora
 								apéndice del menú de usuario tras un separador: sólo
 								Tema (claro/auto/oscuro) y Tamaño de letra. }}
-							<hr class="sn-menu-sep">
-							<div class="sn-menu-prefs">
-								<fieldset class="sn-pref">
-									<legend>{{msg-stellamereida-pref-theme}}</legend>
-									<div class="sn-seg sn-seg-icon" role="group" data-sn-pref="theme" data-sn-os="{{sn-prefs.os-scheme}}">
-										<button type="button" data-v="light" title="{{msg-stellamereida-theme-light}}" aria-label="{{msg-stellamereida-theme-light}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-sun"/></svg></button>
-										<button type="button" data-v="auto" title="{{msg-stellamereida-auto}}" aria-label="{{msg-stellamereida-auto}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-clock"/></svg></button>
-										<button type="button" data-v="dark" title="{{msg-stellamereida-theme-dark}}" aria-label="{{msg-stellamereida-theme-dark}}"><svg class="sn-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sn-i-moon"/></svg></button>
+							<hr class="sh-menu-sep">
+							<div class="sh-menu-prefs">
+								<fieldset class="sh-pref">
+									<legend>{{msg-santa-hermandad-pref-theme}}</legend>
+									<div class="sh-seg sh-seg-icon" role="group" data-sh-pref="theme" data-sh-os="{{sh-prefs.os-scheme}}">
+										<button type="button" data-v="light" title="{{msg-santa-hermandad-theme-light}}" aria-label="{{msg-santa-hermandad-theme-light}}"><svg class="sh-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sh-i-sun"/></svg></button>
+										<button type="button" data-v="auto" title="{{msg-santa-hermandad-auto}}" aria-label="{{msg-santa-hermandad-auto}}"><svg class="sh-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sh-i-clock"/></svg></button>
+										<button type="button" data-v="dark" title="{{msg-santa-hermandad-theme-dark}}" aria-label="{{msg-santa-hermandad-theme-dark}}"><svg class="sh-i" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24"><use href="#sh-i-moon"/></svg></button>
 									</div>
 								</fieldset>
-								<fieldset class="sn-pref">
-									<legend>{{msg-stellamereida-pref-font}}</legend>
-									<div class="sn-seg sn-seg-sz" role="group" data-sn-pref="font">
-										<button type="button" data-v="small" title="{{msg-stellamereida-sz-s}}" aria-label="{{msg-stellamereida-sz-s}}"><span aria-hidden="true">S</span></button>
-										<button type="button" data-v="medium" title="{{msg-stellamereida-sz-m}}" aria-label="{{msg-stellamereida-sz-m}}"><span aria-hidden="true">M</span></button>
-										<button type="button" data-v="large" title="{{msg-stellamereida-sz-l}}" aria-label="{{msg-stellamereida-sz-l}}"><span aria-hidden="true">L</span></button>
+								<fieldset class="sh-pref">
+									<legend>{{msg-santa-hermandad-pref-font}}</legend>
+									<div class="sh-seg sh-seg-sz" role="group" data-sh-pref="font">
+										<button type="button" data-v="small" title="{{msg-santa-hermandad-sz-s}}" aria-label="{{msg-santa-hermandad-sz-s}}"><span aria-hidden="true">S</span></button>
+										<button type="button" data-v="medium" title="{{msg-santa-hermandad-sz-m}}" aria-label="{{msg-santa-hermandad-sz-m}}"><span aria-hidden="true">M</span></button>
+										<button type="button" data-v="large" title="{{msg-santa-hermandad-sz-l}}" aria-label="{{msg-santa-hermandad-sz-l}}"><span aria-hidden="true">L</span></button>
 									</div>
 								</fieldset>
 							</div>
@@ -360,27 +360,27 @@
 		</div>
 	</header>
 
-	<div class="sn-shell">
-		<div class="sn-paper-wrap">
-			<article class="sn-paper mw-body">
-				{{!	Aviso gestionado (StellAmereida:Aviso): lo PRIMERO dentro de la
+	<div class="sh-shell">
+		<div class="sh-paper-wrap">
+			<article class="sh-paper mw-body">
+				{{!	Aviso gestionado (Santa Hermandad:Aviso): lo PRIMERO dentro de la
 					hoja, full-bleed a los bordes del papel (niega el padding con
-					los mismos --sn-paper-px/py que usa .full-width), fondo
-					--sn-warn, con botón de cerrar. El pre-pintado (Hooks) ya fijó
-					data-sn-notice-hide en <html> si esta versión ya se descartó,
-					así que no parpadea. data-sn-notice = id de revisión: al editar
+					los mismos --sh-paper-px/py que usa .full-width), fondo
+					--sh-warn, con botón de cerrar. El pre-pintado (Hooks) ya fijó
+					data-sh-notice-hide en <html> si esta versión ya se descartó,
+					así que no parpadea. data-sh-notice = id de revisión: al editar
 					el aviso, reaparece aunque se hubiera cerrado antes. }}
-				{{#sn-chrome}}{{#notice}}{{#is-published}}
-				<aside class="sn-notice" role="note" data-sn-notice="{{version}}">
-					<div class="sn-notice-body">{{{html}}}</div>
-					<button type="button" class="sn-notice-x" data-sn-notice-close
-						aria-label="{{msg-stellamereida-close}}" title="{{msg-stellamereida-close}}">
-						<svg class="sn-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sn-i-x"/></svg>
+				{{#sh-chrome}}{{#notice}}{{#is-published}}
+				<aside class="sh-notice" role="note" data-sh-notice="{{version}}">
+					<div class="sh-notice-body">{{{html}}}</div>
+					<button type="button" class="sh-notice-x" data-sh-notice-close
+						aria-label="{{msg-santa-hermandad-close}}" title="{{msg-santa-hermandad-close}}">
+						<svg class="sh-i" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><use href="#sh-i-x"/></svg>
 					</button>
 				</aside>
-				{{/is-published}}{{/notice}}{{/sn-chrome}}
+				{{/is-published}}{{/notice}}{{/sh-chrome}}
 
-				<div class="sn-indicators mw-indicators">
+				<div class="sh-indicators mw-indicators">
 					{{#array-indicators}}<div id="{{id}}" class="mw-indicator">{{{html}}}</div>{{/array-indicators}}
 				</div>
 
@@ -389,13 +389,13 @@
 				{{{html-title-heading}}}
 
 				{{!	Sin scaffolding decorativo (ni tagline "De Casiopea" ni caja
-					.sn-subhead). Se emiten SOLO las inyecciones de core que el
+					.sh-subhead). Se emiten SOLO las inyecciones de core que el
 					contrato de fidelidad exige: html-subtitle (avisos de
 					redirección/contexto) y el enlace de restaurar. Vacíos no
 					insertan nada visible (:empty → display:none). #contentSub
 					se conserva por compatibilidad con gadgets/scripts. }}
-				<div id="contentSub" class="sn-subtitle"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
-				<div id="contentSub2" class="sn-subtitle">{{{html-undelete-link}}}</div>
+				<div id="contentSub" class="sh-subtitle"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
+				<div id="contentSub2" class="sh-subtitle">{{{html-undelete-link}}}</div>
 
 				{{{html-user-message}}}
 
@@ -404,7 +404,7 @@
 					skin solo lo ESTILIZA in situ (.mw-parser-output .toc),
 					respetando la ubicación del magic word. }}
 
-				<div id="content" class="sn-body mw-body-content" tabindex="-1">
+				<div id="content" class="sh-body mw-body-content" tabindex="-1">
 					{{{html-body-content}}}
 				</div>
 
@@ -416,63 +416,53 @@
 	{{!	Pie — dos columnas (2fr 1fr):
 		COLUMNA ANCHA (izq):
 		  1. Última edición: "Esta página se editó por última vez el … a las
-		     … por <Usuario>" (sn-lastedit, derivado en PHP).
+		     … por <Usuario>" (sh-lastedit, derivado en PHP).
 		  2. Enlaces de "Herramientas y más" (portlet tb) SIN título: inline,
 		     en rojo, nav-pill al hover.
 		COLUMNA ANGOSTA (der):
 		  3. Enlaces de sitio inline: privacidad · acerca · descargos
 		     (data-places).
-		  4. Bloque institucional editable (StellAmereida:Pie), debajo.
-		La obligación core de "última edición" la cumple sn-lastedit; los
+		  4. Bloque institucional editable (Santa Hermandad:Pie), debajo.
+		La obligación core de "última edición" la cumple sh-lastedit; los
 		enlaces de sitio (data-places) siempre presentes. Los logos
 		"powered-by" (data-icons) se omiten a propósito. La navegación del
 		sitio (Escuela/Wiki/Navegación) vive en su menú del header, no aquí. }}
-	<footer class="sn-footer" role="contentinfo">
-		<div class="sn-footer-inner">
-			{{!	Columna ancha — última edición + herramientas (colapsables) + enlaces de sitio. }}
-			<div class="sn-footer-col sn-footer-main">
-				{{#sn-lastedit}}<p class="sn-foot-lastedit">{{{html}}}</p>{{/sn-lastedit}}
-
-				{{!	Herramientas — disclosure NATIVO (<details>, sin JS). El <details>
-					es SOLO el toggle (summary); la lista revelada vive FUERA, como
-					hermana inmediata, para poder ocupar una fila propia ARRIBA a todo
-					el ancho mientras "Herramientas" queda inline con los enlaces de
-					sitio (un <details> no puede partir summary y contenido en celdas
-					distintas del grid). Mismo patrón EXACTO que el pie de pantalla
-					completa. Ver .sn-foot-line en el CSS. }}
-				<div class="sn-foot-line">
-					{{#sn-toolbox}}{{^is-empty}}
-					<details class="sn-foot-tools-dd">
-						<summary class="sn-foot-tools-summary" aria-controls="{{id}}">
-							<svg class="sn-i sn-foot-tools-plus" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sn-i-plus"/></svg>
-							<svg class="sn-i sn-foot-tools-up" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sn-i-arrow-up"/></svg>
-							{{msg-stellamereida-tools}}
-						</summary>
-					</details>
-					<ul class="sn-foot-toollist" id="{{id}}">{{{html-items}}}</ul>
-					{{/is-empty}}{{/sn-toolbox}}
-
-					{{#data-footer}}{{#data-places}}<ul class="sn-foot-places" id="{{id}}">{{#array-items}}<li id="{{id}}">{{{html}}}</li>{{/array-items}}</ul>{{/data-places}}{{/data-footer}}
-				</div>
-
-				{{!	Licencia de la wiki (copyright de core, $wgRights*), tras los enlaces de sitio. }}
-				{{#sn-license}}<p class="sn-foot-license">{{{html}}}</p>{{/sn-license}}
+	<footer class="sh-footer" role="contentinfo">
+		<div class="sh-footer-inner">
+			{{!	Columna angosta (izq) — bloque editable (Santa Hermandad:Pie). }}
+			<div class="sh-footer-col sh-footer-side" {{{html-user-language-attributes}}}>
+				{{#sh-chrome}}{{#footer}}{{#is-published}}
+				<section class="sh-footer-managed" aria-label="{{msg-sitetitle}}">{{{html}}}</section>
+				{{/is-published}}{{/footer}}{{/sh-chrome}}
 			</div>
 
-			{{!	Columna angosta — bloque editable (StellAmereida:Pie). }}
-			<div class="sn-footer-col sn-footer-side" {{{html-user-language-attributes}}}>
-				{{#sn-chrome}}{{#footer}}{{#is-published}}
-				<section class="sn-footer-managed" aria-label="{{msg-sitetitle}}">{{{html}}}</section>
-				{{/is-published}}{{/footer}}{{/sn-chrome}}
+			{{!	Columna ancha (der) — herramientas + enlaces de sitio + última edición, todo en línea. }}
+			<div class="sh-footer-col sh-footer-main">
+				<div class="sh-foot-line">
+					{{#sh-toolbox}}{{^is-empty}}
+					<details class="sh-foot-tools-dd">
+						<summary class="sh-foot-tools-summary" aria-controls="{{id}}">
+							<svg class="sh-i sh-foot-tools-plus" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sh-i-plus"/></svg>
+							<svg class="sh-i sh-foot-tools-up" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24"><use href="#sh-i-arrow-up"/></svg>
+							{{msg-santa-hermandad-tools}}
+						</summary>
+					</details>
+					<ul class="sh-foot-toollist" id="{{id}}">{{{html-items}}}</ul>
+					{{/is-empty}}{{/sh-toolbox}}
+
+					{{#data-footer}}{{#data-places}}<ul class="sh-foot-places" id="{{id}}">{{#array-items}}<li id="{{id}}">{{{html}}}</li>{{/array-items}}</ul>{{/data-places}}{{/data-footer}}
+
+					{{#sh-lastedit}}<p class="sh-foot-lastedit">{{{html}}}</p>{{/sh-lastedit}}
+				</div>
 			</div>
 		</div>
 	</footer>
 </div>
 
-{{/is-sn-fullscreen}}
+{{/is-sh-fullscreen}}
 
 {{{html-after-content}}}
 {{{html-printtail}}}
-{{>SnIcons}}
+{{>ShIcons}}
 </body>
 </html>

@@ -1,13 +1,13 @@
 /* ============================================================
- * skinStyles/easytimeline.css — Stellamereida
+ * skinStyles/easytimeline.css — Santa Hermandad
  * 
  * Snapshot inicial del CSS de la extensión EasyTimeline (Timeline)
  * versión ?, licencia upstream: GPL-2.0-only.
  * Capturado el 2026-05-19 desde EasyTimeline/extension.json para
- * absorber los estilos dentro del sistema visual de Stellamereida.
+ * absorber los estilos dentro del sistema visual de Santa Hermandad.
  * 
  * Estos bloques se reescribirán gradualmente usando los tokens del
- * skin (var(--sn-...)). Mientras tanto, sirven como referencia
+ * skin (var(--sh-...)). Mientras tanto, sirven como referencia
  * exacta de lo que la extensión inyecta hoy.
  * 
  * Cargado vía ResourceModuleSkinStyles en skin.json con prefijo `+`,

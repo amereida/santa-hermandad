@@ -1,13 +1,13 @@
 /* ============================================================
- * skinStyles/wikieditor.css — Stellamereida
+ * skinStyles/wikieditor.css — Santa Hermandad
  * 
  * Snapshot inicial del CSS de la extensión WikiEditor
  * versión 0.5.4, licencia upstream: GPL-2.0-or-later.
  * Capturado el 2026-05-19 desde WikiEditor/extension.json para
- * absorber los estilos dentro del sistema visual de Stellamereida.
+ * absorber los estilos dentro del sistema visual de Santa Hermandad.
  * 
  * Estos bloques se reescribirán gradualmente usando los tokens del
- * skin (var(--sn-...)). Mientras tanto, sirven como referencia
+ * skin (var(--sh-...)). Mientras tanto, sirven como referencia
  * exacta de lo que la extensión inyecta hoy.
  * 
  * Cargado vía ResourceModuleSkinStyles en skin.json con prefijo `+`,
@@ -59,13 +59,13 @@ form#editform {
 	margin-top: 2.062em;
 }
 
-/* ─── Tema Stellamereida para el WikiEditor ───────────────────────────
+/* ─── Tema Santa Hermandad para el WikiEditor ───────────────────────────
  * El módulo `ext.wikiEditor` hardcodea superficies claras (#fff, #ccc,
  * #f9f9f9, #222, #0645ad) en el frame, la toolbar, las tabs y los
  * tool-selects. En modo oscuro esa cromática NO voltea (no usa
  * --codex-* ni tokens) y el editor queda como un islote claro sobre
  * la chrome oscura. Reemplazamos esas superficies por tokens del skin
- * para que voltee con `--sn-paper`/`--sn-sunk`/`--sn-ink`. Como este
+ * para que voltee con `--sh-paper`/`--sh-sunk`/`--sh-ink`. Como este
  * archivo se carga con prefijo `+` en skin.json, llega DESPUÉS del
  * CSS de la extensión y gana por orden de fuente sin necesidad de
  * `!important`. */
@@ -76,64 +76,64 @@ form#editform {
    `+ext.wikiEditor.styles`. Con la MISMA especificidad, core ganaba por
    orden de fuente → por eso sobrevivían en oscuro sus azules `#0645ad`,
    sus negros `#222` y sus bordes `#ccc`. Prefijamos cada regla con
-   `.skin-stellamereida` (clase del <body> con el skin activo) para subir +1
+   `.skin-santa-hermandad` (clase del <body> con el skin activo) para subir +1
    clase y ganar SIEMPRE, sin depender del orden de carga.
    Convenciones de esta sección:
-     · bordes  → --sn-hairline (el filete coherente de .editOptions)
-     · acentos/links → --sn-nova (decisión 2026-06-02: el azul de
-       --sn-link queda para enlaces de CONTENIDO; el cromo del editor
+     · bordes  → --sh-hairline (el filete coherente de .editOptions)
+     · acentos/links → --sh-nova (decisión 2026-06-02: el azul de
+       --sh-link queda para enlaces de CONTENIDO; el cromo del editor
        habla con la nova).
    ╚══════════════════════════════════════════════════════════════════╝ */
 
 /* Frame del editor: borde exterior y filete entre toolbar y textarea. */
-.skin-stellamereida .wikiEditor-ui .wikiEditor-ui-view {
-	border-color: var(--sn-hairline);
+.skin-santa-hermandad .wikiEditor-ui .wikiEditor-ui-view {
+	border-color: var(--sh-hairline);
 }
-.skin-stellamereida .wikiEditor-ui .wikiEditor-ui-top {
-	border-bottom-color: var(--sn-hairline);
+.skin-santa-hermandad .wikiEditor-ui .wikiEditor-ui-top {
+	border-bottom-color: var(--sh-hairline);
 }
-.skin-stellamereida .wikiEditor-ui .wikiEditor-ui-right {
-	background: var(--sn-sunk);
+.skin-santa-hermandad .wikiEditor-ui .wikiEditor-ui-right {
+	background: var(--sh-sunk);
 }
 
 /* Cinta inferior con controles + barra de tabs/buttons del wikitexto. */
-.skin-stellamereida .wikiEditor-ui-controls,
-.skin-stellamereida .wikiEditor-ui-tabs,
-.skin-stellamereida .wikiEditor-ui-tabs div.current,
-.skin-stellamereida .wikiEditor-ui-buttons {
-	background-color: var(--sn-paper);
+.skin-santa-hermandad .wikiEditor-ui-controls,
+.skin-santa-hermandad .wikiEditor-ui-tabs,
+.skin-santa-hermandad .wikiEditor-ui-tabs div.current,
+.skin-santa-hermandad .wikiEditor-ui-buttons {
+	background-color: var(--sh-paper);
 }
-.skin-stellamereida .wikiEditor-ui-tabs {
-	border-left-color: var(--sn-hairline);
-	border-top-color: var(--sn-hairline);
+.skin-santa-hermandad .wikiEditor-ui-tabs {
+	border-left-color: var(--sh-hairline);
+	border-top-color: var(--sh-hairline);
 }
-.skin-stellamereida .wikiEditor-ui-tabs div {
-	background-color: var(--sn-sunk);
-	border-right-color: var(--sn-hairline);
-	border-bottom-color: var(--sn-hairline);
+.skin-santa-hermandad .wikiEditor-ui-tabs div {
+	background-color: var(--sh-sunk);
+	border-right-color: var(--sh-hairline);
+	border-bottom-color: var(--sh-hairline);
 }
-.skin-stellamereida .wikiEditor-ui-tabs div a { color: var(--sn-nova); }
-.skin-stellamereida .wikiEditor-ui-tabs div.current {
-	border-bottom-color: var(--sn-paper);
+.skin-santa-hermandad .wikiEditor-ui-tabs div a { color: var(--sh-nova); }
+.skin-santa-hermandad .wikiEditor-ui-tabs div.current {
+	border-bottom-color: var(--sh-paper);
 }
-.skin-stellamereida .wikiEditor-ui-tabs div.current a { color: var(--sn-ink); }
-.skin-stellamereida .wikiEditor-ui-buttons { border-top-color: var(--sn-paper); }
+.skin-santa-hermandad .wikiEditor-ui-tabs div.current a { color: var(--sh-ink); }
+.skin-santa-hermandad .wikiEditor-ui-buttons { border-top-color: var(--sh-paper); }
 
 /* Superficie de la barra: el tema `wikimedia` la fija con
    `@background-color-neutral-subtle` (compilado a #f8f9fa, NO voltea).
-   La atamos a --sn-sunk para que sea la misma "cinta hundida" del resto
+   La atamos a --sh-sunk para que sea la misma "cinta hundida" del resto
    del skin y voltee claro/oscuro. La sombra negra de core se mantiene en
    claro pero se neutraliza en oscuro (invisible/sucia sobre papel oscuro).
 
-   `.skin-stellamereida` (+1 clase) es OBLIGATORIO aquí: la regla de core
+   `.skin-santa-hermandad` (+1 clase) es OBLIGATORIO aquí: la regla de core
    vive en `jquery.wikiEditor.toolbar-wikimedia.less`, skinStyle `default`
    del módulo `ext.wikiEditor` (el grande), que carga DESPUÉS de nuestro
    `+ext.wikiEditor.styles` → con misma especificidad (0,1,0) ganaba core
    por orden de fuente. Mismo patrón que `.page-characters` más abajo. */
-.skin-stellamereida .wikiEditor-ui-toolbar {
-	background-color: var(--sn-sunk);
+.skin-santa-hermandad .wikiEditor-ui-toolbar {
+	background-color: var(--sh-sunk);
 }
-:root[data-sn-theme="dark"] .wikiEditor-ui-toolbar {
+:root[data-sh-theme="dark"] .wikiEditor-ui-toolbar {
 	box-shadow: none;
 }
 
@@ -143,69 +143,69 @@ form#editform {
    `.tool-button` legacy y el botón OOUI frameless. */
 .wikiEditor-ui-toolbar .tool-button:hover,
 .wikiEditor-ui-toolbar .tool.oo-ui-buttonElement-frameless.oo-ui-iconElement > .oo-ui-buttonElement-button:hover {
-	background-color: var(--sn-opt-hover-bg);
+	background-color: var(--sh-opt-hover-bg);
 }
 .wikiEditor-ui-toolbar .tool-button.tool-active,
 .wikiEditor-ui-toolbar .tool.oo-ui-buttonElement-frameless.oo-ui-iconElement.oo-ui-toggleWidget-on > .oo-ui-buttonElement-button {
-	background-color: var(--sn-nova-wash);
+	background-color: var(--sh-nova-wash);
 }
 
 /* Toolbar: secciones, tabs expandibles, grupos. */
-.skin-stellamereida .wikiEditor-ui-toolbar .sections .section {
-	border-top-color: var(--sn-hairline);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .sections .section {
+	border-top-color: var(--sh-hairline);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .tabs span.tab a,
-.skin-stellamereida .wikiEditor-ui-toolbar .tabs span.tab a:visited {
-	color: var(--sn-nova);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .tabs span.tab a,
+.skin-santa-hermandad .wikiEditor-ui-toolbar .tabs span.tab a:visited {
+	color: var(--sh-nova);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .tabs span.tab a.current,
-.skin-stellamereida .wikiEditor-ui-toolbar .tabs span.tab a.current:visited {
-	color: var(--sn-ink);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .tabs span.tab a.current,
+.skin-santa-hermandad .wikiEditor-ui-toolbar .tabs span.tab a.current:visited {
+	color: var(--sh-ink);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .section-secondary .group,
-.skin-stellamereida .wikiEditor-ui-toolbar .group-search {
-	border-left-color: var(--sn-hairline);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .section-secondary .group,
+.skin-santa-hermandad .wikiEditor-ui-toolbar .group-search {
+	border-left-color: var(--sh-hairline);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .group {
-	border-right-color: var(--sn-hairline);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .group {
+	border-right-color: var(--sh-hairline);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .group .label,
-.skin-stellamereida .wikiEditor-ui-toolbar .page-table th {
-	color: var(--sn-ink-soft);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .group .label,
+.skin-santa-hermandad .wikiEditor-ui-toolbar .page-table th {
+	color: var(--sh-ink-soft);
 }
 
 /* Tool-select (desplegable "Avanzado": estilo de párrafo, encabezados). */
-.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select {
-	border-color: var(--sn-hairline);
-	background-color: var(--sn-paper);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .group .tool-select {
+	border-color: var(--sh-hairline);
+	background-color: var(--sh-paper);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select .label { color: var(--sn-ink); }
-.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select .options {
-	border-color: var(--sn-hairline);
-	background-color: var(--sn-paper);
-	box-shadow: var(--sn-lift-soft);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .group .tool-select .label { color: var(--sh-ink); }
+.skin-santa-hermandad .wikiEditor-ui-toolbar .group .tool-select .options {
+	border-color: var(--sh-hairline);
+	background-color: var(--sh-paper);
+	box-shadow: var(--sh-lift-soft);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select .options .option {
-	color: var(--sn-ink);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .group .tool-select .options .option {
+	color: var(--sh-ink);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .group .tool-select .options .option:hover {
-	background-color: var(--sn-opt-hover-bg);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .group .tool-select .options .option:hover {
+	background-color: var(--sh-opt-hover-bg);
 }
 
 /* Booklet — pestaña "Ayuda" y panel de caracteres especiales. */
 /* Pestaña/índice ACTIVO: core lo pinta `#eaf3ff` + texto `#0645ad` (azul).
    A lavado nova + tinta nova (nada azul en el cromo del editor). */
-.skin-stellamereida .wikiEditor-ui-toolbar .booklet > .index > .current {
-	background-color: var(--sn-nova-wash);
-	color: var(--sn-nova);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .booklet > .index > .current {
+	background-color: var(--sh-nova-wash);
+	color: var(--sh-nova);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .booklet > .index .wikiEditor-character-highlighted {
-	background-color: var(--sn-nova-wash);
-	color: var(--sn-ink);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .booklet > .index .wikiEditor-character-highlighted {
+	background-color: var(--sh-nova-wash);
+	color: var(--sh-ink);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .page-table td {
-	color: var(--sn-ink);
-	border-top-color: var(--sn-hairline-soft);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .page-table td {
+	color: var(--sh-ink);
+	border-top-color: var(--sh-hairline-soft);
 }
 /* Caracteres especiales: celdas tipo botón. Sobre el CSS base de WikiEditor
    (border 1px, padding 5px 8px, font monospace, etc.) aplicamos los ajustes
@@ -215,7 +215,7 @@ form#editform {
    inline-flex y lo centramos. Color y borde siguen por token (= #222/#ccc del
    inspector, pero tematizables claro/oscuro).
 
-   Prefijamos con `.skin-stellamereida` (la clase que MW añade al <body> con el
+   Prefijamos con `.skin-santa-hermandad` (la clase que MW añade al <body> con el
    skin activo) porque las reglas correspondientes upstream — height: 1em,
    font-size: 1.25em — viven en `jquery.wikiEditor.toolbar.less`, parte del
    módulo `ext.wikiEditor` (el grande, con JS). Ese módulo carga DESPUÉS que
@@ -223,23 +223,23 @@ form#editform {
    ganaba por orden de fuente. Subir un nivel de especificidad (+1 clase)
    nos hace ganar siempre sin depender del orden de carga. Mismo patrón si
    en el futuro otra extensión presenta el mismo síntoma: prefijar la regla
-   conflictiva con `.skin-stellamereida`, no mover el hook entre módulos. */
-.skin-stellamereida .wikiEditor-ui-toolbar .page-characters div span {
+   conflictiva con `.skin-santa-hermandad`, no mover el hook entre módulos. */
+.skin-santa-hermandad .wikiEditor-ui-toolbar .page-characters div span {
 	display: inline-flex; align-items: center; justify-content: center;
 	height: 2rem;
 	margin-left: .5ex; margin-top: .5ex;
 	font-size: 1em;
-	border-color: var(--sn-hairline);
-	border-radius: var(--sn-radius);
-	color: var(--sn-ink);
+	border-color: var(--sh-hairline);
+	border-radius: var(--sh-radius);
+	color: var(--sh-ink);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .page-characters div span:hover {
-	background-color: var(--sn-sunk);
-	border-color: var(--sn-ink-faint);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .page-characters div span:hover {
+	background-color: var(--sh-sunk);
+	border-color: var(--sh-ink-faint);
 }
-.skin-stellamereida .wikiEditor-ui-toolbar .page-characters div .wikiEditor-character-highlighted {
-	background-color: var(--sn-nova-wash);
-	color: var(--sn-ink);
+.skin-santa-hermandad .wikiEditor-ui-toolbar .page-characters div .wikiEditor-character-highlighted {
+	background-color: var(--sh-nova-wash);
+	color: var(--sh-ink);
 }
 
 /* ─── Íconos de la toolbar en MODO OSCURO ──────────────────────────
@@ -264,66 +264,66 @@ form#editform {
  *
  * Scopeado a la toolbar y al tema oscuro (selector explícito + el modo
  * `auto` bajo prefers-color-scheme). En claro no se toca nada. */
-:root[data-sn-theme="dark"] .wikiEditor-ui-toolbar .oo-ui-iconElement-icon:not( .oo-ui-image-invert ):not( .oo-ui-image-progressive ):not( .oo-ui-image-destructive ),
-:root[data-sn-theme="dark"] .wikiEditor-ui-toolbar .tabs span.tab a::before,
-:root[data-sn-theme="dark"] .wikiEditor-ui-toolbar .tool-select .label::after {
+:root[data-sh-theme="dark"] .wikiEditor-ui-toolbar .oo-ui-iconElement-icon:not( .oo-ui-image-invert ):not( .oo-ui-image-progressive ):not( .oo-ui-image-destructive ),
+:root[data-sh-theme="dark"] .wikiEditor-ui-toolbar .tabs span.tab a::before,
+:root[data-sh-theme="dark"] .wikiEditor-ui-toolbar .tool-select .label::after {
 	filter: invert( 1 ) brightness( 1.1 );
 }
 @media ( prefers-color-scheme: dark ) {
-	:root[data-sn-theme="auto"] .wikiEditor-ui-toolbar .oo-ui-iconElement-icon:not( .oo-ui-image-invert ):not( .oo-ui-image-progressive ):not( .oo-ui-image-destructive ),
-	:root[data-sn-theme="auto"] .wikiEditor-ui-toolbar .tabs span.tab a::before,
-	:root[data-sn-theme="auto"] .wikiEditor-ui-toolbar .tool-select .label::after {
+	:root[data-sh-theme="auto"] .wikiEditor-ui-toolbar .oo-ui-iconElement-icon:not( .oo-ui-image-invert ):not( .oo-ui-image-progressive ):not( .oo-ui-image-destructive ),
+	:root[data-sh-theme="auto"] .wikiEditor-ui-toolbar .tabs span.tab a::before,
+	:root[data-sh-theme="auto"] .wikiEditor-ui-toolbar .tool-select .label::after {
 		filter: invert( 1 ) brightness( 1.1 );
 	}
 }
 
 /* Diálogo "Insertar tabla" — preview embebido. */
 .ui-widget table td.wikieditor-toolbar-table-preview-wrapper {
-	background: var(--sn-sunk);
+	background: var(--sh-sunk);
 }
 .ui-widget table .wikieditor-toolbar-table-preview-frame {
-	background: var(--sn-paper);
+	background: var(--sh-paper);
 }
 
 /* Textarea — venciendo a MediaWiki:Common.css.
  * Common.css trae `.mw-body #wpTextbox1 { background-color: rgb(132 150 117 / 8%) }`
  * con especificidad (1,1,0): pisaba al `#wpTextbox1` (1,0,0) de
- * stellamereida.css en modo oscuro y dejaba un tinte verdoso sobre el
+ * santa-hermandad.css en modo oscuro y dejaba un tinte verdoso sobre el
  * papel oscuro. Subimos especificidad agregando `.mw-body` al selector
  * y fijamos también el textarea ya wrapped por WikiEditor
  * (`.wikiEditor-ui .wikiEditor-ui-text textarea`). */
 .mw-body #wpTextbox1,
 .mw-body .mw-editfont-monospace,
 .mw-body .wikiEditor-ui-text textarea {
-	background: var(--sn-edit-surface);
-	color: var(--sn-ink);
+	background: var(--sh-edit-surface);
+	color: var(--sh-ink);
 }
 
 /* ─── Acento del editor: familia `progressive` → nova ──────────────
  * Decisión 2026-06-02. Los botones OOUI del pie (Guardar = primary
  * progressive, Previsualizar = progressive) y el foco de los campos usan
  * la familia de variables `--*-progressive*`, aliasada globalmente a
- * --sn-link (azul en oscuro). En el CROMO del editor eso se sale del
+ * --sh-link (azul en oscuro). En el CROMO del editor eso se sale del
  * esquema. En vez de pelear con los selectores internos de OOUI,
  * REDEFINIMOS la familia progressive a la nova en el contenedor del
  * editor: como son custom properties, todo widget OOUI descendiente
  * recalcula a nova sin tocar su CSS. Cubre claro (nova carmín) y oscuro
  * (nova coral) por igual. El botón Cancelar es `destructive`
- * (--sn-danger), no progressive → no se ve afectado. */
-.skin-stellamereida .mw-editform {
-	--color-progressive:                    var(--sn-nova);
-	--color-progressive--hover:             color-mix(in oklab, var(--sn-nova) 80%, var(--sn-ink));
-	--color-progressive--active:            color-mix(in oklab, var(--sn-nova) 65%, var(--sn-ink));
-	--color-progressive--focus:             var(--sn-nova);
-	--background-color-progressive:         var(--sn-nova);
-	--background-color-progressive--hover:   color-mix(in oklab, var(--sn-nova) 80%, var(--sn-ink));
-	--background-color-progressive--active:  color-mix(in oklab, var(--sn-nova) 65%, var(--sn-ink));
-	--background-color-progressive--focus:   var(--sn-nova);
-	--background-color-progressive-subtle:   var(--sn-nova-wash);
-	--border-color-progressive--hover:       color-mix(in oklab, var(--sn-nova) 80%, var(--sn-ink));
-	--border-color-progressive--focus:       var(--sn-nova);
-	--box-shadow-color-progressive--focus:   var(--sn-nova);
-	--box-shadow-color-progressive--active:  color-mix(in oklab, var(--sn-nova) 65%, var(--sn-ink));
+ * (--sh-danger), no progressive → no se ve afectado. */
+.skin-santa-hermandad .mw-editform {
+	--color-progressive:                    var(--sh-nova);
+	--color-progressive--hover:             color-mix(in oklab, var(--sh-nova) 80%, var(--sh-ink));
+	--color-progressive--active:            color-mix(in oklab, var(--sh-nova) 65%, var(--sh-ink));
+	--color-progressive--focus:             var(--sh-nova);
+	--background-color-progressive:         var(--sh-nova);
+	--background-color-progressive--hover:   color-mix(in oklab, var(--sh-nova) 80%, var(--sh-ink));
+	--background-color-progressive--active:  color-mix(in oklab, var(--sh-nova) 65%, var(--sh-ink));
+	--background-color-progressive--focus:   var(--sh-nova);
+	--background-color-progressive-subtle:   var(--sh-nova-wash);
+	--border-color-progressive--hover:       color-mix(in oklab, var(--sh-nova) 80%, var(--sh-ink));
+	--border-color-progressive--focus:       var(--sh-nova);
+	--box-shadow-color-progressive--focus:   var(--sh-nova);
+	--box-shadow-color-progressive--active:  color-mix(in oklab, var(--sh-nova) 65%, var(--sh-ink));
 }
 
 /* ─── Cromo del formulario de edición del CORE: MOVIDO ──────────────

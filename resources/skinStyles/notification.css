@@ -1,5 +1,5 @@
 /* ============================================================
- * skinStyles/notification.css — Stellamereida
+ * skinStyles/notification.css — Santa Hermandad
  *
  * Tokeniza y REUBICA los avisos flotantes del CORE (mw.notify):
  * el "Se guardó la edición", "Página marcada para borrado", avisos de
@@ -10,7 +10,7 @@
  *   1. POSICIÓN. El core ancla `.mw-notification-area` arriba a la
  *      derecha (`position: absolute|fixed; top:0; right:0; width:20em`,
  *      ver resources/src/mediawiki.notification/{common,default}.less del
- *      core). En Stellamereida esa esquina la ocupa el `.sn-header` sticky
+ *      core). En Santa Hermandad esa esquina la ocupa el `.sh-header` sticky
  *      con la barra de acciones (editar, historial, menús). El toast la
  *      tapaba y, como cada `.mw-notification` lleva `pointer-events:auto`
  *      + `cursor:pointer` (un clic la cierra), los clics sobre la barra
@@ -23,7 +23,7 @@
  *      WikimediaUI en build-time (@background-color-base, @border-color-…):
  *      hex congelados que NO pasan por var() → ignoran los tokens del skin
  *      y no voltean con el tema. Aquí reescribimos caja, borde, sombra,
- *      tipografía y las variantes (éxito/aviso/error) con var(--sn-…), de
+ *      tipografía y las variantes (éxito/aviso/error) con var(--sh-…), de
  *      modo que el aviso obedece al papel, la tinta y el flip claro/oscuro.
  *
  * Cargado vía ResourceModuleSkinStyles con prefijo `+mediawiki.notification`:
@@ -46,60 +46,60 @@
 	position: fixed;
 	top: auto;
 	left: auto;
-	right: var(--sn-s-4);
-	bottom: var(--sn-s-4);
+	right: var(--sh-s-4);
+	bottom: var(--sh-s-4);
 	width: auto;
-	max-width: min(24em, calc(100vw - var(--sn-s-4) * 2));
+	max-width: min(24em, calc(100vw - var(--sh-s-4) * 2));
 	padding: 0;
 	z-index: 10000;
-	font-size: var(--sn-fs-sm);
-	line-height: var(--sn-leading);
+	font-size: var(--sh-fs-sm);
+	line-height: var(--sh-leading);
 }
 
 /* ─── La caja del aviso ─── */
 .mw-notification {
 	box-sizing: border-box;
-	margin: 0 0 var(--sn-s-2);
-	padding: var(--sn-s-3) var(--sn-s-4);
-	background-color: var(--sn-paper);
-	color: var(--sn-ink);
-	border: 1px solid var(--sn-paper-edge);
+	margin: 0 0 var(--sh-s-2);
+	padding: var(--sh-s-3) var(--sh-s-4);
+	background-color: var(--sh-paper);
+	color: var(--sh-ink);
+	border: 1px solid var(--sh-paper-edge);
 	/* Filete lateral de acento — neutro por defecto, coloreado por variante. */
-	border-left: 3px solid var(--sn-ink-faint);
-	border-radius: var(--sn-radius);
-	box-shadow: var(--sn-lift);
+	border-left: 3px solid var(--sh-ink-faint);
+	border-radius: var(--sh-radius);
+	box-shadow: var(--sh-lift);
 	word-break: break-word;
 }
 
 .mw-notification-title {
 	font-weight: 600;
-	color: var(--sn-ink);
+	color: var(--sh-ink);
 }
 
 .mw-notification a {
-	color: var(--sn-link);
+	color: var(--sh-link);
 	text-decoration: none;
 }
 
 .mw-notification a:hover {
-	color: var(--sn-link-hover);
+	color: var(--sh-link-hover);
 	text-decoration: underline;
 }
 
 /* ─── Variantes por tipo — filete + tinte de fondo con los washes ─── */
 .mw-notification.mw-notification-type-success {
-	border-left-color: var(--sn-ok);
-	background-color: var(--sn-ok-wash);
+	border-left-color: var(--sh-ok);
+	background-color: var(--sh-ok-wash);
 }
 
 .mw-notification.mw-notification-type-warn {
-	border-left-color: var(--sn-warn);
-	background-color: var(--sn-warn-wash);
+	border-left-color: var(--sh-warn);
+	background-color: var(--sh-warn-wash);
 }
 
 .mw-notification.mw-notification-type-error {
-	border-left-color: var(--sn-danger);
-	background-color: var(--sn-danger-wash);
+	border-left-color: var(--sh-danger);
+	background-color: var(--sh-danger-wash);
 }
 
 /* El aviso de "Se guardó la edición" sale por mw.notify SIN type (solo
@@ -107,7 +107,7 @@
    así que por sí mismo caería en el estilo neutro. Es una confirmación:
    le damos el mismo acento de éxito que la variante success. */
 .mw-notification.postedit {
-	border-left-color: var(--sn-ok);
+	border-left-color: var(--sh-ok);
 }
 
 /* ─── Movimiento: la diapositiva entra desde la derecha (coherente con el
